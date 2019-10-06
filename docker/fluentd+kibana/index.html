@@ -31,18 +31,18 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-　、。，．]+">
       
-      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
-        <title>Docker - roy-n-roy メモ</title>
+        <title>Fluentd+kibana - roy-n-roy メモ</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
@@ -51,7 +51,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
@@ -60,7 +60,7 @@
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
-    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
     
@@ -83,7 +83,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#docker" tabindex="1" class="md-skip">
+      <a href="#fluentdelasticsearchkibana" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -92,7 +92,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="roy-n-roy メモ" class="md-header-nav__button md-logo">
+        <a href="../.." title="roy-n-roy メモ" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -109,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Docker
+                Fluentd+kibana
               
             </span>
           
@@ -153,6 +153,41 @@
         
       
       
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="./" class="md-tabs__link md-tabs__link--active">
+          Docker
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
       <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
@@ -162,7 +197,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href=".." title="roy-n-roy メモ" class="md-nav__button md-logo">
+    <a href="../.." title="roy-n-roy メモ" class="md-nav__button md-logo">
       
         <i class="md-icon"></i>
       
@@ -178,7 +213,7 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
+    <a href="../.." title="Home" class="md-nav__link">
       Home
     </a>
   </li>
@@ -191,37 +226,47 @@
   
 
 
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Docker
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
   <li class="md-nav__item md-nav__item--active">
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
-      
-    
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Docker
+        Fluentd+kibana
       </label>
     
-    <a href="./" title="Docker" class="md-nav__link md-nav__link--active">
-      Docker
+    <a href="./" title="Fluentd+kibana" class="md-nav__link md-nav__link--active">
+      Fluentd+kibana
     </a>
     
       
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">目次</label>
     <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#wordpress" class="md-nav__link">
-    Wordpress
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#fluentdelasticsearchkibana" class="md-nav__link">
@@ -240,6 +285,23 @@
     
   </li>
 
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../wordpress/" title="Wordpress" class="md-nav__link">
+      Wordpress
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
     
   </ul>
 </nav>
@@ -255,18 +317,9 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">目次</label>
     <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#wordpress" class="md-nav__link">
-    Wordpress
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#fluentdelasticsearchkibana" class="md-nav__link">
@@ -292,34 +345,17 @@
               
                 
                 
-                <h1 id="docker">Docker</h1>
-<h2 id="wordpress">Wordpress</h2>
-<ul>
-<li>Weblogサイト作成&amp;バックアップ<br />
-<a href="https://gist.github.com/roy-n-roy/75370b28f639fdb489ca321001717eb8#file-docker-compose-yml">docker-compose.yml</a>
-<details>
-<script src="https://gist.github.com/roy-n-roy/75370b28f639fdb489ca321001717eb8.js?file=docker-compose.yml"></script>
-</details>
-<a href="https://gist.github.com/roy-n-roy/75370b28f639fdb489ca321001717eb8#file-wp_backup-sh">wp_backup.sh</a>
-<details>
-<script src="https://gist.github.com/roy-n-roy/75370b28f639fdb489ca321001717eb8.js?file=wp_backup.sh"></script>
-</details></li>
-</ul>
-<h2 id="fluentdelasticsearchkibana">Fluentd+Elasticsearch+Kibana</h2>
+                  <h1>Fluentd+kibana</h1>
+                
+                <h2 id="fluentdelasticsearchkibana">Fluentd+Elasticsearch+Kibana</h2>
 <ul>
 <li>ログ収集+可視化<br />
 <a href="https://gist.github.com/roy-n-roy/7ae6bc3fbc2868c61de743a8b81c6aae#file-docker-compose-yml">docker-compose.yml</a>
-<details>
 <script src="https://gist.github.com/roy-n-roy/7ae6bc3fbc2868c61de743a8b81c6aae.js?file=docker-compose.yml"></script>
-</details>
 <a href="https://gist.github.com/roy-n-roy/7ae6bc3fbc2868c61de743a8b81c6aae#file-fluent-conf">wp_backup.sh</a>
-<details>
 <script src="https://gist.github.com/roy-n-roy/7ae6bc3fbc2868c61de743a8b81c6aae.js?file=fluent.conf "></script>
-</details>
 <a href="https://gist.github.com/roy-n-roy/7ae6bc3fbc2868c61de743a8b81c6aae#file-Dockerfile">wp_backup.sh</a>
-<details>
-<script src="https://gist.github.com/roy-n-roy/7ae6bc3fbc2868c61de743a8b81c6aae.js?file=Dockerfile "></script>
-</details></li>
+<script src="https://gist.github.com/roy-n-roy/7ae6bc3fbc2868c61de743a8b81c6aae.js?file=Dockerfile "></script></li>
 </ul>
                 
                   
@@ -341,7 +377,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href=".." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../.." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -355,6 +391,20 @@
             </div>
           </a>
         
+        
+          <a href="../wordpress/" title="Wordpress" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  次
+                </span>
+                Wordpress
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>
@@ -371,7 +421,7 @@
       </div>
       
   <div class="md-footer-social">
-    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
     
       <a href="https://github.com/roy-n-roy" class="md-footer-social__link fa fa-github"></a>
     
@@ -385,26 +435,26 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
         
         
           
-          <script src="../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
           
             
               
-                <script src="../assets/javascripts/lunr/tinyseg.js"></script>
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
               
               
-                <script src="../assets/javascripts/lunr/lunr.ja.js"></script>
+                <script src="../../assets/javascripts/lunr/lunr.ja.js"></script>
               
             
           
           
         
       
-      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
     
   </body>
