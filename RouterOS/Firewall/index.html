@@ -202,6 +202,19 @@
   
     <li class="md-tabs__item">
       
+        <a href="../../mkdocs/VSCode/" class="md-tabs__link">
+          Mkdocs
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
         <a href="../../raspberrypi/WebRTC/" class="md-tabs__link">
           Raspberrypi
         </a>
@@ -342,6 +355,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2回目以降の実行
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup_and_execsh" class="md-nav__link">
+    setup_and_exec.shでダウンロードされるファイル
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -426,10 +453,46 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
-      Raspberrypi
+      Mkdocs
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-4">
+        Mkdocs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../mkdocs/VSCode/" title="VSCode" class="md-nav__link">
+      VSCode
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Raspberrypi
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
         Raspberrypi
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -459,13 +522,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       Streaming
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         Streaming
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -529,6 +592,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2回目以降の実行
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup_and_execsh" class="md-nav__link">
+    setup_and_exec.shでダウンロードされるファイル
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -565,8 +642,82 @@
 </ul>
 <h4 id="jp">JPアドレスグループの作成</h4>
 <ul>
-<li>作成中</li>
+<li>セットアップスクリプトをダウンロード</li>
 </ul>
+<div class="admonition example">
+<p class="admonition-title">setup_and_exec.sh</p>
+<p><script src="https://gist.github.com/roy-n-roy/cc49d45e0d8f35d905cbbbd3f685d4ee.js?file=setup_and_exec.sh"></script></p>
+</div>
+<div class="codehilite"><pre><span></span>curl -L -O https://gist.githubusercontent.com/roy-n-roy/cc49d45e0d8f35d905cbbbd3f685d4ee/raw/setup_and_exec.sh
+</pre></div>
+
+<ul>
+<li>下記の2行をルーターのIPアドレス、adminユーザのパスワードに書き換える</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">setup_and_exec.sh</p>
+<div class="codehilite"><pre><span></span><span class="n">ipAddress</span><span class="o">=</span><span class="ss">&quot;192.168.XXX.XXX&quot;</span>
+<span class="n">password</span><span class="o">=</span><span class="ss">&quot;Passw0rd&quot;</span>
+</pre></div>
+
+</div>
+<ul>
+<li>実行</li>
+</ul>
+<div class="codehilite"><pre><span></span>chmod +x setup_and_exec.sh
+./setup_and_exec.sh
+</pre></div>
+
+<div class="admonition success">
+<p class="admonition-title">Result</p>
+<div class="codehilite"><pre><span></span><span class="c1">% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span>
+                                <span class="nv">Dload</span>  <span class="nv">Upload</span>   <span class="nv">Total</span>   <span class="nv">Spent</span>    <span class="nv">Left</span>  <span class="nv">Speed</span>
+<span class="mi">100</span>    <span class="mi">27</span>  <span class="mi">100</span>    <span class="mi">27</span>    <span class="mi">0</span>     <span class="mi">0</span>    <span class="mi">519</span>      <span class="mi">0</span> <span class="s s-Atom">--:--:--</span> <span class="s s-Atom">--:--:--</span> <span class="s s-Atom">--:--:--</span>   <span class="mi">519</span>
+<span class="c1">% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span>
+                                <span class="nv">Dload</span>  <span class="nv">Upload</span>   <span class="nv">Total</span>   <span class="nv">Spent</span>    <span class="nv">Left</span>  <span class="nv">Speed</span>
+<span class="mi">100</span>  <span class="mi">1210</span>  <span class="mi">100</span>  <span class="mi">1210</span>    <span class="mi">0</span>     <span class="mi">0</span>  <span class="mi">35588</span>      <span class="mi">0</span> <span class="s s-Atom">--:--:--</span> <span class="s s-Atom">--:--:--</span> <span class="s s-Atom">--:--:--</span> <span class="mi">36666</span>
+<span class="c1">% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span>
+                                <span class="nv">Dload</span>  <span class="nv">Upload</span>   <span class="nv">Total</span>   <span class="nv">Spent</span>    <span class="nv">Left</span>  <span class="nv">Speed</span>
+<span class="mi">100</span>   <span class="mi">131</span>  <span class="mi">100</span>   <span class="mi">131</span>    <span class="mi">0</span>     <span class="mi">0</span>   <span class="mi">3742</span>      <span class="mi">0</span> <span class="s s-Atom">--:--:--</span> <span class="s s-Atom">--:--:--</span> <span class="s s-Atom">--:--:--</span>  <span class="mi">3638</span>
+<span class="nv">New</span> <span class="nv">Vault</span> <span class="nn">password</span><span class="p">:</span>                           <span class="s s-Atom">&lt;-</span> <span class="s s-Atom">ルーターのログインパスワード保管用鍵となるパスワードを入力する</span>
+<span class="nv">Confirm</span> <span class="nv">New</span> <span class="nv">Vault</span> <span class="nn">password</span><span class="p">:</span>                   <span class="s s-Atom">&lt;-</span> <span class="s s-Atom">同じパスワードを再入力（保管時の確認）</span>
+<span class="nv">Encryption</span> <span class="s s-Atom">successful</span>
+<span class="nv">Vault</span> <span class="nn">password</span><span class="p">:</span>                               <span class="s s-Atom">&lt;-</span> <span class="s s-Atom">同じパスワードを再入力（スクリプト実行）</span>
+
+<span class="nv">PLAY</span> <span class="p">[</span><span class="s s-Atom">localhost</span><span class="p">]</span> <span class="s s-Atom">*****************************************************************************************************</span>
+<span class="nv">TASK</span> <span class="p">[</span><span class="nv">Gathering</span> <span class="nv">Facts</span><span class="p">]</span> <span class="s s-Atom">***********************************************************************************************</span>
+<span class="nn">ok</span><span class="p">:</span> <span class="p">[</span><span class="s s-Atom">localhost</span><span class="p">]</span>
+
+<span class="nv">TASK</span> <span class="p">[</span><span class="nv">Download</span> <span class="nv">IP</span> <span class="nv">Address</span> <span class="nv">List</span><span class="p">]</span> <span class="s s-Atom">**************************************************************************************</span>
+
+<span class="p">(...</span><span class="s s-Atom">中略</span><span class="p">...)</span>
+
+<span class="nn">skipping</span><span class="p">:</span> <span class="p">[</span><span class="mf">192.168</span><span class="p">.</span><span class="nv">XXX</span><span class="p">.</span><span class="nv">XXX</span><span class="p">]</span> <span class="s s-Atom">=&gt;</span> <span class="p">(</span><span class="s s-Atom">item</span><span class="o">=</span><span class="s s-Atom">apnic</span><span class="p">|</span><span class="nv">BD</span><span class="p">|</span><span class="s s-Atom">asn</span><span class="p">|</span><span class="mi">139622</span><span class="p">|</span><span class="mi">1</span><span class="p">|</span><span class="mi">20190829</span><span class="p">|</span><span class="s s-Atom">allocated</span><span class="p">|</span><span class="nv">A91E773E</span><span class="p">)</span>
+<span class="nn">skipping</span><span class="p">:</span> <span class="p">[</span><span class="mf">192.168</span><span class="p">.</span><span class="nv">XXX</span><span class="p">.</span><span class="nv">XXX</span><span class="p">]</span> <span class="s s-Atom">=&gt;</span> <span class="p">(</span><span class="s s-Atom">item</span><span class="o">=</span><span class="s s-Atom">apnic</span><span class="p">|</span><span class="nv">AU</span><span class="p">|</span><span class="s s-Atom">asn</span><span class="p">|</span><span class="mi">139623</span><span class="p">|</span><span class="mi">1</span><span class="p">|</span><span class="mi">20190830</span><span class="p">|</span><span class="s s-Atom">allocated</span><span class="p">|</span><span class="nv">A919337F</span><span class="p">)</span>
+<span class="nn">skipping</span><span class="p">:</span> <span class="p">[</span><span class="mf">192.168</span><span class="p">.</span><span class="nv">XXX</span><span class="p">.</span><span class="nv">XXX</span><span class="p">]</span> <span class="s s-Atom">=&gt;</span> <span class="p">(</span><span class="s s-Atom">item</span><span class="o">=</span><span class="s s-Atom">apnic</span><span class="p">|</span><span class="nv">IN</span><span class="p">|</span><span class="s s-Atom">asn</span><span class="p">|</span><span class="mi">139624</span><span class="p">|</span><span class="mi">1</span><span class="p">|</span><span class="mi">20190830</span><span class="p">|</span><span class="s s-Atom">allocated</span><span class="p">|</span><span class="nv">A9114899</span><span class="p">)</span>
+<span class="nn">skipping</span><span class="p">:</span> <span class="p">[</span><span class="mf">192.168</span><span class="p">.</span><span class="nv">XXX</span><span class="p">.</span><span class="nv">XXX</span><span class="p">]</span> <span class="s s-Atom">=&gt;</span> <span class="p">(</span><span class="s s-Atom">item</span><span class="o">=</span><span class="s s-Atom">apnic</span><span class="p">||</span><span class="s s-Atom">asn</span><span class="p">|</span><span class="mi">139625</span><span class="p">|</span><span class="mi">2001</span><span class="p">||</span><span class="s s-Atom">available</span><span class="p">|)</span>
+
+<span class="nv">PLAY</span> <span class="nv">RECAP</span> <span class="s s-Atom">***********************************************************************************************************</span>
+<span class="mf">192.168</span><span class="p">.</span><span class="nv">XXX</span><span class="p">.</span><span class="nv">XXX</span>            <span class="s s-Atom">:</span> <span class="s s-Atom">ok</span><span class="o">=</span><span class="mi">3</span>    <span class="s s-Atom">changed</span><span class="o">=</span><span class="mi">0</span>    <span class="s s-Atom">unreachable</span><span class="o">=</span><span class="mi">0</span>    <span class="s s-Atom">failed</span><span class="o">=</span><span class="mi">0</span>    <span class="s s-Atom">skipped</span><span class="o">=</span><span class="mi">0</span>    <span class="s s-Atom">rescued</span><span class="o">=</span><span class="mi">0</span>    <span class="s s-Atom">ignored</span><span class="o">=</span><span class="mi">0</span>
+<span class="s s-Atom">localhost</span>                  <span class="s s-Atom">:</span> <span class="s s-Atom">ok</span><span class="o">=</span><span class="mi">2</span>    <span class="s s-Atom">changed</span><span class="o">=</span><span class="mi">0</span>    <span class="s s-Atom">unreachable</span><span class="o">=</span><span class="mi">0</span>    <span class="s s-Atom">failed</span><span class="o">=</span><span class="mi">0</span>    <span class="s s-Atom">skipped</span><span class="o">=</span><span class="mi">0</span>    <span class="s s-Atom">rescued</span><span class="o">=</span><span class="mi">0</span>    <span class="s s-Atom">ignored</span><span class="o">=</span><span class="mi">0</span>
+</pre></div>
+
+</div>
+<h4 id="2">2回目以降の実行</h4>
+<p><code>ansible-playbook -i hosts set_firewalls.yml</code></p>
+<h4 id="setup_and_execsh">setup_and_exec.shでダウンロードされるファイル</h4>
+<div class="admonition example">
+<p class="admonition-title">set_firewalls.yml</p>
+<p><script src="https://gist.github.com/roy-n-roy/cc49d45e0d8f35d905cbbbd3f685d4ee.js?file=set_firewalls.yml"></script></p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">group_vars_routeros_login.yml</p>
+<p><script src="https://gist.github.com/roy-n-roy/cc49d45e0d8f35d905cbbbd3f685d4ee.js?file=group_vars_routeros_login.yml"></script></p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">hosts</p>
+<p><script src="https://gist.github.com/roy-n-roy/cc49d45e0d8f35d905cbbbd3f685d4ee.js?file=hosts"></script></p>
+</div>
                 
                   
                 
