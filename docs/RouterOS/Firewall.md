@@ -33,13 +33,13 @@ chmod +x setup_and_exec.sh
 !!! success "Result"
 	```
 	% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-									Dload  Upload   Total   Spent    Left  Speed
+	                               Dload  Upload   Total   Spent    Left  Speed
 	100    27  100    27    0     0    519      0 --:--:-- --:--:-- --:--:--   519
 	% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-									Dload  Upload   Total   Spent    Left  Speed
+	                               Dload  Upload   Total   Spent    Left  Speed
 	100  1210  100  1210    0     0  35588      0 --:--:-- --:--:-- --:--:-- 36666
 	% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-									Dload  Upload   Total   Spent    Left  Speed
+	                               Dload  Upload   Total   Spent    Left  Speed
 	100   131  100   131    0     0   3742      0 --:--:-- --:--:-- --:--:--  3638
 	New Vault password:                           <- ルーターのログインパスワード保管用鍵となるパスワードを入力する
 	Confirm New Vault password:                   <- 同じパスワードを再入力（保管時の確認）
