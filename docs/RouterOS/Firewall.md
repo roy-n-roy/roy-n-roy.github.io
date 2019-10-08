@@ -1,10 +1,11 @@
 ## Firewallの設定
 
 ### 日本国外からの通信の遮断
-* 日本国内に割り当てられているIPアドレスからの通信のみを許可する
+日本国内に割り当てられているIPアドレスからの通信のみを許可するよう設定する。  
+また、割当てIPアドレスの更新に対応する。  
 
 #### JPアドレスグループの作成
-* セットアップスクリプトをダウンロード
+セットアップスクリプトをGithub Gistsからダウンロード
 
 !!! example "setup_and_exec.sh"
 	<script src="https://gist.github.com/roy-n-roy/cc49d45e0d8f35d905cbbbd3f685d4ee.js?file=setup_and_exec.sh"></script>
