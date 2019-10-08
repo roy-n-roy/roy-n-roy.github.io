@@ -4,6 +4,30 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "mkdocs-install",
+			"type": "shell",
+			"command": "pip install mkdocs mkdocs-material pymdown-extensions",
+			"problemMatcher": []
+		},
+		{
+			"label": "mkdocs-new",
+			"type": "shell",
+			"command": "mkdocs new .",
+			"dependsOn": [
+				"mkdocs-install"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "mkdocs-build",
+			"type": "shell",
+			"command": "mkdocs build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
 			"label": "mkdocs-serve",
 			"type": "shell",
 			"isBackground": true,
@@ -30,11 +54,6 @@
 			"type": "shell",
 			"command": "mkdocs gh-deploy",
 			"problemMatcher": []
-		},
-		{
-			"label": "mkdocs-install",
-			"type": "shell",
-			"command": "pip install mkdocs mkdocs-material pymdown-extensions"
 		}
 	]
 }
