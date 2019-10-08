@@ -1,0 +1,20 @@
+site_name: roy-n-roy メモ
+theme:
+  name: material
+  language: 'ja'
+  palette:
+    primary: 'deep orange'
+  feature:
+    tabs: true
+markdown_extensions:
+  - admonition
+  - codehilite
+remote_branch: master
+extra:
+  search:
+    language: 'ja'
+  social:
+    - type: 'github'
+      link: 'https://github.com/roy-n-roy'
+    - type: 'twitter'
+      link: 'https://twitter.com/roy_n_roy'
