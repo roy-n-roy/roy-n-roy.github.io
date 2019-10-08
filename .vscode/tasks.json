@@ -1,0 +1,40 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "mkdocs-serve",
+			"type": "shell",
+			"isBackground": true,
+			"command": "mkdocs serve",
+			"problemMatcher": {
+				"owner": "custom",
+				"pattern": {
+					"regexp": "^$"
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*Building documentation.*",
+					"endsPattern": ".*Start detecting changes.*"
+				}
+			}
+		},
+		{
+			"label": "mkdocs-stop",
+			"type": "shell",
+			"command": "${command:workbench.action.terminal.kill}"
+		},
+		{
+			"label": "mkdocs-deploy",
+			"type": "shell",
+			"command": "mkdocs gh-deploy",
+			"problemMatcher": []
+		},
+		{
+			"label": "mkdocs-install",
+			"type": "shell",
+			"command": "pip install mkdocs mkdocs-material pymdown-extensions"
+		}
+	]
+}
