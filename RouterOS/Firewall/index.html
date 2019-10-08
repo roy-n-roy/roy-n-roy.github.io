@@ -36,7 +36,7 @@
     
     
       
-        <title>Wordpress - roy-n-roy メモ</title>
+        <title>Firewall - roy-n-roy メモ</title>
       
     
     
@@ -83,7 +83,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#wordpress" tabindex="1" class="md-skip">
+      <a href="#firewall" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -109,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Wordpress
+                Firewall
               
             </span>
           
@@ -176,7 +176,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../RouterOS/Backup/" class="md-tabs__link">
+        <a href="../Backup/" class="md-tabs__link md-tabs__link--active">
           RouterOS
         </a>
       
@@ -189,7 +189,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../fluentd+kibana/" class="md-tabs__link md-tabs__link--active">
+        <a href="../../docker/fluentd+kibana/" class="md-tabs__link">
           Docker
         </a>
       
@@ -262,10 +262,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       RouterOS
@@ -283,58 +285,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../RouterOS/Backup/" title="Backup" class="md-nav__link">
+    <a href="../Backup/" title="Backup" class="md-nav__link">
       Backup
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../RouterOS/Firewall/" title="Firewall" class="md-nav__link">
-      Firewall
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
-    
-    <label class="md-nav__link" for="nav-3">
-      Docker
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
-        Docker
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../fluentd+kibana/" title="Fluentd+kibana" class="md-nav__link">
-      Fluentd+kibana
     </a>
   </li>
 
@@ -352,11 +304,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Wordpress
+        Firewall
       </label>
     
-    <a href="./" title="Wordpress" class="md-nav__link md-nav__link--active">
-      Wordpress
+    <a href="./" title="Firewall" class="md-nav__link md-nav__link--active">
+      Firewall
     </a>
     
       
@@ -368,9 +320,35 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#wordpress" class="md-nav__link">
-    Wordpress
+  <a href="#firewall" class="md-nav__link">
+    Firewallの設定
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    日本国外からの通信の遮断
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jp" class="md-nav__link">
+    JPアドレスグループの作成
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -382,6 +360,54 @@
   
 </nav>
     
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Docker
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../docker/fluentd+kibana/" title="Fluentd+kibana" class="md-nav__link">
+      Fluentd+kibana
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../docker/wordpress/" title="Wordpress" class="md-nav__link">
+      Wordpress
+    </a>
   </li>
 
         
@@ -481,9 +507,35 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#wordpress" class="md-nav__link">
-    Wordpress
+  <a href="#firewall" class="md-nav__link">
+    Firewallの設定
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    日本国外からの通信の遮断
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jp" class="md-nav__link">
+    JPアドレスグループの作成
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -504,15 +556,16 @@
               
                 
                 
-                  <h1>Wordpress</h1>
+                  <h1>Firewall</h1>
                 
-                <h2 id="wordpress">Wordpress</h2>
+                <h2 id="firewall">Firewallの設定</h2>
+<h3 id="_1">日本国外からの通信の遮断</h3>
 <ul>
-<li>Weblogサイト作成&amp;バックアップ<br />
-<a href="https://gist.github.com/roy-n-roy/75370b28f639fdb489ca321001717eb8#file-docker-compose-yml">docker-compose.yml</a>
-<script src="https://gist.github.com/roy-n-roy/75370b28f639fdb489ca321001717eb8.js?file=docker-compose.yml"></script>
-<a href="https://gist.github.com/roy-n-roy/75370b28f639fdb489ca321001717eb8#file-wp_backup-sh">wp_backup.sh</a>
-<script src="https://gist.github.com/roy-n-roy/75370b28f639fdb489ca321001717eb8.js?file=wp_backup.sh"></script></li>
+<li>日本国内に割り当てられているIPアドレスからの通信のみを許可する</li>
+</ul>
+<h4 id="jp">JPアドレスグループの作成</h4>
+<ul>
+<li>作成中</li>
 </ul>
                 
                   
@@ -534,7 +587,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../fluentd+kibana/" title="Fluentd+kibana" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../Backup/" title="Backup" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -543,19 +596,19 @@
                 <span class="md-footer-nav__direction">
                   前
                 </span>
-                Fluentd+kibana
+                Backup
               </span>
             </div>
           </a>
         
         
-          <a href="../../raspberrypi/WebRTC/" title="WebRTC" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../docker/fluentd+kibana/" title="Fluentd+kibana" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   次
                 </span>
-                WebRTC
+                Fluentd+kibana
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
