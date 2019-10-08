@@ -9,6 +9,8 @@ theme:
 markdown_extensions:
   - admonition
   - codehilite
+  - footnotes
+  - pymdownx.superfences
 remote_branch: master
 extra:
   search:
