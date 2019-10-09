@@ -31,18 +31,18 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-　、。，．]+">
       
-      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
-        <title>WebRTC - roy-n-roy メモ</title>
+        <title>VPNサーバの代替設定 - roy-n-roy メモ</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
@@ -51,7 +51,7 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
@@ -60,7 +60,7 @@
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
-    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
     
     
@@ -83,7 +83,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#webrtc" tabindex="1" class="md-skip">
+      <a href="#vpn" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -92,7 +92,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../.." title="roy-n-roy メモ" class="md-header-nav__button md-logo">
+        <a href=".." title="roy-n-roy メモ" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -109,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                WebRTC
+                VPNサーバの代替設定
               
             </span>
           
@@ -155,16 +155,14 @@
       
         
 
-  
-
-<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+<nav class="md-tabs" data-md-component="tabs">
   <div class="md-tabs__inner md-grid">
     <ul class="md-tabs__list">
       
         
   <li class="md-tabs__item">
     
-      <a href="../.." class="md-tabs__link">
+      <a href=".." class="md-tabs__link md-tabs__link--active">
         Home
       </a>
     
@@ -172,24 +170,13 @@
 
       
         
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="../../RouterOS/" class="md-tabs__link">
-          RouterOS
-        </a>
-      
-    </li>
-  
-
       
         
   
   
     <li class="md-tabs__item">
       
-        <a href="../../docker/" class="md-tabs__link">
+        <a href="../Docker/" class="md-tabs__link">
           Docker
         </a>
       
@@ -202,34 +189,34 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../mkdocs/VSCode/" class="md-tabs__link">
+        <a href="../Raspberry Pi/" class="md-tabs__link">
+          Raspberry Pi
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../RouterOS/" class="md-tabs__link">
+          RouterOS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../mkdocs/" class="md-tabs__link">
           Mkdocs
-        </a>
-      
-    </li>
-  
-
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="./" class="md-tabs__link md-tabs__link--active">
-          Raspberrypi
-        </a>
-      
-    </li>
-  
-
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="../../streaming/動画像ストリーミング/" class="md-tabs__link">
-          Streaming
         </a>
       
     </li>
@@ -249,7 +236,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../.." title="roy-n-roy メモ" class="md-nav__button md-logo">
+    <a href=".." title="roy-n-roy メモ" class="md-nav__button md-logo">
       
         <i class="md-icon"></i>
       
@@ -265,7 +252,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../.." title="Home" class="md-nav__link">
+    <a href=".." title="Home" class="md-nav__link">
       Home
     </a>
   </li>
@@ -275,59 +262,20 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
-    <label class="md-nav__link" for="nav-2">
-      RouterOS
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        RouterOS
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../RouterOS/" title="Index" class="md-nav__link">
-      Index
+      
+    
+    
+    <a href="./" title="VPNサーバの代替設定" class="md-nav__link md-nav__link--active">
+      VPNサーバの代替設定
     </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../RouterOS/Backup/" title="Backup" class="md-nav__link">
-      Backup
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../RouterOS/Firewall/" title="Firewall" class="md-nav__link">
-      Firewall
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
+    
   </li>
 
     
@@ -356,8 +304,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../docker/" title="Index" class="md-nav__link">
-      Index
+    <a href="../Docker/" title="Docker" class="md-nav__link">
+      Docker
     </a>
   </li>
 
@@ -368,8 +316,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../docker/fluentd+kibana/" title="Fluentd+kibana" class="md-nav__link">
-      Fluentd+kibana
+    <a href="../Docker/fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
+      Fluentd+Elasticsearch+Kibana
     </a>
   </li>
 
@@ -380,7 +328,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../docker/wordpress/" title="Wordpress" class="md-nav__link">
+    <a href="../Docker/wordpress/" title="Wordpress" class="md-nav__link">
       Wordpress
     </a>
   </li>
@@ -401,11 +349,11 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
-      Mkdocs
+      Raspberry Pi
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-4">
-        Mkdocs
+        Raspberry Pi
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
@@ -416,8 +364,32 @@
 
 
   <li class="md-nav__item">
-    <a href="../../mkdocs/VSCode/" title="VSCode" class="md-nav__link">
-      VSCode
+    <a href="../Raspberry Pi/" title="Raspberry Pi" class="md-nav__link">
+      Raspberry Pi
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Raspberry Pi/Network/" title="ネットワーク設定" class="md-nav__link">
+      ネットワーク設定
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Raspberry Pi/WebConsole/" title="Web Console" class="md-nav__link">
+      Web Console
     </a>
   </li>
 
@@ -431,19 +403,17 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
     <label class="md-nav__link" for="nav-5">
-      Raspberrypi
+      RouterOS
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-5">
-        Raspberrypi
+        RouterOS
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
@@ -452,52 +422,35 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        WebRTC
-      </label>
-    
-    <a href="./" title="WebRTC" class="md-nav__link md-nav__link--active">
-      WebRTC
+  <li class="md-nav__item">
+    <a href="../RouterOS/" title="RouterOS" class="md-nav__link">
+      RouterOS
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">目次</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#webrtc" class="md-nav__link">
-    WebRTC
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#webrtc-native-client-momo" class="md-nav__link">
-    WebRTC Native Client Momo
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../RouterOS/Backup/" title="Backup" class="md-nav__link">
+      Backup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../RouterOS/Firewall/" title="Firewall" class="md-nav__link">
+      Firewall
+    </a>
   </li>
 
         
@@ -516,11 +469,11 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
     <label class="md-nav__link" for="nav-6">
-      Streaming
+      Mkdocs
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-6">
-        Streaming
+        Mkdocs
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
@@ -531,8 +484,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../../streaming/動画像ストリーミング/" title="動画像ストリーミング" class="md-nav__link">
-      動画像ストリーミング
+    <a href="../mkdocs/" title="MkDocs" class="md-nav__link">
+      MkDocs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mkdocs/VSCode/" title="Visual Studio Codeでの編集環境構築" class="md-nav__link">
+      Visual Studio Codeでの編集環境構築
     </a>
   </li>
 
@@ -556,29 +521,8 @@
 <nav class="md-nav md-nav--secondary">
   
   
+    
   
-    <label class="md-nav__title" for="__toc">目次</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#webrtc" class="md-nav__link">
-    WebRTC
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#webrtc-native-client-momo" class="md-nav__link">
-    WebRTC Native Client Momo
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
   
 </nav>
                   </div>
@@ -591,16 +535,24 @@
               
                 
                 
-                  <h1>WebRTC</h1>
-                
-                <h2 id="webrtc">WebRTC</h2>
-<p>ウェブブラウザやモバイルアプリケーションにシンプルなAPI経由でリアルタイム通信を提供する自由かつオープンソースのプロジェクトである。<br />
-ウェブページ内で直接のピア・ツー・ピア通信によって、プラグインのインストールやネイティブアプリのダウンロードをせずに、<br />
-ウェブブラウザ間のボイスチャット、ビデオチャット、ファイル共有が可能になる。<br />
-<a href="https://ja.wikipedia.org/wiki/WebRTC">- Wikipedia「WebRTC」より引用</a></p>
-<h2 id="webrtc-native-client-momo"><a href="https://github.com/shiguredo/momo">WebRTC Native Client Momo</a></h2>
-<p>WebRTC Native Client Momo は libwebrtc を利用しブラウザなしで様々な環境で動作する WebRTC ネイティブクライアント。<br />
-時雨堂社によりメンテナンスされ、Raspbian Buster, Ubuntu, MacOS用バイナリが提供されている。</p>
+                <h1 id="vpn">VPNサーバの代替設定</h1>
+<p>プライマリVPNサーバが落ちた時にRaspberry Piなどで自動でPPPoE接続し、代替VPNサーバが立ち上がるように設定  </p>
+<ul>
+<li>
+<p>PPPoE接続+VPNサーバ起動&amp;停止スクリプト  </p>
+<div class="admonition example">
+<p class="admonition-title">check_vpn.sh</p>
+<p><script src="https://gist.github.com/roy-n-roy/032f1df08654a6aeb276aebb2ffeb871.js?file=check_vpn.sh"></script></p>
+</div>
+</li>
+<li>
+<p>Systemd自動起動 設定ファイル  </p>
+<div class="admonition example">
+<p class="admonition-title">check_vpn.service</p>
+<p><script src="https://gist.github.com/roy-n-roy/032f1df08654a6aeb276aebb2ffeb871.js?file=check_vpn.service"></script></p>
+</div>
+</li>
+</ul>
                 
                   
                 
@@ -621,7 +573,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../mkdocs/VSCode/" title="VSCode" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -630,19 +582,19 @@
                 <span class="md-footer-nav__direction">
                   前
                 </span>
-                VSCode
+                Home
               </span>
             </div>
           </a>
         
         
-          <a href="../../streaming/動画像ストリーミング/" title="動画像ストリーミング" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../Docker/" title="Docker" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   次
                 </span>
-                動画像ストリーミング
+                Docker
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -665,7 +617,7 @@
       </div>
       
   <div class="md-footer-social">
-    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
     
       <a href="https://github.com/roy-n-roy" class="md-footer-social__link fa fa-github"></a>
     
@@ -679,26 +631,26 @@
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
       
         
         
           
-          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          <script src="../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
           
             
               
-                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+                <script src="../assets/javascripts/lunr/tinyseg.js"></script>
               
               
-                <script src="../../assets/javascripts/lunr/lunr.ja.js"></script>
+                <script src="../assets/javascripts/lunr/lunr.ja.js"></script>
               
             
           
           
         
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
     
   </body>

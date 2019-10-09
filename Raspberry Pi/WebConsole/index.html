@@ -1,0 +1,1466 @@
+
+
+
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="クリップボードへコピー">
+      
+        <meta name="lang:clipboard.copied" content="コピーしました">
+      
+        <meta name="lang:search.language" content="ja">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="何も見つかりませんでした">
+      
+        <meta name="lang:search.result.one" content="1件見つかりました">
+      
+        <meta name="lang:search.result.other" content="#件見つかりました">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-　、。，．]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+    
+    
+      
+        <title>Web Console - roy-n-roy メモ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ff7043">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="deep-orange" data-md-color-accent="">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#web-console" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="roy-n-roy メモ" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              roy-n-roy メモ
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Web Console
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            検索キーワードを入力してください
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Docker/" class="md-tabs__link">
+          Docker
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../" class="md-tabs__link md-tabs__link--active">
+          Raspberry Pi
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../RouterOS/" class="md-tabs__link">
+          RouterOS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../mkdocs/" class="md-tabs__link">
+          Mkdocs
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="roy-n-roy メモ" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    roy-n-roy メモ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../vpn/" title="VPNサーバの代替設定" class="md-nav__link">
+      VPNサーバの代替設定
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Docker
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/" title="Docker" class="md-nav__link">
+      Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
+      Fluentd+Elasticsearch+Kibana
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/wordpress/" title="Wordpress" class="md-nav__link">
+      Wordpress
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Raspberry Pi
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Raspberry Pi
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Raspberry Pi" class="md-nav__link">
+      Raspberry Pi
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Network/" title="ネットワーク設定" class="md-nav__link">
+      ネットワーク設定
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Web Console
+      </label>
+    
+    <a href="./" title="Web Console" class="md-nav__link md-nav__link--active">
+      Web Console
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    概要
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    実現に必要な機能
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    接続方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    苦労した点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    マウス・キーボードエミュレーション
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#websocketnodejs" class="md-nav__link">
+    WebSocketを用いたNodeJSブラウザアプリ
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usb-on-the-gousb" class="md-nav__link">
+    USB On-the-Go機能を用いたUSBマウス・キーボードのエミュレーション
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    モニターエミュレーション
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csi-2-to-hdmihdmi" class="md-nav__link">
+    CSI-2 to HDMIブリッジモジュールを用いたHDMI入力
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web" class="md-nav__link">
+    Webブラウザへの動画ストリーミング配信
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#webrtc" class="md-nav__link">
+    WebRTC ストリーミング配信
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    シグナリングサーバ
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ice" class="md-nav__link">
+    ICEサーバ
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      RouterOS
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        RouterOS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../RouterOS/" title="RouterOS" class="md-nav__link">
+      RouterOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../RouterOS/Backup/" title="Backup" class="md-nav__link">
+      Backup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../RouterOS/Firewall/" title="Firewall" class="md-nav__link">
+      Firewall
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Mkdocs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Mkdocs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../mkdocs/" title="MkDocs" class="md-nav__link">
+      MkDocs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../mkdocs/VSCode/" title="Visual Studio Codeでの編集環境構築" class="md-nav__link">
+      Visual Studio Codeでの編集環境構築
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    概要
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    実現に必要な機能
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    接続方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    苦労した点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    マウス・キーボードエミュレーション
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#websocketnodejs" class="md-nav__link">
+    WebSocketを用いたNodeJSブラウザアプリ
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usb-on-the-gousb" class="md-nav__link">
+    USB On-the-Go機能を用いたUSBマウス・キーボードのエミュレーション
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    モニターエミュレーション
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csi-2-to-hdmihdmi" class="md-nav__link">
+    CSI-2 to HDMIブリッジモジュールを用いたHDMI入力
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web" class="md-nav__link">
+    Webブラウザへの動画ストリーミング配信
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#webrtc" class="md-nav__link">
+    WebRTC ストリーミング配信
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    シグナリングサーバ
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ice" class="md-nav__link">
+    ICEサーバ
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="web-console">Web Console</h1>
+<h2 id="_1">概要</h2>
+<p>Raspberry PiとPCを接続し、ブラウザからRaspberry Piにアクセスすることで
+Web画面上で、あたかも直接PCを操作しているかのような環境を実現する。  </p>
+<table>
+<thead>
+<tr>
+<th>環境</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデル</td>
+<td>Raspberry Pi4</td>
+</tr>
+<tr>
+<td>ディストリビューション</td>
+<td>Raspbian 10 Buster</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">実現に必要な機能</h2>
+<p>PCを操作するための機能として「モニター」「キーボード」が、
+加えてGUIで操作するには「マウス」も必要となる。</p>
+<p>Web ConsoleではRaspberry Piを用いて、「キーボード」「マウス」「モニター」の3つをエミュレーションし、ブラウザからの入出力操作を実現する。<br />
+それぞれを下記の様に実現した。  </p>
+<table>
+<thead>
+<tr>
+<th>機能</th>
+<th>要件</th>
+<th>方法</th>
+<th>利用した<br>ソフトウェア</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「キーボード」「マウス」<br>エミュレーション</td>
+<td>ブラウザからRaspberry Piへのキー・マウス入力</td>
+<td>WebブラウザとWebSocket</td>
+<td>NodeJSを用いた<br>自作アプリ</td>
+</tr>
+<tr>
+<td></td>
+<td>Raspberry PiからPCへのキー・マウス操作再現</td>
+<td>USB On-the-Goを用いた<br>USBマウス・キーボードのエミュレーション</td>
+<td>Linuxカーネルモジュール(libcomposite)</td>
+</tr>
+<tr>
+<td>「モニター」<br>エミュレーション</td>
+<td>PCから<br>Raspberry Piへの映像入力</td>
+<td>CSI-2 to HDMIブリッジモジュールを用いたHDMI入力</td>
+<td>Video4Linuxドライバ</td>
+</tr>
+<tr>
+<td></td>
+<td>Raspberry Piから<br>ブラウザへの画面表示</td>
+<td>Webブラウザへの動画ストリーミング配信</td>
+<td>WebRTCクライアント "Momo"</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">接続方法</h2>
+<style>
+figure#raspi_fig { display:table; table-layout:fixed; }
+figure#raspi_fig div { display:table-cell; vertical-align:middle; }
+figure#raspi_fig div#hdmi { text-align:right; }
+figure#raspi_fig div#lan { text-align:left; }
+figure#raspi_fig figcaption { text-align:center; }
+</style>
+
+<figure id="raspi_fig">
+<div id="hdmi"><br><br>HDMIケーブル→<br>(PCに接続)<br><br><br>USB Type-C→</div>
+<img width="400" src="/imgs/raspberrypi_webconsole.jpg" />
+<figcaption>Raspberry PiとCSI-2 to HDMIブリッジ</figcaption>
+<div id="lan">←LANケーブル<br><br><br><br><br><br><br></div>
+</figure>
+
+<h2 id="_4">苦労した点</h2>
+<ul>
+<li>正しく動作するレポートディスクリプタの作成<br />
+マウス・キーボードデバイスのエミュレーションのためにUSB HIDデバイスの機能に応じたレポートディスクリプタ<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>の作成が必要となる。<br />
+簡単な3ボタンマウスであれば、インターネット上に例がいくつか見つかるのだが、「横スクロール」「指定座標へのポインタの移動」などを実現ためには自身で作成が必要となった。</li>
+<li>WebRTCでのブラウザへの画面表示<br />
+WebRTCは、様々な用途を想定しているためか、とにかく仕様が複雑<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>で、また、Webブラウザの外で実装しようとなると数千行のプログラムを自作するハメになる。<br />
+しかし、運良く技術書典7にサークル参加されていた<a href="https://techbookfest.org/event/tbf07/circle/5152352327696384">でんでんらぼ</a>さんの同人誌、<a href="https://tnoho.booth.pm/items/1572872">WebRTCをブラウザ外で使ってブラウザでできることを増やしてみませんか?</a>を拝読したことで、一気に解決した。  </li>
+</ul>
+<h2 id="_5">マウス・キーボードエミュレーション</h2>
+<h3 id="websocketnodejs">WebSocketを用いたNodeJSブラウザアプリ</h3>
+<p>ブラウザへのマウス・キーボード入力をRaspberry Piで受け取るためのNodeJSアプリケーションを自作した。<br />
+<a href="https://github.com/roy-n-roy/raspi_web_console">roy-n-roy/raspi_web_console - GitHub</a>  </p>
+<p>Socket.ioとExpressを用いた簡単なプログラムである。  </p>
+<p>キーボード入力については、ブラウザの<a href="https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent">KeyboardEvent</a>で受け取ったキー入力をUSB HIDキーコード<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>にマッピングした上で、エミュレーションデバイスに渡している。  </p>
+<p>マウス入力については、ブラウザの<a href="https://developer.mozilla.org/ja/docs/Web/API/MouseEvent">MouseEvent</a>で受け取ったマウスの移動量・スクロール量を後述のUSB HIDエミュレーションデバイスにそのまま渡している。  </p>
+<p>しかし、これでは<strong>「ブラウザ上のマウスポインタの位置」と「接続先PC上のマウスポインタの位置」にズレが生じる</strong>。<br />
+そのため、絶対位置指定でポインタの位置を修正する必要がある。<br />
+そのためマウスとデジタイザ(ペンタブレットの様な機器)を合体させたデバイスをエミュレーションし、ブラウザの外からポインタが入ってきたタイミングでモニタ上の絶対位置もエミュレーションデバイスに渡している。</p>
+<p>また、後述のWebRTCのシグナリングサーバでもWebSocketを利用しているため、ブラウザからシグナリングサーバへのWebsocketコネクションのProxyも行っている。  </p>
+<h3 id="usb-on-the-gousb">USB On-the-Go機能を用いたUSBマウス・キーボードのエミュレーション</h3>
+<p>USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定を変更する。</p>
+<ol>
+<li>
+<p>起動パラメータにLinux Device Tree Overlay "dwc2" USBコントローラドライバを設定  </p>
+<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;dtoverlay=dwc2&quot;</span> &gt;&gt; /boot/config.txt
+</pre></div>
+
+</li>
+<li>
+<p>起動時にLinuxカーネルモジュール "dwc2" と "libcomposite"<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> を読み込むよう設定  </p>
+<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;dwc2&quot;</span> &gt;&gt; /etc/modules
+<span class="nb">echo</span> <span class="s2">&quot;libcomposite&quot;</span> &gt;&gt; /etc/modules
+</pre></div>
+
+</li>
+<li>
+<p>libcomposite でUSBデバイスをエミュレーションするための設定<br />
+デバイスディスクリプタ/コンフィグディスクリプタ/レポートディスクリプタと呼ばれる情報を設定する。<br />
+下記のスクリプトで設定すると、<code>/dev/hidg0</code>(キーボードエミュレータ), <code>/dev/hidg1</code>(マウス・デジタイザエミュレータ)というデバイスファイルが生えてくる。<br />
+これらのデバイスファイルに、後述の構造のデータを書き込むと、接続先のPCでキーボードやマウスとして動作する。  </p>
+</li>
+</ol>
+<p>なお、デジタイザデバイスとはペンタブレットなどの様なカーソルの位置入力デバイスのことを指す。  </p>
+<div class="codehilite"><pre><span></span>``` <span class="nv">bash</span>
+<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="o">/</span><span class="nv">sys</span><span class="o">/</span><span class="nv">kernel</span><span class="o">/</span><span class="nv">config</span><span class="o">/</span><span class="nv">usb_gadget</span><span class="o">/</span><span class="nv">gadget</span>
+<span class="nv">cd</span> <span class="o">/</span><span class="nv">sys</span><span class="o">/</span><span class="nv">kernel</span><span class="o">/</span><span class="nv">config</span><span class="o">/</span><span class="nv">usb_gadget</span><span class="o">/</span><span class="nv">gadget</span>
+
+### <span class="nv">Device</span> <span class="nv">Descriptor</span>の設定
+# <span class="nv">VendorID</span>
+<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x1d6b</span> <span class="o">&gt;</span> <span class="nv">idVendor</span> # <span class="nv">Linux</span> <span class="nv">Foundation</span>
+# <span class="nv">USB</span> <span class="nv">HID</span> <span class="nv">Specification</span> <span class="nv">Release</span>
+<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x0200</span> <span class="o">&gt;</span> <span class="nv">bcdUSB</span> # <span class="nv">USB2</span>
+# <span class="nv">USB</span> <span class="nv">Class</span> <span class="nv">code</span>
+<span class="nv">echo</span> <span class="mi">0</span><span class="nv">xEF</span> <span class="o">&gt;</span> <span class="nv">bDeviceClass</span> # <span class="nv">Miscellaneous</span> <span class="nv">Device</span> <span class="nv">Class</span>
+# <span class="nv">USB</span> <span class="nv">SubClass</span> <span class="nv">code</span>
+<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x02</span> <span class="o">&gt;</span> <span class="nv">bDeviceSubClass</span> # <span class="nv">Common</span>
+# <span class="nv">USB</span> <span class="nv">Protocol</span> <span class="nv">code</span>
+<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x01</span> <span class="o">&gt;</span> <span class="nv">bDeviceProtocol</span> # <span class="nv">Interface</span> <span class="nv">Association</span> <span class="nv">Descriptor</span>
+
+# <span class="nv">ProductID</span> <span class="ss">(</span><span class="nv">assigned</span> <span class="nv">by</span> <span class="nv">manufacturer</span><span class="ss">)</span>
+<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x0001</span> <span class="o">&gt;</span> <span class="nv">idProduct</span>
+# <span class="nv">Device</span> <span class="nv">release</span> <span class="nv">number</span><span class="ss">(</span><span class="nv">assigned</span> <span class="nv">by</span> <span class="nv">manufacturer</span><span class="ss">)</span>
+<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x0100</span> <span class="o">&gt;</span> <span class="nv">bcdDevice</span> # <span class="nv">v1</span>.<span class="mi">0</span>.<span class="mi">0</span>
+
+# <span class="nv">language</span> <span class="nv">code</span>: <span class="mi">0</span><span class="nv">x409</span><span class="o">=</span><span class="nv">ENGLISH_US</span>
+<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span>
+<span class="nv">echo</span> <span class="s2">&quot;</span><span class="s">fedcba9876543210</span><span class="s2">&quot;</span> <span class="o">&gt;</span> <span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span><span class="o">/</span><span class="nv">serialnumber</span> # 適当に設定
+<span class="nv">echo</span> <span class="s2">&quot;</span><span class="s">Raspberry Pi</span><span class="s2">&quot;</span> <span class="o">&gt;</span> <span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span><span class="o">/</span><span class="nv">manufacturer</span>
+<span class="nv">echo</span> <span class="s2">&quot;</span><span class="s">Generic USB Composite Device</span><span class="s2">&quot;</span> <span class="o">&gt;</span> <span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span><span class="o">/</span><span class="nv">product</span>
+
+### <span class="nv">Configuration</span> <span class="nv">Descriptor</span>の設定
+<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span><span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span>
+<span class="nv">echo</span> <span class="mi">1500</span> <span class="o">&gt;</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span><span class="nv">MaxPower</span> # <span class="mi">1500</span><span class="o">*</span><span class="mi">2</span><span class="nv">mA</span><span class="o">=</span> <span class="mi">3</span>.<span class="mi">0</span><span class="nv">A</span>
+<span class="nv">echo</span> <span class="s2">&quot;</span><span class="s">Config 1: ECM network</span><span class="s2">&quot;</span> <span class="o">&gt;</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span><span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span><span class="o">/</span><span class="nv">configuration</span>
+
+### <span class="nv">Report</span> <span class="nv">Descriptor</span>定義
+# <span class="nv">Keyboard</span> <span class="nv">Report</span> <span class="nv">Descriptor</span>
+# <span class="ss">(</span><span class="nv">Modifier</span> <span class="nv">keys</span> <span class="o">+</span> <span class="mi">6</span> <span class="nv">simultaneous</span> <span class="nv">Keys</span> <span class="o">-&gt;</span> <span class="mi">8</span> <span class="nv">Bytes</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0501</span><span class="s2">&quot;</span>      # <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Generic</span> <span class="nv">Desktop</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0906</span><span class="s2">&quot;</span>      # <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Keyboard</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">A101</span><span class="s2">&quot;</span>      # <span class="nv">COLLECTION</span> <span class="ss">(</span><span class="nv">Application</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0507</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Keyboard</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">19E0</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MINIMUM</span> <span class="ss">(</span><span class="nv">Keyboard</span> <span class="nv">LeftControl</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">29E7</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MAXIMUM</span> <span class="ss">(</span><span class="nv">Keyboard</span> <span class="nv">Right</span> <span class="nv">GUI</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2501</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7501</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9508</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">8</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8102</span><span class="s2">&quot;</span>      #   <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7508</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">8</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8103</span><span class="s2">&quot;</span>      #   <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Cnst</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1900</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MINIMUM</span> <span class="ss">(</span><span class="nv">Reserved</span> <span class="ss">(</span><span class="nv">no</span> <span class="nv">event</span> <span class="nv">indicated</span><span class="ss">))</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">299F</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MAXIMUM</span> <span class="ss">(</span><span class="nv">Keyboard</span> <span class="nv">Separator</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">259F</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">175</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7508</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">8</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9506</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">6</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8100</span><span class="s2">&quot;</span>      #   <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Ary</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0508</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">LEDs</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1901</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MINIMUM</span> <span class="ss">(</span><span class="nv">Num</span> <span class="nv">Lock</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2905</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MAXIMUM</span> <span class="ss">(</span><span class="nv">Kana</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2501</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7501</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9505</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">5</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9102</span><span class="s2">&quot;</span>      #   <span class="nv">OUTPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7503</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">3</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9103</span><span class="s2">&quot;</span>      #   <span class="nv">OUTPUT</span> <span class="ss">(</span><span class="nv">Cnst</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">C0</span><span class="s2">&quot;</span>        # <span class="nv">END_COLLECTION</span>
+
+# <span class="nv">Mouse</span> <span class="nv">and</span> <span class="nv">Digitizer</span> <span class="nv">Report</span> <span class="nv">Descriptor</span>
+#  <span class="ss">(</span><span class="nv">report_id</span><span class="o">=</span><span class="mi">1</span>, <span class="mi">5</span> <span class="nv">Buttons</span>, <span class="nv">X</span>, <span class="nv">Y</span>, <span class="nv">Wheel</span>, <span class="nv">AC</span> <span class="nv">Pan</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="nv">byte</span> <span class="o">+</span> <span class="mi">1</span><span class="nv">byte</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="mi">2</span> <span class="nv">Bytes</span><span class="ss">)</span>
+#  <span class="ss">(</span><span class="nv">report_id</span><span class="o">=</span><span class="mi">2</span>, <span class="mi">5</span> <span class="nv">Buttons</span>, <span class="nv">X</span>, <span class="nv">Y</span>, <span class="nv">padding</span><span class="o">*</span><span class="mi">2</span>     <span class="o">-&gt;</span> <span class="mi">1</span><span class="nv">byte</span> <span class="o">+</span> <span class="mi">1</span><span class="nv">byte</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="mi">2</span> <span class="nv">Bytes</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+# マウス部分
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0501</span><span class="s2">&quot;</span>      # <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Generic</span> <span class="nv">Desktop</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0902</span><span class="s2">&quot;</span>      # <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Mouse</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">A101</span><span class="s2">&quot;</span>      # <span class="nv">COLLECTION</span> <span class="ss">(</span><span class="nv">Application</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0901</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Pointer</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">A100</span><span class="s2">&quot;</span>      #   <span class="nv">COLLECTION</span> <span class="ss">(</span><span class="nv">Physical</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_ID</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0509</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Button</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1901</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_MINIMUM</span> <span class="ss">(</span><span class="nv">Button</span> <span class="mi">1</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2905</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_MAXIMUM</span> <span class="ss">(</span><span class="nv">Button</span> <span class="mi">5</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #     <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2501</span><span class="s2">&quot;</span>      #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9505</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">5</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8102</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7503</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">3</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8101</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Cnst</span>,<span class="nv">Ary</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0501</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Generic</span> <span class="nv">Desktop</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0930</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">X</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0931</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Y</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0938</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Wheel</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">160180</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="o">-</span><span class="mi">32767</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">26FF7F</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">32767</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7510</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">16</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9503</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">3</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8106</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Rel</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">050C</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Consumer</span> <span class="nv">Devices</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0A3802</span><span class="s2">&quot;</span>    #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">AC</span> <span class="nv">Pan</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">160180</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="o">-</span><span class="mi">32767</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">26FF7F</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">32767</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7510</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">16</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8106</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Rel</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">C0</span><span class="s2">&quot;</span>        #   <span class="nv">END_COLLECTION</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">C0</span><span class="s2">&quot;</span>        # <span class="nv">END_COLLECTION</span>
+# デジタイザ部分
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">050D</span><span class="s2">&quot;</span>      # <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Digitizers</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0902</span><span class="s2">&quot;</span>      # <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Pen</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">A101</span><span class="s2">&quot;</span>      # <span class="nv">COLLECTION</span> <span class="ss">(</span><span class="nv">Application</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8502</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_ID</span> <span class="ss">(</span><span class="mi">2</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0920</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Stylus</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">A100</span><span class="s2">&quot;</span>      #   <span class="nv">COLLECTION</span> <span class="ss">(</span><span class="nv">Physical</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #     <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2501</span><span class="s2">&quot;</span>      #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0942</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Tip</span> <span class="nv">Switch</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0944</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Barrel</span> <span class="nv">Switch</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">093C</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Invert</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0945</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Eraser</span> <span class="nv">Switch</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0932</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">In</span> <span class="nv">Range</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9505</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">5</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8102</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7503</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">3</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8101</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Cnst</span>,<span class="nv">Ary</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0501</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Generic</span> <span class="nv">Desktop</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7510</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">16</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">5500</span><span class="s2">&quot;</span>      #     <span class="nv">UNIT_EXPONENT</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">6513</span><span class="s2">&quot;</span>      #     <span class="nv">UNIT</span> <span class="ss">(</span><span class="nv">Inch</span>,<span class="nv">EngLinear</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">3500</span><span class="s2">&quot;</span>      #     <span class="nv">PHYSICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #     <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0930</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">X</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">460005</span><span class="s2">&quot;</span>    #     <span class="nv">PHYSICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1280</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">260005</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1280</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8102</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0931</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Y</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">46D002</span><span class="s2">&quot;</span>    #     <span class="nv">PHYSICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">720</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">26D002</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">720</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8102</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7520</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">32</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8101</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Cnst</span>,<span class="nv">Ary</span>,<span class="nv">Abs</span><span class="ss">)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">C0</span><span class="s2">&quot;</span>        #   <span class="nv">END_COLLECTION</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">C0</span><span class="s2">&quot;</span>        # <span class="nv">END_COLLECTION</span>
+
+<span class="k">if</span> [ <span class="o">-</span><span class="nv">n</span> <span class="s2">&quot;&quot;</span>$<span class="ss">(</span><span class="nv">cat</span> <span class="nv">UDC</span><span class="ss">)</span><span class="s2">&quot;&quot;</span> ]<span class="c1">; then echo &gt; UDC; fi</span>
+
+### <span class="nv">Report</span> <span class="nv">Descriptor</span>の設定
+# <span class="nv">Keyboard</span>
+<span class="nv">N</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">usb0</span><span class="s2">&quot;</span>
+<span class="k">if</span> [ <span class="o">-</span><span class="nv">L</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span> ]<span class="c1">; then rm configs/c.1/hid.$N; fi</span>
+<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span>
+<span class="nv">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">subclass</span> # <span class="nv">Boot</span> <span class="nv">Device</span>
+<span class="nv">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">protocol</span> # <span class="nv">Keyboard</span>
+<span class="nv">echo</span> <span class="mi">8</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">report_length</span> # <span class="nv">Report</span> <span class="nv">length</span>: <span class="mi">8</span><span class="nv">bytes</span>
+<span class="nv">echo</span> $<span class="nv">KEYBD_REPT</span> <span class="o">|</span> <span class="nv">xxd</span> <span class="o">-</span><span class="nv">r</span> <span class="o">-</span><span class="nv">ps</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">report_desc</span>
+<span class="nv">ln</span> <span class="o">-</span><span class="nv">s</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span>
+
+# <span class="nv">Mouse</span>
+<span class="nv">N</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">usb1</span><span class="s2">&quot;</span>
+<span class="k">if</span> [ <span class="o">-</span><span class="nv">L</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span> ]<span class="c1">; then rm configs/c.1/hid.$N; fi</span>
+<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span>
+<span class="nv">echo</span> <span class="mi">0</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">subclass</span> # <span class="nv">No</span> <span class="nv">Subclass</span>
+<span class="nv">echo</span> <span class="mi">0</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">protocol</span> # <span class="nv">None</span>
+<span class="nv">echo</span> <span class="mi">10</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">report_length</span>  # <span class="nv">Report</span> <span class="nv">length</span>: <span class="mi">10</span><span class="nv">bytes</span>
+<span class="nv">echo</span> $<span class="nv">MOUSE_REPT</span> <span class="o">|</span> <span class="nv">xxd</span> <span class="o">-</span><span class="nv">r</span> <span class="o">-</span><span class="nv">ps</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">report_desc</span>
+<span class="nv">ln</span> <span class="o">-</span><span class="nv">s</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span>
+
+<span class="nv">ls</span> <span class="o">/</span><span class="nv">sys</span><span class="o">/</span><span class="nv">class</span><span class="o">/</span><span class="nv">udc</span> <span class="o">&gt;</span> <span class="nv">UDC</span>
+```
+</pre></div>
+
+
+<!-- -->
+
+<ul>
+<li>
+<p>キーボード入力のデータ構造<br />
+    キーボードデバイス <code>/dev/hidg0</code> に入力する。  </p>
+<table>
+<thead>
+<tr>
+<th align="center">bytes\bit</th>
+<th align="center">7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0バイト目</td>
+<td align="center">右Win&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;右Alt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;右Shift&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;右Ctrl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;左Win&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;左Alt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;左Shift&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;左Ctrl</td>
+</tr>
+<tr>
+<td align="center">1バイト目</td>
+<td align="center">(Zero Padding)</td>
+</tr>
+<tr>
+<td align="center">2バイト目</td>
+<td align="center">1番目に押下したキーコード</td>
+</tr>
+<tr>
+<td align="center">3バイト目</td>
+<td align="center">2番目に押下したキーコード</td>
+</tr>
+<tr>
+<td align="center">4バイト目</td>
+<td align="center">3番目に押下したキーコード</td>
+</tr>
+<tr>
+<td align="center">5バイト目</td>
+<td align="center">4番目に押下したキーコード</td>
+</tr>
+<tr>
+<td align="center">6バイト目</td>
+<td align="center">5番目に押下したキーコード</td>
+</tr>
+<tr>
+<td align="center">7バイト目</td>
+<td align="center">6番目に押下したキーコード</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>マウス入力のデータ構造<br />
+    マウス/デジタイザデバイス <code>/dev/hidg1</code> に入力する。<br />
+    マウスとして使用する場合は、0バイト目にレポートID = 0x01 を指定する。  </p>
+<p>後述のデジタイザ入力も同様だが、各数値は範囲 -32,767 ～ 32,767 の2バイト数値(signed int16)で入力する。  </p>
+<table>
+<thead>
+<tr>
+<th align="center">bytes\bit</th>
+<th align="center">7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0バイト目</td>
+<td align="center">Report ID = 0x01</td>
+</tr>
+<tr>
+<td align="center">1バイト目</td>
+<td align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(5 bits Zero Padding)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Button3&nbsp;&nbsp;Button2&nbsp;&nbsp;Button1</td>
+</tr>
+<tr>
+<td align="center">2バイト目</td>
+<td align="center">カーソル 横方向 移動量 (下位バイト)</td>
+</tr>
+<tr>
+<td align="center">3バイト目</td>
+<td align="center">カーソル 横方向 移動量 (上位バイト)</td>
+</tr>
+<tr>
+<td align="center">4バイト目</td>
+<td align="center">カーソル 縦方向 移動量 (下位バイト)</td>
+</tr>
+<tr>
+<td align="center">5バイト目</td>
+<td align="center">カーソル 縦方向 移動量 (上位バイト)</td>
+</tr>
+<tr>
+<td align="center">6バイト目</td>
+<td align="center">スクロール 縦方向 移動量 (下位バイト)</td>
+</tr>
+<tr>
+<td align="center">7バイト目</td>
+<td align="center">スクロール 縦方向 移動量 (上位バイト)</td>
+</tr>
+<tr>
+<td align="center">8バイト目</td>
+<td align="center">スクロール 縦方向 移動量 (下位バイト)</td>
+</tr>
+<tr>
+<td align="center">9バイト目</td>
+<td align="center">スクロール 縦方向 移動量 (上位バイト)</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>デジタイザ入力のデータ構造<br />
+    マウス/デジタイザデバイス <code>/dev/hidg1</code> に入力する。<br />
+    デジタイザとして使用する場合は、0バイト目にレポートID = 0x02 を指定する。  </p>
+<p>1バイト目の各種スイッチとInvertビットは使用しないため常に <code>0</code> を、<br />
+In Rangeビットは枠内にカーソルが存在することを示すため常に <code>1</code> を入力する。  </p>
+<p>絶対位置は、画面左上の座標を X=0, Y=0 とし、画面右下の座標を X=1280, Y=720 として入力する。<br />
+ここでの最大座標は、レポートディスクリプタ内の<code>USAGE (X)</code>, <code>USAGE (Y)</code>の直後に指定している<code>LOGICAL_MAXIMUM (1280)</code>, <code>LOGICAL_MAXIMUM (720)</code>である。  </p>
+<table>
+<thead>
+<tr>
+<th align="center">bytes\bit</th>
+<th align="center">7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0バイト目</td>
+<td align="center">Report ID = 0x02</td>
+</tr>
+<tr>
+<td align="center">1バイト目</td>
+<td align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(3 bits Zero Padding)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InRange&nbsp;&nbsp;EraserSw&nbsp;&nbsp;&nbsp;Invert&nbsp;&nbsp;&nbsp;BarrelSw&nbsp;&nbsp;&nbsp;TipSw</td>
+</tr>
+<tr>
+<td align="center">2バイト目</td>
+<td align="center">カーソル 横方向 絶対位置 (下位バイト)</td>
+</tr>
+<tr>
+<td align="center">3バイト目</td>
+<td align="center">カーソル 横方向 絶対位置 (上位バイト)</td>
+</tr>
+<tr>
+<td align="center">4バイト目</td>
+<td align="center">カーソル 縦方向 絶対位置 (下位バイト)</td>
+</tr>
+<tr>
+<td align="center">5バイト目</td>
+<td align="center">カーソル 縦方向 絶対位置 (上位バイト)</td>
+</tr>
+<tr>
+<td align="center">6バイト目</td>
+<td align="center">(Zero Padding)</td>
+</tr>
+<tr>
+<td align="center">7バイト目</td>
+<td align="center">(Zero Padding)</td>
+</tr>
+<tr>
+<td align="center">8バイト目</td>
+<td align="center">(Zero Padding)</td>
+</tr>
+<tr>
+<td align="center">9バイト目</td>
+<td align="center">(Zero Padding)</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="_6">モニターエミュレーション</h2>
+<h3 id="csi-2-to-hdmihdmi">CSI-2 to HDMIブリッジモジュールを用いたHDMI入力</h3>
+<p>CSI-2(Camera Serial Interface 2)とはMIPI(Mobile Industry Processor Interface)アライアンスによって策定された、
+モバイル機器のプロセッサにカメラを接続するためのインターフェースの規格<br />
+Raspberry Piはモバイル向けのCPUを搭載しており、CSI-2インターフェースを用いてカメラからの静止画/動画入力が利用できる。</p>
+<p>PC等からのHDMI出力をCSI-2インターフェースに入力できるよう変換するモジュールがHDMI-CSIブリッジモジュールである。<br />
+今回は<a href="https://auvidea.eu/b101-hdmi-to-csi-2-bridge-15-pin-fpc/">ドイツ Auvidea社の B101 HDMI to CSI-2 Bridge (15 pin FPC)</a>を使用した。</p>
+<p>Raspberry PiでCSI-2インターフェースを利用するには、<code>raspi-config</code>での有効化が必要である。<br />
+<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">raspi</span><span class="o">-</span><span class="n">config</span>
+</pre></div></p>
+<p><code>raspi-config</code>を実行すると対話形式での入力画面が表示されるので、<br />
+"5 Interfacing Options" -&gt;<br />
+"P1 Camera" "Enable/Disable connection to the Raspberry Pi Camera"<br />
+と選択してCSI-2インターフェースを有効化する。</p>
+<h3 id="web">Webブラウザへの動画ストリーミング配信</h3>
+<p>2019/10 現在、Webブラウザへの動画ストリーミング配信には、HLSとWebRTCを用いた方法の2種類がある。<br />
+結果的に、今回はリアルタイム性を重視して、WebRTCを使用することにした。  </p>
+<p>また、WebRTCにはシグナリングサーバ/ICEサーバと呼ばれるサーバが必要であるため、それらについてもRaspberry Pi上に構築した。  </p>
+<h4 id="webrtc">WebRTC ストリーミング配信</h4>
+<p>ストリーミング配信には、時雨同社の<a href="https://github.com/shiguredo/momo">WebRTC Native Client Momo</a>を利用した。<br />
+Momo は libwebrtc を利用しブラウザなしで様々な環境で動作する WebRTC ネイティブクライアントであり、時雨堂社によりメンテナンスされ、Raspbian Buster, Ubuntu, MacOS用バイナリが提供されている。
+<a href="https://github.com/shiguredo/momo/releases/latest">GithubのReleaseページ</a>よりバイナリをダウンロードし、インストールした。</p>
+<div class="codehilite"><pre><span></span>curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv7.tar.gz
+tar xf momo-19.09.2_raspbian-buster_armv7.tar.gz
+sudo cp momo-19.09.2_raspbian-buster_armv7/momo /usr/local/bin/.
+chmod +x /usr/local/bin/momo
+</pre></div>
+
+<h4 id="_7">シグナリングサーバ</h4>
+<p>こちらも、時雨堂社の<a href="https://github.com/OpenAyame/ayame">WebRTC向けシグナリングサーバ Ayame</a>と、<a href="https://github.com/OpenAyame/ayame-web-sdk">Ayame Web SDK</a>ライブラリを利用した。  </p>
+<p>AyameについてはArm用バイナリが配布されてないため、
+<a href="https://github.com/OpenAyame/ayame/releases/latest">GithubのReleaseページ</a>からソースコードをダウンロード自身でクロスコンパイルした。
+Go言語で書かれているため、クロスコンパイルは容易である。これはPC上のLinuxから行う。</p>
+<div class="codehilite"><pre><span></span>curl -L -O https://github.com/OpenAyame/ayame/archive/19.08.0.tar.gz
+tar xf ayame-19.08.0.tar.gz
+<span class="nb">cd</span> ayame-19.08.0
+<span class="nv">GO111MODULE</span><span class="o">=</span>on <span class="nv">GOOS</span><span class="o">=</span>linux <span class="nv">GOARCH</span><span class="o">=</span>arm <span class="nv">GOARM</span><span class="o">=</span><span class="m">7</span> go build -ldflags <span class="s1">&#39;-s -w -X main.AyameVersion=${VERSION}&#39;</span> -o ayame
+</pre></div>
+
+<p>生成された<code>ayame</code>バイナリをRaspberryPiへ転送し、momoと同様に<code>/usr/local/bin</code>にインストールする。</p>
+<div class="codehilite"><pre><span></span>scp -p ayame pi@raspberrypi.local:~/.
+ssh pi@raspberrypi.local <span class="s2">&quot;sudo cp ~/ayame /usr/local/bin/.&quot;</span>
+</pre></div>
+
+<h4 id="ice">ICEサーバ</h4>
+<p>ICEサーバとはWebRTCにおいて、Peer-to-peer通信を確立するために、NAT越えなどを実現するための情報を提供するサーバである。
+今回はローカルネットワーク上で通信するため、ICEサーバについては必要ないが、とりあえずインストールしてみる。  </p>
+<p>ICEサーバについてはcoTurnというOSSを利用する。Raspbianのリポジトリからインストールする。</p>
+<div class="codehilite"><pre><span></span>sudo apt install coturn
+</pre></div>
+
+<p><br><br><br><br></p>
+<h1 id="_8">メモ書き</h1>
+<p>以降は、ブラウザへの動画配信を実現するWebRTCとHLSについて、調べたことを下記にメモ書き程度に残しておく。  </p>
+<h2 id="web-real-time-communicationwebrtc">Web Real-Time Communication(WebRTC)</h2>
+<p>Google社によって開発された、ウェブブラウザやモバイルアプリケーションにシンプルなAPI経由でリアルタイム通信を提供する自由かつオープンソースのプロジェクトである。  </p>
+<p>ウェブページ内で直接のピア・ツー・ピア通信によって、プラグインのインストールやネイティブアプリのダウンロードをせずに、<br />
+ウェブブラウザ間のボイスチャット、ビデオチャット、ファイル共有が可能になる。<br />
+<a href="https://ja.wikipedia.org/wiki/WebRTC">- Wikipedia「WebRTC」より引用</a></p>
+<p>Peer-to-peer通信である点が特徴。<br />
+<strong>動画配信のためのプトロコルではなく</strong> ブラウザを用いたリアルタイム通信のための技術である。  </p>
+<h4 id="_9">配信方法</h4>
+<p>Webブラウザ上からWebカメラやモニター共有の動画などを配信することができる。
+また、ベースがPeer-to-Peer通信のため、接続先情報の交換やNAT超えなどの仕組みが用意されている。<br />
+javascriptでHTML5のvideoタグのソースオブジェクトにストリーミング配信動画を設定することで、ブラウザ上に表示する。<br />
+HLSと比較すると遅延の少ないリアルタイム配信が可能。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>下記の記事を参考にした。<br />
+<a href="https://gist.github.com/voluntas/6fcece7f424607c957d5">WebRTC スタックコトハジメ</a><br />
+<a href="https://gist.github.com/voluntas/a9dc017ea85aea5ffb7db73af5c6b4f9">詳解 WebRTC</a><br />
+<a href="http://iwashi.co/2014/12/12/why-do-we-need-rtcp-in-webrtc">WebRTCにて(S)RTCPが必要な理由 - iwashi.co</a>  </p>
+</div>
+<h2 id="http-live-streaminghls">HTTP Live Streaming(HLS)</h2>
+<p>Apple社によって開発された、動画を配信するためのプロトコル。<br />
+MP4(H.264, AAC)ファイルを分割したものと、マスターファイル、インデックスファイルと呼ばれるファイル(拡張子: .m3u8)を用いる。  </p>
+<h4 id="_10">配信方法</h4>
+<p>分割したファイル群をWebサーバに配置し、HTML5のvideoタグを用いて配信ができる。  </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>HLSについては下記の記事が詳しかった。<br />
+<a href="https://blogs.akamai.com/jp/2013/02/-1---http-live-streaminghls.html">動画配信技術 その1 - HTTP Live Streaming(HLS) - Akamai Japan Blog</a></p>
+</div>
+<p>動画の分割と配置が必要なため、リアルタイム配信ではある程度の遅延が発生する。  </p>
+<p>ffmpeg等で、ファイルの分割とインデックスファイルを作成可能。  </p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>input.mp4からoutput.m3u8というインデックスファイルと<br />
+output001.ts, output002.tsといった分割されたmpeg2-tsファイルに変換する。  </p>
+<p>$ <code>ffmpeg -i input.mp4 -c:v libx264 -c:a libfdk_aac -f hls -hls_time 5 -movflags faststart -hls_playlist_type vod -hls_segment_filename "output%3d.ts" output.m3u8</code></p>
+</div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>HIDデバイスでは"レポート"と呼ばれる単位でデータをやりとりする。レポートの形式を定めたものがレポートディスクリプタである。&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://w3c.github.io/webrtc-pc/">WebRTC 1.0: Real-time Communication Between Browsers</a>で12000行ほど、[Media Capture and Streams]で5000行ほどの英文の仕様書となっている。&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>USB HIDのキーコードについては<a href="https://www.usb.org/hid">Human Interface Devices (HID) Information</a>内の"HID Usage Tables"ページ内のPDF資料に記載の、"10. Keyboard/Keypad Page (0x07) "を参照&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>インターネット上には"g_hid"を用いている記述も見つかるが、Raspbian Busterでは動作しなかった。&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Network/" title="ネットワーク設定" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  前
+                </span>
+                ネットワーク設定
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../RouterOS/" title="RouterOS" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  次
+                </span>
+                RouterOS
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/roy-n-roy" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/roy_n_roy" class="md-footer-social__link fa fa-twitter"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.ja.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>
