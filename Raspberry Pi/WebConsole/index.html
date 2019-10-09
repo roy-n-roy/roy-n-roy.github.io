@@ -447,7 +447,7 @@
         
           <li class="md-nav__item">
   <a href="#websocketnodejs" class="md-nav__link">
-    WebSocketを用いたNodeJSブラウザアプリ
+    WebSocketを用いたNode.jsアプリ
   </a>
   
 </li>
@@ -515,6 +515,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#systemd" class="md-nav__link">
+    Systemdサービス設定
+  </a>
   
 </li>
       
@@ -700,7 +707,7 @@
         
           <li class="md-nav__item">
   <a href="#websocketnodejs" class="md-nav__link">
-    WebSocketを用いたNodeJSブラウザアプリ
+    WebSocketを用いたNode.jsアプリ
   </a>
   
 </li>
@@ -771,6 +778,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#systemd" class="md-nav__link">
+    Systemdサービス設定
+  </a>
+  
+</li>
+      
       
       
       
@@ -829,7 +843,7 @@ Web画面上で、あたかも直接PCを操作しているかのような環境
 <td>「キーボード」「マウス」<br>エミュレーション</td>
 <td>ブラウザからRaspberry Piへのキー・マウス入力</td>
 <td>WebブラウザとWebSocket</td>
-<td>NodeJSを用いた<br>自作アプリ</td>
+<td>Node.jsを用いた<br>自作アプリ</td>
 </tr>
 <tr>
 <td></td>
@@ -877,16 +891,33 @@ WebRTCは、様々な用途を想定しているためか、とにかく仕様�
 しかし、運良く技術書典7にサークル参加されていた<a href="https://techbookfest.org/event/tbf07/circle/5152352327696384">でんでんらぼ</a>さんの同人誌、<a href="https://tnoho.booth.pm/items/1572872">WebRTCをブラウザ外で使ってブラウザでできることを増やしてみませんか?</a>を拝読したことで、一気に解決した。  </li>
 </ul>
 <h2 id="_5">マウス・キーボードエミュレーション</h2>
-<h3 id="websocketnodejs">WebSocketを用いたNodeJSブラウザアプリ</h3>
-<p>ブラウザへのマウス・キーボード入力をRaspberry Piで受け取るためのNodeJSアプリケーションを自作した。<br />
+<h3 id="websocketnodejs">WebSocketを用いたNode.jsアプリ</h3>
+<p>ブラウザへのマウス・キーボード入力をRaspberry Piで受け取るためのNode.jsアプリケーションを自作した。<br />
 <a href="https://github.com/roy-n-roy/raspi_web_console">roy-n-roy/raspi_web_console - GitHub</a>  </p>
 <p>Socket.ioとExpressを用いた簡単なプログラムである。  </p>
 <p>キーボード入力については、ブラウザの<a href="https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent">KeyboardEvent</a>で受け取ったキー入力をUSB HIDキーコード<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>にマッピングした上で、エミュレーションデバイスに渡している。  </p>
 <p>マウス入力については、ブラウザの<a href="https://developer.mozilla.org/ja/docs/Web/API/MouseEvent">MouseEvent</a>で受け取ったマウスの移動量・スクロール量を後述のUSB HIDエミュレーションデバイスにそのまま渡している。  </p>
-<p>しかし、これでは<strong>「ブラウザ上のマウスポインタの位置」と「接続先PC上のマウスポインタの位置」にズレが生じる</strong>。<br />
-そのため、絶対位置指定でポインタの位置を修正する必要がある。<br />
-そのためマウスとデジタイザ(ペンタブレットの様な機器)を合体させたデバイスをエミュレーションし、ブラウザの外からポインタが入ってきたタイミングでモニタ上の絶対位置もエミュレーションデバイスに渡している。</p>
+<p>しかし、これでは<strong>「ブラウザ上のマウスポインタの位置」と「接続先PC上のマウスポインタの位置」にズレが生じて</strong>しまう。<br />
+よって、絶対位置指定でポインタの位置を修正する必要がある。  </p>
+<p>そのため、マウスとデジタイザ(ペンタブレットの様な機器)を合体させたデバイスをエミュレーションし、
+ブラウザの外からポインタが入ってきたタイミングでモニタ上の絶対位置もエミュレーションデバイスに渡している。</p>
 <p>また、後述のWebRTCのシグナリングサーバでもWebSocketを利用しているため、ブラウザからシグナリングサーバへのWebsocketコネクションのProxyも行っている。  </p>
+<ul>
+<li>
+<p>アプリケーションのインストール</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Node.jsをインストール</span>
+curl -sL https://deb.nodesource.com/setup_12.x <span class="p">|</span> sudo -E bash -
+sudo apt install -y nodejs
+
+<span class="c1"># アプリケーションのダウンロードとインストール</span>
+curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
+unzip raspi_web_console-master.zip
+<span class="nb">cd</span> raspi_web_console-master
+sudo bash ./setup.sh
+</pre></div>
+
+</li>
+</ul>
 <h3 id="usb-on-the-gousb">USB On-the-Go機能を用いたUSBマウス・キーボードのエミュレーション</h3>
 <p>USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定を変更する。</p>
 <ol>
@@ -905,192 +936,188 @@ WebRTCは、様々な用途を想定しているためか、とにかく仕様�
 </li>
 <li>
 <p>libcomposite でUSBデバイスをエミュレーションするための設定<br />
-デバイスディスクリプタ/コンフィグディスクリプタ/レポートディスクリプタと呼ばれる情報を設定する。<br />
-下記のスクリプトで設定すると、<code>/dev/hidg0</code>(キーボードエミュレータ), <code>/dev/hidg1</code>(マウス・デジタイザエミュレータ)というデバイスファイルが生えてくる。<br />
+    デバイスディスクリプタ/コンフィグディスクリプタ/レポートディスクリプタと呼ばれる情報を設定する。  </p>
+<p>下記のスクリプトで設定すると、<code>/dev/hidg0</code>(キーボードエミュレータ), <code>/dev/hidg1</code>(マウス・デジタイザエミュレータ)というデバイスファイルが生えてくる。<br />
 これらのデバイスファイルに、後述の構造のデータを書き込むと、接続先のPCでキーボードやマウスとして動作する。  </p>
-</li>
-</ol>
 <p>なお、デジタイザデバイスとはペンタブレットなどの様なカーソルの位置入力デバイスのことを指す。  </p>
-<div class="codehilite"><pre><span></span>``` <span class="nv">bash</span>
-<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="o">/</span><span class="nv">sys</span><span class="o">/</span><span class="nv">kernel</span><span class="o">/</span><span class="nv">config</span><span class="o">/</span><span class="nv">usb_gadget</span><span class="o">/</span><span class="nv">gadget</span>
-<span class="nv">cd</span> <span class="o">/</span><span class="nv">sys</span><span class="o">/</span><span class="nv">kernel</span><span class="o">/</span><span class="nv">config</span><span class="o">/</span><span class="nv">usb_gadget</span><span class="o">/</span><span class="nv">gadget</span>
+<div class="admonition example">
+<p class="admonition-title">init_usb.sh</p>
+<div class="codehilite"><pre><span></span>mkdir -p /sys/kernel/config/usb_gadget/gadget
+<span class="nb">cd</span> /sys/kernel/config/usb_gadget/gadget
 
-### <span class="nv">Device</span> <span class="nv">Descriptor</span>の設定
-# <span class="nv">VendorID</span>
-<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x1d6b</span> <span class="o">&gt;</span> <span class="nv">idVendor</span> # <span class="nv">Linux</span> <span class="nv">Foundation</span>
-# <span class="nv">USB</span> <span class="nv">HID</span> <span class="nv">Specification</span> <span class="nv">Release</span>
-<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x0200</span> <span class="o">&gt;</span> <span class="nv">bcdUSB</span> # <span class="nv">USB2</span>
-# <span class="nv">USB</span> <span class="nv">Class</span> <span class="nv">code</span>
-<span class="nv">echo</span> <span class="mi">0</span><span class="nv">xEF</span> <span class="o">&gt;</span> <span class="nv">bDeviceClass</span> # <span class="nv">Miscellaneous</span> <span class="nv">Device</span> <span class="nv">Class</span>
-# <span class="nv">USB</span> <span class="nv">SubClass</span> <span class="nv">code</span>
-<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x02</span> <span class="o">&gt;</span> <span class="nv">bDeviceSubClass</span> # <span class="nv">Common</span>
-# <span class="nv">USB</span> <span class="nv">Protocol</span> <span class="nv">code</span>
-<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x01</span> <span class="o">&gt;</span> <span class="nv">bDeviceProtocol</span> # <span class="nv">Interface</span> <span class="nv">Association</span> <span class="nv">Descriptor</span>
+<span class="c1">### Device Descriptorの設定</span>
+<span class="c1"># VendorID</span>
+<span class="nb">echo</span> 0x1d6b &gt; idVendor <span class="c1"># Linux Foundation</span>
+<span class="c1"># USB HID Specification Release</span>
+<span class="nb">echo</span> 0x0200 &gt; bcdUSB <span class="c1"># USB2</span>
+<span class="c1"># USB Class code</span>
+<span class="nb">echo</span> 0xEF &gt; bDeviceClass <span class="c1"># Miscellaneous Device Class</span>
+<span class="c1"># USB SubClass code</span>
+<span class="nb">echo</span> 0x02 &gt; bDeviceSubClass <span class="c1"># Common</span>
+<span class="c1"># USB Protocol code</span>
+<span class="nb">echo</span> 0x01 &gt; bDeviceProtocol <span class="c1"># Interface Association Descriptor</span>
 
-# <span class="nv">ProductID</span> <span class="ss">(</span><span class="nv">assigned</span> <span class="nv">by</span> <span class="nv">manufacturer</span><span class="ss">)</span>
-<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x0001</span> <span class="o">&gt;</span> <span class="nv">idProduct</span>
-# <span class="nv">Device</span> <span class="nv">release</span> <span class="nv">number</span><span class="ss">(</span><span class="nv">assigned</span> <span class="nv">by</span> <span class="nv">manufacturer</span><span class="ss">)</span>
-<span class="nv">echo</span> <span class="mi">0</span><span class="nv">x0100</span> <span class="o">&gt;</span> <span class="nv">bcdDevice</span> # <span class="nv">v1</span>.<span class="mi">0</span>.<span class="mi">0</span>
+<span class="c1"># ProductID (assigned by manufacturer)</span>
+<span class="nb">echo</span> 0x0001 &gt; idProduct
+<span class="c1"># Device release number(assigned by manufacturer)</span>
+<span class="nb">echo</span> 0x0100 &gt; bcdDevice <span class="c1"># v1.0.0</span>
 
-# <span class="nv">language</span> <span class="nv">code</span>: <span class="mi">0</span><span class="nv">x409</span><span class="o">=</span><span class="nv">ENGLISH_US</span>
-<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span>
-<span class="nv">echo</span> <span class="s2">&quot;</span><span class="s">fedcba9876543210</span><span class="s2">&quot;</span> <span class="o">&gt;</span> <span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span><span class="o">/</span><span class="nv">serialnumber</span> # 適当に設定
-<span class="nv">echo</span> <span class="s2">&quot;</span><span class="s">Raspberry Pi</span><span class="s2">&quot;</span> <span class="o">&gt;</span> <span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span><span class="o">/</span><span class="nv">manufacturer</span>
-<span class="nv">echo</span> <span class="s2">&quot;</span><span class="s">Generic USB Composite Device</span><span class="s2">&quot;</span> <span class="o">&gt;</span> <span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span><span class="o">/</span><span class="nv">product</span>
+<span class="c1"># language code: 0x409=ENGLISH_US</span>
+mkdir -p strings/0x409
+<span class="nb">echo</span> <span class="s2">&quot;fedcba9876543210&quot;</span> &gt; strings/0x409/serialnumber <span class="c1"># 適当に設定</span>
+<span class="nb">echo</span> <span class="s2">&quot;Raspberry Pi&quot;</span> &gt; strings/0x409/manufacturer
+<span class="nb">echo</span> <span class="s2">&quot;Generic USB Composite Device&quot;</span> &gt; strings/0x409/product
 
-### <span class="nv">Configuration</span> <span class="nv">Descriptor</span>の設定
-<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span><span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span>
-<span class="nv">echo</span> <span class="mi">1500</span> <span class="o">&gt;</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span><span class="nv">MaxPower</span> # <span class="mi">1500</span><span class="o">*</span><span class="mi">2</span><span class="nv">mA</span><span class="o">=</span> <span class="mi">3</span>.<span class="mi">0</span><span class="nv">A</span>
-<span class="nv">echo</span> <span class="s2">&quot;</span><span class="s">Config 1: ECM network</span><span class="s2">&quot;</span> <span class="o">&gt;</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span><span class="nv">strings</span><span class="o">/</span><span class="mi">0</span><span class="nv">x409</span><span class="o">/</span><span class="nv">configuration</span>
+<span class="c1">### Configuration Descriptorの設定</span>
+mkdir -p configs/c.1/strings/0x409
+<span class="nb">echo</span> <span class="m">1500</span> &gt; configs/c.1/MaxPower <span class="c1"># 1500*2mA= 3.0A</span>
+<span class="nb">echo</span> <span class="s2">&quot;Config 1: ECM network&quot;</span> &gt; configs/c.1/strings/0x409/configuration
 
-### <span class="nv">Report</span> <span class="nv">Descriptor</span>定義
-# <span class="nv">Keyboard</span> <span class="nv">Report</span> <span class="nv">Descriptor</span>
-# <span class="ss">(</span><span class="nv">Modifier</span> <span class="nv">keys</span> <span class="o">+</span> <span class="mi">6</span> <span class="nv">simultaneous</span> <span class="nv">Keys</span> <span class="o">-&gt;</span> <span class="mi">8</span> <span class="nv">Bytes</span><span class="ss">)</span>
+<span class="c1">### Report Descriptor定義</span>
+<span class="c1"># Keyboard Report Descriptor</span>
+<span class="c1"># (Modifier keys + 6 simultaneous Keys -&gt; 8 Bytes)</span>
 <span class="nv">KEYBD_REPT</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0501</span><span class="s2">&quot;</span>      # <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Generic</span> <span class="nv">Desktop</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0906</span><span class="s2">&quot;</span>      # <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Keyboard</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">A101</span><span class="s2">&quot;</span>      # <span class="nv">COLLECTION</span> <span class="ss">(</span><span class="nv">Application</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0507</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Keyboard</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">19E0</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MINIMUM</span> <span class="ss">(</span><span class="nv">Keyboard</span> <span class="nv">LeftControl</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">29E7</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MAXIMUM</span> <span class="ss">(</span><span class="nv">Keyboard</span> <span class="nv">Right</span> <span class="nv">GUI</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2501</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7501</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9508</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">8</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8102</span><span class="s2">&quot;</span>      #   <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7508</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">8</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8103</span><span class="s2">&quot;</span>      #   <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Cnst</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1900</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MINIMUM</span> <span class="ss">(</span><span class="nv">Reserved</span> <span class="ss">(</span><span class="nv">no</span> <span class="nv">event</span> <span class="nv">indicated</span><span class="ss">))</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">299F</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MAXIMUM</span> <span class="ss">(</span><span class="nv">Keyboard</span> <span class="nv">Separator</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">259F</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">175</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7508</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">8</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9506</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">6</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8100</span><span class="s2">&quot;</span>      #   <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Ary</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0508</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">LEDs</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1901</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MINIMUM</span> <span class="ss">(</span><span class="nv">Num</span> <span class="nv">Lock</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2905</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE_MAXIMUM</span> <span class="ss">(</span><span class="nv">Kana</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2501</span><span class="s2">&quot;</span>      #   <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7501</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9505</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">5</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9102</span><span class="s2">&quot;</span>      #   <span class="nv">OUTPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7503</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">3</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9103</span><span class="s2">&quot;</span>      #   <span class="nv">OUTPUT</span> <span class="ss">(</span><span class="nv">Cnst</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">C0</span><span class="s2">&quot;</span>        # <span class="nv">END_COLLECTION</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;0501&quot;</span>      <span class="c1"># USAGE_PAGE (Generic Desktop)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;0906&quot;</span>      <span class="c1"># USAGE (Keyboard)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;A101&quot;</span>      <span class="c1"># COLLECTION (Application)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;0507&quot;</span>      <span class="c1">#   USAGE_PAGE (Keyboard)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;19E0&quot;</span>      <span class="c1">#   USAGE_MINIMUM (Keyboard LeftControl)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;29E7&quot;</span>      <span class="c1">#   USAGE_MAXIMUM (Keyboard Right GUI)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;1500&quot;</span>      <span class="c1">#   LOGICAL_MINIMUM (0)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;2501&quot;</span>      <span class="c1">#   LOGICAL_MAXIMUM (1)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;7501&quot;</span>      <span class="c1">#   REPORT_SIZE (1)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;9508&quot;</span>      <span class="c1">#   REPORT_COUNT (8)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;8102&quot;</span>      <span class="c1">#   INPUT (Data,Var,Abs)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;7508&quot;</span>      <span class="c1">#   REPORT_SIZE (8)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;9501&quot;</span>      <span class="c1">#   REPORT_COUNT (1)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;8103&quot;</span>      <span class="c1">#   INPUT (Cnst,Var,Abs)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;1900&quot;</span>      <span class="c1">#   USAGE_MINIMUM (Reserved (no event indicated))</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;299F&quot;</span>      <span class="c1">#   USAGE_MAXIMUM (Keyboard Separator)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;1500&quot;</span>      <span class="c1">#   LOGICAL_MINIMUM (0)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;259F&quot;</span>      <span class="c1">#   LOGICAL_MAXIMUM (175)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;7508&quot;</span>      <span class="c1">#   REPORT_SIZE (8)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;9506&quot;</span>      <span class="c1">#   REPORT_COUNT (6)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;8100&quot;</span>      <span class="c1">#   INPUT (Data,Ary,Abs)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;0508&quot;</span>      <span class="c1">#   USAGE_PAGE (LEDs)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;1901&quot;</span>      <span class="c1">#   USAGE_MINIMUM (Num Lock)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;2905&quot;</span>      <span class="c1">#   USAGE_MAXIMUM (Kana)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;1500&quot;</span>      <span class="c1">#   LOGICAL_MINIMUM (0)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;2501&quot;</span>      <span class="c1">#   LOGICAL_MAXIMUM (1)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;7501&quot;</span>      <span class="c1">#   REPORT_SIZE (1)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;9505&quot;</span>      <span class="c1">#   REPORT_COUNT (5)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;9102&quot;</span>      <span class="c1">#   OUTPUT (Data,Var,Abs)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;7503&quot;</span>      <span class="c1">#   REPORT_SIZE (3)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;9501&quot;</span>      <span class="c1">#   REPORT_COUNT (1)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;9103&quot;</span>      <span class="c1">#   OUTPUT (Cnst,Var,Abs)</span>
+<span class="nv">KEYBD_REPT</span><span class="o">+=</span><span class="s2">&quot;C0&quot;</span>        <span class="c1"># END_COLLECTION</span>
 
-# <span class="nv">Mouse</span> <span class="nv">and</span> <span class="nv">Digitizer</span> <span class="nv">Report</span> <span class="nv">Descriptor</span>
-#  <span class="ss">(</span><span class="nv">report_id</span><span class="o">=</span><span class="mi">1</span>, <span class="mi">5</span> <span class="nv">Buttons</span>, <span class="nv">X</span>, <span class="nv">Y</span>, <span class="nv">Wheel</span>, <span class="nv">AC</span> <span class="nv">Pan</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="nv">byte</span> <span class="o">+</span> <span class="mi">1</span><span class="nv">byte</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="mi">2</span> <span class="nv">Bytes</span><span class="ss">)</span>
-#  <span class="ss">(</span><span class="nv">report_id</span><span class="o">=</span><span class="mi">2</span>, <span class="mi">5</span> <span class="nv">Buttons</span>, <span class="nv">X</span>, <span class="nv">Y</span>, <span class="nv">padding</span><span class="o">*</span><span class="mi">2</span>     <span class="o">-&gt;</span> <span class="mi">1</span><span class="nv">byte</span> <span class="o">+</span> <span class="mi">1</span><span class="nv">byte</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="mi">2</span> <span class="nv">Bytes</span><span class="ss">)</span>
+<span class="c1"># Mouse and Digitizer Report Descriptor</span>
+<span class="c1">#  (report_id=1, 5 Buttons, X, Y, Wheel, AC Pan -&gt; 1byte + 1byte + 4*2 Bytes)</span>
+<span class="c1">#  (report_id=2, 5 Buttons, X, Y, padding*2     -&gt; 1byte + 1byte + 4*2 Bytes)</span>
 <span class="nv">MOUSE_REPT</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-# マウス部分
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0501</span><span class="s2">&quot;</span>      # <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Generic</span> <span class="nv">Desktop</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0902</span><span class="s2">&quot;</span>      # <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Mouse</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">A101</span><span class="s2">&quot;</span>      # <span class="nv">COLLECTION</span> <span class="ss">(</span><span class="nv">Application</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0901</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Pointer</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">A100</span><span class="s2">&quot;</span>      #   <span class="nv">COLLECTION</span> <span class="ss">(</span><span class="nv">Physical</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_ID</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0509</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Button</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1901</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_MINIMUM</span> <span class="ss">(</span><span class="nv">Button</span> <span class="mi">1</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2905</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_MAXIMUM</span> <span class="ss">(</span><span class="nv">Button</span> <span class="mi">5</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #     <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2501</span><span class="s2">&quot;</span>      #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9505</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">5</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8102</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7503</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">3</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8101</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Cnst</span>,<span class="nv">Ary</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0501</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Generic</span> <span class="nv">Desktop</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0930</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">X</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0931</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Y</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0938</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Wheel</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">160180</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="o">-</span><span class="mi">32767</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">26FF7F</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">32767</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7510</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">16</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9503</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">3</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8106</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Rel</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">050C</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Consumer</span> <span class="nv">Devices</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0A3802</span><span class="s2">&quot;</span>    #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">AC</span> <span class="nv">Pan</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">160180</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="o">-</span><span class="mi">32767</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">26FF7F</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">32767</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7510</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">16</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8106</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Rel</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">C0</span><span class="s2">&quot;</span>        #   <span class="nv">END_COLLECTION</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">C0</span><span class="s2">&quot;</span>        # <span class="nv">END_COLLECTION</span>
-# デジタイザ部分
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">050D</span><span class="s2">&quot;</span>      # <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Digitizers</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0902</span><span class="s2">&quot;</span>      # <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Pen</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">A101</span><span class="s2">&quot;</span>      # <span class="nv">COLLECTION</span> <span class="ss">(</span><span class="nv">Application</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8502</span><span class="s2">&quot;</span>      #   <span class="nv">REPORT_ID</span> <span class="ss">(</span><span class="mi">2</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0920</span><span class="s2">&quot;</span>      #   <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Stylus</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">A100</span><span class="s2">&quot;</span>      #   <span class="nv">COLLECTION</span> <span class="ss">(</span><span class="nv">Physical</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #     <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">2501</span><span class="s2">&quot;</span>      #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0942</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Tip</span> <span class="nv">Switch</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0944</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Barrel</span> <span class="nv">Switch</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">093C</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Invert</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0945</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Eraser</span> <span class="nv">Switch</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0932</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">In</span> <span class="nv">Range</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9505</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">5</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8102</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7503</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">3</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8101</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Cnst</span>,<span class="nv">Ary</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0501</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE_PAGE</span> <span class="ss">(</span><span class="nv">Generic</span> <span class="nv">Desktop</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7510</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">16</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">9501</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_COUNT</span> <span class="ss">(</span><span class="mi">1</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">5500</span><span class="s2">&quot;</span>      #     <span class="nv">UNIT_EXPONENT</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">6513</span><span class="s2">&quot;</span>      #     <span class="nv">UNIT</span> <span class="ss">(</span><span class="nv">Inch</span>,<span class="nv">EngLinear</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">3500</span><span class="s2">&quot;</span>      #     <span class="nv">PHYSICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">1500</span><span class="s2">&quot;</span>      #     <span class="nv">LOGICAL_MINIMUM</span> <span class="ss">(</span><span class="mi">0</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0930</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">X</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">460005</span><span class="s2">&quot;</span>    #     <span class="nv">PHYSICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1280</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">260005</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">1280</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8102</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">0931</span><span class="s2">&quot;</span>      #     <span class="nv">USAGE</span> <span class="ss">(</span><span class="nv">Y</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">46D002</span><span class="s2">&quot;</span>    #     <span class="nv">PHYSICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">720</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">26D002</span><span class="s2">&quot;</span>    #     <span class="nv">LOGICAL_MAXIMUM</span> <span class="ss">(</span><span class="mi">720</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8102</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Data</span>,<span class="nv">Var</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">7520</span><span class="s2">&quot;</span>      #     <span class="nv">REPORT_SIZE</span> <span class="ss">(</span><span class="mi">32</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">8101</span><span class="s2">&quot;</span>      #     <span class="nv">INPUT</span> <span class="ss">(</span><span class="nv">Cnst</span>,<span class="nv">Ary</span>,<span class="nv">Abs</span><span class="ss">)</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">C0</span><span class="s2">&quot;</span>        #   <span class="nv">END_COLLECTION</span>
-<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;</span><span class="s">C0</span><span class="s2">&quot;</span>        # <span class="nv">END_COLLECTION</span>
+<span class="c1"># マウス部分</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0501&quot;</span>      <span class="c1"># USAGE_PAGE (Generic Desktop)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0902&quot;</span>      <span class="c1"># USAGE (Mouse)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;A101&quot;</span>      <span class="c1"># COLLECTION (Application)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0901&quot;</span>      <span class="c1">#   USAGE (Pointer)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;A100&quot;</span>      <span class="c1">#   COLLECTION (Physical)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8501&quot;</span>      <span class="c1">#     REPORT_ID (1)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0509&quot;</span>      <span class="c1">#     USAGE_PAGE (Button)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;1901&quot;</span>      <span class="c1">#     USAGE_MINIMUM (Button 1)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;2905&quot;</span>      <span class="c1">#     USAGE_MAXIMUM (Button 5)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;1500&quot;</span>      <span class="c1">#     LOGICAL_MINIMUM (0)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;2501&quot;</span>      <span class="c1">#     LOGICAL_MAXIMUM (1)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;7501&quot;</span>      <span class="c1">#     REPORT_SIZE (1)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;9505&quot;</span>      <span class="c1">#     REPORT_COUNT (5)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8102&quot;</span>      <span class="c1">#     INPUT (Data,Var,Abs)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;7503&quot;</span>      <span class="c1">#     REPORT_SIZE (3)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;9501&quot;</span>      <span class="c1">#     REPORT_COUNT (1)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8101&quot;</span>      <span class="c1">#     INPUT (Cnst,Ary,Abs)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0501&quot;</span>      <span class="c1">#     USAGE_PAGE (Generic Desktop)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0930&quot;</span>      <span class="c1">#     USAGE (X)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0931&quot;</span>      <span class="c1">#     USAGE (Y)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0938&quot;</span>      <span class="c1">#     USAGE (Wheel)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;160180&quot;</span>    <span class="c1">#     LOGICAL_MINIMUM (-32767)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;26FF7F&quot;</span>    <span class="c1">#     LOGICAL_MAXIMUM (32767)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;7510&quot;</span>      <span class="c1">#     REPORT_SIZE (16)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;9503&quot;</span>      <span class="c1">#     REPORT_COUNT (3)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8106&quot;</span>      <span class="c1">#     INPUT (Data,Var,Rel)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;050C&quot;</span>      <span class="c1">#     USAGE_PAGE (Consumer Devices)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0A3802&quot;</span>    <span class="c1">#     USAGE (AC Pan)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;160180&quot;</span>    <span class="c1">#     LOGICAL_MINIMUM (-32767)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;26FF7F&quot;</span>    <span class="c1">#     LOGICAL_MAXIMUM (32767)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;7510&quot;</span>      <span class="c1">#     REPORT_SIZE (16)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;9501&quot;</span>      <span class="c1">#     REPORT_COUNT (1)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8106&quot;</span>      <span class="c1">#     INPUT (Data,Var,Rel)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;C0&quot;</span>        <span class="c1">#   END_COLLECTION</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;C0&quot;</span>        <span class="c1"># END_COLLECTION</span>
+<span class="c1"># デジタイザ部分</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;050D&quot;</span>      <span class="c1"># USAGE_PAGE (Digitizers)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0902&quot;</span>      <span class="c1"># USAGE (Pen)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;A101&quot;</span>      <span class="c1"># COLLECTION (Application)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8502&quot;</span>      <span class="c1">#   REPORT_ID (2)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0920&quot;</span>      <span class="c1">#   USAGE (Stylus)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;A100&quot;</span>      <span class="c1">#   COLLECTION (Physical)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;1500&quot;</span>      <span class="c1">#     LOGICAL_MINIMUM (0)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;2501&quot;</span>      <span class="c1">#     LOGICAL_MAXIMUM (1)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0942&quot;</span>      <span class="c1">#     USAGE (Tip Switch)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0944&quot;</span>      <span class="c1">#     USAGE (Barrel Switch)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;093C&quot;</span>      <span class="c1">#     USAGE (Invert)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0945&quot;</span>      <span class="c1">#     USAGE (Eraser Switch)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0932&quot;</span>      <span class="c1">#     USAGE (In Range)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;7501&quot;</span>      <span class="c1">#     REPORT_SIZE (1)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;9505&quot;</span>      <span class="c1">#     REPORT_COUNT (5)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8102&quot;</span>      <span class="c1">#     INPUT (Data,Var,Abs)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;7503&quot;</span>      <span class="c1">#     REPORT_SIZE (3)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;9501&quot;</span>      <span class="c1">#     REPORT_COUNT (1)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8101&quot;</span>      <span class="c1">#     INPUT (Cnst,Ary,Abs)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0501&quot;</span>      <span class="c1">#     USAGE_PAGE (Generic Desktop)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;7510&quot;</span>      <span class="c1">#     REPORT_SIZE (16)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;9501&quot;</span>      <span class="c1">#     REPORT_COUNT (1)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;5500&quot;</span>      <span class="c1">#     UNIT_EXPONENT (0)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;6513&quot;</span>      <span class="c1">#     UNIT (Inch,EngLinear)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;3500&quot;</span>      <span class="c1">#     PHYSICAL_MINIMUM (0)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;1500&quot;</span>      <span class="c1">#     LOGICAL_MINIMUM (0)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0930&quot;</span>      <span class="c1">#     USAGE (X)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;460005&quot;</span>    <span class="c1">#     PHYSICAL_MAXIMUM (1280)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;260005&quot;</span>    <span class="c1">#     LOGICAL_MAXIMUM (1280)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8102&quot;</span>      <span class="c1">#     INPUT (Data,Var,Abs)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;0931&quot;</span>      <span class="c1">#     USAGE (Y)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;46D002&quot;</span>    <span class="c1">#     PHYSICAL_MAXIMUM (720)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;26D002&quot;</span>    <span class="c1">#     LOGICAL_MAXIMUM (720)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8102&quot;</span>      <span class="c1">#     INPUT (Data,Var,Abs)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;7520&quot;</span>      <span class="c1">#     REPORT_SIZE (32)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;8101&quot;</span>      <span class="c1">#     INPUT (Cnst,Ary,Abs)</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;C0&quot;</span>        <span class="c1">#   END_COLLECTION</span>
+<span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;C0&quot;</span>        <span class="c1"># END_COLLECTION</span>
 
-<span class="k">if</span> [ <span class="o">-</span><span class="nv">n</span> <span class="s2">&quot;&quot;</span>$<span class="ss">(</span><span class="nv">cat</span> <span class="nv">UDC</span><span class="ss">)</span><span class="s2">&quot;&quot;</span> ]<span class="c1">; then echo &gt; UDC; fi</span>
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;&quot;</span><span class="k">$(</span>cat UDC<span class="k">)</span><span class="s2">&quot;&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="nb">echo</span> &gt; UDC<span class="p">;</span> <span class="k">fi</span>
 
-### <span class="nv">Report</span> <span class="nv">Descriptor</span>の設定
-# <span class="nv">Keyboard</span>
-<span class="nv">N</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">usb0</span><span class="s2">&quot;</span>
-<span class="k">if</span> [ <span class="o">-</span><span class="nv">L</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span> ]<span class="c1">; then rm configs/c.1/hid.$N; fi</span>
-<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span>
-<span class="nv">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">subclass</span> # <span class="nv">Boot</span> <span class="nv">Device</span>
-<span class="nv">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">protocol</span> # <span class="nv">Keyboard</span>
-<span class="nv">echo</span> <span class="mi">8</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">report_length</span> # <span class="nv">Report</span> <span class="nv">length</span>: <span class="mi">8</span><span class="nv">bytes</span>
-<span class="nv">echo</span> $<span class="nv">KEYBD_REPT</span> <span class="o">|</span> <span class="nv">xxd</span> <span class="o">-</span><span class="nv">r</span> <span class="o">-</span><span class="nv">ps</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">report_desc</span>
-<span class="nv">ln</span> <span class="o">-</span><span class="nv">s</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span>
+<span class="c1">### Report Descriptorの設定</span>
+<span class="c1"># Keyboard</span>
+<span class="nv">N</span><span class="o">=</span><span class="s2">&quot;usb0&quot;</span>
+<span class="k">if</span> <span class="o">[</span> -L configs/c.1/hid.<span class="nv">$N</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> rm configs/c.1/hid.<span class="nv">$N</span><span class="p">;</span> <span class="k">fi</span>
+mkdir -p functions/hid.<span class="nv">$N</span>
+<span class="nb">echo</span> <span class="m">1</span> &gt; functions/hid.<span class="nv">$N</span>/subclass <span class="c1"># Boot Device</span>
+<span class="nb">echo</span> <span class="m">1</span> &gt; functions/hid.<span class="nv">$N</span>/protocol <span class="c1"># Keyboard</span>
+<span class="nb">echo</span> <span class="m">8</span> &gt; functions/hid.<span class="nv">$N</span>/report_length <span class="c1"># Report length: 8bytes</span>
+<span class="nb">echo</span> <span class="nv">$KEYBD_REPT</span> <span class="p">|</span> xxd -r -ps &gt; functions/hid.<span class="nv">$N</span>/report_desc
+ln -s functions/hid.<span class="nv">$N</span> configs/c.1/
 
-# <span class="nv">Mouse</span>
-<span class="nv">N</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">usb1</span><span class="s2">&quot;</span>
-<span class="k">if</span> [ <span class="o">-</span><span class="nv">L</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span> ]<span class="c1">; then rm configs/c.1/hid.$N; fi</span>
-<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span>
-<span class="nv">echo</span> <span class="mi">0</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">subclass</span> # <span class="nv">No</span> <span class="nv">Subclass</span>
-<span class="nv">echo</span> <span class="mi">0</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">protocol</span> # <span class="nv">None</span>
-<span class="nv">echo</span> <span class="mi">10</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">report_length</span>  # <span class="nv">Report</span> <span class="nv">length</span>: <span class="mi">10</span><span class="nv">bytes</span>
-<span class="nv">echo</span> $<span class="nv">MOUSE_REPT</span> <span class="o">|</span> <span class="nv">xxd</span> <span class="o">-</span><span class="nv">r</span> <span class="o">-</span><span class="nv">ps</span> <span class="o">&gt;</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span><span class="o">/</span><span class="nv">report_desc</span>
-<span class="nv">ln</span> <span class="o">-</span><span class="nv">s</span> <span class="nv">functions</span><span class="o">/</span><span class="nv">hid</span>.$<span class="nv">N</span> <span class="nv">configs</span><span class="o">/</span><span class="nv">c</span>.<span class="mi">1</span><span class="o">/</span>
+<span class="c1"># Mouse</span>
+<span class="nv">N</span><span class="o">=</span><span class="s2">&quot;usb1&quot;</span>
+<span class="k">if</span> <span class="o">[</span> -L configs/c.1/hid.<span class="nv">$N</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> rm configs/c.1/hid.<span class="nv">$N</span><span class="p">;</span> <span class="k">fi</span>
+mkdir -p functions/hid.<span class="nv">$N</span>
+<span class="nb">echo</span> <span class="m">0</span> &gt; functions/hid.<span class="nv">$N</span>/subclass <span class="c1"># No Subclass</span>
+<span class="nb">echo</span> <span class="m">0</span> &gt; functions/hid.<span class="nv">$N</span>/protocol <span class="c1"># None</span>
+<span class="nb">echo</span> <span class="m">10</span> &gt; functions/hid.<span class="nv">$N</span>/report_length  <span class="c1"># Report length: 10bytes</span>
+<span class="nb">echo</span> <span class="nv">$MOUSE_REPT</span> <span class="p">|</span> xxd -r -ps &gt; functions/hid.<span class="nv">$N</span>/report_desc
+ln -s functions/hid.<span class="nv">$N</span> configs/c.1/
 
-<span class="nv">ls</span> <span class="o">/</span><span class="nv">sys</span><span class="o">/</span><span class="nv">class</span><span class="o">/</span><span class="nv">udc</span> <span class="o">&gt;</span> <span class="nv">UDC</span>
-```
+ls /sys/class/udc &gt; UDC
 </pre></div>
 
-
-<!-- -->
-
+</div>
 <ul>
 <li>
 <p>キーボード入力のデータ構造<br />
@@ -1198,10 +1225,6 @@ WebRTCは、様々な用途を想定しているためか、とにかく仕様�
 <p>デジタイザ入力のデータ構造<br />
     マウス/デジタイザデバイス <code>/dev/hidg1</code> に入力する。<br />
     デジタイザとして使用する場合は、0バイト目にレポートID = 0x02 を指定する。  </p>
-<p>1バイト目の各種スイッチとInvertビットは使用しないため常に <code>0</code> を、<br />
-In Rangeビットは枠内にカーソルが存在することを示すため常に <code>1</code> を入力する。  </p>
-<p>絶対位置は、画面左上の座標を X=0, Y=0 とし、画面右下の座標を X=1280, Y=720 として入力する。<br />
-ここでの最大座標は、レポートディスクリプタ内の<code>USAGE (X)</code>, <code>USAGE (Y)</code>の直後に指定している<code>LOGICAL_MAXIMUM (1280)</code>, <code>LOGICAL_MAXIMUM (720)</code>である。  </p>
 <table>
 <thead>
 <tr>
@@ -1252,30 +1275,88 @@ In Rangeビットは枠内にカーソルが存在することを示すため常
 </tr>
 </tbody>
 </table>
+<p>また、1バイト目は(今回の用途では)常に下記の様に入力する。</p>
+<table>
+<thead>
+<tr>
+<th>bit</th>
+<th>値</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(Padding)</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>(Padding)</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>(Padding)</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>InRange</td>
+<td>1</td>
+<td>カーソルがデジタイザ上にあることを示す</td>
+</tr>
+<tr>
+<td>Eraser Switch</td>
+<td>0</td>
+<td>消しゴムスイッチが押されていることを示す</td>
+</tr>
+<tr>
+<td>Invert</td>
+<td>0</td>
+<td>ペンの反対側の端(シャーペンの消しゴムの方)が<br>デジタイザ上にあることを示す</td>
+</tr>
+<tr>
+<td>Barrel Switch</td>
+<td>0</td>
+<td>バレルボタンが押されていることを示す</td>
+</tr>
+<tr>
+<td>Tip Switch</td>
+<td>0</td>
+<td>ペンがデジタイザの表面に触れていることを示す</td>
+</tr>
+</tbody>
+</table>
+<p>絶対位置は、画面左上の座標を X=0, Y=0 とし、画面右下の座標を X=1280, Y=720 として入力する。<br />
+ここでの最大座標は、レポートディスクリプタ内の<code>USAGE (X)</code>, <code>USAGE (Y)</code>の直後に指定している<code>LOGICAL_MAXIMUM (1280)</code>, <code>LOGICAL_MAXIMUM (720)</code>である。  </p>
 </li>
 </ul>
+</li>
+</ol>
 <h2 id="_6">モニターエミュレーション</h2>
 <h3 id="csi-2-to-hdmihdmi">CSI-2 to HDMIブリッジモジュールを用いたHDMI入力</h3>
 <p>CSI-2(Camera Serial Interface 2)とはMIPI(Mobile Industry Processor Interface)アライアンスによって策定された、
 モバイル機器のプロセッサにカメラを接続するためのインターフェースの規格<br />
 Raspberry Piはモバイル向けのCPUを搭載しており、CSI-2インターフェースを用いてカメラからの静止画/動画入力が利用できる。</p>
 <p>PC等からのHDMI出力をCSI-2インターフェースに入力できるよう変換するモジュールがHDMI-CSIブリッジモジュールである。<br />
-今回は<a href="https://auvidea.eu/b101-hdmi-to-csi-2-bridge-15-pin-fpc/">ドイツ Auvidea社の B101 HDMI to CSI-2 Bridge (15 pin FPC)</a>を使用した。</p>
+今回は<a href="https://auvidea.eu/b101-hdmi-to-csi-2-bridge-15-pin-fpc/">ドイツ Auvidea社の B101 HDMI to CSI-2 Bridge (15 pin FPC)</a>を使用した。<br />
+モジュールを接続した状態の図が<a href="#_3">こちら</a>。  </p>
 <p>Raspberry PiでCSI-2インターフェースを利用するには、<code>raspi-config</code>での有効化が必要である。<br />
 <div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">raspi</span><span class="o">-</span><span class="n">config</span>
 </pre></div></p>
 <p><code>raspi-config</code>を実行すると対話形式での入力画面が表示されるので、<br />
-"5 Interfacing Options" -&gt;<br />
-"P1 Camera" "Enable/Disable connection to the Raspberry Pi Camera"<br />
-と選択してCSI-2インターフェースを有効化する。</p>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;5 Interfacing Options&quot;</span> <span class="o">-&gt;</span>
+<span class="ss">&quot;P1 Camera&quot;</span> <span class="ss">&quot;Enable/Disable connection to the Raspberry Pi Camera&quot;</span>
+</pre></div>
+と順に選択してCSI-2インターフェースを有効化する。</p>
 <h3 id="web">Webブラウザへの動画ストリーミング配信</h3>
 <p>2019/10 現在、Webブラウザへの動画ストリーミング配信には、HLSとWebRTCを用いた方法の2種類がある。<br />
 結果的に、今回はリアルタイム性を重視して、WebRTCを使用することにした。  </p>
 <p>また、WebRTCにはシグナリングサーバ/ICEサーバと呼ばれるサーバが必要であるため、それらについてもRaspberry Pi上に構築した。  </p>
 <h4 id="webrtc">WebRTC ストリーミング配信</h4>
 <p>ストリーミング配信には、時雨同社の<a href="https://github.com/shiguredo/momo">WebRTC Native Client Momo</a>を利用した。<br />
-Momo は libwebrtc を利用しブラウザなしで様々な環境で動作する WebRTC ネイティブクライアントであり、時雨堂社によりメンテナンスされ、Raspbian Buster, Ubuntu, MacOS用バイナリが提供されている。
-<a href="https://github.com/shiguredo/momo/releases/latest">GithubのReleaseページ</a>よりバイナリをダウンロードし、インストールした。</p>
+Momo は libwebrtc を利用しブラウザなしで様々な環境で動作する WebRTC ネイティブクライアントであり、時雨堂社によりメンテナンスされ、Raspbian Buster, Ubuntu, MacOS用バイナリが提供されている。<br />
+今回は、<a href="https://github.com/shiguredo/momo/releases/latest">GithubのReleaseページ</a>よりバイナリをダウンロードし、インストールした。</p>
 <div class="codehilite"><pre><span></span>curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv7.tar.gz
 tar xf momo-19.09.2_raspbian-buster_armv7.tar.gz
 sudo cp momo-19.09.2_raspbian-buster_armv7/momo /usr/local/bin/.
@@ -1293,9 +1374,10 @@ tar xf ayame-19.08.0.tar.gz
 <span class="nv">GO111MODULE</span><span class="o">=</span>on <span class="nv">GOOS</span><span class="o">=</span>linux <span class="nv">GOARCH</span><span class="o">=</span>arm <span class="nv">GOARM</span><span class="o">=</span><span class="m">7</span> go build -ldflags <span class="s1">&#39;-s -w -X main.AyameVersion=${VERSION}&#39;</span> -o ayame
 </pre></div>
 
-<p>生成された<code>ayame</code>バイナリをRaspberryPiへ転送し、momoと同様に<code>/usr/local/bin</code>にインストールする。</p>
-<div class="codehilite"><pre><span></span>scp -p ayame pi@raspberrypi.local:~/.
-ssh pi@raspberrypi.local <span class="s2">&quot;sudo cp ~/ayame /usr/local/bin/.&quot;</span>
+<p>生成された<code>ayame</code>バイナリと設定ファイルをRaspberryPiへ転送し、momoと同様に<code>/usr/local/bin</code>にインストールする。</p>
+<div class="codehilite"><pre><span></span>scp -p ayame config.yaml pi@raspberrypi.local:~/.
+ssh pi@raspberrypi.local <span class="s2">&quot;sudo cp ~pi/ayame /usr/local/bin/.&quot;</span>
+ssh pi@raspberrypi.local <span class="s2">&quot;sudo mkdir -p /usr/local/etc/ayame &amp;&amp; sudo cp ~pi/config.yaml /usr/local/etc/ayame/.&quot;</span>
 </pre></div>
 
 <h4 id="ice">ICEサーバ</h4>
@@ -1303,6 +1385,82 @@ ssh pi@raspberrypi.local <span class="s2">&quot;sudo cp ~/ayame /usr/local/bin/.
 今回はローカルネットワーク上で通信するため、ICEサーバについては必要ないが、とりあえずインストールしてみる。  </p>
 <p>ICEサーバについてはcoTurnというOSSを利用する。Raspbianのリポジトリからインストールする。</p>
 <div class="codehilite"><pre><span></span>sudo apt install coturn
+</pre></div>
+
+<h2 id="systemd">Systemdサービス設定</h2>
+<p>USB On-the-Goの設定スクリプト <code>usb_init.sh</code>と、Momo、Ayameの自動起動設定を行う。  </p>
+<div class="codehilite"><pre><span></span>sudo mkdir -p /usr/local/etc/default/
+
+sudo vi /etc/systemd/system/usb_init.service
+sudo vi /etc/systemd/system/momo.service
+sudo vi /usr/local/etc/default/momo
+sudo vi /etc/systemd/system/ayame.service
+</pre></div>
+
+<div class="admonition example">
+<p class="admonition-title">usb_init.service</p>
+<div class="codehilite"><pre><span></span><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Initialize USB Composite settings</span>
+<span class="na">Before</span><span class="o">=</span><span class="s">network-pre.target</span>
+
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">oneshot</span>
+<span class="na">RemainAfterExit</span><span class="o">=</span><span class="s">yes</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/local/bin/init_usb.sh</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</pre></div>
+
+</div>
+<div class="admonition example">
+<p class="admonition-title">momo.service</p>
+<div class="codehilite"><pre><span></span><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">WebRTC Native Client Momo</span>
+
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+<span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/var/log</span>
+<span class="na">EnvironmentFile</span><span class="o">=</span><span class="s">/usr/local/etc/default/momo</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/local/bin/momo --no-audio --video-device $VIDEO_DEVICE $OPTIONS ayame $AYAME_URL $ROOM_ID</span>
+<span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</pre></div>
+
+</div>
+<div class="admonition example">
+<p class="admonition-title">/usr/local/etc/default/momo</p>
+<div class="codehilite"><pre><span></span><span class="n">VIDEO_DEVICE</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">video0</span>
+<span class="n">AYAME_URL</span><span class="o">=</span><span class="n">ws</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">3000</span><span class="o">/</span><span class="n">signaling</span>
+<span class="n">ROOM_ID</span><span class="o">=</span><span class="n">web_console</span>
+<span class="k">OPTIONS</span><span class="o">=</span><span class="c1">--force-i420 --use-native --resolution HD --fixed-resolution</span>
+</pre></div>
+
+</div>
+<div class="admonition example">
+<p class="admonition-title">ayame.service</p>
+<div class="codehilite"><pre><span></span><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">WebRTC Signaling Server Ayame</span>
+
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+<span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/usr/local/etc/ayame</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/local/bin/ayame</span>
+<span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</pre></div>
+
+</div>
+<div class="codehilite"><pre><span></span>sudo systemctl daemon-reload
+sudo systemctl <span class="nb">enable</span> usb_init
+sudo systemctl <span class="nb">enable</span> momo
+sudo systemctl <span class="nb">enable</span> ayame
+
+sudo reboot
 </pre></div>
 
 <p><br><br><br><br></p>
