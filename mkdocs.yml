@@ -20,3 +20,6 @@ extra:
       link: 'https://github.com/roy-n-roy'
     - type: 'twitter'
       link: 'https://twitter.com/roy_n_roy'
+google_analytics:
+  - 'UA-149709379-1'
+  - 'auto'
