@@ -72,30 +72,41 @@ Node.jsのモジュールである、Socket.ioとExpressを用いた簡単なプ
 
 なお、デジタイザとはペンタブレットなどのような、カーソルの絶対位置入力デバイスのことをいいます。  
 
-
 #### アプリケーションのインストール
 Node.jsと自作アプリケーションのインストールを行います。  
 
-``` bash
-# Node.jsをインストール
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt install -y nodejs
+	``` bash tab="Raspberry Pi 4の場合"
+	# nodesourceリポジトリから最新のNode.jsをインストール
+	curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+	sudo apt install -y nodejs
 
-# アプリケーションのダウンロードとインストール
-curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
-unzip raspi_web_console-master.zip
-cd raspi_web_console-master
-sudo bash ./setup.sh
-```
+	# アプリケーションのダウンロードとインストール
+	curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
+	unzip master.zip
+	cd raspi_web_console-master
+	sudo bash ./setup.sh
+	```
+
+	``` bash tab="Raspberry Pi Zeroの場合"
+	# RaspbianのリポジトリからNode.jsをインストール
+	sudo apt install -y nodejs npm
+
+	# アプリケーションのダウンロードとインストール
+	curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
+	unzip master.zip
+	cd raspi_web_console-master
+	sudo bash ./setup.sh
+	```
 
 ### USB On-the-Go機能を用いたUSBマウス・キーボードのエミュレーション
 USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定を変更します。
 
 1. 起動パラメータにLinux Device Tree Overlay "dwc2" USBコントローラドライバを設定  
 
-	``` bash
-	echo "dtoverlay=dwc2" >> /boot/config.txt
-	```
+	!!! example "/boot/config.txt"
+		``` bash
+		dtoverlay=dwc2
+		```
 
 1. 起動時にLinuxカーネルモジュール "dwc2" と "libcomposite"[^4] を読み込むよう設定  
 
