@@ -203,6 +203,19 @@
   
     <li class="md-tabs__item">
       
+        <a href="../../Docker/" class="md-tabs__link">
+          Docker
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
         <a href="../" class="md-tabs__link md-tabs__link--active">
           Raspberry Pi
         </a>
@@ -218,19 +231,6 @@
       
         <a href="../../RouterOS/" class="md-tabs__link">
           RouterOS
-        </a>
-      
-    </li>
-  
-
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="../../docker/" class="md-tabs__link">
-          Docker
         </a>
       
     </li>
@@ -314,18 +314,78 @@
       
       
 
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Docker
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/" title="Docker" class="md-nav__link">
+      Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
+      Fluentd+Elasticsearch+Kibana
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/wordpress/" title="Wordpress" class="md-nav__link">
+      Wordpress
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-4">
       Raspberry Pi
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-4">
         Raspberry Pi
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -559,13 +619,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-5">
       RouterOS
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-5">
         RouterOS
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -603,66 +663,6 @@
   <li class="md-nav__item">
     <a href="../../RouterOS/Firewall/" title="Firewall" class="md-nav__link">
       Firewall
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
-    
-    <label class="md-nav__link" for="nav-5">
-      Docker
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
-        Docker
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../docker/" title="Docker" class="md-nav__link">
-      Docker
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../docker/fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
-      Fluentd+Elasticsearch+Kibana
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../docker/wordpress/" title="Wordpress" class="md-nav__link">
-      Wordpress
     </a>
   </li>
 
@@ -1080,25 +1080,43 @@ WebRTCは様々な用途を想定しているためか、とにかく仕様が�
 <p>なお、デジタイザとはペンタブレットなどのような、カーソルの絶対位置入力デバイスのことをいいます。  </p>
 <h4 id="_6">アプリケーションのインストール</h4>
 <p>Node.jsと自作アプリケーションのインストールを行います。  </p>
-<div class="codehilite"><pre><span></span><span class="c1"># Node.jsをインストール</span>
+<div class="superfences-tabs">
+<input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked" />
+<label for="__tab_1_0">Raspberry Pi 4の場合</label>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="c1"># nodesourceリポジトリから最新のNode.jsをインストール</span>
 curl -sL https://deb.nodesource.com/setup_12.x <span class="p">|</span> sudo -E bash -
 sudo apt install -y nodejs
 
 <span class="c1"># アプリケーションのダウンロードとインストール</span>
 curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
-unzip raspi_web_console-master.zip
+unzip master.zip
 <span class="nb">cd</span> raspi_web_console-master
 sudo bash ./setup.sh
-</pre></div>
+</pre></div></div>
+<input name="__tabs_1" type="radio" id="__tab_1_1" />
+<label for="__tab_1_1">Raspberry Pi Zeroの場合</label>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="c1"># RaspbianのリポジトリからNode.jsをインストール</span>
+sudo apt install -y nodejs npm
 
+<span class="c1"># アプリケーションのダウンロードとインストール</span>
+curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
+unzip master.zip
+<span class="nb">cd</span> raspi_web_console-master
+sudo bash ./setup.sh
+</pre></div></div>
+</div>
 <h3 id="usb-on-the-gousb">USB On-the-Go機能を用いたUSBマウス・キーボードのエミュレーション</h3>
-<p>USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定を変更します。</p>
+<p>USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定を変更します。<br />
+なお、これらの設定は前述のアプリケーションのインストール時に合わせて実行されています。  </p>
 <ol>
 <li>
 <p>起動パラメータにLinux Device Tree Overlay "dwc2" USBコントローラドライバを設定  </p>
-<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;dtoverlay=dwc2&quot;</span> &gt;&gt; /boot/config.txt
+<div class="admonition example">
+<p class="admonition-title">/boot/config.txt</p>
+<div class="codehilite"><pre><span></span><span class="nv">dtoverlay</span><span class="o">=</span>dwc2
 </pre></div>
 
+</div>
 </li>
 <li>
 <p>起動時にLinuxカーネルモジュール "dwc2" と "libcomposite"<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> を読み込むよう設定  </p>
@@ -1537,23 +1555,43 @@ Raspberry Piはモバイル向けのCPUを搭載しており、CSI-2インター
 <p>ストリーミング配信には、時雨堂社の<a href="https://github.com/shiguredo/momo">WebRTC Native Client Momo</a>を利用しました。<br />
 Momoは、ブラウザなしで様々な環境で動作する"WebRTC ネイティブクライアント"であり、時雨堂社によりメンテナンスされ、Raspbian Buster, Ubuntu(NVIDIA Jetson向け), MacOS用バイナリが提供されています。  </p>
 <p>今回は、<a href="https://github.com/shiguredo/momo/releases/latest">GithubのReleaseページ</a>よりRaspbian ARMv7用のバイナリをダウンロードし、インストールしました。</p>
-<div class="codehilite"><pre><span></span>curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv7.tar.gz
+<div class="superfences-tabs">
+<input name="__tabs_2" type="radio" id="__tab_2_0" checked="checked" />
+<label for="__tab_2_0">Raspberry Pi 4の場合</label>
+<div class="superfences-content"><div class="codehilite"><pre><span></span>curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv7.tar.gz
 tar xf momo-19.09.2_raspbian-buster_armv7.tar.gz
 sudo cp momo-19.09.2_raspbian-buster_armv7/momo /usr/local/bin/.
-chmod +x /usr/local/bin/momo
-</pre></div>
-
+sudo chmod +x /usr/local/bin/momo
+</pre></div></div>
+<input name="__tabs_2" type="radio" id="__tab_2_1" />
+<label for="__tab_2_1">Raspberry Pi Zeroの場合</label>
+<div class="superfences-content"><div class="codehilite"><pre><span></span>curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv6.tar.gz
+tar xf momo-19.09.2_raspbian-buster_armv6.tar.gz
+sudo cp momo-19.09.2_raspbian-buster_armv6/momo /usr/local/bin/.
+sudo chmod +x /usr/local/bin/momo
+</pre></div></div>
+</div>
 <h4 id="_8">シグナリングサーバ</h4>
 <p>こちらも、時雨堂社の<a href="https://github.com/OpenAyame/ayame">WebRTC向けシグナリングサーバ Ayame</a>と、<a href="https://github.com/OpenAyame/ayame-web-sdk">Ayame Web SDK</a>ライブラリを利用しました。  </p>
 <p>AyameについてはArm用バイナリが配布されてないため、
 <a href="https://github.com/OpenAyame/ayame/releases/latest">GithubのReleaseページ</a>からソースコードをダウンロード自身でクロスコンパイルしました。<br />
 Go言語で書かれているため、簡単にクロスコンパイルができます。コンパイルはGo言語環境をインストールしたPC上のLinuxやWindoesなどで行います。</p>
-<div class="codehilite"><pre><span></span>curl -L -O https://github.com/OpenAyame/ayame/archive/19.08.0.tar.gz
-tar xf ayame-19.08.0.tar.gz
+<div class="superfences-tabs">
+<input name="__tabs_3" type="radio" id="__tab_3_0" checked="checked" />
+<label for="__tab_3_0">Raspberry Pi 4の場合</label>
+<div class="superfences-content"><div class="codehilite"><pre><span></span>curl -L -O https://github.com/OpenAyame/ayame/archive/19.08.0.tar.gz
+tar xf <span class="m">19</span>.08.0.tar.gz
 <span class="nb">cd</span> ayame-19.08.0
 <span class="nv">GO111MODULE</span><span class="o">=</span>on <span class="nv">GOOS</span><span class="o">=</span>linux <span class="nv">GOARCH</span><span class="o">=</span>arm <span class="nv">GOARM</span><span class="o">=</span><span class="m">7</span> go build -ldflags <span class="s1">&#39;-s -w -X main.AyameVersion=${VERSION}&#39;</span> -o ayame
-</pre></div>
-
+</pre></div></div>
+<input name="__tabs_3" type="radio" id="__tab_3_1" />
+<label for="__tab_3_1">Raspberry Pi Zeroの場合</label>
+<div class="superfences-content"><div class="codehilite"><pre><span></span>curl -L -O https://github.com/OpenAyame/ayame/archive/19.08.0.tar.gz
+tar xf <span class="m">19</span>.08.0.tar.gz
+<span class="nb">cd</span> ayame-19.08.0
+<span class="nv">GO111MODULE</span><span class="o">=</span>on <span class="nv">GOOS</span><span class="o">=</span>linux <span class="nv">GOARCH</span><span class="o">=</span>arm <span class="nv">GOARM</span><span class="o">=</span><span class="m">6</span> go build -ldflags <span class="s1">&#39;-s -w -X main.AyameVersion=${VERSION}&#39;</span> -o ayame
+</pre></div></div>
+</div>
 <p>生成された<code>ayame</code>バイナリと設定ファイルをRaspberryPiへ転送し、momoと同様に<code>/usr/local/bin</code>にインストールします。</p>
 <div class="codehilite"><pre><span></span>scp -p ayame config.yaml pi@raspberrypi.local:~/.
 ssh pi@raspberrypi.local <span class="s2">&quot;sudo cp ~pi/ayame /usr/local/bin/.&quot;</span>
