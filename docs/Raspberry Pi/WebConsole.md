@@ -75,31 +75,32 @@ Node.jsのモジュールである、Socket.ioとExpressを用いた簡単なプ
 #### アプリケーションのインストール
 Node.jsと自作アプリケーションのインストールを行います。  
 
-	``` bash tab="Raspberry Pi 4の場合"
-	# nodesourceリポジトリから最新のNode.jsをインストール
-	curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-	sudo apt install -y nodejs
+``` bash tab="Raspberry Pi 4の場合"
+# nodesourceリポジトリから最新のNode.jsをインストール
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt install -y nodejs
 
-	# アプリケーションのダウンロードとインストール
-	curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
-	unzip master.zip
-	cd raspi_web_console-master
-	sudo bash ./setup.sh
-	```
+# アプリケーションのダウンロードとインストール
+curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
+unzip master.zip
+cd raspi_web_console-master
+sudo bash ./setup.sh
+```
 
-	``` bash tab="Raspberry Pi Zeroの場合"
-	# RaspbianのリポジトリからNode.jsをインストール
-	sudo apt install -y nodejs npm
+``` bash tab="Raspberry Pi Zeroの場合"
+# RaspbianのリポジトリからNode.jsをインストール
+sudo apt install -y nodejs npm
 
-	# アプリケーションのダウンロードとインストール
-	curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
-	unzip master.zip
-	cd raspi_web_console-master
-	sudo bash ./setup.sh
-	```
+# アプリケーションのダウンロードとインストール
+curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
+unzip master.zip
+cd raspi_web_console-master
+sudo bash ./setup.sh
+```
 
 ### USB On-the-Go機能を用いたUSBマウス・キーボードのエミュレーション
-USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定を変更します。
+USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定を変更します。  
+なお、これらの設定は前述のアプリケーションのインストール時に合わせて実行されています。  
 
 1. 起動パラメータにLinux Device Tree Overlay "dwc2" USBコントローラドライバを設定  
 
@@ -411,11 +412,18 @@ Momoは、ブラウザなしで様々な環境で動作する"WebRTC ネイテ�
 
 今回は、[GithubのReleaseページ](https://github.com/shiguredo/momo/releases/latest)よりRaspbian ARMv7用のバイナリをダウンロードし、インストールしました。
 
-``` bash
+``` bash tab="Raspberry Pi 4の場合"
 curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv7.tar.gz
 tar xf momo-19.09.2_raspbian-buster_armv7.tar.gz
 sudo cp momo-19.09.2_raspbian-buster_armv7/momo /usr/local/bin/.
-chmod +x /usr/local/bin/momo
+sudo chmod +x /usr/local/bin/momo
+```
+
+``` bash tab="Raspberry Pi Zeroの場合"
+curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv6.tar.gz
+tar xf momo-19.09.2_raspbian-buster_armv6.tar.gz
+sudo cp momo-19.09.2_raspbian-buster_armv6/momo /usr/local/bin/.
+sudo chmod +x /usr/local/bin/momo
 ```
 
 #### シグナリングサーバ
@@ -425,11 +433,18 @@ AyameについてはArm用バイナリが配布されてないため、
 [GithubのReleaseページ](https://github.com/OpenAyame/ayame/releases/latest)からソースコードをダウンロード自身でクロスコンパイルしました。  
 Go言語で書かれているため、簡単にクロスコンパイルができます。コンパイルはGo言語環境をインストールしたPC上のLinuxやWindoesなどで行います。
 
-``` bash
+``` bash tab="Raspberry Pi 4の場合"
 curl -L -O https://github.com/OpenAyame/ayame/archive/19.08.0.tar.gz
-tar xf ayame-19.08.0.tar.gz
+tar xf 19.08.0.tar.gz
 cd ayame-19.08.0
 GO111MODULE=on GOOS=linux GOARCH=arm GOARM=7 go build -ldflags '-s -w -X main.AyameVersion=${VERSION}' -o ayame
+```
+
+``` bash tab="Raspberry Pi Zeroの場合"
+curl -L -O https://github.com/OpenAyame/ayame/archive/19.08.0.tar.gz
+tar xf 19.08.0.tar.gz
+cd ayame-19.08.0
+GO111MODULE=on GOOS=linux GOARCH=arm GOARM=6 go build -ldflags '-s -w -X main.AyameVersion=${VERSION}' -o ayame
 ```
 
 生成された`ayame`バイナリと設定ファイルをRaspberryPiへ転送し、momoと同様に`/usr/local/bin`にインストールします。
