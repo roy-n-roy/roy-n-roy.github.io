@@ -6,6 +6,7 @@ theme:
     primary: 'deep orange'
   feature:
     tabs: true
+site_url: 'https://roy-n-roy.github.io/'
 markdown_extensions:
   - admonition
   - codehilite
@@ -17,9 +18,9 @@ extra:
     language: 'ja'
   social:
     - type: 'github'
-      link: 'https://github.com/roy-n-roy'
+      link: 'https://github.com/roy-n-roy/'
     - type: 'twitter'
-      link: 'https://twitter.com/roy_n_roy'
+      link: 'https://twitter.com/roy_n_roy/'
 google_analytics:
   - 'UA-149709379-1'
   - 'auto'
