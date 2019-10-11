@@ -11,6 +11,21 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
+     <loc>https://roy-n-roy.github.io/Docker/</loc>
+     <lastmod>2019-10-11</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://roy-n-roy.github.io/Docker/fluentd+kibana/</loc>
+     <lastmod>2019-10-11</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://roy-n-roy.github.io/Docker/wordpress/</loc>
+     <lastmod>2019-10-11</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
      <loc>https://roy-n-roy.github.io/Raspberry Pi/</loc>
      <lastmod>2019-10-11</lastmod>
      <changefreq>daily</changefreq>
@@ -37,21 +52,6 @@
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/RouterOS/Firewall/</loc>
-     <lastmod>2019-10-11</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://roy-n-roy.github.io/docker/</loc>
-     <lastmod>2019-10-11</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://roy-n-roy.github.io/docker/fluentd+kibana/</loc>
-     <lastmod>2019-10-11</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://roy-n-roy.github.io/docker/wordpress/</loc>
      <lastmod>2019-10-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
