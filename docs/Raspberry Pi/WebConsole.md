@@ -410,13 +410,15 @@ sudo raspi-config
 ストリーミング配信には、時雨堂社の[WebRTC Native Client Momo](https://github.com/shiguredo/momo)を利用しました。  
 Momoは、ブラウザなしで様々な環境で動作する"WebRTC ネイティブクライアント"であり、時雨堂社によりメンテナンスされ、Raspbian Buster, Ubuntu(NVIDIA Jetson向け), MacOS用バイナリが提供されています。  
 
-今回は、[GithubのReleaseページ](https://github.com/shiguredo/momo/releases/latest)よりRaspbian ARMv7用のバイナリをダウンロードし、インストールしました。
+今回は、[GithubのReleaseページ](https://github.com/shiguredo/momo/releases/latest)よりRaspbian ARMv7用のバイナリをダウンロードし、インストールしました。  
+詳しい利用方法は[Raspberry Pi で Momo を使ってみる](https://github.com/shiguredo/momo/blob/develop/doc/USE_RASPBERRY_PI.md)を参照すると良いと思います。
 
 ``` bash tab="Raspberry Pi 4の場合"
 curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv7.tar.gz
 tar xf momo-19.09.2_raspbian-buster_armv7.tar.gz
 sudo cp momo-19.09.2_raspbian-buster_armv7/momo /usr/local/bin/.
 sudo chmod +x /usr/local/bin/momo
+sudo apt-get install libnspr4 libnss3
 ```
 
 ``` bash tab="Raspberry Pi Zeroの場合"
@@ -424,6 +426,7 @@ curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.0
 tar xf momo-19.09.2_raspbian-buster_armv6.tar.gz
 sudo cp momo-19.09.2_raspbian-buster_armv6/momo /usr/local/bin/.
 sudo chmod +x /usr/local/bin/momo
+sudo apt-get install libnspr4 libnss3
 ```
 
 #### シグナリングサーバ
