@@ -1556,7 +1556,8 @@ Raspberry Piはモバイル向けのCPUを搭載しており、CSI-2インター
 <h4 id="webrtc">WebRTC ストリーミング配信</h4>
 <p>ストリーミング配信には、時雨堂社の<a href="https://github.com/shiguredo/momo">WebRTC Native Client Momo</a>を利用しました。<br />
 Momoは、ブラウザなしで様々な環境で動作する"WebRTC ネイティブクライアント"であり、時雨堂社によりメンテナンスされ、Raspbian Buster, Ubuntu(NVIDIA Jetson向け), MacOS用バイナリが提供されています。  </p>
-<p>今回は、<a href="https://github.com/shiguredo/momo/releases/latest">GithubのReleaseページ</a>よりRaspbian ARMv7用のバイナリをダウンロードし、インストールしました。</p>
+<p>今回は、<a href="https://github.com/shiguredo/momo/releases/latest">GithubのReleaseページ</a>よりRaspbian ARMv7用のバイナリをダウンロードし、インストールしました。<br />
+詳しい利用方法は<a href="https://github.com/shiguredo/momo/blob/develop/doc/USE_RASPBERRY_PI.md">Raspberry Pi で Momo を使ってみる</a>を参照すると良いと思います。</p>
 <div class="superfences-tabs">
 <input name="__tabs_2" type="radio" id="__tab_2_0" checked="checked" />
 <label for="__tab_2_0">Raspberry Pi 4の場合</label>
@@ -1564,6 +1565,7 @@ Momoは、ブラウザなしで様々な環境で動作する"WebRTC ネイテ�
 tar xf momo-19.09.2_raspbian-buster_armv7.tar.gz
 sudo cp momo-19.09.2_raspbian-buster_armv7/momo /usr/local/bin/.
 sudo chmod +x /usr/local/bin/momo
+sudo apt-get install libnspr4 libnss3
 </pre></div></div>
 <input name="__tabs_2" type="radio" id="__tab_2_1" />
 <label for="__tab_2_1">Raspberry Pi Zeroの場合</label>
@@ -1571,6 +1573,7 @@ sudo chmod +x /usr/local/bin/momo
 tar xf momo-19.09.2_raspbian-buster_armv6.tar.gz
 sudo cp momo-19.09.2_raspbian-buster_armv6/momo /usr/local/bin/.
 sudo chmod +x /usr/local/bin/momo
+sudo apt-get install libnspr4 libnss3
 </pre></div></div>
 </div>
 <h4 id="_8">シグナリングサーバ</h4>
