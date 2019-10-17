@@ -133,36 +133,75 @@ USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定�
 !!! example "init_usb.sh"
 	``` bash
 	#!/bin/bash -e
-	mkdir -p /sys/kernel/config/usb_gadget/gadget
-	cd /sys/kernel/config/usb_gadget/gadget
+
+	USE_ETHER=false		# RNDIS Ethernet Adapter
+	USE_SERIAL=false	# Serial port
+	USE_KEYBOARD=true	# HID Keyboard
+	USE_MOUSE=true		# HID Mouse & Digitizer
+
+	LANG="0x409" # language code: 0x409=ENGLISH_US
+	CONFIGFS="/sys/kernel/config/usb_gadget/"
+	GADGET_NAME="gadget"
+
+	if [[ $EUID -ne 0 ]]; then
+		echo "This script must be run as root"
+		exit 1
+	fi
+
+	# libcompositeカーネルモジュールが読み込まれていない場合はロード
+	if [ ! -d $CONFIGFS ]; then
+		modprobe libcomposite
+	fi
+
+	# Enter ConfigFS
+	cd $CONFIGFS
+
+	# Stopping getty
+	GS_SERVICE_NAME=`systemctl list-units -t service --state=running | grep -i getty@ttygs | cut -d' ' -f1` || true
+	if [ -n "$GS_SERVICE_NAME" ]; then
+		systemctl stop $GS_SERVICE_NAME
+		if lsmod | grep g_serial; then
+			rmmod g_serial
+		fi
+	fi
+
+	# 既存設定をクリア
+	find ./$GADGET_NAME/configs/*/* -maxdepth 0 -type l -exec rm {} \; &> /dev/null || true
+	find ./$GADGET_NAME/configs/*/strings/* -maxdepth 0 -type d -exec rmdir {} \; &> /dev/null || true
+	find ./$GADGET_NAME/os_desc/* -maxdepth 0 -type l -exec rm {} \; &> /dev/null || true
+	find ./$GADGET_NAME/functions/* -maxdepth 0 -type d -exec rmdir {} \; &> /dev/null || true
+	find ./$GADGET_NAME/strings/* -maxdepth 0 -type d -exec rmdir {} \; &> /dev/null || true
+	find ./$GADGET_NAME/configs/* -maxdepth 0 -type d -exec rmdir {} \; &> /dev/null || true
+	rmdir ./$GADGET_NAME &> /dev/null || true
+
+	mkdir ./$GADGET_NAME && cd ./$GADGET_NAME
 
 	### Device Descriptorの設定
 	# VendorID
-	echo 0x1d6b > idVendor # Linux Foundation
+	echo 0x1d6b > ./idVendor # Linux Foundation
 	# USB HID Specification Release
-	echo 0x0200 > bcdUSB # USB2
+	echo 0x0200 > ./bcdUSB # USB2
 	# USB Class code
-	echo 0xEF > bDeviceClass # Miscellaneous Device Class
+	echo 0xEF > ./bDeviceClass # Miscellaneous Device Class
 	# USB SubClass code
-	echo 0x02 > bDeviceSubClass # Common
+	echo 0x02 > ./bDeviceSubClass # Common
 	# USB Protocol code
-	echo 0x01 > bDeviceProtocol # Interface Association Descriptor
+	echo 0x01 > ./bDeviceProtocol # Interface Association Descriptor
 
 	# ProductID (assigned by manufacturer)
-	echo 0x0001 > idProduct
+	echo 0x0001 > ./idProduct
 	# Device release number(assigned by manufacturer)
-	echo 0x0100 > bcdDevice # v1.0.0
+	echo 0x0100 > ./bcdDevice # v1.0.0
 
-	# language code: 0x409=ENGLISH_US
-	mkdir -p strings/0x409
-	echo "fedcba9876543210" > strings/0x409/serialnumber # 適当に設定
-	echo "Raspberry Pi" > strings/0x409/manufacturer
-	echo "Generic USB Composite Device" > strings/0x409/product
+	mkdir -p strings/$LANG
+	echo "fedcba9876543210" > ./strings/$LANG/serialnumber # 適当に設定
+	echo "Raspberry Pi" > ./strings/$LANG/manufacturer
+	echo "Generic USB Composite Device" > ./strings/$LANG/product
 
 	### Configuration Descriptorの設定
-	mkdir -p configs/c.1/strings/0x409
-	echo 1500 > configs/c.1/MaxPower # 1500*2mA= 3.0A
-	echo "Config 1: ECM network" > configs/c.1/strings/0x409/configuration
+	mkdir -p ./configs/c.1/strings/$LANG
+	echo 1500 > ./configs/c.1/MaxPower # 1500*2mA= 3.0A
+	echo "Config 1: ECM network" > ./configs/c.1/strings/$LANG/configuration
 
 	### Report Descriptor定義
 	# Keyboard Report Descriptor
@@ -282,30 +321,67 @@ USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定�
 	MOUSE_REPT+="C0"        #   END_COLLECTION
 	MOUSE_REPT+="C0"        # END_COLLECTION
 
-	if [ -n ""$(cat UDC)"" ]; then echo > UDC; fi
+	if [ -n ""$(cat ./UDC)"" ]; then echo > ./UDC; fi
 
+	N=0
 	### Report Descriptorの設定
+	# RNDIS Ethernet Adapter
+	if "$USE_ETHER"; then
+		# OS descriptors
+		# https://msdn.microsoft.com/en-us/library/hh881271.aspx
+		# WIndows extensions to force config
+		echo 1 > ./os_desc/use
+		echo 0xcd > ./os_desc/b_vendor_code
+		echo MSFT100 > ./os_desc/qw_sign
+
+		mkdir -p functions/rndis.usb$N
+		SERIAL="$(grep Serial /proc/cpuinfo | sed 's/Serial\s*: 0000\(\w*\)/\1/')"
+		MAC="$(echo ${SERIAL} | sed 's/\(\w\w\)/:\1/g' | cut -b 2-)"
+		MAC_HOST="12$(echo ${MAC} | cut -b 3-)"
+		MAC_DEV="02$(echo ${MAC} | cut -b 3-)"
+
+		# https://msdn.microsoft.com/en-us/windows/hardware/gg463179.aspx
+		echo RNDIS > ./functions/rndis.usb$N/os_desc/interface.rndis/compatible_id
+		echo 5162001 > ./functions/rndis.usb$N/os_desc/interface.rndis/sub_compatible_id
+		echo $MAC_HOST		> ./functions/rndis.usb$N/host_addr
+		echo $MAC_DEV		> ./functions/rndis.usb$N/dev_addr
+		ln -s ./functions/rndis.usb$((N++)) configs/c.1
+		ln -s ./configs/c.1 os_desc
+	fi
+
+	# Serial port
+	if "$USE_SERIAL"; then
+		mkdir -p functions/acm.usb$N
+		ln -s functions/acm.usb$((N++)) configs/c.1/
+	fi
+
 	# Keyboard
-	N="usb0"
-	if [ -L configs/c.1/hid.$N ]; then rm configs/c.1/hid.$N; fi
-	mkdir -p functions/hid.$N
-	echo 1 > functions/hid.$N/subclass # Boot Device
-	echo 1 > functions/hid.$N/protocol # Keyboard
-	echo 8 > functions/hid.$N/report_length # Report length: 8bytes
-	echo $KEYBD_REPT | xxd -r -ps > functions/hid.$N/report_desc
-	ln -s functions/hid.$N configs/c.1/
+	if "$USE_KEYBOARD"; then
+		mkdir -p ./functions/hid.usb$N
+		echo 1 > ./functions/hid.usb$N/subclass # Boot Device
+		echo 1 > ./functions/hid.usb$N/protocol # Keyboard
+		echo 8 > ./functions/hid.usb$N/report_length # Report length: 8bytes
+		echo $KEYBD_REPT | xxd -r -ps > ./functions/hid.usb$N/report_desc
+		ln -s functions/hid.usb$((N++)) configs/c.1/
+	fi
 
 	# Mouse
-	N="usb1"
-	if [ -L configs/c.1/hid.$N ]; then rm configs/c.1/hid.$N; fi
-	mkdir -p functions/hid.$N
-	echo 0 > functions/hid.$N/subclass # No Subclass
-	echo 0 > functions/hid.$N/protocol # None
-	echo 10 > functions/hid.$N/report_length  # Report length: 10bytes
-	echo $MOUSE_REPT | xxd -r -ps > functions/hid.$N/report_desc
-	ln -s functions/hid.$N configs/c.1/
+	if "$USE_MOUSE"; then
+		mkdir -p ./functions/hid.usb$N
+		echo 0 > ./functions/hid.usb$N/subclass # No Subclass
+		echo 0 > ./functions/hid.usb$N/protocol # None
+		echo 10 > ./functions/hid.usb$N/report_length  # Report length: 10bytes
+		echo $MOUSE_REPT | xxd -r -ps > ./functions/hid.usb$N/report_desc
+		ln -s ./functions/hid.usb$((N++)) configs/c.1/
+	fi
 
-	ls /sys/class/udc > UDC
+	ls /sys/class/udc > ./UDC
+
+	# Starting getty
+	if [ -n "$GS_SERVICE_NAME" ]; then
+		systemctl start $GS_SERVICE_NAME
+	fi
+
 	```
 
 #### USBエミュレーションデバイスの入力データ構造
