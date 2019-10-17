@@ -1143,36 +1143,75 @@ reboot
 <div class="admonition example">
 <p class="admonition-title">init_usb.sh</p>
 <div class="codehilite"><pre><span></span><span class="ch">#!/bin/bash -e</span>
-mkdir -p /sys/kernel/config/usb_gadget/gadget
-<span class="nb">cd</span> /sys/kernel/config/usb_gadget/gadget
+
+<span class="nv">USE_ETHER</span><span class="o">=</span><span class="nb">false</span>     <span class="c1"># RNDIS Ethernet Adapter</span>
+<span class="nv">USE_SERIAL</span><span class="o">=</span><span class="nb">false</span>    <span class="c1"># Serial port</span>
+<span class="nv">USE_KEYBOARD</span><span class="o">=</span><span class="nb">true</span>   <span class="c1"># HID Keyboard</span>
+<span class="nv">USE_MOUSE</span><span class="o">=</span><span class="nb">true</span>      <span class="c1"># HID Mouse &amp; Digitizer</span>
+
+<span class="nv">LANG</span><span class="o">=</span><span class="s2">&quot;0x409&quot;</span> <span class="c1"># language code: 0x409=ENGLISH_US</span>
+<span class="nv">CONFIGFS</span><span class="o">=</span><span class="s2">&quot;/sys/kernel/config/usb_gadget/&quot;</span>
+<span class="nv">GADGET_NAME</span><span class="o">=</span><span class="s2">&quot;gadget&quot;</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$EUID</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;This script must be run as root&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="c1"># libcompositeカーネルモジュールが読み込まれていない場合はロード</span>
+<span class="k">if</span> <span class="o">[</span> ! -d <span class="nv">$CONFIGFS</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    modprobe libcomposite
+<span class="k">fi</span>
+
+<span class="c1"># Enter ConfigFS</span>
+<span class="nb">cd</span> <span class="nv">$CONFIGFS</span>
+
+<span class="c1"># Stopping getty</span>
+<span class="nv">GS_SERVICE_NAME</span><span class="o">=</span><span class="sb">`</span>systemctl list-units -t service --state<span class="o">=</span>running <span class="p">|</span> grep -i getty@ttygs <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f1<span class="sb">`</span> <span class="o">||</span> <span class="nb">true</span>
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;</span><span class="nv">$GS_SERVICE_NAME</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    systemctl stop <span class="nv">$GS_SERVICE_NAME</span>
+    <span class="k">if</span> lsmod <span class="p">|</span> grep g_serial<span class="p">;</span> <span class="k">then</span>
+        rmmod g_serial
+    <span class="k">fi</span>
+<span class="k">fi</span>
+
+<span class="c1"># 既存設定をクリア</span>
+find ./<span class="nv">$GADGET_NAME</span>/configs/*/* -maxdepth <span class="m">0</span> -type l -exec rm <span class="o">{}</span> <span class="se">\;</span> <span class="p">&amp;</span>&gt; /dev/null <span class="o">||</span> <span class="nb">true</span>
+find ./<span class="nv">$GADGET_NAME</span>/configs/*/strings/* -maxdepth <span class="m">0</span> -type d -exec rmdir <span class="o">{}</span> <span class="se">\;</span> <span class="p">&amp;</span>&gt; /dev/null <span class="o">||</span> <span class="nb">true</span>
+find ./<span class="nv">$GADGET_NAME</span>/os_desc/* -maxdepth <span class="m">0</span> -type l -exec rm <span class="o">{}</span> <span class="se">\;</span> <span class="p">&amp;</span>&gt; /dev/null <span class="o">||</span> <span class="nb">true</span>
+find ./<span class="nv">$GADGET_NAME</span>/functions/* -maxdepth <span class="m">0</span> -type d -exec rmdir <span class="o">{}</span> <span class="se">\;</span> <span class="p">&amp;</span>&gt; /dev/null <span class="o">||</span> <span class="nb">true</span>
+find ./<span class="nv">$GADGET_NAME</span>/strings/* -maxdepth <span class="m">0</span> -type d -exec rmdir <span class="o">{}</span> <span class="se">\;</span> <span class="p">&amp;</span>&gt; /dev/null <span class="o">||</span> <span class="nb">true</span>
+find ./<span class="nv">$GADGET_NAME</span>/configs/* -maxdepth <span class="m">0</span> -type d -exec rmdir <span class="o">{}</span> <span class="se">\;</span> <span class="p">&amp;</span>&gt; /dev/null <span class="o">||</span> <span class="nb">true</span>
+rmdir ./<span class="nv">$GADGET_NAME</span> <span class="p">&amp;</span>&gt; /dev/null <span class="o">||</span> <span class="nb">true</span>
+
+mkdir ./<span class="nv">$GADGET_NAME</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ./<span class="nv">$GADGET_NAME</span>
 
 <span class="c1">### Device Descriptorの設定</span>
 <span class="c1"># VendorID</span>
-<span class="nb">echo</span> 0x1d6b &gt; idVendor <span class="c1"># Linux Foundation</span>
+<span class="nb">echo</span> 0x1d6b &gt; ./idVendor <span class="c1"># Linux Foundation</span>
 <span class="c1"># USB HID Specification Release</span>
-<span class="nb">echo</span> 0x0200 &gt; bcdUSB <span class="c1"># USB2</span>
+<span class="nb">echo</span> 0x0200 &gt; ./bcdUSB <span class="c1"># USB2</span>
 <span class="c1"># USB Class code</span>
-<span class="nb">echo</span> 0xEF &gt; bDeviceClass <span class="c1"># Miscellaneous Device Class</span>
+<span class="nb">echo</span> 0xEF &gt; ./bDeviceClass <span class="c1"># Miscellaneous Device Class</span>
 <span class="c1"># USB SubClass code</span>
-<span class="nb">echo</span> 0x02 &gt; bDeviceSubClass <span class="c1"># Common</span>
+<span class="nb">echo</span> 0x02 &gt; ./bDeviceSubClass <span class="c1"># Common</span>
 <span class="c1"># USB Protocol code</span>
-<span class="nb">echo</span> 0x01 &gt; bDeviceProtocol <span class="c1"># Interface Association Descriptor</span>
+<span class="nb">echo</span> 0x01 &gt; ./bDeviceProtocol <span class="c1"># Interface Association Descriptor</span>
 
 <span class="c1"># ProductID (assigned by manufacturer)</span>
-<span class="nb">echo</span> 0x0001 &gt; idProduct
+<span class="nb">echo</span> 0x0001 &gt; ./idProduct
 <span class="c1"># Device release number(assigned by manufacturer)</span>
-<span class="nb">echo</span> 0x0100 &gt; bcdDevice <span class="c1"># v1.0.0</span>
+<span class="nb">echo</span> 0x0100 &gt; ./bcdDevice <span class="c1"># v1.0.0</span>
 
-<span class="c1"># language code: 0x409=ENGLISH_US</span>
-mkdir -p strings/0x409
-<span class="nb">echo</span> <span class="s2">&quot;fedcba9876543210&quot;</span> &gt; strings/0x409/serialnumber <span class="c1"># 適当に設定</span>
-<span class="nb">echo</span> <span class="s2">&quot;Raspberry Pi&quot;</span> &gt; strings/0x409/manufacturer
-<span class="nb">echo</span> <span class="s2">&quot;Generic USB Composite Device&quot;</span> &gt; strings/0x409/product
+mkdir -p strings/<span class="nv">$LANG</span>
+<span class="nb">echo</span> <span class="s2">&quot;fedcba9876543210&quot;</span> &gt; ./strings/<span class="nv">$LANG</span>/serialnumber <span class="c1"># 適当に設定</span>
+<span class="nb">echo</span> <span class="s2">&quot;Raspberry Pi&quot;</span> &gt; ./strings/<span class="nv">$LANG</span>/manufacturer
+<span class="nb">echo</span> <span class="s2">&quot;Generic USB Composite Device&quot;</span> &gt; ./strings/<span class="nv">$LANG</span>/product
 
 <span class="c1">### Configuration Descriptorの設定</span>
-mkdir -p configs/c.1/strings/0x409
-<span class="nb">echo</span> <span class="m">1500</span> &gt; configs/c.1/MaxPower <span class="c1"># 1500*2mA= 3.0A</span>
-<span class="nb">echo</span> <span class="s2">&quot;Config 1: ECM network&quot;</span> &gt; configs/c.1/strings/0x409/configuration
+mkdir -p ./configs/c.1/strings/<span class="nv">$LANG</span>
+<span class="nb">echo</span> <span class="m">1500</span> &gt; ./configs/c.1/MaxPower <span class="c1"># 1500*2mA= 3.0A</span>
+<span class="nb">echo</span> <span class="s2">&quot;Config 1: ECM network&quot;</span> &gt; ./configs/c.1/strings/<span class="nv">$LANG</span>/configuration
 
 <span class="c1">### Report Descriptor定義</span>
 <span class="c1"># Keyboard Report Descriptor</span>
@@ -1292,30 +1331,66 @@ mkdir -p configs/c.1/strings/0x409
 <span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;C0&quot;</span>        <span class="c1">#   END_COLLECTION</span>
 <span class="nv">MOUSE_REPT</span><span class="o">+=</span><span class="s2">&quot;C0&quot;</span>        <span class="c1"># END_COLLECTION</span>
 
-<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;&quot;</span><span class="k">$(</span>cat UDC<span class="k">)</span><span class="s2">&quot;&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="nb">echo</span> &gt; UDC<span class="p">;</span> <span class="k">fi</span>
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;&quot;</span><span class="k">$(</span>cat ./UDC<span class="k">)</span><span class="s2">&quot;&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="nb">echo</span> &gt; ./UDC<span class="p">;</span> <span class="k">fi</span>
 
+<span class="nv">N</span><span class="o">=</span><span class="m">0</span>
 <span class="c1">### Report Descriptorの設定</span>
+<span class="c1"># RNDIS Ethernet Adapter</span>
+<span class="k">if</span> <span class="s2">&quot;</span><span class="nv">$USE_ETHER</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">then</span>
+    <span class="c1"># OS descriptors</span>
+    <span class="c1"># https://msdn.microsoft.com/en-us/library/hh881271.aspx</span>
+    <span class="c1"># WIndows extensions to force config</span>
+    <span class="nb">echo</span> <span class="m">1</span> &gt; ./os_desc/use
+    <span class="nb">echo</span> 0xcd &gt; ./os_desc/b_vendor_code
+    <span class="nb">echo</span> MSFT100 &gt; ./os_desc/qw_sign
+
+    mkdir -p functions/rndis.usb<span class="nv">$N</span>
+    <span class="nv">SERIAL</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>grep Serial /proc/cpuinfo <span class="p">|</span> sed <span class="s1">&#39;s/Serial\s*: 0000\(\w*\)/\1/&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+    <span class="nv">MAC</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">SERIAL</span><span class="si">}</span> <span class="p">|</span> sed <span class="s1">&#39;s/\(\w\w\)/:\1/g&#39;</span> <span class="p">|</span> cut -b <span class="m">2</span>-<span class="k">)</span><span class="s2">&quot;</span>
+    <span class="nv">MAC_HOST</span><span class="o">=</span><span class="s2">&quot;12</span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">MAC</span><span class="si">}</span> <span class="p">|</span> cut -b <span class="m">3</span>-<span class="k">)</span><span class="s2">&quot;</span>
+    <span class="nv">MAC_DEV</span><span class="o">=</span><span class="s2">&quot;02</span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">MAC</span><span class="si">}</span> <span class="p">|</span> cut -b <span class="m">3</span>-<span class="k">)</span><span class="s2">&quot;</span>
+
+    <span class="c1"># https://msdn.microsoft.com/en-us/windows/hardware/gg463179.aspx</span>
+    <span class="nb">echo</span> RNDIS &gt; ./functions/rndis.usb<span class="nv">$N</span>/os_desc/interface.rndis/compatible_id
+    <span class="nb">echo</span> <span class="m">5162001</span> &gt; ./functions/rndis.usb<span class="nv">$N</span>/os_desc/interface.rndis/sub_compatible_id
+    <span class="nb">echo</span> <span class="nv">$MAC_HOST</span>      &gt; ./functions/rndis.usb<span class="nv">$N</span>/host_addr
+    <span class="nb">echo</span> <span class="nv">$MAC_DEV</span>       &gt; ./functions/rndis.usb<span class="nv">$N</span>/dev_addr
+    ln -s ./functions/rndis.usb<span class="k">$((</span>N++<span class="k">))</span> configs/c.1
+    ln -s ./configs/c.1 os_desc
+<span class="k">fi</span>
+
+<span class="c1"># Serial port</span>
+<span class="k">if</span> <span class="s2">&quot;</span><span class="nv">$USE_SERIAL</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">then</span>
+    mkdir -p functions/acm.usb<span class="nv">$N</span>
+    ln -s functions/acm.usb<span class="k">$((</span>N++<span class="k">))</span> configs/c.1/
+<span class="k">fi</span>
+
 <span class="c1"># Keyboard</span>
-<span class="nv">N</span><span class="o">=</span><span class="s2">&quot;usb0&quot;</span>
-<span class="k">if</span> <span class="o">[</span> -L configs/c.1/hid.<span class="nv">$N</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> rm configs/c.1/hid.<span class="nv">$N</span><span class="p">;</span> <span class="k">fi</span>
-mkdir -p functions/hid.<span class="nv">$N</span>
-<span class="nb">echo</span> <span class="m">1</span> &gt; functions/hid.<span class="nv">$N</span>/subclass <span class="c1"># Boot Device</span>
-<span class="nb">echo</span> <span class="m">1</span> &gt; functions/hid.<span class="nv">$N</span>/protocol <span class="c1"># Keyboard</span>
-<span class="nb">echo</span> <span class="m">8</span> &gt; functions/hid.<span class="nv">$N</span>/report_length <span class="c1"># Report length: 8bytes</span>
-<span class="nb">echo</span> <span class="nv">$KEYBD_REPT</span> <span class="p">|</span> xxd -r -ps &gt; functions/hid.<span class="nv">$N</span>/report_desc
-ln -s functions/hid.<span class="nv">$N</span> configs/c.1/
+<span class="k">if</span> <span class="s2">&quot;</span><span class="nv">$USE_KEYBOARD</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">then</span>
+    mkdir -p ./functions/hid.usb<span class="nv">$N</span>
+    <span class="nb">echo</span> <span class="m">1</span> &gt; ./functions/hid.usb<span class="nv">$N</span>/subclass <span class="c1"># Boot Device</span>
+    <span class="nb">echo</span> <span class="m">1</span> &gt; ./functions/hid.usb<span class="nv">$N</span>/protocol <span class="c1"># Keyboard</span>
+    <span class="nb">echo</span> <span class="m">8</span> &gt; ./functions/hid.usb<span class="nv">$N</span>/report_length <span class="c1"># Report length: 8bytes</span>
+    <span class="nb">echo</span> <span class="nv">$KEYBD_REPT</span> <span class="p">|</span> xxd -r -ps &gt; ./functions/hid.usb<span class="nv">$N</span>/report_desc
+    ln -s functions/hid.usb<span class="k">$((</span>N++<span class="k">))</span> configs/c.1/
+<span class="k">fi</span>
 
 <span class="c1"># Mouse</span>
-<span class="nv">N</span><span class="o">=</span><span class="s2">&quot;usb1&quot;</span>
-<span class="k">if</span> <span class="o">[</span> -L configs/c.1/hid.<span class="nv">$N</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> rm configs/c.1/hid.<span class="nv">$N</span><span class="p">;</span> <span class="k">fi</span>
-mkdir -p functions/hid.<span class="nv">$N</span>
-<span class="nb">echo</span> <span class="m">0</span> &gt; functions/hid.<span class="nv">$N</span>/subclass <span class="c1"># No Subclass</span>
-<span class="nb">echo</span> <span class="m">0</span> &gt; functions/hid.<span class="nv">$N</span>/protocol <span class="c1"># None</span>
-<span class="nb">echo</span> <span class="m">10</span> &gt; functions/hid.<span class="nv">$N</span>/report_length  <span class="c1"># Report length: 10bytes</span>
-<span class="nb">echo</span> <span class="nv">$MOUSE_REPT</span> <span class="p">|</span> xxd -r -ps &gt; functions/hid.<span class="nv">$N</span>/report_desc
-ln -s functions/hid.<span class="nv">$N</span> configs/c.1/
+<span class="k">if</span> <span class="s2">&quot;</span><span class="nv">$USE_MOUSE</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">then</span>
+    mkdir -p ./functions/hid.usb<span class="nv">$N</span>
+    <span class="nb">echo</span> <span class="m">0</span> &gt; ./functions/hid.usb<span class="nv">$N</span>/subclass <span class="c1"># No Subclass</span>
+    <span class="nb">echo</span> <span class="m">0</span> &gt; ./functions/hid.usb<span class="nv">$N</span>/protocol <span class="c1"># None</span>
+    <span class="nb">echo</span> <span class="m">10</span> &gt; ./functions/hid.usb<span class="nv">$N</span>/report_length  <span class="c1"># Report length: 10bytes</span>
+    <span class="nb">echo</span> <span class="nv">$MOUSE_REPT</span> <span class="p">|</span> xxd -r -ps &gt; ./functions/hid.usb<span class="nv">$N</span>/report_desc
+    ln -s ./functions/hid.usb<span class="k">$((</span>N++<span class="k">))</span> configs/c.1/
+<span class="k">fi</span>
 
-ls /sys/class/udc &gt; UDC
+ls /sys/class/udc &gt; ./UDC
+
+<span class="c1"># Starting getty</span>
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;</span><span class="nv">$GS_SERVICE_NAME</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    systemctl start <span class="nv">$GS_SERVICE_NAME</span>
+<span class="k">fi</span>
 </pre></div>
 
 </div>
