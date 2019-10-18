@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://roy-n-roy.github.io/Raspberry Pi/Network/">
+        <link rel="canonical" href="https://roy-n-roy.github.io/Windows/記憶域スペース/">
       
       
       
@@ -38,7 +38,7 @@
     
     
       
-        <title>ネットワーク設定 - roy-n-roy メモ</title>
+        <title>記憶域スペースとReFS - roy-n-roy メモ</title>
       
     
     
@@ -110,7 +110,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#_1" tabindex="1" class="md-skip">
+      <a href="#refs" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -136,7 +136,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                ネットワーク設定
+                記憶域スペースとReFS
               
             </span>
           
@@ -205,7 +205,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../" class="md-tabs__link md-tabs__link--active">
+        <a href="../../Raspberry Pi/" class="md-tabs__link">
           Raspberry Pi
         </a>
       
@@ -231,7 +231,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../Windows/記憶域スペース/" class="md-tabs__link">
+        <a href="./" class="md-tabs__link md-tabs__link--active">
           Windows
         </a>
       
@@ -329,12 +329,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
     <label class="md-nav__link" for="nav-3">
       Raspberry Pi
@@ -352,7 +350,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../" title="Raspberry Pi" class="md-nav__link">
+    <a href="../../Raspberry Pi/" title="Raspberry Pi" class="md-nav__link">
       Raspberry Pi
     </a>
   </li>
@@ -362,77 +360,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        ネットワーク設定
-      </label>
-    
-    <a href="./" title="ネットワーク設定" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../Raspberry Pi/Network/" title="ネットワーク設定" class="md-nav__link">
       ネットワーク設定
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">目次</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#systemd-networkd" class="md-nav__link">
-    Systemd-networkd
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usb-on-the-goethernet" class="md-nav__link">
-    USB on the GoのEthernetアダプタ有効化
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#raspberry-pilan-ap" class="md-nav__link">
-    Raspberry Piの無線LAN AP化
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#lan-ap" class="md-nav__link">
-    接続優先度による無線LAN AP 起動/停止の設定
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usbpc" class="md-nav__link">
-    USB接続時のPC側ドライバ
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -442,7 +374,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../WebConsole/" title="Web Console" class="md-nav__link">
+    <a href="../../Raspberry Pi/WebConsole/" title="Web Console" class="md-nav__link">
       Web Console
     </a>
   </li>
@@ -517,10 +449,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
     <label class="md-nav__link" for="nav-5">
       Windows
@@ -536,11 +470,117 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../Windows/記憶域スペース/" title="記憶域スペースとReFS" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        記憶域スペースとReFS
+      </label>
+    
+    <a href="./" title="記憶域スペースとReFS" class="md-nav__link md-nav__link--active">
       記憶域スペースとReFS
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    記憶域スペース
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    記憶域スペースの構成要素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    冗長化の種類
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    物理ディスクの割り当て
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ディスク故障時の回復
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    構成の例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resilient-file-systemrefs" class="md-nav__link">
+    Resilient File System(ReFS)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refs_1" class="md-nav__link">
+    ReFSの特徴
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    整合性ストリームの有効化方法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -714,37 +754,77 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#systemd-networkd" class="md-nav__link">
-    Systemd-networkd
+  <a href="#_1" class="md-nav__link">
+    記憶域スペース
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    記憶域スペースの構成要素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    冗長化の種類
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    物理ディスクの割り当て
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ディスク故障時の回復
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    構成の例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#usb-on-the-goethernet" class="md-nav__link">
-    USB on the GoのEthernetアダプタ有効化
+  <a href="#resilient-file-systemrefs" class="md-nav__link">
+    Resilient File System(ReFS)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refs_1" class="md-nav__link">
+    ReFSの特徴
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#raspberry-pilan-ap" class="md-nav__link">
-    Raspberry Piの無線LAN AP化
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    整合性ストリームの有効化方法
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#lan-ap" class="md-nav__link">
-    接続優先度による無線LAN AP 起動/停止の設定
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usbpc" class="md-nav__link">
-    USB接続時のPC側ドライバ
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -765,189 +845,169 @@
               
                 
                 
-                <h1 id="_1">ネットワーク設定</h1>
+                <h1 id="refs">記憶域スペースとReFS</h1>
+<h2 id="_1">記憶域スペース</h2>
+<p>記憶域スペースとはWindows8, 10/Windows Server 2012以降で利用できる、ストレージの冗長化機能です。<br />
+複数のHDDやSSDを束ねて、冗長性のあるディスクとして利用することができます。  </p>
+<p>似たような機能としてソフトウェアRAIDがありますが、下記の点が異なります。  </p>
+<ul>
+<li>サイズの異なるディスクの組み合わせでも利用できる</li>
+<li>実ディスクのサイズ以上のボリュームを作成できる</li>
+<li>運用開始後にHDD/SSDの追加して、容量の追加ができる</li>
+<li>データ重複除去機能がある</li>
+</ul>
+<p>ソフトウェアRAIDよりは、LinuxのLVMが近いイメージです。  </p>
+<p>また、後述のReFSと併せて利用することで、ファイルレベルでの整合性の担保、エラー時の自動修正が可能です。  </p>
+<h3 id="_2">記憶域スペースの構成要素</h3>
+<ul>
+<li>
+<p>物理ディスク(Physical Disk)<br />
+    物理的なHDD、SSDを指します。接続方法はSAS,iSCSI,Fiber Channelなどのサーバ向けのものからNVMe,SATA,USBなどでも(一応)構成可能です。<br />
+    また、Windows Server 2019ではIntelのOptane DC Persistent MemoryやNVDIMM-Nもサポートしています。  </p>
+</li>
+<li>
+<p>仮想ディスク(Virtual Disk)<br />
+    実際にユーザが利用する、冗長化された仮想的なディスクです。<br />
+    後述のシンプロビジョニング(Thin Provisioning)という機能を利用することで、物理ディスク以上のサイズの仮想ディスクを作成することもできます。  </p>
+</li>
+<li>
+<p>記憶域プール(Storage Pool)<br />
+    物理ディスクをまとめてプールにしたものです。<br />
+    ここから物理ディスクを切り出して、仮想ディスクを作成します。</p>
+</li>
+<li>
+<p>記憶域階層(Storage Tier)<br />
+    SSDとHDDなどのアクセス速度の異なる物理ディスクを組み合わせて階層構造をとることで、
+    SSDを読み取り・書き込みキャッシュのように利用して冗長化によるパフォーマンスの低下を補なうことのできる機能です。<br />
+    記憶域階層を使用する場合、SSD階層とHDD階層のそれぞれで異なる冗長化方法を選択することができます。</p>
+</li>
+</ul>
+<p>また、関連する機能として「記憶域スペース ダイレクト」、「記憶域スペース レプリカ」といったものがありますが、ここでは割愛します。</p>
+<h3 id="_3">冗長化の種類</h3>
+<p>記憶域スペースではディスクの冗長化について、下記の4種類から選択できます。</p>
 <table>
 <thead>
 <tr>
-<th>環境</th>
-<th></th>
+<th align="center">種類</th>
+<th>冗長化</th>
+<th align="center">利用可能な<br>ディスク容量</th>
+<th align="right">最低限必要な<br>ディスク本数</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>モデル</td>
-<td>Raspberry Pi4</td>
+<td align="center">シンプル</td>
+<td>冗長化を行わない。</td>
+<td align="center">物理ディスクと同等</td>
+<td align="right">1本</td>
 </tr>
 <tr>
-<td>ディストリビューション</td>
-<td>Raspbian 10 Buster</td>
+<td align="center">双方向ミラー</td>
+<td>データを2本のディスクに冗長化する。</td>
+<td align="center">物理ディスクの半分</td>
+<td align="right">2本</td>
 </tr>
 <tr>
-<td>インターフェース</td>
-<td>eth0, usb0(USB-OTG), wlan0</td>
+<td align="center">3方向ミラー</td>
+<td>データを3本のディスクに冗長化する。</td>
+<td align="center">物理ディスクの1/3</td>
+<td align="right">3本</td>
 </tr>
 <tr>
-<td>接続優先度</td>
-<td>有線LAN ⇒ USB-LAN ⇒<br>どちらも接続していない場合にのみ無線LAN APを起動</td>
+<td align="center">パリティ</td>
+<td>データを3本以上のディスクに<br>分散して冗長化する。</td>
+<td align="center">物理ディスクの2/3～7/8</td>
+<td align="right">3本</td>
+</tr>
+<tr>
+<td align="center">デュアルパリティ</td>
+<td>データを7本以上のディスクに<br>分散して冗長化する。</td>
+<td align="center">物理ディスクの4/7～</td>
+<td align="right">7本</td>
 </tr>
 </tbody>
 </table>
-<p>ネットワーク設定は下記とする。  </p>
-<table>
-<thead>
-<tr>
-<th>インターフェース</th>
-<th>ネットワーク設定</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>eth0</td>
-<td>DHCPでIPアドレス/ゲートウェイを取得</td>
-</tr>
-<tr>
-<td>usb0</td>
-<td>1対1接続のため、Raspberry PiをDHCPサーバとして機能させる。<br>Raspberry PI: <code>192.168.255.254/30</code><br>対向PC: <code>192.168.255.253/30</code></td>
-</tr>
-<tr>
-<td>wlan0</td>
-<td>1対多接続、Raspberry PiをDHCPサーバとして機能させる。<br>Raspberry PI: <code>192.168.253.1/24</code><br>無線LANクライアント: <code>192.168.253.2～254/24</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="systemd-networkd">Systemd-networkd</h3>
-<p>デフォルトのDHCP Client daemonを削除して、systemd-networkdを有効化する。  </p>
-<ol>
+<h3 id="_4">物理ディスクの割り当て</h3>
+<p>記憶域スペースでは、2種類のディスク割り当て方式があります。  </p>
+<ul>
 <li>
-<p>dhcpcdを削除<br />
-<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">purge</span> <span class="n">dhcpcd</span>  
-</pre></div></p>
+<p>固定(Fixed)<br />
+仮想ディスク作成時に物理ディスクの割り当てを行う方式。いたってシンプル。</p>
 </li>
 <li>
-<p>設定ファイルの配置
-<div class="codehilite"><pre><span></span><span class="n">mv</span> <span class="n">eth</span><span class="p">.</span><span class="n">network</span> <span class="n">usb0</span><span class="p">.</span><span class="n">network</span> <span class="n">wlan0</span><span class="p">.</span><span class="n">network</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">network</span><span class="o">/</span><span class="p">.</span>  
-</pre></div></p>
-<div class="admonition example">
-<p class="admonition-title">eth.network</p>
-<p><script src="https://gist.github.com/roy-n-roy/69cc483810efe17b7356d73036e9a2e2.js?file=eth.network"></script></p>
-</div>
-<div class="admonition example">
-<p class="admonition-title">usb0.network</p>
-<p><script src="https://gist.github.com/roy-n-roy/69cc483810efe17b7356d73036e9a2e2.js?file=usb0.network"></script></p>
-</div>
-<div class="admonition example">
-<p class="admonition-title">wlan0.network</p>
-<p><script src="https://gist.github.com/roy-n-roy/69cc483810efe17b7356d73036e9a2e2.js?file=wlan0.network"></script></p>
-</div>
+<p>シンプロビジョニング(Thin Provisioning)<br />
+仮想ディスク作成時ではなく、データ書き込み時に物理ディスクへの割り当てを行う方式。<br />
+物理ディスクの総容量よりも大きなサイズの仮想ディスクを作成することができ、物理ディスク容量が不足した場合にはプールへディスクを追加するだけでよい。<br />
+反面、仮想ディスクの容量に余裕があるように見えても、物理ディスク容量が不足してデータが書き込めないといったことも発生しうる。</p>
 </li>
+</ul>
+<h3 id="_5">ディスク故障時の回復</h3>
+<p>記憶域プールに対して、ディスクが故障した場合に自動的に冗長性を回復するための「ホットスペア」ディスクを割り当てることができます。<br />
+これにより、ディスクの故障が発生した場合でも、故障前と同じ状態に戻るようになっています。  </p>
+<p>ただ、ホットスペアを割り当てずに記憶域プールを構成することも可能です。<br />
+この場合、ディスク故障時にはプール内の他のディスクにミラーやパリティ情報を分散させて冗長性を回復するようになっています。  </p>
+<h3 id="_6">構成の例</h3>
+<p>下記の図では200GBのSSDを2本、500GBのHDDを2本、1TBのHDDを2本を使用して合計サイズ3.4TBのプールを作成しています。<br />
+また、HDDが故障したときのために、1TBのHDDをホットスペアとして割り当てています。  </p>
+<p>図の左上 <strong>例1</strong>では、記憶域階層を使用して物理ディスクのサイズよりも大きい4TBのパリティで冗長化された仮想ディスクを作成しています。
+これは「シンプロビジョニング」というデータの書き込み時に物理ディスクの確保を行う方式を用いているため、可能になっています。  </p>
+<p>一方、図の右上 <strong>例2</strong>のように、記憶域階層を用いずに仮想ディスクを作成することもできます。<br />
+こちらは記憶域プールから直接1TBのミラーで冗長化された仮想ディスクを作成しています。<br />
+また、「シンプロビジョニング」を用いずに、仮想ディスクの作成時に1TB×2(ミラーなので2倍)の容量分の物理ディスクを確保しています。  </p>
+<figure style="text-align: center;">
+<img src="/imgs/windows_storage_spaces.png" width="80%" />
+<figcaption>図： 記憶域スペースの構成例</figcaption>
+</figure>
+
+<h2 id="resilient-file-systemrefs">Resilient File System(ReFS)</h2>
+<p>Windows Server 2012以降、もしくは<strong>Windows10 Pro for WorkstationおよびEnterprise</strong>で利用できるファイルシステムです。<br />
+従来のWindowsのファイルシステムであるNTFSと比較して、信頼性・可用性・拡張性に優れているとされています。  </p>
+<p>個人で利用する場合、Windows10 Pro for Workstationでの利用が最有力の候補となります。  </p>
+<h3 id="refs_1">ReFSの特徴</h3>
+<ul>
 <li>
-<p>systemd-networkd, systemd-resolvedを有効化<br />
-<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">systemd</span><span class="o">-</span><span class="n">networkd</span>  
-<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">systemd</span><span class="o">-</span><span class="n">resolved</span>  
-</pre></div></p>
-</li>
-</ol>
-<h3 id="usb-on-the-goethernet">USB on the GoのEthernetアダプタ有効化</h3>
-<ol>
-<li>
-<p>下記のスクリプトを<code>/usr/local/bin</code>に配置</p>
-<div class="admonition example">
-<p class="admonition-title">init_usb_otg.sh</p>
-<p><script src="https://gist.github.com/roy-n-roy/69cc483810efe17b7356d73036e9a2e2.js?file=init_usb_otg.sh"></script></p>
+<p>信頼性<br />
+    「整合性ストリーム」とオプション機能を利用することで、ファイル読み込み時にチェックサムの検証とエラー修正を行うことができます。<br />
+    これは、ボリューム全体、フォルダ単位またはファイル単位で有効化・無効化ができます。  </p>
+<p>また、「Data Integrity Scan」と呼ばれるタスクがタスクスケジューラに登録されており、このタスクで定期的に全データの読み取りチェックとエラー修正を行っています。  </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><span style="font-size:90%;">タスクスケジューラから、タスクスケジューラライブラリ→Microsoft→Windows→Data Integrity Scan内のタスク「Data Integrity Scan」をダブルクリックし、トリガータブで各トリガーの編集画面から「有効」にチェックを入れる。</span></p>
 </div>
 </li>
 <li>
-<p>起動時に実行されるようsystemd serviceファイルを<code>/etc/systemd/system</code>に配置</p>
+<p>可用性<br />
+    稼働状態でのデータのエラー修正が可能です。  </p>
+</li>
+<li>
+<p>保守性<br />
+    もし、ファイルシステムレベルで破損してしまった場合、Windowsに標準でインストールされている<code>refsutil</code>というツールを用いて、可能な限りのデータ・サルベージを行うことができます。  </p>
+</li>
+<li>
+<p>性能<br />
+    コピー・オン・ライトを採用しており、Hyper-Vなどで使用される固定サイズのvhdxファイル作成などは数秒で完了します。<br />
+    しかし、細かいファイルアクセスの速度などについてはあまり得意で無く、あくまでサーバなどでの信頼性に重点をおいたものとなっています。<br />
+    また、Windows OSの起動ディスクにReFSを採用することはできません。  </p>
+</li>
+</ul>
+<h3 id="_7">整合性ストリームの有効化方法</h3>
+<p>整合性ストリームの有効化するためには、PowerShell上で<code>Set-FileIntegrity</code>コマンドを使用します。<br />
+ボリューム全体、フォルダ、ファイル単位のいずれでも有効化/無効化を設定することができます。</p>
 <div class="admonition example">
-<p class="admonition-title">usb_init.service</p>
-<p><script src="https://gist.github.com/roy-n-roy/69cc483810efe17b7356d73036e9a2e2.js?file=usb_init.service"></script></p>
+<p class="admonition-title">整合性ストリームの有効化/無効化と確認</p>
+<div class="codehilite"><pre><span></span><span class="o">#</span> <span class="n">Eドライブ全体で有効化</span>
+<span class="k">Set</span><span class="o">-</span><span class="n">FileIntegrity</span> <span class="n">E</span><span class="p">:</span> <span class="o">-</span><span class="n">Enable</span> <span class="err">$</span><span class="k">True</span>
+<span class="o">#</span> <span class="n">F</span><span class="p">:</span><span class="err">\</span><span class="n">Docsフォルダ配下を有効化</span>
+<span class="k">Set</span><span class="o">-</span><span class="n">FileIntegrity</span> <span class="n">F</span><span class="p">:</span><span class="err">\</span><span class="n">Docs</span><span class="err">\</span> <span class="o">-</span><span class="n">Enable</span> <span class="err">$</span><span class="k">True</span>
+<span class="o">#</span> <span class="n">F</span><span class="p">:</span><span class="err">\</span><span class="n">Secret</span><span class="err">\</span><span class="n">Movie</span><span class="p">.</span><span class="n">mp4ファイルのみで有効化</span>
+<span class="k">Set</span><span class="o">-</span><span class="n">FileIntegrity</span> <span class="n">F</span><span class="p">:</span><span class="err">\</span><span class="n">Secret</span><span class="err">\</span><span class="n">Movie</span><span class="p">.</span><span class="n">mp4</span> <span class="o">-</span><span class="n">Enable</span> <span class="err">$</span><span class="k">True</span>
+
+<span class="o">#</span> <span class="err">確認</span>
+<span class="k">Get</span><span class="o">-</span><span class="n">FileIntegrity</span> <span class="o">-</span><span class="n">FileName</span> <span class="s1">&#39;F:\Secret\Movie.mp4&#39;</span>
+<span class="k">Get</span><span class="o">-</span><span class="n">ChildItem</span> <span class="o">-</span><span class="n">Recurse</span> <span class="n">F</span><span class="p">:</span><span class="err">\</span><span class="n">Docs</span><span class="err">\</span> <span class="o">|</span> <span class="k">Get</span><span class="o">-</span><span class="n">FileIntegrity</span>
+</pre></div>
+
 </div>
-</li>
-<li>
-<p>usb_initを有効化
-<div class="codehilite"><pre><span></span><span class="n">systemd</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
-<span class="n">systemd</span> <span class="n">enable</span> <span class="n">usb_init</span>
-</pre></div></p>
-</li>
-</ol>
-<h3 id="raspberry-pilan-ap">Raspberry Piの無線LAN AP化</h3>
-<ol>
-<li>
-<p>networkd-dispatcher, hostapdをインストール<br />
-<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">hostapd</span>  
-</pre></div></p>
-</li>
-<li>
-<p>設定ファイルを配置<br />
-<div class="codehilite"><pre><span></span><span class="n">mv</span> <span class="n">hostapd</span><span class="p">.</span><span class="n">conf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hostapd</span><span class="o">/</span><span class="p">.</span>  
-</pre></div></p>
-</li>
-<li>
-<p>hostapdを有効化<br />
-<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">unmask</span> <span class="n">hostapd</span>  
-</pre></div></p>
-</li>
-</ol>
-<h3 id="lan-ap">接続優先度による無線LAN AP 起動/停止の設定</h3>
-<ol>
-<li>
-<p>networkd-dispatcher, hostapdをインストール<br />
-<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">networkd</span><span class="o">-</span><span class="n">dispatcher</span>  
-</pre></div></p>
-</li>
-<li>
-<p>設定ファイルを配置<br />
-他のネットワーク接続(eth0,usb0)が接続されている(routable)場合は無線LAN APを停止、<br />
-他が切断された場合は無線LAN APを起動するスクリプトを設定する。
-<div class="codehilite"><pre><span></span><span class="n">mv</span> <span class="n">stop_ap</span><span class="p">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">networkd</span><span class="o">-</span><span class="n">dispatcher</span><span class="o">/</span><span class="n">routable</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="p">.</span>  
-<span class="n">mv</span> <span class="n">start_ap</span><span class="p">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">networkd</span><span class="o">-</span><span class="n">dispatcher</span><span class="o">/</span><span class="k">off</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="p">.</span>  
-</pre></div></p>
-</li>
-</ol>
-<div class="admonition example">
-<p class="admonition-title">stop_ap.sh</p>
-<p><script src="https://gist.github.com/roy-n-roy/69cc483810efe17b7356d73036e9a2e2.js?file=stop_ap.sh"></script></p>
-</div>
-<div class="admonition example">
-<p class="admonition-title">start_ap.sh</p>
-<p><script src="https://gist.github.com/roy-n-roy/69cc483810efe17b7356d73036e9a2e2.js?file=start_ap.sh"></script></p>
-</div>
-<h3 id="usbpc">USB接続時のPC側ドライバ</h3>
-<p>USB接続されたRaspberry Piのイーサネットポート<code>usb0</code>は、RNDIS(Remote Network Driver Interface Specification)と呼ばれる規格に則ったものであるため、Windows10であれば別途ドライバを準備する必要はない。<br />
-しかし、セットアップ情報ファイル(INF)ファイルは用意されていないため、接続しただけではドライバが適用されない。  </p>
-<p>そのため、初回接続時には下記の手順でドライバを適用する必要がある。
-なお、この情報は2019/10時点のものであり、将来的には変更されている可能性がある点を事前に断っておく。  </p>
-<ol>
-<li>
-<p>デバイスマネージャを開く<br />
-「RNDIS」というデバイスに警告アイコンが表示されている。これをダブルクリックするとプロパティ画面が表示される。<br />
-<img width="400" src="/imgs/raspberrypi_network_devicemanager.png" />
-<img width="250" src="/imgs/raspberrypi_network_deviceproperty.png" />  </p>
-</li>
-<li>
-<p>ドライバ更新開始<br />
-「ドライバの更新」ボタンからドライバ更新を開始する。<br />
-「コンピューターを参照してドライバーソフトウェアを検索」「コンピューター上の利用可能なドライバーの一覧から選択します」と順に選択していく。<br />
-<img width="450" src="/imgs/raspberrypi_network_driverupdate1.png" /><br />
-<img width="450" src="/imgs/raspberrypi_network_driverupdate2.png" />  </p>
-</li>
-<li>
-<p>ドライバ種別の選択<br />
-続いて、「ネットワークアダプター」選択して次へ
-<img width="450" src="/imgs/raspberrypi_network_driverupdate3.png" />  </p>
-</li>
-<li>
-<p>ドライバの選択<br />
-製造元の一覧から「Microsoft」を選択し、さらに「リモートNDIS互換デバイス」を選択して次へ
-「ドライバーの更新警告」メッセージが表示されるが、無視して「はい」を選択<br />
-<img width="450" src="/imgs/raspberrypi_network_driverupdate4.png" />  </p>
-</li>
-<li>
-<p>ドライバ更新完了<br />
-「ドライバーが正常に更新されました」と表示されれば更新完了である<br />
-<img width="450" src="/imgs/raspberrypi_network_driverupdate5.png" />  </p>
-</li>
-</ol>
                 
                   
                 
@@ -968,7 +1028,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../" title="Raspberry Pi" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../../RouterOS/Firewall/" title="Firewall" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -977,19 +1037,19 @@
                 <span class="md-footer-nav__direction">
                   前
                 </span>
-                Raspberry Pi
+                Firewall
               </span>
             </div>
           </a>
         
         
-          <a href="../WebConsole/" title="Web Console" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../docker/" title="Docker" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   次
                 </span>
-                Web Console
+                Docker
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
