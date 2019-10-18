@@ -433,13 +433,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    ディスク構成の手順
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -461,7 +454,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     整合性ストリームの有効化方法
   </a>
   
@@ -815,13 +808,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    ディスク構成の手順
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -843,7 +829,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     整合性ストリームの有効化方法
   </a>
   
@@ -985,7 +971,6 @@
 <figcaption>図： 記憶域スペースの構成例</figcaption>
 </figure>
 
-<h3 id="_7">ディスク構成の手順</h3>
 <div class="admonition example">
 <p class="admonition-title">例１のディスクの構成方法</p>
 <div class="codehilite"><pre><span></span><span class="o">#</span> <span class="err">プールに設定する</span><span class="n">SSD</span><span class="o">/</span><span class="n">HDDを取得</span>
@@ -998,7 +983,7 @@
 <span class="o">#</span> <span class="n">SSDの記憶域階層を作成</span>
 <span class="err">$</span><span class="n">SSDTier</span> <span class="o">=</span> <span class="k">New</span><span class="o">-</span><span class="n">StorageTier</span> <span class="o">-</span><span class="n">StoragePoolFriendlyName</span> <span class="s1">&#39;記憶域プール&#39;</span> <span class="o">-</span><span class="n">FriendlyName</span> <span class="s1">&#39;SSD階層&#39;</span> <span class="o">-</span><span class="n">MediaType</span> <span class="n">SSD</span> <span class="o">-</span><span class="n">ResiliencySettingName</span> <span class="n">Mirror</span> <span class="o">-</span><span class="n">ProvisioningType</span> <span class="n">Fixed</span>
 <span class="o">#</span> <span class="n">HDDの記憶域階層を作成</span>
-<span class="err">$</span><span class="n">HDDTier</span> <span class="o">=</span> <span class="k">New</span><span class="o">-</span><span class="n">StorageTier</span> <span class="o">-</span><span class="n">StoragePoolFriendlyName</span> <span class="s1">&#39;記憶域プール&#39;</span> <span class="o">-</span><span class="n">FriendlyName</span> <span class="s1">&#39;HDD階層&#39;</span> <span class="o">-</span><span class="n">MediaType</span> <span class="n">HDD</span> <span class="o">-</span><span class="n">ResiliencySettingName</span> <span class="n">Parity</span> <span class="o">-</span><span class="n">ProvisioningType</span> <span class="n">Thin</span> <span class="o">-</span><span class="n">NumberOfColumns</span> <span class="mi">4</span>
+<span class="err">$</span><span class="n">HDDTier</span> <span class="o">=</span> <span class="k">New</span><span class="o">-</span><span class="n">StorageTier</span> <span class="o">-</span><span class="n">StoragePoolFriendlyName</span> <span class="s1">&#39;記憶域プール&#39;</span> <span class="o">-</span><span class="n">FriendlyName</span> <span class="s1">&#39;HDD階層&#39;</span> <span class="o">-</span><span class="n">MediaType</span> <span class="n">HDD</span> <span class="o">-</span><span class="n">ResiliencySettingName</span> <span class="n">Parity</span> <span class="o">-</span><span class="n">ProvisioningType</span> <span class="n">Fixed</span> <span class="o">-</span><span class="n">NumberOfColumns</span> <span class="mi">4</span>
 <span class="o">#</span> <span class="n">ReFSのボリュームを作成</span>
 <span class="o">#</span> <span class="err">サイズ指定は</span><span class="n">SSD</span><span class="p">:</span><span class="mi">200</span><span class="n">GB</span><span class="err">、</span><span class="n">HDD</span><span class="p">:</span><span class="mi">1</span><span class="n">TB</span><span class="p">(</span><span class="err">バイト単位</span><span class="p">)</span>
 <span class="k">New</span><span class="o">-</span><span class="n">Volume</span> <span class="o">-</span><span class="n">FriendlyName</span> <span class="s1">&#39;例１&#39;</span> <span class="o">-</span><span class="n">WriteCacheSize</span> <span class="mi">16</span><span class="n">GB</span> <span class="o">-</span><span class="n">StorageTiers</span> <span class="err">$</span><span class="n">SSDTier</span><span class="p">,</span><span class="err">$</span><span class="n">HDDTier</span> <span class="o">-</span><span class="n">StorageTierSizes</span> <span class="mi">214748364800</span><span class="p">,</span><span class="mi">1099511627776</span>
@@ -1046,7 +1031,7 @@
     また、Windows OSの起動ディスクにReFSを採用することはできません。  </p>
 </li>
 </ul>
-<h3 id="_8">整合性ストリームの有効化方法</h3>
+<h3 id="_7">整合性ストリームの有効化方法</h3>
 <p>ReFSのボリューム作成した段階では整合性ストリームは無効の状態になっています。<br />
 有効化するためには、PowerShell上で<code>Set-FileIntegrity</code>コマンドを使用します。  </p>
 <p>整合性ストリームは、ボリューム全体・フォルダ単位・ファイル単位のいずれでも有効化/無効化を設定することができます。</p>
