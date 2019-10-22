@@ -542,27 +542,34 @@
         
           <li class="md-nav__item">
   <a href="#_9" class="md-nav__link">
-    ディスク構築
+    おことわり
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#_10" class="md-nav__link">
-    ベンチマーク
+    ディスク構築
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#_11" class="md-nav__link">
-    考察
+    ベンチマーク
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#_12" class="md-nav__link">
+    考察
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
     余談
   </a>
   
@@ -905,27 +912,34 @@
         
           <li class="md-nav__item">
   <a href="#_9" class="md-nav__link">
-    ディスク構築
+    おことわり
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#_10" class="md-nav__link">
-    ベンチマーク
+    ディスク構築
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#_11" class="md-nav__link">
-    考察
+    ベンチマーク
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#_12" class="md-nav__link">
+    考察
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
     余談
   </a>
   
@@ -1182,10 +1196,11 @@ Windows Server 2016 Datacenter/Windows Server 2019 Datacenterでサポートさ�
 </tr>
 </tbody>
 </table>
-<p>上記のデメリットを補うために、ミラーとパリティの両方の回復性を持たせる機能が「ミラーリングによって高速化されたパリティ」です。  </p>
-<h3 id="_9">ディスク構築</h3>
-<p>本来、「ミラーリングによって高速化されたパリティ」ではWindows Server2016 Datacenter以降のOSである必要がありますが、今回はWindows10 Pro for Workstationで構築してみました。<br />
+<p>上記のデメリットを補うために、ミラーとパリティの両方の回復性を持たせて、<strong>ストレージ容量の高利用効率と高ランダム書き込み性能を両立</strong>する機能が「ミラーリングによって高速化されたパリティ」です。  </p>
+<h3 id="_9">おことわり</h3>
+<p>本来、「ミラーリングによって高速化されたパリティ」を利用するには、Windows Server2016 Datacenter以降のOSである必要がありますが、今回はWindows10 Pro for Workstationで構築してみました。<br />
 公式にはサポートされていない環境ですので、将来のアップデートなどで正常に利用できなくなる可能性が有ることを、事前にお断りしておきます。  </p>
+<h3 id="_10">ディスク構築</h3>
 <p>使用したハードウェア仕様は下記の通りです。  </p>
 <table>
 <thead>
@@ -1217,6 +1232,12 @@ Windows Server 2016 Datacenter/Windows Server 2019 Datacenterでサポートさ�
 </tr>
 </tbody>
 </table>
+<p>下記の図の様な構成の仮想ディスクを構築します。</p>
+<figure style="text-align: center;">
+<img src="/imgs/windows_storage_spaces_mirror_accelerated_parity.png" width="80%" />
+<figcaption>図: </figcaption>
+</figure>
+
 <p>では、実際にSSD:200GB + HDD:32TB の仮想ディスクを作成してみます。  </p>
 <div class="codehilite"><pre><span></span><span class="o">#</span> <span class="n">SSD階層を作成</span>
 <span class="err">$</span><span class="n">SSDTier</span> <span class="o">=</span> <span class="k">New</span><span class="o">-</span><span class="n">StorageTier</span> <span class="o">-</span><span class="n">StoragePoolFriendlyName</span> <span class="s1">&#39;記憶域プール&#39;</span> <span class="o">-</span><span class="n">FriendlyName</span> <span class="s1">&#39;SSD階層&#39;</span> <span class="o">-</span><span class="n">MediaType</span> <span class="n">SSD</span> <span class="o">-</span><span class="n">ResiliencySettingName</span> <span class="n">Mirror</span> <span class="o">-</span><span class="n">ProvisioningType</span> <span class="n">Fixed</span>
@@ -1231,7 +1252,7 @@ Windows Server 2016 Datacenter/Windows Server 2019 Datacenterでサポートさ�
 </pre></div>
 
 <p><img alt="" src="/imgs/windows_storage_spaces_powershell.png" /></p>
-<h3 id="_10">ベンチマーク</h3>
+<h3 id="_11">ベンチマーク</h3>
 <p>とりあえず、エラー無く作成できましたので、下記の条件でベンチマークを取ってみます。  </p>
 <ul>
 <li>使用ソフト: CrystalDiskMark 6.0.3</li>
@@ -1265,13 +1286,13 @@ table#benchmark_teble td.bottom { font-weight: bold; color: blue; }
 
 <p>ミラー階層とパリティ階層の両方を含んだ仮想ディスクで、NTFSのボリュームは作成できないのかと思っていましたが、作成できてしまいました。<br />
 結果として、予期していませんでしたが、ランダム書き込みで一番高パフォーマンスなのは「記憶域階層を利用したNTFS」のパターンとなりました。  </p>
-<h3 id="_11">考察</h3>
+<h3 id="_12">考察</h3>
 <p>書き込みについては有意な差が見られ、記憶域階層を利用した方が高パフォーマンスになりました。<br />
 また読み込みについては、記憶域階層を利用したReFSが一番パフォーマンスが低くなりました。
 これは「ミラーリングによって高速化されたパリティ」が、記憶域スペースダイレクトでの利用を前提としており、
 記憶域スペースダイレクトの読み込みキャッシュ機能を利用して性能向上させる設計なのかと思います。</p>
 <p>なお、ここまで書いておきながらなのですが、今回のベンチマーク結果は正式にサポートされた環境での測定されたものではないため「ミラーリングによって高速化されたパリティ」が正しく構築できた結果なのかは不明です。  </p>
-<h3 id="_12">余談</h3>
+<h3 id="_13">余談</h3>
 <p>ちなみに、下記を試してみましたが、Not Supportedエラーが発生しました。</p>
 <ul>
 <li>記憶域階層作成時のProvisioningTypeをThin(シンプロビジョニング)に設定<br />
