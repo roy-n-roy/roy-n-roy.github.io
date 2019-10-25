@@ -1,8 +1,10 @@
 
 ## 目的
-私はよく忘れ物をします。  
-それはデータとて同じであり、出先で編集しようと思っていたデータをモバイルPCに同期し忘れていたとか、自宅PCでコミットしたソースコードをGitHubにプッシュし忘れていたとか、日常茶飯事なのです。  
-しかし、自宅にどこからでも接続できれば、ファイルサーバにはアクセス出来るし、Wake-on-Lanで自宅PCを起動してソースコードをアップロードすることもできます。
+* 出先で編集しようと思っていたデータをモバイルPCに同期し忘れていた  
+* 自宅PCでコミットしたソースコードをGitHubにプッシュし忘れていた  
+
+そんな時、出先から自宅にどこからでも接続できれば、宅内ファイルサーバにはアクセス出来るし、Wake-on-Lanで自宅PCを起動してソースコードをアップロードすることもできます。  
+
 なので、自宅へ接続できるVPNサーバを立てることにしました。
 
 ## 要件
@@ -94,8 +96,8 @@ VPNサーバ・クライアントの正真性検証や認証に使用する証�
 	クライアントを認証するための証明書を作成し、CAで署名します。
 
 	```
-	/certificate add common-name=user@vpn.yourdomain.com name=client_user1 key-size=2048 days-valid=3650 country=JP subject-alt-name=email:user@vpn.yourdomain.com key-usage=digital-signature,key-encipherment,data-encipherment,ipsec-user,ipsec-tunnel,ipsec-end-system,tls-client
-	/certificate sign server ca=ca
+	/certificate add common-name=user1@vpn.yourdomain.com name=client_user1 key-size=2048 days-valid=3650 country=JP subject-alt-name=email:user1@vpn.yourdomain.com key-usage=digital-signature,key-encipherment,data-encipherment,ipsec-user,ipsec-tunnel,ipsec-end-system,tls-client
+	/certificate sign client_user1 ca=ca
 	/certificate set client_user1 trusted=yes
 	```
 
@@ -112,7 +114,7 @@ VPNサーバ・クライアントの正真性検証や認証に使用する証�
 	このとき、必ずパスフレーズを設定するようにしてください。パスフレーズを設定しないと正しい証明書ストアにインストールされなくなります。  
 
 	* Windows向けにはPKCS12フォーマットでエクスポートします。これにより、CAとクライアント証明書が紐付いた状態でWindowsへインポートされます。  
-	* iOS向けにはPEMフォーマットでCAとクライアント証明書を別々にエクスポートします。iOSはPKCS12フォーマットだとCAが紐付いた状態で上手くインポートされないそうです。  
+	* iOS向けにはCAとクライアント証明書の両方をエクスポートします。iOSはPKCS12フォーマットだとCAが紐付いた状態で上手くインポートされないそうです。  
 	
 
 	```
@@ -121,10 +123,10 @@ VPNサーバ・クライアントの正真性検証や認証に使用する証�
 
 	# iOS向け
 	/certificate export-certificate ca type=pem
-	/certificate export-certificate rw-client1 export-passphrase=1234567890 type=pem
+	/certificate export-certificate client_user1 export-passphrase=1234567890 type=pkcs12
 	```
 
-	エクスポートした証明書ファイルは、ブラウザからのダウンロードやscp,sftpで転送するなりして、クライアントOSへ転送してください。  
+	エクスポートした証明書ファイルは、ブラウザからのダウンロード、scp,sftpでの転送するなりして、クライアントOSへ転送してください。  
 
 ### IPsec/IKEv2設定
 RouterOS上でVPNサーバの設定をしていきます。  
@@ -180,11 +182,11 @@ Windows10、iOSもしくはその両方でVPN接続できるか、確認して�
 このとき、保存場所は「ローカル コンピューター」を選んでください。  
 また、途中でパスフレーズの入力を求められるので、エクスポートしたときのパスフレーズを入力してください。証明書ストアの設定はデフォルトの「証明書の種類に基づいて、自動的に証明書ストアを選択する。」で大丈夫です。  
 
-<a href="/imgs/routeros_vpn_server_windows10_import1.png" data-lightbox="import"><img src="/imgs/routeros_vpn_server_windows10_import1.png" width=30% /></a>
-<a href="/imgs/routeros_vpn_server_windows10_import2.png" data-lightbox="import"><img src="/imgs/routeros_vpn_server_windows10_import2.png" width=30% /></a>
-<a href="/imgs/routeros_vpn_server_windows10_import3.png" data-lightbox="import"><img src="/imgs/routeros_vpn_server_windows10_import3.png" width=30% /></a>
-<a href="/imgs/routeros_vpn_server_windows10_import4.png" data-lightbox="import"><img src="/imgs/routeros_vpn_server_windows10_import4.png" width=30% /></a>
-<a href="/imgs/routeros_vpn_server_windows10_import5.png" data-lightbox="import"><img src="/imgs/routeros_vpn_server_windows10_import5.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_windows10_import1.png" data-lightbox="import_win"><img src="/imgs/routeros_vpn_server_windows10_import1.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_windows10_import2.png" data-lightbox="import_win"><img src="/imgs/routeros_vpn_server_windows10_import2.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_windows10_import3.png" data-lightbox="import_win"><img src="/imgs/routeros_vpn_server_windows10_import3.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_windows10_import4.png" data-lightbox="import_win"><img src="/imgs/routeros_vpn_server_windows10_import4.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_windows10_import5.png" data-lightbox="import_win"><img src="/imgs/routeros_vpn_server_windows10_import5.png" width=30% /></a>
 
 次に、VPN接続の設定をしていきます。  
 
@@ -201,10 +203,47 @@ Windows10、iOSもしくはその両方でVPN接続できるか、確認して�
 | ユーザー名(オプション) | (空欄) |
 | パスワード(オプション) | (空欄) |
 
-<a href="/imgs/routeros_vpn_server_windows10_settings.png" data-lightbox="settings"><img src="/imgs/routeros_vpn_server_windows10_settings.png" width="60%" /></a>
+<a href="/imgs/routeros_vpn_server_windows10_settings.png" data-lightbox="settings_win"><img src="/imgs/routeros_vpn_server_windows10_settings.png" width="60%" /></a>
+
+設定完了後、VPN接続できることを確認します。  
 
 #### iOS13の場合
-(作成中)
+まず、先の手順で作成したCA証明書をインポートします。  
+`cert_export_ca.crt`ファイルを開くと、"設定" Appで確認するよう表示されるので、設定Appを開いてプロファイルをインストールします。  
+インストールが完了すると、「<span style="color:LimeGreen;">検証済み ☑</span>」と表示されます。  
+
+<a href="/imgs/routeros_vpn_server_ios13_import1.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import1.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import2.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import2.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import3.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import3.png" width=30% /></a>
+
+次に`cert_export_client_user1.p12`を開き、同様にプロファイルをインストールします。  
+こちらもインストール完了後、「一般」→「プロファイル」から確認すると「<span style="color:LimeGreen;">検証済み ☑</span>」と表示されます。  
+<a href="/imgs/routeros_vpn_server_ios13_import4.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import4.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import5.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import5.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import6.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import6.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import7.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import7.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import8.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import8.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import9.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import9.png" width=30% /></a>
+
+最後に設定Appの「一般」→「VPN」と開き、「VPN構成の追加」をタップしてVPN構成を設定します。  
+設定は下記の様に入力します。
+
+<a href="/imgs/routeros_vpn_server_ios13_settings.png" data-lightbox="settings_ios"><img style="float: left;" src="/imgs/routeros_vpn_server_ios13_settings.png" width=30% /></a>
+
+| | |
+|-|-|
+| タイプ | IKEv2 |
+| 説明 | (お好みの名前を設定) |
+| サーバ | vpn.mydomain.com<br>(自身のVPNサーバのドメイン) |
+| リモートID | vpn.mydomain.com<br>(自身のVPNサーバのドメイン) |
+| ローカルID | user1@vpn.mydomain.com<br>(クライアント証明書の名前) |
+| ユーザ認証 | なし |
+| 証明書を使用 | ON |
+| 証明書 | user1@vpn.mydomain.com<br>(クライアント証明書の名前) |
+
+<span style="clear: left;" />
+
+設定完了後、VPN接続できることを確認します。  
 
 [^1]: DS-LiteではISPからプライベートIPv4アドレスが割り当てられ、ISP側でNAT変換をしています。
 [^2]: MAP-EではISP側から利用可能な外部ポートが割り当てられ、その範囲のみでしか外部公開することができません。
