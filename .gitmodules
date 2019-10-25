@@ -1,0 +1,3 @@
+[submodule "submodules/lightbox2"]
+	path = submodules/lightbox2
+	url = https://github.com/lokesh/lightbox2.git
