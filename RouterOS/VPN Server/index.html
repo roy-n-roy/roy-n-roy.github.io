@@ -936,10 +936,12 @@
                   <h1>VPN Server</h1>
                 
                 <h2 id="_1">目的</h2>
-<p>私はよく忘れ物をします。<br />
-それはデータとて同じであり、出先で編集しようと思っていたデータをモバイルPCに同期し忘れていたとか、自宅PCでコミットしたソースコードをGitHubにプッシュし忘れていたとか、日常茶飯事なのです。<br />
-しかし、自宅にどこからでも接続できれば、ファイルサーバにはアクセス出来るし、Wake-on-Lanで自宅PCを起動してソースコードをアップロードすることもできます。
-なので、自宅へ接続できるVPNサーバを立てることにしました。</p>
+<ul>
+<li>出先で編集しようと思っていたデータをモバイルPCに同期し忘れていた  </li>
+<li>自宅PCでコミットしたソースコードをGitHubにプッシュし忘れていた  </li>
+</ul>
+<p>そんな時、出先から自宅にどこからでも接続できれば、宅内ファイルサーバにはアクセス出来るし、Wake-on-Lanで自宅PCを起動してソースコードをアップロードすることもできます。  </p>
+<p>なので、自宅へ接続できるVPNサーバを立てることにしました。</p>
 <h2 id="_2">要件</h2>
 <p>今回のVPNの要件は、下記の3点です。</p>
 <ul>
@@ -1049,8 +1051,8 @@
 <li>
 <p>クライアント証明書の作成<br />
     クライアントを認証するための証明書を作成し、CAで署名します。</p>
-<div class="codehilite"><pre><span></span><span class="o">/</span><span class="nv">certificate</span> <span class="nv">add</span> <span class="nv">common</span><span class="o">-</span><span class="nv">name</span><span class="o">=</span><span class="nv">user</span>@<span class="nv">vpn</span>.<span class="nv">yourdomain</span>.<span class="nv">com</span> <span class="nv">name</span><span class="o">=</span><span class="nv">client_user1</span> <span class="nv">key</span><span class="o">-</span><span class="nv">size</span><span class="o">=</span><span class="mi">2048</span> <span class="nv">days</span><span class="o">-</span><span class="nv">valid</span><span class="o">=</span><span class="mi">3650</span> <span class="nv">country</span><span class="o">=</span><span class="nv">JP</span> <span class="nv">subject</span><span class="o">-</span><span class="nv">alt</span><span class="o">-</span><span class="nv">name</span><span class="o">=</span><span class="nv">email</span>:<span class="nv">user</span>@<span class="nv">vpn</span>.<span class="nv">yourdomain</span>.<span class="nv">com</span> <span class="nv">key</span><span class="o">-</span><span class="nv">usage</span><span class="o">=</span><span class="nv">digital</span><span class="o">-</span><span class="nv">signature</span>,<span class="nv">key</span><span class="o">-</span><span class="nv">encipherment</span>,<span class="nv">data</span><span class="o">-</span><span class="nv">encipherment</span>,<span class="nv">ipsec</span><span class="o">-</span><span class="nv">user</span>,<span class="nv">ipsec</span><span class="o">-</span><span class="nv">tunnel</span>,<span class="nv">ipsec</span><span class="o">-</span><span class="k">end</span><span class="o">-</span><span class="nv">system</span>,<span class="nv">tls</span><span class="o">-</span><span class="nv">client</span>
-<span class="o">/</span><span class="nv">certificate</span> <span class="nv">sign</span> <span class="nv">server</span> <span class="nv">ca</span><span class="o">=</span><span class="nv">ca</span>
+<div class="codehilite"><pre><span></span><span class="o">/</span><span class="nv">certificate</span> <span class="nv">add</span> <span class="nv">common</span><span class="o">-</span><span class="nv">name</span><span class="o">=</span><span class="nv">user1</span>@<span class="nv">vpn</span>.<span class="nv">yourdomain</span>.<span class="nv">com</span> <span class="nv">name</span><span class="o">=</span><span class="nv">client_user1</span> <span class="nv">key</span><span class="o">-</span><span class="nv">size</span><span class="o">=</span><span class="mi">2048</span> <span class="nv">days</span><span class="o">-</span><span class="nv">valid</span><span class="o">=</span><span class="mi">3650</span> <span class="nv">country</span><span class="o">=</span><span class="nv">JP</span> <span class="nv">subject</span><span class="o">-</span><span class="nv">alt</span><span class="o">-</span><span class="nv">name</span><span class="o">=</span><span class="nv">email</span>:<span class="nv">user1</span>@<span class="nv">vpn</span>.<span class="nv">yourdomain</span>.<span class="nv">com</span> <span class="nv">key</span><span class="o">-</span><span class="nv">usage</span><span class="o">=</span><span class="nv">digital</span><span class="o">-</span><span class="nv">signature</span>,<span class="nv">key</span><span class="o">-</span><span class="nv">encipherment</span>,<span class="nv">data</span><span class="o">-</span><span class="nv">encipherment</span>,<span class="nv">ipsec</span><span class="o">-</span><span class="nv">user</span>,<span class="nv">ipsec</span><span class="o">-</span><span class="nv">tunnel</span>,<span class="nv">ipsec</span><span class="o">-</span><span class="k">end</span><span class="o">-</span><span class="nv">system</span>,<span class="nv">tls</span><span class="o">-</span><span class="nv">client</span>
+<span class="o">/</span><span class="nv">certificate</span> <span class="nv">sign</span> <span class="nv">client_user1</span> <span class="nv">ca</span><span class="o">=</span><span class="nv">ca</span>
 <span class="o">/</span><span class="nv">certificate</span> <span class="nv">set</span> <span class="nv">client_user1</span> <span class="nv">trusted</span><span class="o">=</span><span class="nv">yes</span>
 </pre></div>
 
@@ -1069,17 +1071,17 @@
     このとき、必ずパスフレーズを設定するようにしてください。パスフレーズを設定しないと正しい証明書ストアにインストールされなくなります。  </p>
 <ul>
 <li>Windows向けにはPKCS12フォーマットでエクスポートします。これにより、CAとクライアント証明書が紐付いた状態でWindowsへインポートされます。  </li>
-<li>iOS向けにはPEMフォーマットでCAとクライアント証明書を別々にエクスポートします。iOSはPKCS12フォーマットだとCAが紐付いた状態で上手くインポートされないそうです。  </li>
+<li>iOS向けにはCAとクライアント証明書の両方をエクスポートします。iOSはPKCS12フォーマットだとCAが紐付いた状態で上手くインポートされないそうです。  </li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="o">#</span> <span class="n">Windows向け</span>
 <span class="o">/</span><span class="n">certificate</span> <span class="n">export</span><span class="o">-</span><span class="n">certificate</span> <span class="n">client_user1</span> <span class="n">export</span><span class="o">-</span><span class="n">passphrase</span><span class="o">=</span><span class="mi">1234567890</span> <span class="k">type</span><span class="o">=</span><span class="n">pkcs12</span>
 
 <span class="o">#</span> <span class="n">iOS向け</span>
 <span class="o">/</span><span class="n">certificate</span> <span class="n">export</span><span class="o">-</span><span class="n">certificate</span> <span class="n">ca</span> <span class="k">type</span><span class="o">=</span><span class="n">pem</span>
-<span class="o">/</span><span class="n">certificate</span> <span class="n">export</span><span class="o">-</span><span class="n">certificate</span> <span class="n">rw</span><span class="o">-</span><span class="n">client1</span> <span class="n">export</span><span class="o">-</span><span class="n">passphrase</span><span class="o">=</span><span class="mi">1234567890</span> <span class="k">type</span><span class="o">=</span><span class="n">pem</span>
+<span class="o">/</span><span class="n">certificate</span> <span class="n">export</span><span class="o">-</span><span class="n">certificate</span> <span class="n">client_user1</span> <span class="n">export</span><span class="o">-</span><span class="n">passphrase</span><span class="o">=</span><span class="mi">1234567890</span> <span class="k">type</span><span class="o">=</span><span class="n">pkcs12</span>
 </pre></div>
 
-<p>エクスポートした証明書ファイルは、ブラウザからのダウンロードやscp,sftpで転送するなりして、クライアントOSへ転送してください。  </p>
+<p>エクスポートした証明書ファイルは、ブラウザからのダウンロード、scp,sftpでの転送するなりして、クライアントOSへ転送してください。  </p>
 </li>
 </ol>
 <h3 id="ipsecikev2">IPsec/IKEv2設定</h3>
@@ -1129,11 +1131,11 @@
 <p>証明書ファイル <code>client_user1.p12</code> をダブルクリックし、証明書のインポートウィザードを開始します。
 このとき、保存場所は「ローカル コンピューター」を選んでください。<br />
 また、途中でパスフレーズの入力を求められるので、エクスポートしたときのパスフレーズを入力してください。証明書ストアの設定はデフォルトの「証明書の種類に基づいて、自動的に証明書ストアを選択する。」で大丈夫です。  </p>
-<p><a href="/imgs/routeros_vpn_server_windows10_import1.png" data-lightbox="import"><img src="/imgs/routeros_vpn_server_windows10_import1.png" width=30% /></a>
-<a href="/imgs/routeros_vpn_server_windows10_import2.png" data-lightbox="import"><img src="/imgs/routeros_vpn_server_windows10_import2.png" width=30% /></a>
-<a href="/imgs/routeros_vpn_server_windows10_import3.png" data-lightbox="import"><img src="/imgs/routeros_vpn_server_windows10_import3.png" width=30% /></a>
-<a href="/imgs/routeros_vpn_server_windows10_import4.png" data-lightbox="import"><img src="/imgs/routeros_vpn_server_windows10_import4.png" width=30% /></a>
-<a href="/imgs/routeros_vpn_server_windows10_import5.png" data-lightbox="import"><img src="/imgs/routeros_vpn_server_windows10_import5.png" width=30% /></a></p>
+<p><a href="/imgs/routeros_vpn_server_windows10_import1.png" data-lightbox="import_win"><img src="/imgs/routeros_vpn_server_windows10_import1.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_windows10_import2.png" data-lightbox="import_win"><img src="/imgs/routeros_vpn_server_windows10_import2.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_windows10_import3.png" data-lightbox="import_win"><img src="/imgs/routeros_vpn_server_windows10_import3.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_windows10_import4.png" data-lightbox="import_win"><img src="/imgs/routeros_vpn_server_windows10_import4.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_windows10_import5.png" data-lightbox="import_win"><img src="/imgs/routeros_vpn_server_windows10_import5.png" width=30% /></a></p>
 <p>次に、VPN接続の設定をしていきます。  </p>
 <p>スタートボタン、もしくはWinキー+Iで設定画面を開きます。
 そこから「ネットワークとインターネット」→「VPN」とたどっていき、「VPN接続を追加する」をクリックし、下記のように設定します。</p>
@@ -1175,8 +1177,70 @@
 </tr>
 </tbody>
 </table>
-<p><a href="/imgs/routeros_vpn_server_windows10_settings.png" data-lightbox="settings"><img src="/imgs/routeros_vpn_server_windows10_settings.png" width="60%" /></a></p>
+<p><a href="/imgs/routeros_vpn_server_windows10_settings.png" data-lightbox="settings_win"><img src="/imgs/routeros_vpn_server_windows10_settings.png" width="60%" /></a></p>
+<p>設定完了後、VPN接続できることを確認します。  </p>
 <h4 id="ios13">iOS13の場合</h4>
+<p>まず、先の手順で作成したCA証明書をインポートします。<br />
+<code>cert_export_ca.crt</code>ファイルを開くと、"設定" Appで確認するよう表示されるので、設定Appを開いてプロファイルをインストールします。<br />
+インストールが完了すると、「<span style="color:LimeGreen;">検証済み ☑</span>」と表示されます。  </p>
+<p><a href="/imgs/routeros_vpn_server_ios13_import1.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import1.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import2.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import2.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import3.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import3.png" width=30% /></a></p>
+<p>次に<code>cert_export_client_user1.p12</code>を開き、同様にプロファイルをインストールします。<br />
+こちらもインストール完了後、「一般」→「プロファイル」から確認すると「<span style="color:LimeGreen;">検証済み ☑</span>」と表示されます。<br />
+<a href="/imgs/routeros_vpn_server_ios13_import4.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import4.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import5.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import5.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import6.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import6.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import7.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import7.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import8.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import8.png" width=30% /></a>
+<a href="/imgs/routeros_vpn_server_ios13_import9.png" data-lightbox="import_ios"><img src="/imgs/routeros_vpn_server_ios13_import9.png" width=30% /></a></p>
+<p>最後に設定Appの「一般」→「VPN」と開き、「VPN構成の追加」をタップしてVPN構成を設定します。<br />
+設定は下記の様に入力します。</p>
+<p><a href="/imgs/routeros_vpn_server_ios13_settings.png" data-lightbox="settings_ios"><img style="float: left;" src="/imgs/routeros_vpn_server_ios13_settings.png" width=30% /></a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>タイプ</td>
+<td>IKEv2</td>
+</tr>
+<tr>
+<td>説明</td>
+<td>(お好みの名前を設定)</td>
+</tr>
+<tr>
+<td>サーバ</td>
+<td>vpn.mydomain.com<br>(自身のVPNサーバのドメイン)</td>
+</tr>
+<tr>
+<td>リモートID</td>
+<td>vpn.mydomain.com<br>(自身のVPNサーバのドメイン)</td>
+</tr>
+<tr>
+<td>ローカルID</td>
+<td>user1@vpn.mydomain.com<br>(クライアント証明書の名前)</td>
+</tr>
+<tr>
+<td>ユーザ認証</td>
+<td>なし</td>
+</tr>
+<tr>
+<td>証明書を使用</td>
+<td>ON</td>
+</tr>
+<tr>
+<td>証明書</td>
+<td>user1@vpn.mydomain.com<br>(クライアント証明書の名前)</td>
+</tr>
+</tbody>
+</table>
+<p><span style="clear: left;" /></p>
+<p>設定完了後、VPN接続できることを確認します。  </p>
 <div class="footnote">
 <hr />
 <ol>

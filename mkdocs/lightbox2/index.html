@@ -812,12 +812,14 @@
 <span class="nv">cd</span> ..<span class="o">/</span>..<span class="o">/</span>
 <span class="nv">git</span> <span class="nv">add</span> <span class="nv">submodules</span><span class="o">/</span><span class="nv">lightbox2</span>
 <span class="nv">git</span> <span class="nv">commit</span> <span class="o">-</span><span class="nv">m</span> <span class="s2">&quot;</span><span class="s">Add lightbox2 v2.11.1</span><span class="s2">&quot;</span>
+<span class="nv">cd</span> <span class="nv">docs</span>
 
-# <span class="k">for</span> <span class="nv">Powershell</span>
-<span class="nv">New</span><span class="o">-</span><span class="nv">Item</span> <span class="o">-</span><span class="nv">Type</span> <span class="nv">SymbolicLink</span> <span class="o">-</span><span class="nv">Name</span> <span class="nv">docs</span>\<span class="nv">lightbox2</span> <span class="o">-</span><span class="nv">Path</span> ..\<span class="nv">submodules</span>\<span class="nv">lightbox2</span>\<span class="nv">dist</span>
+# <span class="k">for</span> <span class="nv">command</span> <span class="nv">prompt</span>
+<span class="nv">git</span> <span class="nv">config</span> <span class="nv">core</span>.<span class="nv">symlinks</span> <span class="nv">true</span>
+<span class="nv">mklink</span> <span class="o">/</span><span class="nv">D</span> <span class="nv">lightbox2</span> ..\<span class="nv">submodules</span>\<span class="nv">lightbox2</span>\<span class="nv">dist</span>
 
 # <span class="k">for</span> <span class="nv">bash</span>
-<span class="nv">ln</span> <span class="o">-</span><span class="nv">s</span> ..<span class="o">/</span><span class="nv">submodules</span><span class="o">/</span><span class="nv">lightbox2</span><span class="o">/</span><span class="nv">dist</span> <span class="nv">docs</span><span class="o">/</span><span class="nv">lightbox2</span>
+<span class="nv">ln</span> <span class="o">-</span><span class="nv">s</span> <span class="nv">submodules</span><span class="o">/</span><span class="nv">lightbox2</span><span class="o">/</span><span class="nv">dist</span> <span class="nv">lightbox2</span>
 </pre></div>
 
 <h3 id="mkdocslightbox2">mkdocsの設定ファイルにlightbox2を読み込むよう設定を追加する</h3>
