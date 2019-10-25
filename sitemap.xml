@@ -66,6 +66,11 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
+     <loc>https://roy-n-roy.github.io/RouterOS/VPN Server/</loc>
+     <lastmod>2019-10-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
      <loc>https://roy-n-roy.github.io/mkdocs/</loc>
      <lastmod>2019-10-25</lastmod>
      <changefreq>daily</changefreq>
