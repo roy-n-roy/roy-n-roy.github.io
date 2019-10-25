@@ -17,12 +17,14 @@ git checkout v2.11.1
 cd ../../
 git add submodules/lightbox2
 git commit -m "Add lightbox2 v2.11.1"
+cd docs
 
-# for Powershell
-New-Item -Type SymbolicLink -Name docs\lightbox2 -Path ..\submodules\lightbox2\dist
+# for command prompt
+git config core.symlinks true
+mklink /D lightbox2 ..\submodules\lightbox2\dist
 
 # for bash
-ln -s ../submodules/lightbox2/dist docs/lightbox2
+ln -s submodules/lightbox2/dist lightbox2
 ```
 
 ### mkdocsの設定ファイルにlightbox2を読み込むよう設定を追加する
