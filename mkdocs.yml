@@ -1,6 +1,8 @@
 site_name: roy-n-roy メモ
 theme:
   name: material
+  logo: 'imgs/logo.svg'
+  favicon: 'favicon.ico'
   language: 'ja'
   palette:
     primary: 'deep orange'
