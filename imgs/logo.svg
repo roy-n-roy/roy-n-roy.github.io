@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="128"
+   height="128"
+   viewBox="0 0 33.866666 33.866666"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="logo.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     units="px" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="translate(-0.50081834,-134.07473)">
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke-width:0.04988673"
+       mask="none"
+       d="m 4.6668569,136.79843 v 20.85128 l 5.7268421,0.81115 -0.119943,0.84681 -5.6068991,-0.79419 v 2.77086 l 5.7268421,0.81114 -0.119943,0.84681 -5.6068991,-0.79419 v 5.79329 H 30.316921 v -5.79826 l -5.641878,0.79916 -0.119943,-0.84681 5.761821,-0.81611 v -2.77086 l -5.641878,0.79916 -0.119943,-0.84681 5.761821,-0.81611 v -20.84632 h -9.8e-5 L 17.520293,149.59505 4.7236615,136.79843 Z m 25.6500641,20.84632 v 0.86376 l 5.718657,-0.81008 -0.119943,-0.84671 z m 0,3.63462 v 0.86376 l 5.718657,-0.81008 -0.119943,-0.84671 z M 4.6668569,162.1481 v -0.86376 l -5.63359603,-0.798 -0.11994257,0.84671 z m 0,-3.63462 v -0.86377 l -5.63359603,-0.79799 -0.11994257,0.84671 z"
+       id="rect3713" />
+  </g>
+</svg>
