@@ -104,27 +104,31 @@ USB接続されたRaspberry Piのイーサネットポート`usb0`は、RNDIS(Re
 
 1. デバイスマネージャを開く  
 「RNDIS」というデバイスに警告アイコンが表示されている。これをダブルクリックするとプロパティ画面が表示される。  
-<img width="400" src="/imgs/raspberrypi_network_devicemanager.png" />
-<img width="250" src="/imgs/raspberrypi_network_deviceproperty.png" />  
+<a href="/imgs/raspberrypi_network_devicemanager.png" data-lightbox="image">
+<img width="400" src="/imgs/raspberrypi_network_devicemanager.png" /></a>
+<a href="/imgs/raspberrypi_network_deviceproperty.png" data-lightbox="image">
+<img width="250" src="/imgs/raspberrypi_network_deviceproperty.png" /></a>  
 
 1. ドライバ更新開始  
 「ドライバの更新」ボタンからドライバ更新を開始する。  
 「コンピューターを参照してドライバーソフトウェアを検索」「コンピューター上の利用可能なドライバーの一覧から選択します」と順に選択していく。  
-<img width="450" src="/imgs/raspberrypi_network_driverupdate1.png" />  
-<img width="450" src="/imgs/raspberrypi_network_driverupdate2.png" />  
+<a href="/imgs/raspberrypi_network_driverupdate1.png" data-lightbox="image">
+<img width="450" src="/imgs/raspberrypi_network_driverupdate1.png" /></a>  
+<a href="/imgs/raspberrypi_network_driverupdate2.png" data-lightbox="image">
+<img width="450" src="/imgs/raspberrypi_network_driverupdate2.png" /></a>  
 
 1. ドライバ種別の選択  
 続いて、「ネットワークアダプター」選択して次へ
-<img width="450" src="/imgs/raspberrypi_network_driverupdate3.png" />  
+<a href="/imgs/raspberrypi_network_driverupdate3.png" data-lightbox="image">
+<img width="450" src="/imgs/raspberrypi_network_driverupdate3.png" /></a>  
 
 1. ドライバの選択  
 製造元の一覧から「Microsoft」を選択し、さらに「リモートNDIS互換デバイス」を選択して次へ
 「ドライバーの更新警告」メッセージが表示されるが、無視して「はい」を選択  
-<img width="450" src="/imgs/raspberrypi_network_driverupdate4.png" />  
+<a href="/imgs/raspberrypi_network_driverupdate4.png" data-lightbox="image">
+<img width="450" src="/imgs/raspberrypi_network_driverupdate4.png" /></a>  
 
 1. ドライバ更新完了  
 「ドライバーが正常に更新されました」と表示されれば更新完了である  
-<img width="450" src="/imgs/raspberrypi_network_driverupdate5.png" />  
-
-
-
+<a href="/imgs/raspberrypi_network_driverupdate5.png" data-lightbox="image">
+<img width="450" src="/imgs/raspberrypi_network_driverupdate5.png" /></a>  
