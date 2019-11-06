@@ -14,6 +14,7 @@ markdown_extensions:
   - codehilite
   - footnotes
   - pymdownx.superfences
+  - pymdownx.tabbed
   - pymdownx.details
 plugins:
   - search
