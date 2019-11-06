@@ -89,16 +89,16 @@ Node.jsと自作アプリケーションのインストールを行います。
 	```
 
 === "Raspberry Pi Zeroの場合"
-    ``` bash
-    # RaspbianのリポジトリからNode.jsをインストール
-    sudo apt install -y nodejs npm
+	``` bash
+	# RaspbianのリポジトリからNode.jsをインストール
+	sudo apt install -y nodejs npm
 
-    # アプリケーションのダウンロードとインストール
-    curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
-    unzip master.zip
-    cd raspi_web_console-master
-    sudo bash ./setup.sh
-    ```
+	# アプリケーションのダウンロードとインストール
+	curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
+	unzip master.zip
+	cd raspi_web_console-master
+	sudo bash ./setup.sh
+	```
 
 ### USB On-the-Go機能を用いたUSBマウス・キーボードのエミュレーション
 USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定を変更します。  
