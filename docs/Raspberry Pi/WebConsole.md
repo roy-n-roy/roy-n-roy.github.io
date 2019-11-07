@@ -128,7 +128,9 @@ USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定�
 	実行すると、`/dev/hidg0`(キーボードエミュレータ), `/dev/hidg1`(マウス・デジタイザエミュレータ)というデバイスファイルが生えてきます。  
 	これらのデバイスファイルにデータを書き込むと、接続先のPCでキーボードやマウスとして動作します。  
 
-#### USB デバイス/コンフィグ/レポートディスクリプタの設定スクリプト
+#### USB デバイス/コンフィグ/レポートディスクリプタの設定スクリプト  
+USB HIDデバイスのディスクリプタを設定していきます。  
+この辺り([USB gadget using libcomposite - Raspberry Pi Forums](https://www.raspberrypi.org/forums/viewtopic.php?t=241161))を参考にしました。  
 
 !!! example "init_usb.sh"
 	``` bash
