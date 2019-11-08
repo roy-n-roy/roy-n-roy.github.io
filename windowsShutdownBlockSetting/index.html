@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://roy-n-roy.github.io/Docker/">
+        <link rel="canonical" href="https://roy-n-roy.github.io/windowsShutdownBlockSetting/">
       
       
       
@@ -38,7 +38,7 @@
     
     
       
-        <title>Docker - roy-n-roy メモ</title>
+        <title>Windows10 シャットダウンブロックの設定 - roy-n-roy メモ</title>
       
     
     
@@ -112,7 +112,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#docker" tabindex="1" class="md-skip">
+      <a href="#windows10" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -138,7 +138,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Docker
+                Windows10 シャットダウンブロックの設定
               
             </span>
           
@@ -184,16 +184,14 @@
       
         
 
-  
-
-<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+<nav class="md-tabs" data-md-component="tabs">
   <div class="md-tabs__inner md-grid">
     <ul class="md-tabs__list">
       
         
   <li class="md-tabs__item">
     
-      <a href=".." class="md-tabs__link">
+      <a href=".." class="md-tabs__link md-tabs__link--active">
         Home
       </a>
     
@@ -209,7 +207,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="./" class="md-tabs__link md-tabs__link--active">
+        <a href="../Docker/" class="md-tabs__link">
           Docker
         </a>
       
@@ -333,11 +331,56 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../windowsShutdownBlockSetting/" title="Windows10 シャットダウンブロックの設定" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Windows10 シャットダウンブロックの設定
+      </label>
+    
+    <a href="./" title="Windows10 シャットダウンブロックの設定" class="md-nav__link md-nav__link--active">
       Windows10 シャットダウンブロックの設定
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    特定のアプリケーションだけを終了させたい
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    すべてのアプリケーションを強制終了させたい
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
     
@@ -345,12 +388,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       Docker
@@ -366,20 +407,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="Docker" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../Docker/" title="Docker" class="md-nav__link">
       Docker
     </a>
-    
   </li>
 
         
@@ -389,7 +421,7 @@
 
 
   <li class="md-nav__item">
-    <a href="fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
+    <a href="../Docker/fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
       Fluentd+Elasticsearch+Kibana
     </a>
   </li>
@@ -401,7 +433,7 @@
 
 
   <li class="md-nav__item">
-    <a href="wordpress/" title="Wordpress" class="md-nav__link">
+    <a href="../Docker/wordpress/" title="Wordpress" class="md-nav__link">
       Wordpress
     </a>
   </li>
@@ -717,6 +749,29 @@
     
   
   
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    特定のアプリケーションだけを終了させたい
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    すべてのアプリケーションを強制終了させたい
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -728,8 +783,105 @@
               
                 
                 
-                <h1 id="docker">Docker</h1>
-<p>docker-composeファイルをメモ書き程度に保管する。</p>
+                <h1 id="windows10">Windows10 シャットダウンブロックの設定</h1>
+<p>Window10ではOSのシャットダウン時に、終了確認ダイアログが表示されるアプリケーションなどが開いたままになっていたり、未保存のファイルを保存するか確認するダイアログが開いたままになっていると、シャットダウンをブロックして待機するようになっています。  </p>
+<p>しかし、「シャットダウンしたつもりで寝て起きたらPCがつきっぱなしだった」といったことが度々あるため、できればそのままシャットダウンして欲しいです。  </p>
+<h2 id="_1">特定のアプリケーションだけを終了させたい</h2>
+<p>もし、「特定のアプリケーションは終了しても良いが、ExcelやWordで未保存のファイルがある場合など、他のアプリケーションは強制終了して欲しくない。」<br />
+といった場合は、全てのアプリケーションが強制終了させると未保存のデータが失われてしまうことになるため、それは困ります。  </p>
+<p>そういった場合は、タスクスケジューラで下記のようなタスクを新規作成します。</p>
+<ul>
+<li>
+<p>[タスクの作成]</p>
+<ul>
+<li>[全般]タブ &gt; [セキュリティ オプション]  <ul>
+<li>[ユーザがログオンしているどうかにかかわらず実行する] を選択  </li>
+<li>[パスワードを保存しない] をチェック  </li>
+</ul>
+</li>
+</ul>
+<p><a href="/imgs/windows_shutdown_application_stop_task.png" data-lightbox="task"><img src="/imgs/windows_shutdown_application_stop_task.png" width="50%" /></a>  </p>
+<ul>
+<li>
+<p>[トリガー]タブ &gt; [新規]<br />
+    下記のように設定します。  </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[タスクの開始]</td>
+<td>イベント時</td>
+</tr>
+<tr>
+<td>[設定]</td>
+<td>基本</td>
+</tr>
+<tr>
+<td>[ログ]</td>
+<td>Application</td>
+</tr>
+<tr>
+<td>[ソース]</td>
+<td>Winsrv</td>
+</tr>
+<tr>
+<td>[イベント ID]</td>
+<td>10001</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>[操作]タブ &gt; [新規]<br />
+    下記のように設定します。<br />
+<code>[プログラム名]</code> の箇所は、強制終了させたいプログラムのファイル名を指定してください。
+    複数を指定することも可能です。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[操作]</td>
+<td>プログラムの開始</td>
+</tr>
+<tr>
+<td>[プログラム]</td>
+<td>powershell.exe</td>
+</tr>
+<tr>
+<td>[引数の追加]</td>
+<td><code>-Command "(Get-Process -Name @(\"[プログラム名]\")).Kill();"</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>「メモ帳」と「ワードパッド」を強制終了させたい場合は<br />
+<code>-Command "(Get-Process -Name @(\"notepad\", \"wordpad\")).Kill();"</code><br />
+と指定する。</p>
+</div>
+</li>
+</ul>
+<p><a href="/imgs/windows_shutdown_application_stop_trigger.png" data-lightbox="task"><img src="/imgs/windows_shutdown_application_stop_trigger.png" width="45%" /></a>
+<a href="/imgs/windows_shutdown_application_stop_action.png" data-lightbox="task"><img src="/imgs/windows_shutdown_application_stop_action.png" width="45%" /></a></p>
+</li>
+</ul>
+<p>これで、設定したアプリケーションのみをシャットダウン時に強制終了させることができます。</p>
+<h2 id="_2">すべてのアプリケーションを強制終了させたい</h2>
+<p>全てのアプリケーションを強制終了して良い場合は、グループポリシーで設定することでシャットダウンのブロック自体を無効にすることができます。  </p>
+<figure>
+<a href="/imgs/windows_shutdown_block_group_policy.png" data-lightbox="group_policy"><img src="/imgs/windows_shutdown_block_group_policy.png" width="70%" /></a>
+<figcaption style="font-size: smaller;">[コンピュータの構成] > [管理用テンプレート] > [システム] > [シャットダウンオプション] ><br> [シャットダウンをブロックするか取り消すアプリケーションの自動終了をオフにする] で、<br>ブロックの有効/無効を設定することができる。</figcaption>
+</figure>
                 
                   
                 
@@ -750,7 +902,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../windowsShutdownBlockSetting/" title="Windows10 シャットダウンブロックの設定" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../vpn/" title="VPNサーバの代替設定" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -759,19 +911,19 @@
                 <span class="md-footer-nav__direction">
                   前
                 </span>
-                Windows10 シャットダウンブロックの設定
+                VPNサーバの代替設定
               </span>
             </div>
           </a>
         
         
-          <a href="fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../Docker/" title="Docker" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   次
                 </span>
-                Fluentd+Elasticsearch+Kibana
+                Docker
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
