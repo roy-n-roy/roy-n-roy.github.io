@@ -1,3 +1,4 @@
+is_index: true
 # Raspberry Pi
 
 ## [ネットワーク設定](/Raspberry Pi/Network)

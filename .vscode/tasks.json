@@ -6,7 +6,7 @@
 		{
 			"label": "mkdocs-install",
 			"type": "shell",
-			"command": "pip install mkdocs mkdocs-material pymdown-extensions",
+			"command": "pip install mkdocs mkdocs-material mkdocs-git-revision-date-plugin",
 			"problemMatcher": []
 		},
 		{

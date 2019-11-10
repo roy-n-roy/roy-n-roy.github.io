@@ -1,3 +1,4 @@
+is_index: true
 # MkDocs
 Python製の静的サイトジェネレータ  
 Markdownファイルからhtmlを生成するツールです。  

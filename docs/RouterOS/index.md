@@ -1,3 +1,4 @@
+is_index: true
 # RouterOS
 
 ## RouterOS とは

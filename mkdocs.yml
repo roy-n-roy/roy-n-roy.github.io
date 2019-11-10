@@ -1,6 +1,7 @@
 site_name: roy-n-roy メモ
 theme:
   name: material
+  custom_dir: 'material_custom'
   logo: 'imgs/logo.svg'
   favicon: 'favicon.ico'
   language: 'ja'
@@ -14,6 +15,9 @@ markdown_extensions:
   - codehilite
   - footnotes
   - pymdownx.superfences
+plugins:
+  - search
+  - git-revision-date
 remote_branch: master
 extra:
   search:
@@ -27,6 +31,7 @@ extra_javascript:
     - 'lightbox2/js/lightbox-plus-jquery.min.js'
 extra_css:
     - 'lightbox2/css/lightbox.min.css'
+    - 'styles/git_revision_date.css'
 google_analytics:
   - 'UA-149709379-1'
   - 'auto'
