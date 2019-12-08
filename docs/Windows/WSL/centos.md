@@ -60,7 +60,7 @@ CentOSへログインするためのショートカットを作成します。
 
 作成したショートカットから起動します。
 
-<a href="/imgs/windows_wsl_centos.png"><img src="/imgs/windows_wsl_centos.png" width=75% /></a>  
+<a href="/imgs/windows_wsl_centos.png" data-lightbox="windows_wsl_centos"><img src="/imgs/windows_wsl_centos.png" width=75% /></a>  
 
 ## ユーザの作成とsudoの有効化
 初期状態ではrootユーザしかないため、作業用ユーザを作成してsudoが利用できるようにします。
@@ -98,9 +98,37 @@ CentOSへログインするためのショートカットを作成します。
 1. 同じキー(フォルダ)内にある`DefaultUid`の値を「0」から「1000(10進数)」に変更します。
 1. レジストリエディタを閉じます。
 
-<a href="/imgs/windows_wsl_centos_registry.png"><img src="/imgs/windows_wsl_centos_registry.png" width=75% /></a>  
+<a href="/imgs/windows_wsl_centos_registry.png" data-lightbox="windows_wsl_centos_registry"><img src="/imgs/windows_wsl_centos_registry.png" width=75% /></a>  
 
 その後、先ほど作成したショートカットからCentOSを起動すると先ほど作成したユーザ`roy`でログインされていることが確認できます。
 
 ## アイコンを変更したい  
 CentOSのWebサイトからfavicon.icoをダウンロードして、ショートカットの「プロパティ」→「アイコンの変更」でダウンロードしたアイコンを割り当てるなどしてください。
+
+## CentOS8を使いたい
+2019/12/08時点ではCentOS8のクラウド用イメージが公開されていないため、RPMパッケージから作成します。
+CentOS7へログインし、CentOS8のrootfsを作成していきます。
+
+!!! example "rootfs作成"
+	``` bash
+	# CentOS8のリポジトリ設定ファイルを作成
+	cat << _END_ > ./centos8.repo
+	[centos8-base]
+	name=CentOS-8-Base
+	baseurl=http://mirror.centos.org/centos/8/BaseOS/x86_64/os/
+	gpgcheck=0
+	_END_
+
+	# rootfsを作成
+	mkdir rootfs
+	sudo yum -y -c centos.repo --installroot=$PWD/rootfs \
+	        --disablerepo="*" --enablerepo="centos8-base" groupinstall "Minimal Install"
+
+	# tarボールにrootfsをアーカイブ
+	tar cf centos8_rootfs.tar -C rootfs/ .
+
+	# 作成したrootfsのtarファイルをWindows側に移動
+	mv centos8_rootfs.tar /mnt/c/Users/user/.
+	```
+
+以降は、CentOS7と同様にインポートするとCentOS8環境が利用できるようになります。
