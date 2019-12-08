@@ -753,6 +753,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#centos8" class="md-nav__link">
+    CentOS8を使いたい
+  </a>
+  
+</li>
+      
       
       
       
@@ -761,6 +768,18 @@
   
 </nav>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../wsl2/" title="WSL2" class="md-nav__link">
+      WSL2
+    </a>
   </li>
 
         
@@ -963,6 +982,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#centos8" class="md-nav__link">
+    CentOS8を使いたい
+  </a>
+  
+</li>
+      
       
       
       
@@ -1095,6 +1121,33 @@ CentOSへログインするためのショートカットを作成します。  
 <p>その後、先ほど作成したショートカットからCentOSを起動すると先ほど作成したユーザ<code>roy</code>でログインされていることが確認できます。</p>
 <h2 id="_2">アイコンを変更したい</h2>
 <p>CentOSのWebサイトからfavicon.icoをダウンロードして、ショートカットの「プロパティ」→「アイコンの変更」でダウンロードしたアイコンを割り当てるなどしてください。</p>
+<h2 id="centos8">CentOS8を使いたい</h2>
+<p>2019/12/08時点ではCentOS8のクラウド用イメージが公開されていないため、RPMパッケージから作成します。
+CentOS7へログインし、CentOS8のrootfsを作成していきます。</p>
+<div class="admonition example">
+<p class="admonition-title">rootfs作成</p>
+<div class="codehilite"><pre><span></span><span class="c1"># CentOS8のリポジトリ設定ファイルを作成</span>
+cat <span class="s">&lt;&lt; _END_ &gt; ./centos8.repo</span>
+<span class="s">[centos8-base]</span>
+<span class="s">name=CentOS-8-Base</span>
+<span class="s">baseurl=http://mirror.centos.org/centos/8/BaseOS/x86_64/os/</span>
+<span class="s">gpgcheck=0</span>
+<span class="s">_END_</span>
+
+<span class="c1"># rootfsを作成</span>
+mkdir rootfs
+sudo yum -y -c centos.repo --installroot<span class="o">=</span><span class="nv">$PWD</span>/rootfs <span class="se">\</span>
+        --disablerepo<span class="o">=</span><span class="s2">&quot;*&quot;</span> --enablerepo<span class="o">=</span><span class="s2">&quot;centos8-base&quot;</span> groupinstall <span class="s2">&quot;Minimal Install&quot;</span>
+
+<span class="c1"># tarボールにrootfsをアーカイブ</span>
+tar cf centos8_rootfs.tar -C rootfs/ .
+
+<span class="c1"># 作成したrootfsのtarファイルをWindows側に移動</span>
+mv centos8_rootfs.tar /mnt/c/Users/user/.
+</pre></div>
+
+</div>
+<p>以降は、CentOS7と同様にインポートするとCentOS8環境が利用できるようになります。</p>
                 
                   
                 
@@ -1130,13 +1183,13 @@ CentOSへログインするためのショートカットを作成します。  
           </a>
         
         
-          <a href="../../../mkdocs/" title="MkDocs" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../wsl2/" title="WSL2" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   次
                 </span>
-                MkDocs
+                WSL2
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
