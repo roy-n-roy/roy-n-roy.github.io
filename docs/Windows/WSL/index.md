@@ -8,3 +8,6 @@ Windows subsystem for Linux(WSL)について
 
 ## [WSLでCentOSを利用する](centos)
 Microsoft Storeで公開されていないCentOSをWSLで利用する。
+
+## [WSL2](wsl2)
+Windows 10 バージョン2004で追加される (予定の) WSL2について
