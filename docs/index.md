@@ -1,5 +1,5 @@
-## [HomeServer](/HomeServer)
-Windowsでの記憶域スペースなどの設定について
+## [Windows](/Windows)
+Windowsでの記憶域スペースやWSL、あれこれについて
 
 ## [Raspberry Pi](/Raspberry Pi)
 Raspberry Piの設定やあれこれ
