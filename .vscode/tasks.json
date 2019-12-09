@@ -54,6 +54,21 @@
 			"type": "shell",
 			"command": "mkdocs gh-deploy",
 			"problemMatcher": []
+		},
+		{
+			"label": "test-env-install",
+			"type": "shell",
+			"command": "pip install pytest bs4 requests lxml aiohttp[speedups]",
+			"problemMatcher": []
+		},
+		{
+			"label": "mkdocs-test",
+			"type": "shell",
+			"command": "py.test",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			}
 		}
 	]
 }
