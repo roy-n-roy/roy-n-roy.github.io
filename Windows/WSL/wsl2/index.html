@@ -698,9 +698,71 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        WSL2
+      </label>
+    
     <a href="./" title="WSL2" class="md-nav__link md-nav__link--active">
       WSL2
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wsl2_1" class="md-nav__link">
+    WSL2の改善点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    アーキテクチャ比較
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wsl1" class="md-nav__link">
+    WSL1のアーキテクチャ
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    プロセス関連
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -852,6 +914,55 @@
     
   
   
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wsl2_1" class="md-nav__link">
+    WSL2の改善点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    アーキテクチャ比較
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wsl1" class="md-nav__link">
+    WSL1のアーキテクチャ
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    プロセス関連
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -862,13 +973,35 @@
             <article class="md-content__inner md-typeset">
               
                 <div class="git_revision_date">
-                  最終更新日: 2019-12-08
+                  最終更新日: 2019-12-09
                 </div>
               
               
                 
                 
                 <h1 id="wsl2">WSL2</h1>
+<p>Windows Subsystem for Linux(WSL)は仮想マシンのオーバーヘッドなしでGNU/Linuxの実行バイナリ(Executable and Linkable Format, ELF)を実行することのできる環境を提供します。
+Windows 10 バージョン2004 以降では、現行のWSL(以降、バージョン1と記載) に加えて、WSL2(以降、WSL2 もしくは バージョン2と記載) を利用出来るようになります。</p>
+<h2 id="wsl2_1">WSL2の改善点</h2>
+<p>WSL2では、バージョン1と比べて、下記の改善がなされています。</p>
+<ul>
+<li>Linux上でのファイルアクセス速度の向上</li>
+<li>システムコールの完全互換</li>
+</ul>
+<p>一方で、Linux上から、NTFSなどのWindows上のファイルへのアクセス速度は下がっているため、多くのファイルアクセスが必要な場面ではLinux側へファイルを移動させた上で処理する方が良いでしょう。</p>
+<h2 id="_1">アーキテクチャ比較</h2>
+<h3 id="wsl1">WSL1のアーキテクチャ</h3>
+<p>WSL2との比較の前に、WSL1の仕組みについて説明していきます。</p>
+<h4 id="_2">プロセス関連</h4>
+<p>WSLバージョン1では、LxssManagerがWindows上のサービスとして常駐しています。
+これが、Linux上ではカーネルの代替として機能します。  </p>
+<p>Windows上で、Linuxディストリビューションを起動するとLxssManagerの子プロセスとしてinitプロセスが立ち上がります。
+Linux側でも同じくinitプロセスがプロセスID=1のプロセスとして起動され、全てのプロセスはinitプロセスの子孫として紐付けられて起動します。  </p>
+<p>Linux上では、これがカーネルの代替として、ファイルシステムドライバや</p>
+<figure style="text-align: center;">
+<a href="/imgs/windows_wsl_wsl2.png" data-lightbox="windows_wsl_wsl2"><img src="/imgs/windows_wsl_wsl2.png" /></a>  
+<figcaption>図. WSLとWSL2 アーキテクチャの比較</figcaption>
+</figure>
                 
                   
                 
