@@ -287,7 +287,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../プライバシー・ポリシー/privacy-policy/" class="md-tabs__link">
+        <a href="../../プライバシー・ポリシー/" class="md-tabs__link">
           プライバシー・ポリシー
         </a>
       
@@ -872,6 +872,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../mkdocs/test/" title="リンク切れのテスト" class="md-nav__link">
+      リンク切れのテスト
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -902,7 +914,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../プライバシー・ポリシー/privacy-policy/" title="プライバシー・ポリシー" class="md-nav__link">
+    <a href="../../プライバシー・ポリシー/" title="プライバシー・ポリシー" class="md-nav__link">
       プライバシー・ポリシー
     </a>
   </li>
@@ -1040,14 +1052,14 @@
 パスフレーズを設定する場合は、ssh-agentへのパスフレーズ登録を行う。  </li>
 </ul>
 <p><code>&gt; ssh-keygen -t rsa -b 4096</code>
-<div class="codehilite"><pre><span></span><span class="err">Generating public/private rsa key pair.</span>
-<span class="err">Enter file in which to save the key (C:\Users\ryo/.ssh/id_rsa):</span>
-<span class="err">Enter passphrase (empty for no passphrase):</span>
-<span class="err">Enter same passphrase again:</span>
-<span class="err">Your identification has been saved in C:\Users\ryo/.ssh/id_rsa.</span>
-<span class="err">Your public key has been saved in C:\Users\ryo/.ssh/id_rsa.pub.</span>
-<span class="err">The key fingerprint is:</span>
-<span class="err">...</span>
+<div class="codehilite"><pre><span></span><span class="nv">Generating</span> <span class="nv">public</span><span class="o">/</span><span class="nv">private</span> <span class="nv">rsa</span> <span class="nv">key</span> <span class="nv">pair</span>.
+<span class="nv">Enter</span> <span class="nv">file</span> <span class="nv">in</span> <span class="nv">which</span> <span class="nv">to</span> <span class="nv">save</span> <span class="nv">the</span> <span class="nv">key</span> <span class="ss">(</span><span class="nv">C</span>:\<span class="nv">Users</span>\<span class="nv">ryo</span><span class="o">/</span>.<span class="nv">ssh</span><span class="o">/</span><span class="nv">id_rsa</span><span class="ss">)</span>:
+<span class="nv">Enter</span> <span class="nv">passphrase</span> <span class="ss">(</span><span class="nv">empty</span> <span class="k">for</span> <span class="nv">no</span> <span class="nv">passphrase</span><span class="ss">)</span>:
+<span class="nv">Enter</span> <span class="nv">same</span> <span class="nv">passphrase</span> <span class="nv">again</span>:
+<span class="nv">Your</span> <span class="nv">identification</span> <span class="nv">has</span> <span class="nv">been</span> <span class="nv">saved</span> <span class="nv">in</span> <span class="nv">C</span>:\<span class="nv">Users</span>\<span class="nv">ryo</span><span class="o">/</span>.<span class="nv">ssh</span><span class="o">/</span><span class="nv">id_rsa</span>.
+<span class="nv">Your</span> <span class="nv">public</span> <span class="nv">key</span> <span class="nv">has</span> <span class="nv">been</span> <span class="nv">saved</span> <span class="nv">in</span> <span class="nv">C</span>:\<span class="nv">Users</span>\<span class="nv">ryo</span><span class="o">/</span>.<span class="nv">ssh</span><span class="o">/</span><span class="nv">id_rsa</span>.<span class="nv">pub</span>.
+<span class="nv">The</span> <span class="nv">key</span> <span class="nv">fingerprint</span> <span class="nv">is</span>:
+...
 </pre></div></p>
 <ul>
 <li>公開鍵をルータへ転送  </li>
@@ -1062,9 +1074,9 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">~/.ssh/config</p>
-<div class="codehilite"><pre><span></span><span class="err">Host Router  </span>
-<span class="err">    Hostname 192.168.XXX.XXX</span>
-<span class="err">    User backup</span>
+<div class="codehilite"><pre><span></span><span class="k">Host</span> <span class="n">Router</span>  
+    <span class="n">Hostname</span> <span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="n">XXX</span><span class="p">.</span><span class="n">XXX</span>
+    <span class="k">User</span> <span class="n">backup</span>
 </pre></div>
 
 </div>
@@ -1089,22 +1101,22 @@
 <p><code>&gt; ssh Router "/system resource print"</code></p>
 <div class="admonition success">
 <p class="admonition-title">Result</p>
-<div class="codehilite"><pre><span></span><span class="err">                   uptime: 1w1d22h17m27s</span>
-<span class="err">                  version: 6.45.6 (stable)</span>
-<span class="err">               build-time: Sep/10/2019 09:06:31</span>
-<span class="err">              free-memory: 428.1MiB</span>
-<span class="err">             total-memory: 480.0MiB</span>
-<span class="err">                      cpu: Intel(R)</span>
-<span class="err">                cpu-count: 2</span>
-<span class="err">            cpu-frequency: 3695MHz</span>
-<span class="err">                 cpu-load: 1%</span>
-<span class="err">           free-hdd-space: 29.3MiB</span>
-<span class="err">          total-hdd-space: 63.5MiB</span>
-<span class="err">  write-sect-since-reboot: 130136</span>
-<span class="err">         write-sect-total: 130137</span>
-<span class="err">        architecture-name: x86_64</span>
-<span class="err">               board-name: CHR</span>
-<span class="err">                 platform: MikroTik</span>
+<div class="codehilite"><pre><span></span>                   <span class="k">uptime</span>: <span class="mi">1</span><span class="nv">w1d22h17m27s</span>
+                  <span class="nv">version</span>: <span class="mi">6</span>.<span class="mi">45</span>.<span class="mi">6</span> <span class="ss">(</span><span class="nv">stable</span><span class="ss">)</span>
+               <span class="nv">build</span><span class="o">-</span><span class="nv">time</span>: <span class="nv">Sep</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">2019</span> <span class="mi">09</span>:<span class="mi">06</span>:<span class="mi">31</span>
+              <span class="nv">free</span><span class="o">-</span><span class="nv">memory</span>: <span class="mi">428</span>.<span class="mi">1</span><span class="nv">MiB</span>
+             <span class="nv">total</span><span class="o">-</span><span class="nv">memory</span>: <span class="mi">480</span>.<span class="mi">0</span><span class="nv">MiB</span>
+                      <span class="nv">cpu</span>: <span class="nv">Intel</span><span class="ss">(</span><span class="nv">R</span><span class="ss">)</span>
+                <span class="nv">cpu</span><span class="o">-</span><span class="nv">count</span>: <span class="mi">2</span>
+            <span class="nv">cpu</span><span class="o">-</span><span class="nv">frequency</span>: <span class="mi">3695</span><span class="nv">MHz</span>
+                 <span class="nv">cpu</span><span class="o">-</span><span class="nv">load</span>: <span class="mi">1</span><span class="o">%</span>
+           <span class="nv">free</span><span class="o">-</span><span class="nv">hdd</span><span class="o">-</span><span class="nv">space</span>: <span class="mi">29</span>.<span class="mi">3</span><span class="nv">MiB</span>
+          <span class="nv">total</span><span class="o">-</span><span class="nv">hdd</span><span class="o">-</span><span class="nv">space</span>: <span class="mi">63</span>.<span class="mi">5</span><span class="nv">MiB</span>
+  <span class="nv">write</span><span class="o">-</span><span class="nv">sect</span><span class="o">-</span><span class="nv">since</span><span class="o">-</span><span class="nv">reboot</span>: <span class="mi">130136</span>
+         <span class="nv">write</span><span class="o">-</span><span class="nv">sect</span><span class="o">-</span><span class="nv">total</span>: <span class="mi">130137</span>
+        <span class="nv">architecture</span><span class="o">-</span><span class="nv">name</span>: <span class="nv">x86_64</span>
+               <span class="nv">board</span><span class="o">-</span><span class="nv">name</span>: <span class="nv">CHR</span>
+                 <span class="nv">platform</span>: <span class="nv">MikroTik</span>
 </pre></div>
 
 </div>
@@ -1120,11 +1132,11 @@
 <h4 id="_5">実行</h4>
 <div class="admonition success">
 <p class="admonition-title">Result</p>
-<div class="codehilite"><pre><span></span><span class="err">PS C:\tools&gt; .\backup_router.ps1</span>
-<span class="err">Connected to Router.</span>
-<span class="err">Fetching /Backup-20191008-164812.backup to C:/Users/Public/RouterOS_backup/Backup-20191008-164812.backup</span>
-<span class="err">/Backup-20191008-164812.backup                                                      100%  354KB 338.2MB/s   00:00</span>
-<span class="err">2019/10/08 16:48:12 バックアップに成功しました</span>
+<div class="codehilite"><pre><span></span><span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">tools</span><span class="o">&gt;</span> <span class="p">.</span><span class="err">\</span><span class="n">backup_router</span><span class="p">.</span><span class="n">ps1</span>
+<span class="n">Connected</span> <span class="k">to</span> <span class="n">Router</span><span class="p">.</span>
+<span class="n">Fetching</span> <span class="o">/</span><span class="n">Backup</span><span class="o">-</span><span class="mi">20191008</span><span class="o">-</span><span class="mi">164812</span><span class="p">.</span><span class="n">backup</span> <span class="k">to</span> <span class="k">C</span><span class="p">:</span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="k">Public</span><span class="o">/</span><span class="n">RouterOS_backup</span><span class="o">/</span><span class="n">Backup</span><span class="o">-</span><span class="mi">20191008</span><span class="o">-</span><span class="mi">164812</span><span class="p">.</span><span class="n">backup</span>
+<span class="o">/</span><span class="n">Backup</span><span class="o">-</span><span class="mi">20191008</span><span class="o">-</span><span class="mi">164812</span><span class="p">.</span><span class="n">backup</span>                                                      <span class="mi">100</span><span class="o">%</span>  <span class="mi">354</span><span class="n">KB</span> <span class="mi">338</span><span class="p">.</span><span class="mi">2</span><span class="n">MB</span><span class="o">/</span><span class="n">s</span>   <span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="mi">2019</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">08</span> <span class="mi">16</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mi">12</span> <span class="err">バックアップに成功しました</span>
 </pre></div>
 
 </div>

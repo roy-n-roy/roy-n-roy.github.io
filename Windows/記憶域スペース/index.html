@@ -287,7 +287,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../プライバシー・ポリシー/privacy-policy/" class="md-tabs__link">
+        <a href="../../プライバシー・ポリシー/" class="md-tabs__link">
           プライバシー・ポリシー
         </a>
       
@@ -966,6 +966,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../mkdocs/test/" title="リンク切れのテスト" class="md-nav__link">
+      リンク切れのテスト
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -996,7 +1008,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../プライバシー・ポリシー/privacy-policy/" title="プライバシー・ポリシー" class="md-nav__link">
+    <a href="../../プライバシー・ポリシー/" title="プライバシー・ポリシー" class="md-nav__link">
       プライバシー・ポリシー
     </a>
   </li>
@@ -1551,8 +1563,8 @@ table#benchmark_teble td.bottom { font-weight: bold; color: blue; }
 <p>運用中に仮想ディスクの容量が不足した場合、物理ディスクを追加することで仮想ディスクのサイズを拡張することができます。  </p>
 <h3 id="1">パターン1: シンプロビジョニングの仮想ディスクの場合</h3>
 <p>あらかじめ、仮想ディスクサイズに余裕をもってシンプロビジョニングのディスクにしている場合は、記憶域プールに物理ディスクを追加するだけです。  </p>
-<div class="codehilite"><pre><span></span><span class="err"># 物理ディスクを記憶域プールに追加</span>
-<span class="err">Get-PhysicalDisk -CanPool $true | Add-PhysicalDisk -StoragePoolFriendlyName 記憶域プール</span>
+<div class="codehilite"><pre><span></span><span class="o">#</span> <span class="err">物理ディスクを記憶域プールに追加</span>
+<span class="k">Get</span><span class="o">-</span><span class="n">PhysicalDisk</span> <span class="o">-</span><span class="n">CanPool</span> <span class="err">$</span><span class="k">true</span> <span class="o">|</span> <span class="k">Add</span><span class="o">-</span><span class="n">PhysicalDisk</span> <span class="o">-</span><span class="n">StoragePoolFriendlyName</span> <span class="err">記憶域プール</span>
 </pre></div>
 
 <h3 id="2">パターン2: 記憶域階層を使用しない、固定サイズ仮想ディスクの場合</h3>

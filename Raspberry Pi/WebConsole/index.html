@@ -287,7 +287,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../プライバシー・ポリシー/privacy-policy/" class="md-tabs__link">
+        <a href="../../プライバシー・ポリシー/" class="md-tabs__link">
           プライバシー・ポリシー
         </a>
       
@@ -951,6 +951,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../mkdocs/test/" title="リンク切れのテスト" class="md-nav__link">
+      リンク切れのテスト
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -981,7 +993,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../プライバシー・ポリシー/privacy-policy/" title="プライバシー・ポリシー" class="md-nav__link">
+    <a href="../../プライバシー・ポリシー/" title="プライバシー・ポリシー" class="md-nav__link">
       プライバシー・ポリシー
     </a>
   </li>
@@ -1858,11 +1870,11 @@ Raspberry Piはモバイル向けのCPUを搭載しており、CSI-2インター
 今回は<a href="https://auvidea.eu/b101-hdmi-to-csi-2-bridge-15-pin-fpc/">ドイツ Auvidea社の B101 HDMI to CSI-2 Bridge (15 pin FPC)</a>を使用しました。<br />
 モジュールを接続した状態の図が<a href="#_3">こちら</a>。  </p>
 <p>Raspberry PiでCSI-2インターフェースを利用するには、<code>raspi-config</code>での有効化が必要です。<br />
-<div class="codehilite"><pre><span></span><span class="err">sudo raspi-config</span>
+<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">raspi</span><span class="o">-</span><span class="n">config</span>
 </pre></div></p>
 <p><code>raspi-config</code>を実行すると対話形式での入力画面が表示されるので、<br />
-<div class="codehilite"><pre><span></span><span class="err">&quot;5 Interfacing Options&quot; -&gt;</span>
-<span class="err">&quot;P1 Camera&quot; &quot;Enable/Disable connection to the Raspberry Pi Camera&quot;</span>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;5 Interfacing Options&quot;</span> <span class="o">-&gt;</span>
+<span class="ss">&quot;P1 Camera&quot;</span> <span class="ss">&quot;Enable/Disable connection to the Raspberry Pi Camera&quot;</span>
 </pre></div>
 と順に選択してCSI-2インターフェースを有効化します。</p>
 <h3 id="web">Webブラウザへの動画ストリーミング配信</h3>
@@ -1954,10 +1966,10 @@ sudo vi /etc/systemd/system/ayame.service
 </div>
 <div class="admonition example">
 <p class="admonition-title">/usr/local/etc/default/momo</p>
-<div class="codehilite"><pre><span></span><span class="err">VIDEO_DEVICE=/dev/video0</span>
-<span class="err">AYAME_URL=ws://localhost:3000/signaling</span>
-<span class="err">ROOM_ID=web_console</span>
-<span class="err">OPTIONS=--force-i420 --use-native --resolution HD --fixed-resolution</span>
+<div class="codehilite"><pre><span></span><span class="n">VIDEO_DEVICE</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">video0</span>
+<span class="n">AYAME_URL</span><span class="o">=</span><span class="n">ws</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">3000</span><span class="o">/</span><span class="n">signaling</span>
+<span class="n">ROOM_ID</span><span class="o">=</span><span class="n">web_console</span>
+<span class="k">OPTIONS</span><span class="o">=</span><span class="c1">--force-i420 --use-native --resolution HD --fixed-resolution</span>
 </pre></div>
 
 </div>
