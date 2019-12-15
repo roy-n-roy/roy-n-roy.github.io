@@ -1,3 +1,16 @@
+* WSL1:ピコプロセスとカーネルモードLxCore.sys, lsxx.sys
+	https://blogs.msdn.microsoft.com/wsl/2016/05/23/pico-process-overview/
+	https://github.com/ionescu007/lxss/blob/master/WSL-BlueHat-Final.pdf
+	* システムコール
+	* プロセス管理、メモリ管理
+	* ネットワーク
+* WSL1:ファイルシステム VolFsとDrvFs
+* 共通: initとユーザランド起動
+* 共通: 9P Serverとp9rdr.sys, \\wsl$
+* 共通: Linux内からWindowsプログラムの呼び出し
+* WSL2: Utility VMとLinuxカーネル
+* WSL2: 
+
 # WSL2
 Windows Subsystem for Linux(WSL)は仮想マシンのオーバーヘッドなしでGNU/Linuxの実行バイナリ(Executable and Linkable Format, ELF)を実行することのできる環境を提供する機能です。
 Windows 10 バージョン1709 以降のHome/Proエディション共に利用することができます。  
@@ -14,16 +27,25 @@ WSL2では、バージョン1と比較して、下記の改善がなされてい
 
 これは、WSLバージョン1が「Windows上でELFバイナリを実行する」機能であったのに比べ、WSLバージョン2は「軽量仮想マシン上でLinuxコンテナを動作させる」機能であることによるものです。  
 
+
+## 起動
+1. `wsl.exe`をランチャーとして起動する
+1. `wsl.exe`が`wslhost.exe`を子プロセスとして起動
+1. `wslhost.exe`が`conhost.exe`を子プロセスとして起動し、コンソールと接続
+1. 
+
+
 ## アーキテクチャ比較
 <figure style="text-align: center;">
 <a href="/imgs/windows_wsl_wsl2.png" data-lightbox="windows_wsl_wsl2"><img src="/imgs/windows_wsl_wsl2.png" /></a>  
 <figcaption>図. WSLとWSL2 アーキテクチャの概略</figcaption>
 </figure>
 
-|                          | WSL1での動作・仕組み                       | WSL2での動作・仕組み                       |
+|                          | WSL1                                       | WSL2                                       |
 | ------------------------ | ------------------------------------------ | ------------------------------------------ |
-| バックグラウンドプロセス | LxssManagerサービス(`lxss.sys`, `lxcore.sys`) | Hyper-Vコンテナとその上で動くLinuxカーネル |
-| WSLの起動                | Windowsから`wsl.exe`をランチャーして起動   | ←                                         |
+| ベース技術               | ピコプロセスと呼ばれるプロセス隔離環境     | Utility VMと呼ばれるの軽量仮想化環境       |
+| カーネルランド           | Linuxカーネルは存在せず、ピコプロバイダーがシステムコールを変換しNTカーネル上で動作 | 軽量VM上でLinuxカーネルが動作 |
+| Linuxプロセス            | Windowsプロセス(Pico Process)として動作    | 仮想マシン上で動作、ホストからは見えない   |
 | Linuxプロセスの起動      | MS製init(9Pサーバ機能を兼ねる)             | ←                                         |
 | フロントエンド           | `wsl.exe`および`wslhost.exe`がLxssManagerを経由してLinux内のinitと通信し、`conhost.exe`を用いてコンソールへ表示する | ← |
 | Linuxシステムコール      | LxssManagerが受け取り、WindowsカーネルAPIに変換した上で、Windows NTカーネルが実行する。<br>一部のシステムコールには対応しない。 | Linuxカーネルでシステムコールを解釈し、<br>Hyper-V仮想マシン上で実行する。 |
