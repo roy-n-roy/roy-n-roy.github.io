@@ -1,15 +1,78 @@
+# WSLのアーキテクチャ
+## WSLで実現できること
+Windows Subsystem for Linux(WSL)は少ないオーバーヘッドでGNU/LinuxのCLIプログラムを実行できる環境を提供する機能です。
+
+Windowsでは「Portable Executable」という形式の実行ファイルのみを動作させることができます。
+しかし、Linuxなどで利用されている実行ファイルは「Executable and Linkable Format(ELF)」と呼ばれる形式であるため、通常はWindows上で動作させることはできません。  
+
+LinuxのCLIプログラムを利用できる環境を用意するには、下記のような機能が必要です。
+
+* Linuxカーネルの機能  
+	ファイルシステム・プロセス管理・メモリ管理などのシステムコールAPIの提供
+* シェル環境  
+	bash, zsh, kshなど
+* パッケージマネージャ  
+	プログラムとライブラリの入手方法の提供
+
+そのため、WSLではLinuxシステムコールAPIをWindowsの機能として用意し、その上にLinuxディストリビューションをMicrosoft Storeでインストールするという形式をとっています。  
+
+WSLにはバージョン1とバージョン2が存在し、それぞれLinuxシステムコールAPIの提供方法が異なります。  
+
+| バージョン            | ベース技術                                              | システムコールAPI提供方法                   |
+| --------------------- | ------------------------------------------------------- | ------------------------------------------- |
+| バージョン1<br>(WSL1) | 「ピコプロセス」と呼ばれる<br>Windowsのプロセス隔離技術 | LxCore.sys/Lxss.sysという<br>NTカーネルドライバがLinux<br>システムコールをエミュレーション |
+| バージョン2<br>(WSL2) | 軽量仮想マシン(lightweight VM)技術                      | 仮想マシン上で<br>実際のLinuxカーネルを稼働 |
+
+なお、本記事ではWSLのバージョンを区別する場合には、WSLバージョン1を「WSL1」、  
+バージョン2を「WSL2」として記載し、バージョンを明記せずに「WSL」とのみ記載する場合は両方を指すものとします。  
+
+## WSL1の機能
+### システムコールAPIの提供
 * WSL1:ピコプロセスとカーネルモードLxCore.sys, lsxx.sys
 	https://blogs.msdn.microsoft.com/wsl/2016/05/23/pico-process-overview/
 	https://github.com/ionescu007/lxss/blob/master/WSL-BlueHat-Final.pdf
 	* システムコール
 	* プロセス管理、メモリ管理
 	* ネットワーク
+
+### ファイルシステム
 * WSL1:ファイルシステム VolFsとDrvFs
+
+### Linux→Windowsファイルシステムへのアクセス
+
+## initの機能
+### ユーザランド起動
 * 共通: initとユーザランド起動
-* 共通: 9P Serverとp9rdr.sys, \\wsl$
+
+### Windows→Linuxファイルシステムへのアクセス
+WindowsからLinux上のファイルシステムへは、UNCパスで`\\wsl$\[ディストリビューション名]`を指定することで、WSLで起動しているディストリビューションのファイルシステムへアクセスすることができます。  
+
+#### 仕組み
+Windows上からLinuxファイルシステムへのアクセスには「Plan 9 Filesystem Protocol(9P)」と呼ばれるプロトコルが利用されています。
+これは、「Plan 9 from Bell Labs」というUNIXの後継としてベル研究所で開発されたOSにおいて、システムの構成要素間の接続を目的として開発されたネットワークプロトコルです。  
+
+WSLではこれを応用して、Windows・Linux間の接続に用いられています。
+
+
+<a href="/imgs/windows_wsl_windows_to_linux_file_access.png" data-lightbox="windows_wsl_windows_to_linux_file_access"><img src="/imgs/windows_wsl_windows_to_linux_file_access.png" /></a>  
+
+### Linux→Windowsプログラムの呼び出し
 * 共通: Linux内からWindowsプログラムの呼び出し
+
+## WSL2の機能
+### システムコールAPIの提供
 * WSL2: Utility VMとLinuxカーネル
-* WSL2: 
+
+### ファイルシステム
+* WSL2:仮想HDD(root.vhdx)
+
+### Linux→Windowsファイルシステムへのアクセス
+* WSL2:9P
+
+
+
+
+
 
 # WSL2
 Windows Subsystem for Linux(WSL)は仮想マシンのオーバーヘッドなしでGNU/Linuxの実行バイナリ(Executable and Linkable Format, ELF)を実行することのできる環境を提供する機能です。
