@@ -3,7 +3,7 @@ theme:
   name: material
   custom_dir: 'material_custom'
   logo: 'imgs/logo.svg'
-  favicon: 'favicon.ico'
+  favicon: 'imgs/favicon.ico'
   language: 'ja'
   palette:
     primary: 'deep orange'
