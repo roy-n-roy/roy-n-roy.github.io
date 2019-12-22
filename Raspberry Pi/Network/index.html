@@ -42,6 +42,7 @@
       
     
     
+      
       <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
@@ -1022,12 +1023,12 @@
 <ol>
 <li>
 <p>dhcpcdを削除<br />
-<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">purge</span> <span class="n">dhcpcd</span>  
+<div class="codehilite"><pre><span></span><span class="err">sudo apt purge dhcpcd  </span>
 </pre></div></p>
 </li>
 <li>
 <p>設定ファイルの配置
-<div class="codehilite"><pre><span></span><span class="n">mv</span> <span class="n">eth</span><span class="p">.</span><span class="n">network</span> <span class="n">usb0</span><span class="p">.</span><span class="n">network</span> <span class="n">wlan0</span><span class="p">.</span><span class="n">network</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">network</span><span class="o">/</span><span class="p">.</span>  
+<div class="codehilite"><pre><span></span><span class="err">mv eth.network usb0.network wlan0.network /etc/systemd/network/.  </span>
 </pre></div></p>
 <div class="admonition example">
 <p class="admonition-title">eth.network</p>
@@ -1044,8 +1045,8 @@
 </li>
 <li>
 <p>systemd-networkd, systemd-resolvedを有効化<br />
-<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">systemd</span><span class="o">-</span><span class="n">networkd</span>  
-<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">systemd</span><span class="o">-</span><span class="n">resolved</span>  
+<div class="codehilite"><pre><span></span><span class="err">sudo systemctl enable systemd-networkd  </span>
+<span class="err">sudo systemctl enable systemd-resolved  </span>
 </pre></div></p>
 </li>
 </ol>
@@ -1067,8 +1068,8 @@
 </li>
 <li>
 <p>usb_initを有効化
-<div class="codehilite"><pre><span></span><span class="n">systemd</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
-<span class="n">systemd</span> <span class="n">enable</span> <span class="n">usb_init</span>
+<div class="codehilite"><pre><span></span><span class="err">systemd daemon-reload</span>
+<span class="err">systemd enable usb_init</span>
 </pre></div></p>
 </li>
 </ol>
@@ -1076,17 +1077,17 @@
 <ol>
 <li>
 <p>networkd-dispatcher, hostapdをインストール<br />
-<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">hostapd</span>  
+<div class="codehilite"><pre><span></span><span class="err">sudo apt install hostapd  </span>
 </pre></div></p>
 </li>
 <li>
 <p>設定ファイルを配置<br />
-<div class="codehilite"><pre><span></span><span class="n">mv</span> <span class="n">hostapd</span><span class="p">.</span><span class="n">conf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hostapd</span><span class="o">/</span><span class="p">.</span>  
+<div class="codehilite"><pre><span></span><span class="err">mv hostapd.conf /etc/hostapd/.  </span>
 </pre></div></p>
 </li>
 <li>
 <p>hostapdを有効化<br />
-<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">unmask</span> <span class="n">hostapd</span>  
+<div class="codehilite"><pre><span></span><span class="err">sudo systemctl unmask hostapd  </span>
 </pre></div></p>
 </li>
 </ol>
@@ -1094,15 +1095,15 @@
 <ol>
 <li>
 <p>networkd-dispatcher, hostapdをインストール<br />
-<div class="codehilite"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">networkd</span><span class="o">-</span><span class="n">dispatcher</span>  
+<div class="codehilite"><pre><span></span><span class="err">sudo apt install networkd-dispatcher  </span>
 </pre></div></p>
 </li>
 <li>
 <p>設定ファイルを配置<br />
 他のネットワーク接続(eth0,usb0)が接続されている(routable)場合は無線LAN APを停止、<br />
 他が切断された場合は無線LAN APを起動するスクリプトを設定する。
-<div class="codehilite"><pre><span></span><span class="n">mv</span> <span class="n">stop_ap</span><span class="p">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">networkd</span><span class="o">-</span><span class="n">dispatcher</span><span class="o">/</span><span class="n">routable</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="p">.</span>  
-<span class="n">mv</span> <span class="n">start_ap</span><span class="p">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">networkd</span><span class="o">-</span><span class="n">dispatcher</span><span class="o">/</span><span class="k">off</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="p">.</span>  
+<div class="codehilite"><pre><span></span><span class="err">mv stop_ap.sh /etc/networkd-dispatcher/routable.d/.  </span>
+<span class="err">mv start_ap.sh /etc/networkd-dispatcher/off.d/.  </span>
 </pre></div></p>
 </li>
 </ol>
@@ -1235,7 +1236,7 @@
       
     </div>
     
-      <script src="../../assets/javascripts/application.8e03edeb.js"></script>
+      <script src="../../assets/javascripts/application.808e90bba.js"></script>
       
         
         

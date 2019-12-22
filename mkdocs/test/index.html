@@ -42,6 +42,7 @@
       
     
     
+      
       <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
@@ -963,7 +964,7 @@
 <p>mkdocsはPython製のツールなので、すでにPythonがインストールされています。<br />
 なので、今回はPython製のテストフレームワークであるpytestを利用することにしました。  </p>
 <p>まずはpytestをpipコマンドでインストールします。</p>
-<div class="codehilite"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pytest</span>
+<div class="codehilite"><pre><span></span><span class="err">pip install pytest</span>
 </pre></div>
 
 <p>続いて、スクレイピング、HTMLパース用にbeautifulsoap4,  requests, lxmlを、<br />
@@ -985,26 +986,26 @@
 <p>Visual Studio Code(VSCode)でテストタスクとして実行できるように設定してます。  </p>
 <p>まず、VSCodeからpytestを呼び出す際の設定を<code>.vscode/settings.json</code>に追記します。ファイルがない場合は、ファイルを作成してください。  </p>
 <div class="codehilite"><pre><span></span><span class="err">{</span>
-    <span class="ss">&quot;python.testing.pytestArgs&quot;</span><span class="p">:</span> <span class="p">[],</span>
-    <span class="ss">&quot;python.testing.unittestEnabled&quot;</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
-    <span class="ss">&quot;python.testing.nosetestsEnabled&quot;</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
-    <span class="ss">&quot;python.testing.pytestEnabled&quot;</span><span class="p">:</span> <span class="k">true</span>
+<span class="err">    &quot;python.testing.pytestArgs&quot;: [],</span>
+<span class="err">    &quot;python.testing.unittestEnabled&quot;: false,</span>
+<span class="err">    &quot;python.testing.nosetestsEnabled&quot;: false,</span>
+<span class="err">    &quot;python.testing.pytestEnabled&quot;: true</span>
 <span class="err">}</span>
 </pre></div>
 
 <p>続いて、<code>.vscode/settings.json</code>に下記を追記します。</p>
 <div class="codehilite"><pre><span></span><span class="err">{</span>
-    <span class="ss">&quot;tasks&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="err">{</span>
-            <span class="ss">&quot;label&quot;</span><span class="p">:</span> <span class="ss">&quot;mkdocs-test&quot;</span><span class="p">,</span>
-            <span class="ss">&quot;type&quot;</span><span class="p">:</span> <span class="ss">&quot;shell&quot;</span><span class="p">,</span>
-            <span class="ss">&quot;command&quot;</span><span class="p">:</span> <span class="ss">&quot;py.test&quot;</span><span class="p">,</span>
-            <span class="ss">&quot;group&quot;</span><span class="p">:</span> <span class="err">{</span>
-                <span class="ss">&quot;kind&quot;</span><span class="p">:</span> <span class="ss">&quot;test&quot;</span><span class="p">,</span>
-                <span class="ss">&quot;isDefault&quot;</span><span class="p">:</span> <span class="k">true</span>
-            <span class="err">}</span>
-        <span class="err">}</span>
-    <span class="p">]</span>
+<span class="err">    &quot;tasks&quot;: [</span>
+<span class="err">        {</span>
+<span class="err">            &quot;label&quot;: &quot;mkdocs-test&quot;,</span>
+<span class="err">            &quot;type&quot;: &quot;shell&quot;,</span>
+<span class="err">            &quot;command&quot;: &quot;py.test&quot;,</span>
+<span class="err">            &quot;group&quot;: {</span>
+<span class="err">                &quot;kind&quot;: &quot;test&quot;,</span>
+<span class="err">                &quot;isDefault&quot;: true</span>
+<span class="err">            }</span>
+<span class="err">        }</span>
+<span class="err">    ]</span>
 <span class="err">}</span>
 </pre></div>
 
@@ -1130,7 +1131,7 @@
       
     </div>
     
-      <script src="../../assets/javascripts/application.8e03edeb.js"></script>
+      <script src="../../assets/javascripts/application.808e90bba.js"></script>
       
         
         
