@@ -53,6 +53,9 @@
 			"label": "mkdocs-deploy",
 			"type": "shell",
 			"command": "mkdocs gh-deploy",
+			"dependsOn":[
+				"mkdocs-test"
+			],
 			"problemMatcher": []
 		},
 		{
