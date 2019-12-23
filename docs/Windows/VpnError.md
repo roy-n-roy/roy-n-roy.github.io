@@ -2,6 +2,11 @@
 私は、外出先から自宅へVPN接続できるように、IPsec/IKEv2の[VPNサーバの設定](/RouterOS/VPN Server)をしており、Windows PCでVPN接続するときにはiPhoneのテザリングでのインターネット経由でVPN接続をしています。  
 
 iPhoneのテザリングを利用するには「Lightningケーブル接続」「Wi-Fi接続」「Bluetooth接続」の3通りの方法があります。
+
+<div align="center">
+<a href="/imgs/windows_vpn_error_why.png" data-lightbox="vpn_error_why"><img src="/imgs/windows_vpn_error_why.png" width="100%" /></a>
+</div>
+
 Windows PCからVPN接続をするときに「Wi-Fi接続」でのテザリング経由では正常に接続できるのですが、「Lightningケーブル」での有線接続の場合に、VPN接続がエラーとなることがありました。  
 
 <figure style="text-align: center;">
