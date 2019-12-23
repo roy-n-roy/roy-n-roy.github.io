@@ -1,5 +1,10 @@
 is_index: true
-# Windows subsystem for Linux
+# Windowsでのコンテナ技術とWSL
+
+## Host Conpute Service
+Host Conpute ServiceはWindows
+
+## Windows subsystem for Linux
 Windows subsystem for Linux(WSL) とは、Windows上でLinux OS(ディストリビューション)を利用できる機能です。  
 
 ## 利用できるOS・エディション
