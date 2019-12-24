@@ -28,7 +28,7 @@ def test_urls():
     # テスト対象URLのリスト
     target_urls = []
     # docs配下の*.mdファイルを検索し、対象URLリストを作成
-    for md in glob.glob('docs/**/*.md', recursive=True):
+    for md in glob.glob('release/docs/**/*.md', recursive=True):
         target_urls.append(mkdocs_url + re.sub(r'^docs\\|\.md$|index\.md$', '', md).replace(os.sep, '/'))
 
     check_urls = []
@@ -78,7 +78,13 @@ def check_and_start_mkdocs(mkdocs_url) -> subprocess.Popen:
         requests.get(mkdocs_url)
     except requests.exceptions.ConnectionError:
         # 接続できない場合はmkdocs serveを起動
-        proc = subprocess.Popen(['mkdocs', 'serve'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+        proc = subprocess.Popen(
+                ['mkdocs', 'serve'],
+                cwd='release',
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                universal_newlines=True
+            )
         while proc.returncode is None:
             if 'Start detecting changes' in proc.stdout.readline():
                 break

@@ -45,6 +45,29 @@
 			}
 		},
 		{
+			"label": "mkdocs-check-serve",
+			"type": "shell",
+			"isBackground": true,
+			"command": "mkdocs serve",
+			"options": {
+				"cwd": "${workspaceRoot}/release"
+			},
+			"dependsOn":[
+				"mkdocs-stop"
+			],
+			"problemMatcher": {
+				"owner": "custom",
+				"pattern": {
+					"regexp": "^$"
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*Building documentation.*",
+					"endsPattern": ".*Start detecting changes.*"
+				}
+			}
+		},
+		{
 			"label": "mkdocs-stop",
 			"type": "shell",
 			"command": "${command:workbench.action.terminal.kill}"
@@ -53,6 +76,9 @@
 			"label": "mkdocs-deploy",
 			"type": "shell",
 			"command": "mkdocs gh-deploy",
+			"options": {
+				"cwd": "${workspaceRoot}/release"
+			},
 			"dependsOn":[
 				"mkdocs-test"
 			],
@@ -71,7 +97,10 @@
 			"group": {
 				"kind": "test",
 				"isDefault": true
-			}
+			},
+			"dependsOn":[
+				"mkdocs-check-serve"
+			]
 		}
 	]
 }

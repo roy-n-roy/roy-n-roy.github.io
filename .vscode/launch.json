@@ -12,9 +12,22 @@
 			//"type": "chrome",
 			"request": "launch",
 			"url": "http://localhost:8000/",
-			"webRoot": "${workspaceFolder}",
+			"webRoot": "${workspaceFolder}/site",
 			"preLaunchTask": "mkdocs-serve",
 			"postDebugTask": "mkdocs-stop"
+		},
+		{
+			"name": "mkdocs-check",
+			// Use Debugger for Firefox https://marketplace.visualstudio.com/items?itemName=firefox-devtools.vscode-firefox-debug
+			"type": "firefox",
+			// Use Debugger for Chrome https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
+			//"type": "chrome",
+			"request": "launch",
+			"url": "http://localhost:8000/",
+			"webRoot": "${workspaceFolder}/release/site",
+			"preLaunchTask": "mkdocs-check-serve",
+			"postDebugTask": "mkdocs-stop"
 		}
+
 	]
 }
