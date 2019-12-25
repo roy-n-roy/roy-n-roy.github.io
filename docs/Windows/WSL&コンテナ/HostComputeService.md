@@ -1,6 +1,7 @@
 # Windowsのコンテナ
 ## Host Compute Service(HCS)
-Windowsで利用できるコンテナ技術の一つ。  
+Host Conpute ServiceはWindowsでコンテナを扱うためのAPIを提供するサービスです。[^1]
+このサービスが、Linuxでのcontainerdとruncにあたる機能を提供します。  
 Windowsのコンテナには大きく2種類あり、Windowsコンテナ(プロセス分離モード)とHyper-Vコンテナ(Hyper-V分離モード)と呼ばれています。[^1]  
 
 2019/12現在、各モードのコンテナが利用できるOSバージョン/エディションは下記の通りです。  
