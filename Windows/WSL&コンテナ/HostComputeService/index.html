@@ -1,0 +1,1371 @@
+
+
+
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://roy-n-roy.github.io/Windows/WSL&コンテナ/HostComputeService/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="クリップボードへコピー">
+      
+        <meta name="lang:clipboard.copied" content="コピーしました">
+      
+        <meta name="lang:search.language" content="ja">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="何も見つかりませんでした">
+      
+        <meta name="lang:search.result.one" content="1件見つかりました">
+      
+        <meta name="lang:search.result.other" content="#件見つかりました">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-　、。，．]+">
+      
+      <link rel="shortcut icon" href="../../../imgs/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+    
+    
+      
+        <title>Windowsのコンテナ - roy-n-roy メモ</title>
+      
+    
+    
+      
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.1b62728e.css">
+      
+        <link rel="stylesheet" href="../../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ff7043">
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../../lightbox2/css/lightbox.min.css">
+    
+      <link rel="stylesheet" href="../../../styles/git_revision_date.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-149709379-1", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="deep-orange" data-md-color-accent="">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#windows" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://roy-n-roy.github.io/" title="roy-n-roy メモ" class="md-header-nav__button md-logo">
+          
+            <img src="../../../imgs/logo.svg" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              roy-n-roy メモ
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Windowsのコンテナ
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            検索キーワードを入力してください
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../C＃/mergeAssemblies/" class="md-tabs__link">
+          C＃
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../Docker/" class="md-tabs__link">
+          Docker
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../Raspberry Pi/" class="md-tabs__link">
+          Raspberry Pi
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../RouterOS/" class="md-tabs__link">
+          RouterOS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../" class="md-tabs__link md-tabs__link--active">
+          Windows
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../mkdocs/" class="md-tabs__link">
+          Mkdocs
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../プライバシー・ポリシー/" class="md-tabs__link">
+          プライバシー・ポリシー
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://roy-n-roy.github.io/" title="roy-n-roy メモ" class="md-nav__button md-logo">
+      
+        <img src="../../../imgs/logo.svg" width="48" height="48">
+      
+    </a>
+    roy-n-roy メモ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../vpn/" title="VPNサーバの代替設定" class="md-nav__link">
+      VPNサーバの代替設定
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      C＃
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        C＃
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../C＃/mergeAssemblies/" title=".Net CoreでのDLL埋め込み" class="md-nav__link">
+      .Net CoreでのDLL埋め込み
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Docker
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/" title="Docker 設定集" class="md-nav__link">
+      Docker 設定集
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
+      Fluentd+Elasticsearch+Kibana
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/nginx/" title="Nginx" class="md-nav__link">
+      Nginx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/wordpress/" title="Wordpress" class="md-nav__link">
+      Wordpress
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Raspberry Pi
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Raspberry Pi
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Raspberry Pi/" title="Raspberry Pi" class="md-nav__link">
+      Raspberry Pi
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Raspberry Pi/Network/" title="ネットワーク設定" class="md-nav__link">
+      ネットワーク設定
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Raspberry Pi/WebConsole/" title="Web Console" class="md-nav__link">
+      Web Console
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      RouterOS
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        RouterOS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../RouterOS/" title="RouterOS" class="md-nav__link">
+      RouterOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../RouterOS/Backup/" title="Backup" class="md-nav__link">
+      Backup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../RouterOS/Firewall/" title="Firewall" class="md-nav__link">
+      Firewall
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../RouterOS/VPN Server/" title="VPN Server" class="md-nav__link">
+      VPN Server
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+    
+    <label class="md-nav__link" for="nav-7">
+      Windows
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Windows
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../" title="Windows Desktop" class="md-nav__link">
+      Windows Desktop
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../VpnError/" title="テザリング(有線ケーブル)でのVPN接続エラー" class="md-nav__link">
+      テザリング(有線ケーブル)でのVPN接続エラー
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../windowsShutdownBlockSetting/" title="Windows10 シャットダウンブロックの設定" class="md-nav__link">
+      Windows10 シャットダウンブロックの設定
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../記憶域スペース/" title="記憶域スペースとReFS" class="md-nav__link">
+      記憶域スペースとReFS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-5" type="checkbox" id="nav-7-5" checked>
+    
+    <label class="md-nav__link" for="nav-7-5">
+      WSL&コンテナ
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-7-5">
+        WSL&コンテナ
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Windowsでのコンテナ技術とWSL" class="md-nav__link">
+      Windowsでのコンテナ技術とWSL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Windowsのコンテナ
+      </label>
+    
+    <a href="./" title="Windowsのコンテナ" class="md-nav__link md-nav__link--active">
+      Windowsのコンテナ
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#host-compute-servicehcs" class="md-nav__link">
+    Host Compute Service(HCS)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hcsdiag" class="md-nav__link">
+    hcsdiag
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-list" class="md-nav__link">
+    hcsdiag list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-exec-uvm-guid-command-line" class="md-nav__link">
+    hcsdiag exec [-uvm] &lt;GUID&gt; [command line]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-console-uvm-guid" class="md-nav__link">
+    hcsdiag console [-uvm] &lt;GUID&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-read-uvm-guid-host-file" class="md-nav__link">
+    hcsdiag read [-uvm] &lt;GUID&gt; [host file]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-write-uvm-host-file-guid" class="md-nav__link">
+    hcsdiag write [-uvm] [host file] &lt;GUID&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-kill-guid" class="md-nav__link">
+    hcsdiag kill &lt;GUID&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-share-uvm-readonly-guid" class="md-nav__link">
+    hcsdiag share [-uvm] [-readonly] &lt;GUID&gt;  
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../centos/" title="WSLでCentOSを利用する" class="md-nav__link">
+      WSLでCentOSを利用する
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Mkdocs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Mkdocs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/" title="MkDocs" class="md-nav__link">
+      MkDocs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/VSCode/" title="Visual Studio Codeでの編集環境構築" class="md-nav__link">
+      Visual Studio Codeでの編集環境構築
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/gitRevisionDate/" title="git-revision-dateプラグイン" class="md-nav__link">
+      git-revision-dateプラグイン
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/lightbox2/" title="Lightbox2" class="md-nav__link">
+      Lightbox2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/logo作成/" title="Logo作成" class="md-nav__link">
+      Logo作成
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/test/" title="リンク切れのテスト" class="md-nav__link">
+      リンク切れのテスト
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      プライバシー・ポリシー
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        プライバシー・ポリシー
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../プライバシー・ポリシー/" title="プライバシー・ポリシー" class="md-nav__link">
+      プライバシー・ポリシー
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#host-compute-servicehcs" class="md-nav__link">
+    Host Compute Service(HCS)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hcsdiag" class="md-nav__link">
+    hcsdiag
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-list" class="md-nav__link">
+    hcsdiag list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-exec-uvm-guid-command-line" class="md-nav__link">
+    hcsdiag exec [-uvm] &lt;GUID&gt; [command line]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-console-uvm-guid" class="md-nav__link">
+    hcsdiag console [-uvm] &lt;GUID&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-read-uvm-guid-host-file" class="md-nav__link">
+    hcsdiag read [-uvm] &lt;GUID&gt; [host file]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-write-uvm-host-file-guid" class="md-nav__link">
+    hcsdiag write [-uvm] [host file] &lt;GUID&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-kill-guid" class="md-nav__link">
+    hcsdiag kill &lt;GUID&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hcsdiag-share-uvm-readonly-guid" class="md-nav__link">
+    hcsdiag share [-uvm] [-readonly] &lt;GUID&gt;  
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                <div class="git_revision_date">
+                  最終更新日: 2019-12-25
+                </div>
+              
+              
+                
+                
+                <h1 id="windows">Windowsのコンテナ</h1>
+<h2 id="host-compute-servicehcs">Host Compute Service(HCS)</h2>
+<p>Host Conpute ServiceはWindowsでコンテナを扱うためのAPIを提供するサービスです。<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>
+このサービスが、Linuxでのcontainerdとruncにあたる機能を提供します。<br />
+Windowsのコンテナには大きく2種類あり、Windowsコンテナ(プロセス分離モード)とHyper-Vコンテナ(Hyper-V分離モード)と呼ばれています。<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup>  </p>
+<p>2019/12現在、各モードのコンテナが利用できるOSバージョン/エディションは下記の通りです。  </p>
+<ul>
+<li>Windows Server 2016</li>
+<li>Windows Server 2019</li>
+<li>Windows 10 Pro バージョン 1607以降</li>
+<li>Windows 10 Enterprise バージョン 1607以降<ul>
+<li>ただし、Windowsコンテナの実行は バージョン 1809以降のみ可能</li>
+</ul>
+</li>
+</ul>
+<p>コンテナの操作にはdockerコマンドを利用するが、詳細についてはここでは割愛します。</p>
+<h2 id="hcsdiag">hcsdiag</h2>
+<p>Windowsコンテナの操作にはdockerを利用する場合が多いが、その他に<code>hcsdiag.exe</code>というものが存在します。<br />
+しかしながら、コマンドのリファレンスが現時点(2019/12)で見つからないため、そのオプションと実行した結果をここに記載します。  </p>
+<h3 id="hcsdiag-list"><strong>hcsdiag list</strong></h3>
+<p>英語での説明:  </p>
+<blockquote>
+<p>'Lists running containers and VMs.'  </p>
+</blockquote>
+<p>実行した結果:<br />
+&emsp;コンテナ or VMの一覧が表示される。<br />
+&emsp;項目は、左から「コンテナ/VMの種類」「ステータス」「GUID」「作成したサービス?」と予想。</p>
+<div class="admonition example">
+<p class="admonition-title">hcsdiag list</p>
+<p>上から、「Hyper-V コンテナ テンプレート」「Hyper-V コンテナ」「WSL2用仮想マシン」「Hyper-V仮想マシン」の4項目が表示されている。<br />
+なお、4つめの項目が「VMMS」となっている「Hyper-V仮想マシン」も起動しているが、「ステータス」は「Running」になっていない。<br />
+理由は分からない。<br />
+<div class="codehilite"><pre><span></span><span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="n">list</span>
+<span class="mi">0</span><span class="n">ACF54A5</span><span class="o">-</span><span class="n">CEEF</span><span class="o">-</span><span class="mi">454</span><span class="n">A</span><span class="o">-</span><span class="n">BDC7</span><span class="o">-</span><span class="mi">56</span><span class="n">D2C9A223B9</span>
+    <span class="n">Hyper</span><span class="o">-</span><span class="n">V</span> <span class="n">Container</span> <span class="k">Template</span><span class="p">,</span> <span class="n">Created</span><span class="p">,</span> <span class="mi">0</span><span class="n">ACF54A5</span><span class="o">-</span><span class="n">CEEF</span><span class="o">-</span><span class="mi">454</span><span class="n">A</span><span class="o">-</span><span class="n">BDC7</span><span class="o">-</span><span class="mi">56</span><span class="n">D2C9A223B9</span>
+
+<span class="mi">0</span><span class="n">c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6</span>
+    <span class="n">Hyper</span><span class="o">-</span><span class="n">V</span> <span class="n">Container</span><span class="p">,</span>          <span class="n">Running</span><span class="p">,</span> <span class="mi">2</span><span class="n">A0A7D9B</span><span class="o">-</span><span class="mi">25</span><span class="n">D0</span><span class="o">-</span><span class="mi">4</span><span class="n">C18</span><span class="o">-</span><span class="n">B620</span><span class="o">-</span><span class="mi">4</span><span class="n">FC1E92740F9</span><span class="p">,</span> <span class="n">docker</span>
+
+<span class="mi">3</span><span class="n">F098403</span><span class="o">-</span><span class="mi">148</span><span class="n">F</span><span class="o">-</span><span class="mi">49</span><span class="n">FE</span><span class="o">-</span><span class="mi">9</span><span class="n">EA3</span><span class="o">-</span><span class="mi">1729298</span><span class="n">CD01F</span>
+    <span class="n">VM</span><span class="p">,</span>                         <span class="n">Running</span><span class="p">,</span> <span class="mi">3</span><span class="n">F098403</span><span class="o">-</span><span class="mi">148</span><span class="n">F</span><span class="o">-</span><span class="mi">49</span><span class="n">FE</span><span class="o">-</span><span class="mi">9</span><span class="n">EA3</span><span class="o">-</span><span class="mi">1729298</span><span class="n">CD01F</span><span class="p">,</span> <span class="n">WSL</span>
+
+<span class="n">EB83922C</span><span class="o">-</span><span class="n">E87B</span><span class="o">-</span><span class="mi">45</span><span class="n">FF</span><span class="o">-</span><span class="n">B2A3</span><span class="o">-</span><span class="n">BBB773644DCA</span>
+    <span class="n">VM</span><span class="p">,</span>                         <span class="n">Created</span><span class="p">,</span> <span class="n">EB83922C</span><span class="o">-</span><span class="n">E87B</span><span class="o">-</span><span class="mi">45</span><span class="n">FF</span><span class="o">-</span><span class="n">B2A3</span><span class="o">-</span><span class="n">BBB773644DCA</span><span class="p">,</span> <span class="n">VMMS</span>
+</pre></div></p>
+</div>
+<h3 id="hcsdiag-exec-uvm-guid-command-line"><strong>hcsdiag exec [-uvm] &lt;GUID&gt; [command line] </strong></h3>
+<p>英語での説明:  </p>
+<blockquote>
+<p>'Executes a process inside the container.'  </p>
+</blockquote>
+<p>実行した結果:<br />
+&emsp;コンテナの場合はプロセスを実行できたが、VMの場合はできない。  </p>
+<div class="admonition example">
+<p class="admonition-title">hcsdiag exec</p>
+<div class="codehilite"><pre><span></span><span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="k">exec</span> <span class="mi">0</span><span class="n">c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6</span> <span class="n">cmd</span> <span class="o">/</span><span class="k">c</span> <span class="ss">&quot;dir C:\&quot;</span>
+    <span class="n">Volume</span> <span class="k">in</span> <span class="n">drive</span> <span class="k">C</span> <span class="n">has</span> <span class="k">no</span> <span class="n">label</span><span class="p">.</span>
+    <span class="n">Volume</span> <span class="nb">Serial</span> <span class="nb">Number</span> <span class="k">is</span> <span class="n">C280</span><span class="o">-</span><span class="mi">441</span><span class="n">F</span>
+
+    <span class="n">Directory</span> <span class="k">of</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span>
+
+<span class="mi">11</span><span class="o">/</span><span class="mi">27</span><span class="o">/</span><span class="mi">2019</span>  <span class="mi">06</span><span class="p">:</span><span class="mi">55</span> <span class="n">PM</span>             <span class="mi">5</span><span class="p">,</span><span class="mi">510</span> <span class="n">License</span><span class="p">.</span><span class="n">txt</span>
+<span class="mi">12</span><span class="o">/</span><span class="mi">25</span><span class="o">/</span><span class="mi">2019</span>  <span class="mi">05</span><span class="p">:</span><span class="mi">08</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="n">Users</span>
+<span class="mi">12</span><span class="o">/</span><span class="mi">25</span><span class="o">/</span><span class="mi">2019</span>  <span class="mi">05</span><span class="p">:</span><span class="mi">08</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="n">Windows</span>
+                <span class="mi">1</span> <span class="n">File</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>          <span class="mi">5</span><span class="p">,</span><span class="mi">510</span> <span class="n">bytes</span>
+                <span class="mi">2</span> <span class="n">Dir</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  <span class="mi">21</span><span class="p">,</span><span class="mi">299</span><span class="p">,</span><span class="mi">453</span><span class="p">,</span><span class="mi">952</span> <span class="n">bytes</span> <span class="k">free</span>
+<span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="k">exec</span> <span class="mi">3</span><span class="n">F098403</span><span class="o">-</span><span class="mi">148</span><span class="n">F</span><span class="o">-</span><span class="mi">49</span><span class="n">FE</span><span class="o">-</span><span class="mi">9</span><span class="n">EA3</span><span class="o">-</span><span class="mi">1729298</span><span class="n">CD01F</span> <span class="n">bash</span>
+<span class="n">PS</span> <span class="o">&gt;</span> <span class="err">$</span><span class="o">?</span>
+<span class="k">False</span>
+<span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="k">exec</span> <span class="mi">3</span><span class="n">F098403</span><span class="o">-</span><span class="mi">148</span><span class="n">F</span><span class="o">-</span><span class="mi">49</span><span class="n">FE</span><span class="o">-</span><span class="mi">9</span><span class="n">EA3</span><span class="o">-</span><span class="mi">1729298</span><span class="n">CD01F</span> <span class="n">cmd</span>
+<span class="n">PS</span> <span class="o">&gt;</span> <span class="err">$</span><span class="o">?</span>
+<span class="k">False</span>
+</pre></div>
+
+</div>
+<h3 id="hcsdiag-console-uvm-guid"><strong>hcsdiag console [-uvm] &lt;GUID&gt;</strong></h3>
+<p>英語での説明:  </p>
+<blockquote>
+<p>'Launches an interactive console inside the container.'  </p>
+</blockquote>
+<p>実行した結果:<br />
+&emsp;コンテナの場合はコマンドプロンプトが表示されたが、VMの場合は何も起きない。</p>
+<div class="admonition example">
+<p class="admonition-title">hcsdiag read</p>
+<div class="codehilite"><pre><span></span><span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="n">console</span> <span class="mi">0</span><span class="n">c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6</span>
+<span class="n">Microsoft</span> <span class="n">Windows</span> <span class="p">[</span><span class="k">Version</span> <span class="mi">10</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">19035</span><span class="p">.</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">(</span><span class="k">c</span><span class="p">)</span> <span class="mi">2019</span> <span class="n">Microsoft</span> <span class="n">Corporation</span><span class="p">.</span> <span class="k">All</span> <span class="n">rights</span> <span class="n">reserved</span><span class="p">.</span>
+
+<span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span><span class="err">\</span><span class="n">system32</span><span class="o">&gt;</span>
+</pre></div>
+
+</div>
+<h3 id="hcsdiag-read-uvm-guid-host-file"><strong>hcsdiag read [-uvm] &lt;GUID&gt; [host file] </strong></h3>
+<p>英語での説明:  </p>
+<blockquote>
+<p>'Reads a file from the container and outputs it to standard output or a file.'  </p>
+</blockquote>
+<p>実行した結果:<br />
+&emsp;コンテナの場合はコンテナ内のファイルが表示されたが、VMの場合は何も起きない。</p>
+<div class="admonition example">
+<p class="admonition-title">hcsdiag read</p>
+<div class="codehilite"><pre><span></span><span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="k">read</span> <span class="mi">0</span><span class="n">c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6</span> <span class="s1">&#39;C:\License.txt&#39;</span>
+<span class="n">MICROSOFT</span> <span class="n">SOFTWARE</span> <span class="n">SUPPLEMENTAL</span> <span class="n">LICENSE</span>
+<span class="k">FOR</span> <span class="n">WINDOWS</span> <span class="n">CONTAINER</span> <span class="n">BASE</span> <span class="n">IMAGE</span>
+
+<span class="n">This</span> <span class="n">Supplemental</span> <span class="n">License</span> <span class="k">is</span> <span class="k">for</span> <span class="n">the</span> <span class="n">Windows</span> <span class="n">Container</span> <span class="n">Base</span> <span class="n">Image</span> <span class="p">(</span><span class="ss">&quot;Container Image&quot;</span><span class="p">).</span>  <span class="k">If</span> <span class="n">you</span> <span class="n">comply</span> <span class="k">with</span> <span class="n">the</span> <span class="n">terms</span> <span class="k">of</span> <span class="n">this</span> <span class="n">Supplemental</span> <span class="n">License</span> <span class="n">you</span> <span class="n">may</span> <span class="n">use</span> <span class="n">the</span> <span class="n">Container</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">described</span> <span class="n">below</span><span class="p">.</span>
+
+   <span class="err">≪以下略≫</span>
+</pre></div>
+
+</div>
+<h3 id="hcsdiag-write-uvm-host-file-guid"><strong>hcsdiag write [-uvm] [host file] &lt;GUID&gt;</strong></h3>
+<p>英語での説明:  </p>
+<blockquote>
+<p>'Writes from standard input or a host file to a file in the container.'  </p>
+</blockquote>
+<p>実行した結果:<br />
+&emsp;コンテナの場合はコンテナ内のファイルが作成されたが、VMの場合は何も起きない。</p>
+<div class="admonition example">
+<p class="admonition-title">hcsdiag write</p>
+<div class="codehilite"><pre><span></span><span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="k">write</span> <span class="mi">0</span><span class="n">c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6</span> <span class="s1">&#39;C:\Users\ContainerUser\hoge.txt&#39;</span>
+<span class="n">hogehoge</span>
+<span class="n">hoge</span>
+<span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="k">exec</span> <span class="mi">0</span><span class="n">c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6</span> <span class="n">cmd</span> <span class="o">/</span><span class="k">c</span> <span class="s1">&#39;more C:\Users\ContainerUser\hoge.txt&#39;</span>
+
+<span class="n">hogehoge</span>
+<span class="n">hoge</span>
+</pre></div>
+
+</div>
+<h3 id="hcsdiag-kill-guid"><strong>hcsdiag kill &lt;GUID&gt;</strong></h3>
+<p>英語での説明:  </p>
+<blockquote>
+<p>'Terminates a running container.'  </p>
+</blockquote>
+<p>実行した結果:<br />
+&emsp;コンテナの場合は強制終了、WSLのVMの場合も強制終了された。Hyper-V仮想マシンの場合は、仮想マシンが強制リセットされた。</p>
+<div class="admonition example">
+<p class="admonition-title">hcsdiag kill</p>
+<div class="codehilite"><pre><span></span><span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="n">list</span>
+<span class="mi">0</span><span class="n">ACF54A5</span><span class="o">-</span><span class="n">CEEF</span><span class="o">-</span><span class="mi">454</span><span class="n">A</span><span class="o">-</span><span class="n">BDC7</span><span class="o">-</span><span class="mi">56</span><span class="n">D2C9A223B9</span>
+    <span class="n">Hyper</span><span class="o">-</span><span class="n">V</span> <span class="n">Container</span> <span class="k">Template</span><span class="p">,</span> <span class="n">Created</span><span class="p">,</span> <span class="mi">0</span><span class="n">ACF54A5</span><span class="o">-</span><span class="n">CEEF</span><span class="o">-</span><span class="mi">454</span><span class="n">A</span><span class="o">-</span><span class="n">BDC7</span><span class="o">-</span><span class="mi">56</span><span class="n">D2C9A223B9</span>
+
+<span class="mi">0</span><span class="n">c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6</span>
+    <span class="n">Hyper</span><span class="o">-</span><span class="n">V</span> <span class="n">Container</span><span class="p">,</span>          <span class="n">Running</span><span class="p">,</span> <span class="mi">2</span><span class="n">A0A7D9B</span><span class="o">-</span><span class="mi">25</span><span class="n">D0</span><span class="o">-</span><span class="mi">4</span><span class="n">C18</span><span class="o">-</span><span class="n">B620</span><span class="o">-</span><span class="mi">4</span><span class="n">FC1E92740F9</span><span class="p">,</span> <span class="n">docker</span>
+
+<span class="mi">3</span><span class="n">F098403</span><span class="o">-</span><span class="mi">148</span><span class="n">F</span><span class="o">-</span><span class="mi">49</span><span class="n">FE</span><span class="o">-</span><span class="mi">9</span><span class="n">EA3</span><span class="o">-</span><span class="mi">1729298</span><span class="n">CD01F</span>
+    <span class="n">VM</span><span class="p">,</span>                         <span class="n">Running</span><span class="p">,</span> <span class="mi">3</span><span class="n">F098403</span><span class="o">-</span><span class="mi">148</span><span class="n">F</span><span class="o">-</span><span class="mi">49</span><span class="n">FE</span><span class="o">-</span><span class="mi">9</span><span class="n">EA3</span><span class="o">-</span><span class="mi">1729298</span><span class="n">CD01F</span><span class="p">,</span> <span class="n">WSL</span>
+
+<span class="n">EB83922C</span><span class="o">-</span><span class="n">E87B</span><span class="o">-</span><span class="mi">45</span><span class="n">FF</span><span class="o">-</span><span class="n">B2A3</span><span class="o">-</span><span class="n">BBB773644DCA</span>
+    <span class="n">VM</span><span class="p">,</span>                         <span class="n">Created</span><span class="p">,</span> <span class="n">EB83922C</span><span class="o">-</span><span class="n">E87B</span><span class="o">-</span><span class="mi">45</span><span class="n">FF</span><span class="o">-</span><span class="n">B2A3</span><span class="o">-</span><span class="n">BBB773644DCA</span><span class="p">,</span> <span class="n">VMMS</span>
+
+<span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="n">kill</span> <span class="mi">0</span><span class="n">c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6</span>
+<span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="n">kill</span> <span class="mi">3</span><span class="n">F098403</span><span class="o">-</span><span class="mi">148</span><span class="n">F</span><span class="o">-</span><span class="mi">49</span><span class="n">FE</span><span class="o">-</span><span class="mi">9</span><span class="n">EA3</span><span class="o">-</span><span class="mi">1729298</span><span class="n">CD01F</span>
+<span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="n">kill</span> <span class="n">EB83922C</span><span class="o">-</span><span class="n">E87B</span><span class="o">-</span><span class="mi">45</span><span class="n">FF</span><span class="o">-</span><span class="n">B2A3</span><span class="o">-</span><span class="n">BBB773644DCA</span>
+<span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="n">list</span>
+<span class="mi">0</span><span class="n">ACF54A5</span><span class="o">-</span><span class="n">CEEF</span><span class="o">-</span><span class="mi">454</span><span class="n">A</span><span class="o">-</span><span class="n">BDC7</span><span class="o">-</span><span class="mi">56</span><span class="n">D2C9A223B9</span>
+    <span class="n">Hyper</span><span class="o">-</span><span class="n">V</span> <span class="n">Container</span> <span class="k">Template</span><span class="p">,</span> <span class="n">Created</span><span class="p">,</span> <span class="mi">0</span><span class="n">ACF54A5</span><span class="o">-</span><span class="n">CEEF</span><span class="o">-</span><span class="mi">454</span><span class="n">A</span><span class="o">-</span><span class="n">BDC7</span><span class="o">-</span><span class="mi">56</span><span class="n">D2C9A223B9</span>
+
+<span class="n">EB83922C</span><span class="o">-</span><span class="n">E87B</span><span class="o">-</span><span class="mi">45</span><span class="n">FF</span><span class="o">-</span><span class="n">B2A3</span><span class="o">-</span><span class="n">BBB773644DCA</span>
+    <span class="n">VM</span><span class="p">,</span>                         <span class="n">Created</span><span class="p">,</span> <span class="n">EB83922C</span><span class="o">-</span><span class="n">E87B</span><span class="o">-</span><span class="mi">45</span><span class="n">FF</span><span class="o">-</span><span class="n">B2A3</span><span class="o">-</span><span class="n">BBB773644DCA</span><span class="p">,</span> <span class="n">VMMS</span>
+
+<span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="n">kill</span> <span class="n">EB83922C</span><span class="o">-</span><span class="n">E87B</span><span class="o">-</span><span class="mi">45</span><span class="n">FF</span><span class="o">-</span><span class="n">B2A3</span><span class="o">-</span><span class="n">BBB773644DCA</span>
+<span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="n">list</span>
+<span class="mi">0</span><span class="n">ACF54A5</span><span class="o">-</span><span class="n">CEEF</span><span class="o">-</span><span class="mi">454</span><span class="n">A</span><span class="o">-</span><span class="n">BDC7</span><span class="o">-</span><span class="mi">56</span><span class="n">D2C9A223B9</span>
+    <span class="n">Hyper</span><span class="o">-</span><span class="n">V</span> <span class="n">Container</span> <span class="k">Template</span><span class="p">,</span> <span class="n">Created</span><span class="p">,</span> <span class="mi">0</span><span class="n">ACF54A5</span><span class="o">-</span><span class="n">CEEF</span><span class="o">-</span><span class="mi">454</span><span class="n">A</span><span class="o">-</span><span class="n">BDC7</span><span class="o">-</span><span class="mi">56</span><span class="n">D2C9A223B9</span>
+
+<span class="n">EB83922C</span><span class="o">-</span><span class="n">E87B</span><span class="o">-</span><span class="mi">45</span><span class="n">FF</span><span class="o">-</span><span class="n">B2A3</span><span class="o">-</span><span class="n">BBB773644DCA</span>
+<span class="n">VM</span><span class="p">,</span>                         <span class="n">Created</span><span class="p">,</span> <span class="n">EB83922C</span><span class="o">-</span><span class="n">E87B</span><span class="o">-</span><span class="mi">45</span><span class="n">FF</span><span class="o">-</span><span class="n">B2A3</span><span class="o">-</span><span class="n">BBB773644DCA</span><span class="p">,</span> <span class="n">VMMS</span>
+</pre></div>
+
+</div>
+<h3 id="hcsdiag-share-uvm-readonly-guid"><strong>hcsdiag share [-uvm] [-readonly] &lt;GUID&gt; <Folder> <DriveLetter></strong></h3>
+<p>英語での説明:  </p>
+<blockquote>
+<p>'Shares a host folder into the container.'  </p>
+</blockquote>
+<p>実行した結果:<br />
+&emsp;コンテナの場合はコンテナにフォルダが共有された。VMの場合は何も起きない。</p>
+<div class="admonition example">
+<p class="admonition-title">hcsdiag share</p>
+<div class="codehilite"><pre><span></span><span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="k">share</span> <span class="mi">0</span><span class="n">c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">temp</span> <span class="n">Z</span><span class="p">:</span>
+<span class="n">PS</span> <span class="o">&gt;</span> <span class="n">hcsdiag</span> <span class="k">exec</span> <span class="mi">0</span><span class="n">c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6</span> <span class="n">cmd</span> <span class="o">/</span><span class="k">c</span> <span class="ss">&quot;dir Z:\&quot;</span>
+ <span class="n">Volume</span> <span class="k">in</span> <span class="n">drive</span> <span class="n">Z</span> <span class="n">has</span> <span class="k">no</span> <span class="n">label</span><span class="p">.</span>
+ <span class="n">Volume</span> <span class="nb">Serial</span> <span class="nb">Number</span> <span class="k">is</span> <span class="mi">9</span><span class="n">A79</span><span class="o">-</span><span class="mi">25</span><span class="n">D9</span>
+
+ <span class="n">Directory</span> <span class="k">of</span> <span class="n">Z</span><span class="p">:</span><span class="err">\</span>
+
+<span class="mi">12</span><span class="o">/</span><span class="mi">25</span><span class="o">/</span><span class="mi">2019</span>  <span class="mi">07</span><span class="p">:</span><span class="mi">25</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">.</span>
+<span class="mi">12</span><span class="o">/</span><span class="mi">25</span><span class="o">/</span><span class="mi">2019</span>  <span class="mi">07</span><span class="p">:</span><span class="mi">25</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">..</span>
+               <span class="mi">0</span> <span class="n">File</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>              <span class="mi">0</span> <span class="n">bytes</span>
+               <span class="mi">2</span> <span class="n">Dir</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  <span class="mi">199</span><span class="p">,</span><span class="mi">435</span><span class="p">,</span><span class="mi">386</span><span class="p">,</span><span class="mi">880</span> <span class="n">bytes</span> <span class="k">free</span>
+</pre></div>
+
+</div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://www.atmarkit.co.jp/ait/articles/1912/24/news011.html">Windows 10におけるWindowsコンテナの「プロセス分離モード」対応最新情報 - @IT</a> 2019年12月24日 05時00分 公開&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../" title="Windowsでのコンテナ技術とWSL" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  前
+                </span>
+                Windowsでのコンテナ技術とWSL
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../centos/" title="WSLでCentOSを利用する" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  次
+                </span>
+                WSLでCentOSを利用する
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/roy-n-roy/" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/roy_n_roy/" class="md-footer-social__link fa fa-twitter"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/application.808e90bb.js"></script>
+      
+        
+        
+          
+          <script src="../../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../../assets/javascripts/lunr/lunr.ja.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      
+        <script src="../../../lightbox2/js/lightbox-plus-jquery.min.js"></script>
+      
+    
+  </body>
+</html>
