@@ -17,7 +17,7 @@ def test_urls():
     """
 
     # mkdocs serve実行時のURL
-    mkdocs_url = 'http://127.0.0.1:8000/'
+    mkdocs_url = 'http://127.0.0.1:9000/'
     
     # 並列実行数
     max_access_count = 100
@@ -29,7 +29,7 @@ def test_urls():
     target_urls = []
     # docs配下の*.mdファイルを検索し、対象URLリストを作成
     for md in glob.glob('release/docs/**/*.md', recursive=True):
-        target_urls.append(mkdocs_url + re.sub(r'^docs\\|\.md$|index\.md$', '', md).replace(os.sep, '/'))
+        target_urls.append(mkdocs_url + re.sub(r'^release/docs/|\.md$|index\.md$', '', md.replace(os.sep, '/')))
 
     check_urls = []
     errors = []
@@ -79,7 +79,7 @@ def check_and_start_mkdocs(mkdocs_url) -> subprocess.Popen:
     except requests.exceptions.ConnectionError:
         # 接続できない場合はmkdocs serveを起動
         proc = subprocess.Popen(
-                ['mkdocs', 'serve'],
+                ['mkdocs', 'serve', '-a', urlparse(mkdocs_url).netloc],
                 cwd='release',
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,

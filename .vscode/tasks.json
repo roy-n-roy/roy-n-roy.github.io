@@ -97,10 +97,7 @@
 			"group": {
 				"kind": "test",
 				"isDefault": true
-			},
-			"dependsOn":[
-				"mkdocs-check-serve"
-			]
+			}
 		}
 	]
 }
