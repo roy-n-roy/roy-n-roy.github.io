@@ -11,6 +11,8 @@
 			// Use Debugger for Chrome https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
 			//"type": "chrome",
 			"request": "launch",
+			"reAttach": true,
+			"profileDir": "${workspaceFolder}\\.vscode\\firefox_profile\\nevnhmu0.debug",
 			"url": "http://localhost:8000/",
 			"webRoot": "${workspaceFolder}/site",
 			"preLaunchTask": "mkdocs-serve",
@@ -23,6 +25,8 @@
 			// Use Debugger for Chrome https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
 			//"type": "chrome",
 			"request": "launch",
+			"reAttach": true,
+			"profileDir": "${workspaceFolder}\\.vscode\\firefox_profile\\nevnhmu0.debug",
 			"url": "http://localhost:8000/",
 			"webRoot": "${workspaceFolder}/release/site",
 			"preLaunchTask": "mkdocs-check-serve",
