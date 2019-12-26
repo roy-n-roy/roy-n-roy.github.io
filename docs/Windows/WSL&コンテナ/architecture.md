@@ -27,7 +27,49 @@ WSLにはバージョン1とバージョン2が存在し、それぞれLinuxシ�
 バージョン2を「WSL2」として記載し、バージョンを明記せずに「WSL」とのみ記載する場合は両方を指すものとします。  
 
 ## WSL1の機能
+### 構成要素
+
+### プロセス管理と「ピコプロセス」
+WSL1では、Windows上で「ピコプロセス(Pico Process)」と呼ばれる形式のプロセスとして、Linuxプログラムを動作させます。  
+
+「ピコプロセス」は、Windowsの通常のユーザーモードプロセスと下記のような点が異なります。
+
+!!! quote "「ピコプロセス」の特徴"
+
+> 1. ntdll.dllはプロセスにマップされない  
+		ユーザーモードのバイナリーである「ntdll.dll」は、デフォルトでプロセスにマップされません。  
+
+> 2. PEBは生成されない  
+	プロセスの管理に使用するPEB（Process Environment Block）は生成されません。  
+
+> 3. 初期スレッドは生成されない  
+	プロセス生成時、初期スレッド（メインスレッド）を生成しません。  
+
+> 4. TEBは自動的に生成されない  
+	「ピコプロセス」内でスレッドが生成されても、スレッドの管理に使用するTEB（Thread Environment Block）は自動的に生成されません。  
+
+> 5. 共有ユーザーデータセクションはマップされない  
+	共有ユーザーデータセクションは、プロセスにマップされません。  
+	共有ユーザーデータセクションとは、すべてのユーザーモードのアドレス空間に読み込み専用でマップされ、システム共通の情報を効果的に検索するために使用されるブロックです。  
+
+> 6. PEB/TEBなしで動作する  
+	従来のプロセスのようにプロセスが常にPEB/TEBを持っている前提で動作する個所は、PEB/TEBなしでもプロセスを扱えるように変更されています。  
+
+> 7. カーネルは積極的にプロセスの管理を行わない  
+	Windowsカーネルは、積極的にプロセスの管理を行いません。  
+	しかしスレッドのスケジューリングやメモリー管理など、ユーザーが利用したいOSのすべての基盤技術は引き続き提供されます。  
+
+> 引用元: <cite>WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb[^1]</cite>  
+参考文献: [^2]  
+
 ### システムコールAPIの提供
+WSL1では、LxCore.sys, lsxx.sysの2つのカーネルモードドライバーがNTカーネル上で動作しています。  
+この2つのドライバーは「ピコプロバイダー」と呼ばれ、これらがLinuxシステムコールAPIを提供しています。  
+「ピコプロセス」の呼び出したシステムコールや例外は、ドライバー上での処理やWindowsシステムコールへの変換されます。
+これにより、WSL1においてLinuxカーネル相当の機能を実現しています。  
+
+参考文献: [WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb](https://kledgeb.blogspot.com/2016/06/wsl-24-linuxwindows-nt.html)
+
 * WSL1:ピコプロセスとカーネルモードLxCore.sys, lsxx.sys
 	https://blogs.msdn.microsoft.com/wsl/2016/05/23/pico-process-overview/
 	https://github.com/ionescu007/lxss/blob/master/WSL-BlueHat-Final.pdf
@@ -172,3 +214,5 @@ Windows上ではHyper-Vコンテナとして仮想マシンが常駐起動して
 Linuxディストリビューションを起動すると前述の仮想マシン内でLinuxコンテナが起動し、WSL1と同様のinitプロセスが起動します。
 Linux上で起動したbashなどのELFバイナリのプロセスはLinuxカーネルにより管理され、Windows側からは確認することができません。
 
+[^1]: [WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb](https://kledgeb.blogspot.com/2016/06/wsl-19-wsl1.html)
+[^2]: [Pico Process Overview - Windows Subsystem for Linux](https://blogs.msdn.microsoft.com/wsl/2016/05/23/pico-process-overview/)
