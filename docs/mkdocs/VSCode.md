@@ -9,6 +9,9 @@
 Windows10: [Get Python 3.7 - Microsoft Store](https://www.microsoft.com/store/productId/9NJ46SX7X90P)  
 Ubuntu: `sudo apt install python3 python3-pip`  
 
+## mkdocsの設定ファイルを作成
+[Getting started -  Material for MkDocs](https://squidfunk.github.io/mkdocs-material/getting-started/#usage)を参考に、`mkdocs.yml`ファイルを作成します。  
+
 ## launch.jsonとtasks.jsonの設定
 下記を設定する  
 
