@@ -126,7 +126,7 @@ async def get_links(target_url, html) -> list:
             if url.scheme == 'http' or url.scheme == 'https':
                 if url.netloc in href and len(url.netloc) > 0:
                     # 絶対リンクかつ、同一ドメイン
-                    test_urls.append(quote(href, safe='./:', encoding='utf-8'))
+                    test_urls.append(quote(href, safe='./:#', encoding='utf-8'))
                 else:
                     # 外部サイトリンクはテストしない
                     #print('IGNORE:{}'.format(href))
@@ -147,7 +147,7 @@ async def get_links(target_url, html) -> list:
             else:
                 path = url.path + '/'
 
-            test_urls.append(quote('{}://{}{}{}'.format(url.scheme, url.netloc, path, href), safe='./:', encoding='utf-8'))
+            test_urls.append(quote('{}://{}{}{}'.format(url.scheme, url.netloc, path, href), safe='./:#', encoding='utf-8'))
 
     # 重複排除
     test_urls = list(set(test_urls))
