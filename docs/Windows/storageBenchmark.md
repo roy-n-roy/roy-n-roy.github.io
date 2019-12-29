@@ -1,4 +1,4 @@
-# ストレージの速度
+# ストレージの速度測定
 
 自宅デスクトップPC/ノートPC/サーバについて、ストレージの速度を測定したので記録しておきます。  
 
@@ -10,18 +10,18 @@ CrystalDiskMark 7.0.0g x64 (ADMINモード)
 
 ## 測定対象
 
-| No. |           機種 | ドライブ種別 |           ディスク名 |          接続I/F |
-| --: | -------------- | ------------ | -------------------- | ---------------- |
-|   1 | デスクトップPC |   システムSSD | CFD CSSD-M2B1TBG3VNF | PCIe4.0 x4(NVMe) |
-|   2 |           同上 |     データSSD | INTEL SSDPE2MW400G4  | PCIe3.0 x4(NVMe) |
-|   3 |           同上 |           NAS | (No.6 のドライブ)    |   1Gbps Ethernet |
-|   4 | Surface GO     |   システムSSD | TOSHIBA KBG30ZPZ128G | PCIe3.0 x4(NVMe) |
-|   5 |   おうちサーバ | データSSD+HDD | 記憶域スペース       | 記事参照[^1] |
+| No. |           機種 |  ドライブ種別 |               ディスク名 |          接続I/F |
+| --: | -------------- | ------------- | ------------------------ | ---------------- |
+|   1 | デスクトップPC | システムSSD   | CFD CSSD-M2B1TBG3VNF     | PCIe4.0 x4(NVMe) |
+|   2 | 同上           | データSSD     | INTEL SSDPE2MW400G4      | PCIe3.0 x4(NVMe) |
+|   3 | 同上           | NAS           | No.5 のドライブ over SMB | 1Gbps Ethernet   |
+|   4 | Surface GO     | システムSSD   | TOSHIBA KBG30ZPZ128G     | PCIe3.0 x4(NVMe) |
+|   5 | おうちサーバ   | データSSD+HDD | 記憶域スペース           | 記事参照[^1]     |
 
 ## 測定結果
 MB/s と IOPS を測定しました。  
 
-* MB/s
+### MB/s
 
 <style>
 table#benchmark_teble_MBPS th, table#benchmark_teble_IOPS th { text-align: center;  vertical-align: middle; }
@@ -45,7 +45,7 @@ table#benchmark_teble_MBPS td, table#benchmark_teble_IOPS td { text-align: right
 </tbody>
 </table>
 
-* IOPS
+### IOPS
 
 <canvas id="benchmark_chart_IOPS" height="200"></canvas>
 
@@ -85,7 +85,7 @@ for (var i = 0; i < data_array.length; i++) {
 
 var ctx_MBPS = document.getElementById("benchmark_chart_MBPS");
 var ctx_IOPS = document.getElementById("benchmark_chart_IOPS");
-var labels = ["CFD CSSD-M2B1TBG3VNF", "INTEL SSDPE2MW400G4", "NAS", "Surface GO", "記憶域スペース"];
+var labels = ["CFD CSSD-M2B1TBG3VNF", "INTEL SSDPE2MW400G4", "記憶域スペース over SMB", "Surface GO", "記憶域スペース"];
 var bgColors = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'];
 var bdColors = ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'];
 
@@ -182,4 +182,4 @@ var chart_IOPS = new Chart(ctx_IOPS, {
 </script>
 
 
-[^1]: [記憶域スペースの記事](/Windows/%E8%A8%98%E6%86%B6%E5%9F%9F%E3%82%B9%E3%83%9A%E3%83%BC%E3%82%B9/#_10)で構築した、記憶域階層あり・ReFSのボリューム。SSD2本、HDD14本で構成。
+[^1]: [記憶域スペースの記事](/Windows/記憶域スペース/#_10)で構築した、記憶域階層あり・ReFSのボリューム。SSD2本、HDD14本で構成。
