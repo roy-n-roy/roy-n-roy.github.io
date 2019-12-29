@@ -23,18 +23,34 @@ WSLにはバージョン1とバージョン2が存在し、それぞれLinuxシ�
 | バージョン1<br>(WSL1) | 「ピコプロセス」と呼ばれる<br>Windowsのプロセス隔離技術 | LxCore.sys/Lxss.sysという<br>NTカーネルドライバがLinux<br>システムコールをエミュレーション |
 | バージョン2<br>(WSL2) | 軽量仮想マシン(lightweight VM)技術                      | 仮想マシン上で<br>実際のLinuxカーネルを稼働 |
 
-なお、本記事ではWSLのバージョンを区別する場合には、WSLバージョン1を「WSL1」、  
-バージョン2を「WSL2」として記載し、バージョンを明記せずに「WSL」とのみ記載する場合は両方を指すものとします。  
+なお、本記事ではWSLのバージョンを明確に区別するため、WSLバージョン1を「WSL1」、バージョン2を「WSL2」と記載します。  
+また、WSL1とWSL2の両方に共通する機能の場合は「WSL1/WSL2」という風に記載します。  
 
 ## WSL1の機能
 ### 構成要素
+WSL1では下記の図に示される要素から成り立っています。
+
+* ランチャー/フロントエンド(wsl.exe/wslhost.exe)
+
+* LxssManager(LxssManager.dll)
+
+* ピコプロバイダー(カーネルモードドライバー: LxCore.sys/Lxss.sys)
+
+* ピコプロセス
+	* MS製initプロセス
+	* Linuxディストリビューション
+
+* Plan9プロトコル リダイレクタ(カーネルモードドライバー: p9rdr.sys)
+
+https://github.com/ionescu007/lxss/blob/master/WSL-BlueHat-Final.pdf
 
 ### プロセス管理と「ピコプロセス」
-WSL1では、Windows上で「ピコプロセス(Pico Process)」と呼ばれる形式のプロセスとして、Linuxプログラムを動作させます。  
+WSL1では、Windows上で「ピコプロセス(Pico Process)」[^1]と呼ばれる形式のプロセスとして、Linuxプログラムを動作させます。  
 
-「ピコプロセス」は、Windowsの通常のユーザーモードプロセスと下記のような点が異なります。
+「ピコプロセス」は、Windowsの「最小プロセス(Minimal Porcess)」という仕組みを利用して実現しています。
+「最小プロセス」は通常のユーザーモードプロセスと下記のような点が異なります。
 
-!!! quote "「ピコプロセス」の特徴"
+!!! quote "「最小プロセス」の特徴"
 
 > 1. ntdll.dllはプロセスにマップされない  
 		ユーザーモードのバイナリーである「ntdll.dll」は、デフォルトでプロセスにマップされません。  
@@ -59,8 +75,9 @@ WSL1では、Windows上で「ピコプロセス(Pico Process)」と呼ばれる�
 	Windowsカーネルは、積極的にプロセスの管理を行いません。  
 	しかしスレッドのスケジューリングやメモリー管理など、ユーザーが利用したいOSのすべての基盤技術は引き続き提供されます。  
 
-> 引用元: <cite>WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb[^1]</cite>  
-参考文献: [^2]  
+> 引用元: <cite>WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb[^2]</cite>  
+
+「ピコプロセス」は、これらの特徴を利用して、通常のWindowsプロセスからの隔離と最小限のプロセス管理を実現しています。  
 
 ### システムコールAPIの提供
 WSL1では、LxCore.sys, lsxx.sysの2つのカーネルモードドライバーがNTカーネル上で動作しています。  
@@ -70,17 +87,29 @@ WSL1では、LxCore.sys, lsxx.sysの2つのカーネルモードドライバー�
 
 参考文献: [WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb](https://kledgeb.blogspot.com/2016/06/wsl-24-linuxwindows-nt.html)
 
-* WSL1:ピコプロセスとカーネルモードLxCore.sys, lsxx.sys
-	https://blogs.msdn.microsoft.com/wsl/2016/05/23/pico-process-overview/
-	https://github.com/ionescu007/lxss/blob/master/WSL-BlueHat-Final.pdf
-	* システムコール
-	* プロセス管理、メモリ管理
-	* ネットワーク
-
 ### ファイルシステム
-* WSL1:ファイルシステム VolFsとDrvFs
+#### VolFs
+「VolFs」とは、WSL1で動作するディストリビューションのルートパーティションで使用するファイルシステムです。  
+これは、WSL1独自のファイルシステムであり、WSL1ではext4やxfs、btrfsといったファイルシステムをルートパーティションに利用することはできません。
 
-### Linux→Windowsファイルシステムへのアクセス
+VolFsでのファイルの実体は、WindowsのNTFS上に保存されています。  
+しかし、NTFSではLinux上で利用されるパーミッション情報などが保存できないため、VolFsでは実ファイルとは別にメタデータとしてパーミッション情報を保存しています。  
+
+VolFsは、ext4やxfs、btrfsと同様に、Virtual File System(VFS)というファイルシステムの抽象化インターフェースの上に実装されており、他のLinux上で利用されるファイルシステムと同様に扱うことができるようになっています。  
+
+#### DrvFs
+「DrvFs」とは、WSL1の中からWindows上のCドライブなどの「ドライブ文字を割り当てられているローカルファイルシステム」へアクセスするためのファイルシステムです。  
+ネットワークドライブには対応していません。  
+
+こちらもWSL1の独自のファイルシステムですが、パーミッション情報などはログインしたユーザで`777`もしくは`555`で固定されており、変更することはできません。  
+
+WSLの起動時に自動マウントされるようになっていますが、USBフラッシュディスクなどを後から接続した場合は、下記のようなコマンドで手動マウントすることでアクセスできるようになります。  
+
+!!! example "Eドライブをマウント"
+	```
+	sudo mkdir /mnt/e
+	sudo mount -t drvfs E: /mnt/e
+	```
 
 ## initの機能
 ### ユーザランド起動
@@ -210,9 +239,9 @@ WSLバージョン1では、ルートファイルシステムにはext4やxfsで
 
 ### WSL2のアーキテクチャ
 #### プロセス管理
-Windows上ではHyper-Vコンテナとして仮想マシンが常駐起動しており、その上でMS社によってカスタマイズされたLinuxカーネルが動作しています。
+Windows上では一番始めのディストリビューションの起動時に軽量仮想マシンが起動し、その上でMS社によってカスタマイズされたLinuxカーネルが動作しています。
 Linuxディストリビューションを起動すると前述の仮想マシン内でLinuxコンテナが起動し、WSL1と同様のinitプロセスが起動します。
 Linux上で起動したbashなどのELFバイナリのプロセスはLinuxカーネルにより管理され、Windows側からは確認することができません。
 
-[^1]: [WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb](https://kledgeb.blogspot.com/2016/06/wsl-19-wsl1.html)
-[^2]: [Pico Process Overview - Windows Subsystem for Linux](https://blogs.msdn.microsoft.com/wsl/2016/05/23/pico-process-overview/)
+[^1]: [Pico Process Overview - Windows Subsystem for Linux](https://blogs.msdn.microsoft.com/wsl/2016/05/23/pico-process-overview/)
+[^2]: [WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb](https://kledgeb.blogspot.com/2016/06/wsl-19-wsl1.html)
