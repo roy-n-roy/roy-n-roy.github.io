@@ -2,15 +2,65 @@
 
 自宅デスクトップPC/ノートPC/サーバについて、ストレージの速度を測定したので記録しておきます。  
 
-測定ソフト: CrystalDiskMark 7.0.0g x64 (ADMINモード)
+## 測定ソフト  
+CrystalDiskMark 7.0.0g x64 (ADMINモード)  
+データサイズは「1GB (x5)」  
+「Sequential Queues: 8, Thread: 1」と「Random Queues: 32, Threads: 16」を測定
 
-|         機種名 | 対象ストレージ       |          接続I/F | Sequential<br>Read | Sequential<br>Write | Random<br>Read | Random Write(MB/s) | 
-| -------------- | -------------------- | ---------------- | ---------- | ----------- |
-| デスクトップPC | CFD CSSD-M2B1TBG3VNF | PCIe4.0 x4(NVMe) |   4991.864 |    1021.249 |
-|                | INTEL SSDPE2MW400G4  | PCIe3.0 x4(NVMe) |   2312.482 |    1033.822 |
-|                | Ram Disk: DDR4-3200<br>(Primo Ramdisk: Direct-IO mode) |   22784.540 |   23415.746 |
-|                | NAS(おうちサーバ)    | 1Gbps Ethernet   |    116.039 |     116.368 |
-| Surface GO     | TOSHIBA KBG30ZPZ128G | PCIe3.0 x4(NVMe) |   1314.798 |     125.391 |
-| おうちサーバ   | 記憶域スペース[^1]   | 記事参照[^1]     |   1219.595 |     648.890 |
 
-[^1]: [記憶域スペースの記事](/Windows/%E8%A8%98%E6%86%B6%E5%9F%9F%E3%82%B9%E3%83%9A%E3%83%BC%E3%82%B9/#_10)で構築した、記憶域海藻あり・ReFSのボリューム
+## 測定対象
+
+| No. |           機種 | ドライブ種別 |           ディスク名 |          接続I/F |
+| --: | -------------- | ------------ | -------------------- | ---------------- |
+|   1 | デスクトップPC |   システムSSD | CFD CSSD-M2B1TBG3VNF | PCIe4.0 x4(NVMe) |
+|   2 |           同上 |     データSSD | INTEL SSDPE2MW400G4  | PCIe3.0 x4(NVMe) |
+|   3 |           同上 | テンポラリ<br>RAM Disk | Primo Ramdisk<br>(Direct-IO mode) | DDR4-3200 DRAM |
+|   4 |           同上 |           NAS | (No.6 のドライブ)    |   1Gbps Ethernet |
+|   5 | Surface GO     |   システムSSD | TOSHIBA KBG30ZPZ128G | PCIe3.0 x4(NVMe) |
+|   6 |   おうちサーバ | データSSD+HDD | 記憶域スペース       | 記事参照[^1] |
+
+## 測定結果
+MB/s と IOPS を測定  
+
+* MB/s
+
+<style>
+table#benchmark_teble_MBPS th, table#benchmark_teble_IOPS th { text-align: center;  vertical-align: middle; }
+table#benchmark_teble_MBPS td, table#benchmark_teble_IOPS td { text-align: right;   vertical-align: middle; }
+</style>
+
+<table id="benchmark_teble_MBPS">
+<thead>
+<tr><th rowspan="3">No.</th><th colspan="2">Sequential</th><th colspan="2">Random</th></tr>
+<tr>          <th>   Read     </th><th>   Write    </th><th>   Read     </th><th>   Write    </th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>   4991.864 </td><td>   1021.249 </td><td>   2272.780 </td><td>    963.961 </td></tr>
+<tr><td>2</td><td>   2312.482 </td><td>   1033.822 </td><td>   1033.822 </td><td>    908.450 </td></tr>
+<tr><td>3</td><td>  22784.540 </td><td>  23415.746 </td><td>   3841.888 </td><td>   3760.213 </td></tr>
+<tr><td>4</td><td>    116.039 </td><td>    116.368 </td><td>    112.829 </td><td>     82.975 </td></tr>
+<tr><td>5</td><td>   1314.798 </td><td>    125.391 </td><td>     83.797 </td><td>     37.980 </td></tr>
+<tr><td>6</td><td>   1219.595 </td><td>    648.890 </td><td>     16.355 </td><td>    129.260 </td></tr>
+</tbody>
+</table>
+
+* IOPS
+
+<table id="benchmark_teble_IOPS">
+<thead>
+<tr><th rowspan="3">No.</th><th colspan="2">Sequential</th><th colspan="2">Random</th></tr>
+<tr>          <th>   Read     </th><th>   Write    </th><th>   Read     </th><th>   Write    </th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>   4760.6   </td><td>    973.9   </td><td> 554877.9   </td><td> 235342.0   </td></tr>
+<tr><td>2</td><td>   2205.4   </td><td>    985.9   </td><td> 448273.7   </td><td> 221789.6   </td></tr>
+<tr><td>3</td><td>  21729.0   </td><td>  22331.0   </td><td> 937960.9   </td><td> 918020.8   </td></tr>
+<tr><td>4</td><td>    110.7   </td><td>    111.0   </td><td>  27546.1   </td><td>  20257.6   </td></tr>
+<tr><td>5</td><td>   1253.9   </td><td>    119.6   </td><td>  20458.3   </td><td>   9272.5   </td></tr>
+<tr><td>6</td><td>   1163.1   </td><td>    618.8   </td><td>   3992.9   </td><td>  31557.6   </td></tr>
+</tbody>
+</table>
+
+
+
+[^1]: [記憶域スペースの記事](/Windows/%E8%A8%98%E6%86%B6%E5%9F%9F%E3%82%B9%E3%83%9A%E3%83%BC%E3%82%B9/#_10)で構築した、記憶域階層あり・ReFSのボリューム。SSD2本、HDD14本で構成。
