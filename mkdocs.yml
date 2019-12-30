@@ -15,9 +15,10 @@ markdown_extensions:
   - codehilite
   - footnotes
   - pymdownx.superfences
+  - pymdownx.details
 plugins:
   - search
-  - git-revision-date
+  - git-revision-date-localized
 remote_branch: master
 extra:
   search:

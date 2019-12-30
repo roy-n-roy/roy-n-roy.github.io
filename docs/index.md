@@ -1,3 +1,4 @@
+is_index: true
 ## [Windows](/Windows)
 Windowsでの記憶域スペースやWSL、あれこれについて
 
