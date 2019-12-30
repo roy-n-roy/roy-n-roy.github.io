@@ -34,15 +34,14 @@
         <meta name="lang:search.tokenizer" content="[\s\-　、。，．]+">
       
       <link rel="shortcut icon" href="../../imgs/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
-        <title>git-revision-dateプラグイン - roy-n-roy メモ</title>
+        <title>git-revision-date-localizedプラグイン - roy-n-roy メモ</title>
       
     
     
-      
       <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
@@ -59,7 +58,7 @@
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -115,7 +114,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#git-revision-date" tabindex="1" class="md-skip">
+      <a href="#git-revision-date-localized" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -141,7 +140,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                git-revision-dateプラグイン
+                git-revision-date-localizedプラグイン
               
             </span>
           
@@ -813,11 +812,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        git-revision-dateプラグイン
+        git-revision-date-localizedプラグイン
       </label>
     
-    <a href="./" title="git-revision-dateプラグイン" class="md-nav__link md-nav__link--active">
-      git-revision-dateプラグイン
+    <a href="./" title="git-revision-date-localizedプラグイン" class="md-nav__link md-nav__link--active">
+      git-revision-date-localizedプラグイン
     </a>
     
       
@@ -1035,37 +1034,49 @@
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
-                <div class="git_revision_date">
-                  最終更新日: 2019-11-10
+                
+                <div class="md-source-date">
+                  <small>
+                    
+                      最終更新日: 2019年12月30日
+                    
+                  </small>
                 </div>
               
               
                 
                 
-                <h1 id="git-revision-date">git-revision-dateプラグイン</h1>
+                <h1 id="git-revision-date-localized">git-revision-date-localizedプラグイン</h1>
 <blockquote>
-<p><a href="https://github.com/zhaoterryy/mkdocs-git-revision-date-plugin">zhaoterryy/mkdocs-git-revision-date-plugin - GitHub</a><br />
-MkDocs plugin for setting revision date from git per markdown file.  </p>
+<p><a href="https://github.com/timvink/mkdocs-git-revision-date-localized-plugin">timvink/mkdocs-git-revision-date-localized-plugin - GitHub</a><br />
+MkDocs plugin that enables displaying the date of the last git modification of a page. The plugin uses babel and timeago.js to provide different localized date formats. Initial fork from mkdocs-git-revision-date-plugin.  </p>
 </blockquote>
-<p>git-revision-dateプラグインを使用すると、Git上で管理しているMarkdownファイルの更新日時をページ上に表示することができます。</p>
+<p>git-revision-date-localizedプラグインを使用すると、Git上で管理しているMarkdownファイルの更新日時をページ上に表示することができます。</p>
+<p>git-revision-date-localizedプラグインは、git-revision-dateプラグインから派生したものです。</p>
+<p>派生元との違いは、 <code>2019-11-29</code> と表示されていたものが、設定の言語によって
+英語であれば <code>28 November, 2019</code> 、日本語であれば <code>2019年11月28日</code> といった様に、ローカライズされた表示になります。  </p>
 <h2 id="_1">インストール</h2>
 <p>下記のコマンドを実行します。<br />
-<div class="codehilite"><pre><span></span><span class="err">pip install mkdocs-git-revision-date-plugin</span>
+<div class="codehilite"><pre><span></span><span class="err">pip install mkdocs-git-revision-date-localized-plugin</span>
 </pre></div></p>
 <p>続いて、<code>mkdocs.yml</code>ファイルに下記を追記します。<br />
 <div class="codehilite"><pre><span></span><span class="c">plugins:</span>
 <span class="c">  - search</span>
-<span class="c">  - git-revision-date</span>
+<span class="c">  - git-revision-date-localized</span>
 </pre></div></p>
 <p>プラグインをまだ1つも設定していない場合は、デフォルトでsearchプラグインが有効になっているため、searchプラグインも明示的に記載しておきます。</p>
+<p>mkdocs-materialテーマを利用している場合は、<code>mkdocs.yml</code>に追記すると、自動でページ下部に最終更新日が表示されるようになります。  </p>
 <h2 id="markdown">Markdownファイル毎に表示を設定</h2>
 <p>Markdownファイル内に下記のように記入することで、最終更新日が表示されます。</p>
-<p>&#x7b;&#x7b; git_revision_date &#x7d;&#x7d; =&gt; 2019-11-10</p>
+<p>&#x7b;&#x7b; git_revision_date &#x7d;&#x7d; =&gt; {{ git_revision_date }}</p>
 <p>ただし、この方法の場合、日付を表示したいファイル全てに設定が必要になります。</p>
 <h2 id="_2">テンプレートファイルに埋め込む</h2>
 <p>Mkdocsのテンプレートファイルに下記のように記入することで、全てのページに最終更新日が表示されます。  </p>
-<p>&#x7b;&#x7b; page.meta.revision_date &#x7d;&#x7d; =&gt; 2019-11-10</p>
-<h3 id="_3">テンプレートをカスタマイズする</h3>
+<p>&#x7b;&#x7b; page.meta.revision_date &#x7d;&#x7d; =&gt; {{ git_revision_date }}</p>
+<p>Materialテーマは、バージョン4.6.0でgit-revision-dateのサポートを追加したため、
+始めからテンプレートファイルに最終更新日の表示が埋め込まれており、特に編集は必要ありません。</p>
+<p>自身で埋め込む場合は、下記を開いて参考にしてください。  </p>
+<details class="info"><summary>自身でテンプレートに埋め込む場合</summary><h3 id="_3">テンプレートをカスタマイズする</h3>
 <p>このサイトの場合は、materialテーマを使用しているので、materialのテンプレートファイルを元にテンプレートを編集します。
 pipでインストールしている場合は <code>pip show mkdocs-material</code> コマンドでインストール先を確認できます。</p>
 <div class="codehilite"><pre><span></span><span class="err">&gt; pip show mkdocs-material</span>
@@ -1097,10 +1108,14 @@ pipでインストールしている場合は <code>pip show mkdocs-material</co
 </div>
 <p>なお、git-revision-dateプラグインのREADMEでは、 <code>&#x7b;% if page.meta.revision_date &#x7d;</code> と書かれているのですが、
 これだけだとビルドエラーが発生するため、 <code>&emsp;&#x7b;% if page and page.meta and page.meta.revision_date ...</code> としています。  </p>
+</details>
 <h3 id="_4">特定のページで最終更新日を表示しない</h3>
 <p>トップページでは更新日時を表示したくない場合は、テンプレートのif文の部分を下記のようにすると、トップページでは表示されないようになります。<br />
 <div class="codehilite"><span class="nv">
-&#x7b;% if page and page.meta ... <span class="mi">and not page.is_homepage</span> %&#x7d;<br />
+&emsp;&emsp;{% if page and page.meta <span class="mi">and not page.is_homepage</span> and (<br />
+&emsp;&emsp;&emsp;&emsp;page.meta.git_revision_date_localized or<br />
+&emsp;&emsp;&emsp;&emsp;page.meta.revision_date<br />
+&emsp;&emsp;)}
 </span></div></p>
                 
                   
