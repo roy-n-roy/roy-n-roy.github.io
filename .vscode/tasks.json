@@ -6,7 +6,7 @@
 		{
 			"label": "mkdocs-install",
 			"type": "shell",
-			"command": "pip install mkdocs mkdocs-material mkdocs-git-revision-date-localized-plugin pytest bs4 requests lxml aiohttp[speedups]",
+			"command": "pip install -r submodules/mkdocs-material/requirements.txt mkdocs-git-revision-date-localized-plugin pytest bs4 requests lxml aiohttp[speedups]",
 			"problemMatcher": []
 		},
 		{
