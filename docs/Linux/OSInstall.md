@@ -36,7 +36,7 @@ sudo canonical-livepatch enable XXXXXXXXXXXXXXXXXXXXXX
 ### 固定IPアドレス設定
 
 ```
-cat <<EOL >> /etc/cloud/cloud.cfg.d/90-static.yaml
+cat <<EOL >> /etc/netplan/90-static.yaml
 network:
   ethernets:
     eth0:
