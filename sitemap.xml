@@ -2,162 +2,172 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://roy-n-roy.github.io/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/InfiniBand/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/vpn/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/C＃/mergeAssemblies/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Docker/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Docker/fluentd+kibana/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Docker/nginx/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://roy-n-roy.github.io/Docker/redmine+gitlab+jenkins/</loc>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Docker/wordpress/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://roy-n-roy.github.io/Linux/LVM/</loc>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Linux/OSInstall/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Raspberry Pi/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Raspberry Pi/Network/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Raspberry Pi/WebConsole/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/RouterOS/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/RouterOS/Backup/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/RouterOS/Firewall/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/RouterOS/VPN Server/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Windows/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Windows/VpnError/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Windows/storageBenchmark/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Windows/windowsShutdownBlockSetting/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Windows/記憶域スペース/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Windows/WSL&コンテナ/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Windows/WSL&コンテナ/HostComputeService/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/Windows/WSL&コンテナ/centos/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/mkdocs/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/mkdocs/VSCode/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/mkdocs/VSVode_debug_optout_googleAnalytics/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/mkdocs/gitRevisionDate/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/mkdocs/lightbox2/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/mkdocs/logo作成/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/mkdocs/test/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://roy-n-roy.github.io/プライバシー・ポリシー/</loc>
-     <lastmod>2020-01-09</lastmod>
+     <lastmod>2020-01-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
