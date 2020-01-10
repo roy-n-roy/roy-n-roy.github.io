@@ -17,7 +17,7 @@ OSの稼働中にディスク容量が不足した場合には、物理ディス
 論理ディスクの拡張するためには、下記のコマンドを実行します。
 
 !!! example "LVMへ新規ディスク追加"
-	```
+	``` bash
 	# 新たなHDD/SSDをフォーマットし、物理ボリュームを作成
 	sudo parted -s -a optimal /dev/sdx mklabel gpt mkpart primary 0% 100% set 1 lvm on
 	# 作成したパーティションから物理ボリュームを作成
@@ -27,7 +27,7 @@ OSの稼働中にディスク容量が不足した場合には、物理ディス
 	```
 
 !!! example "物理ボリュームをボリュームグループ「ubuntu-vg」に追加"
-	```
+	``` bash
 	sudo vgextend ubuntu-vg /dev/sdx1
 	# 確認
 	sudo vgdisplay
@@ -35,7 +35,7 @@ OSの稼働中にディスク容量が不足した場合には、物理ディス
 	```
 
 !!! example "ボリュームグループ「ubuntu-vg」の論理ボリューム「ubuntu-lv」に「5GB」追加"
-	```
+	``` bash
 	sudo lvextend -L +5120m /dev/ubuntu-vg/ubuntu-lv
 	# 確認
 	sudo lvdisplay
@@ -49,7 +49,7 @@ OSの稼働中にディスク容量が不足した場合には、物理ディス
 もしくは、  
 
 !!! example "ボリュームグループ「ubuntu-vg」の論理ボリューム「ubuntu-lv」を「最大サイズ」まで拡張"
-	```
+	``` bash
 	sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
 	# 確認
 	sudo lvdisplay
