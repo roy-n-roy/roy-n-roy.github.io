@@ -33,16 +33,16 @@ Windowsコンテナの操作にはdockerを利用する場合が多いが、そ�
 	```
 	PS > hcsdiag list
 	0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
-		Hyper-V Container Template, Created, 0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
+	    Hyper-V Container Template, Created, 0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
 
 	0c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6
-		Hyper-V Container,          Running, 2A0A7D9B-25D0-4C18-B620-4FC1E92740F9, docker
+	    Hyper-V Container,          Running, 2A0A7D9B-25D0-4C18-B620-4FC1E92740F9, docker
 
 	3F098403-148F-49FE-9EA3-1729298CD01F
-		VM,                         Running, 3F098403-148F-49FE-9EA3-1729298CD01F, WSL
+	    VM,                         Running, 3F098403-148F-49FE-9EA3-1729298CD01F, WSL
 
 	EB83922C-E87B-45FF-B2A3-BBB773644DCA
-		VM,                         Created, EB83922C-E87B-45FF-B2A3-BBB773644DCA, VMMS
+	    VM,                         Created, EB83922C-E87B-45FF-B2A3-BBB773644DCA, VMMS
 	```
 ### **hcsdiag exec [-uvm] &lt;GUID&gt; [command line] **  
 英語での説明:  
@@ -54,16 +54,16 @@ Windowsコンテナの操作にはdockerを利用する場合が多いが、そ�
 !!! example "hcsdiag exec"
 	```
 	PS > hcsdiag exec 0c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6 cmd /c "dir C:\"
-		Volume in drive C has no label.
-		Volume Serial Number is C280-441F
+	    Volume in drive C has no label.
+	    Volume Serial Number is C280-441F
 
-		Directory of C:\
+	    Directory of C:\
 
 	11/27/2019  06:55 PM             5,510 License.txt
 	12/25/2019  05:08 PM    <DIR>          Users
 	12/25/2019  05:08 PM    <DIR>          Windows
-					1 File(s)          5,510 bytes
-					2 Dir(s)  21,299,453,952 bytes free
+	               1 File(s)          5,510 bytes
+	               2 Dir(s)  21,299,453,952 bytes free
 	PS > hcsdiag exec 3F098403-148F-49FE-9EA3-1729298CD01F bash
 	PS > $?
 	False
@@ -136,34 +136,34 @@ Windowsコンテナの操作にはdockerを利用する場合が多いが、そ�
 	```
 	PS > hcsdiag list
 	0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
-		Hyper-V Container Template, Created, 0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
+	    Hyper-V Container Template, Created, 0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
 
 	0c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6
-		Hyper-V Container,          Running, 2A0A7D9B-25D0-4C18-B620-4FC1E92740F9, docker
+	    Hyper-V Container,          Running, 2A0A7D9B-25D0-4C18-B620-4FC1E92740F9, docker
 
 	3F098403-148F-49FE-9EA3-1729298CD01F
-		VM,                         Running, 3F098403-148F-49FE-9EA3-1729298CD01F, WSL
+	    VM,                         Running, 3F098403-148F-49FE-9EA3-1729298CD01F, WSL
 
 	EB83922C-E87B-45FF-B2A3-BBB773644DCA
-		VM,                         Created, EB83922C-E87B-45FF-B2A3-BBB773644DCA, VMMS
+	    VM,                         Created, EB83922C-E87B-45FF-B2A3-BBB773644DCA, VMMS
 
 	PS C:\> hcsdiag kill 0c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6
 	PS C:\> hcsdiag kill 3F098403-148F-49FE-9EA3-1729298CD01F
 	PS C:\> hcsdiag kill EB83922C-E87B-45FF-B2A3-BBB773644DCA
 	PS C:\> hcsdiag list
 	0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
-		Hyper-V Container Template, Created, 0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
+	    Hyper-V Container Template, Created, 0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
 
 	EB83922C-E87B-45FF-B2A3-BBB773644DCA
-		VM,                         Created, EB83922C-E87B-45FF-B2A3-BBB773644DCA, VMMS
+	    VM,                         Created, EB83922C-E87B-45FF-B2A3-BBB773644DCA, VMMS
 
 	PS C:\> hcsdiag kill EB83922C-E87B-45FF-B2A3-BBB773644DCA
 	PS C:\> hcsdiag list
 	0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
-		Hyper-V Container Template, Created, 0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
+	    Hyper-V Container Template, Created, 0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
 
 	EB83922C-E87B-45FF-B2A3-BBB773644DCA
-    VM,                         Created, EB83922C-E87B-45FF-B2A3-BBB773644DCA, VMMS
+	    VM,                         Created, EB83922C-E87B-45FF-B2A3-BBB773644DCA, VMMS
 
 	```
 ### **hcsdiag share [-uvm] [-readonly] &lt;GUID&gt; <Folder> <DriveLetter>**  
