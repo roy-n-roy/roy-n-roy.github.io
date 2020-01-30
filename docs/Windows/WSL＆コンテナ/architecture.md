@@ -14,14 +14,14 @@ LinuxのCLIプログラムを利用できる環境を用意するには、下記
 * パッケージマネージャ  
 	プログラムとライブラリの入手方法の提供
 
-そのため、WSLではLinuxシステムコールAPIをWindowsの機能として用意し、その上にLinuxディストリビューションをMicrosoft Storeでインストールするという形式をとっています。  
+WSLではLinuxシステムコールAPIをWindowsの機能として用意し、その上にLinuxディストリビューションをMicrosoft Storeからインストールするという形式をとっています。  
 
 WSLにはバージョン1とバージョン2が存在し、それぞれLinuxシステムコールAPIの提供方法が異なります。  
 
 | バージョン            | ベース技術                                              | システムコールAPI提供方法                   |
 | --------------------- | ------------------------------------------------------- | ------------------------------------------- |
 | バージョン1<br>(WSL1) | 「ピコプロセス」と呼ばれる<br>Windowsのプロセス隔離技術 | LxCore.sys/Lxss.sysという<br>NTカーネルドライバがLinux<br>システムコールをエミュレーション |
-| バージョン2<br>(WSL2) | 軽量仮想マシン(lightweight VM)技術                      | 仮想マシン上で<br>実際のLinuxカーネルを稼働 |
+| バージョン2<br>(WSL2) | 軽量仮想マシン(lightweight VM)技術+Linuxカーネル        | 仮想マシン上で<br>実際のLinuxカーネルを稼働 |
 
 なお、本記事ではWSLのバージョンを明確に区別するため、WSLバージョン1を「WSL1」、バージョン2を「WSL2」と記載します。  
 また、WSL1とWSL2の両方に共通する機能の場合は「WSL1/WSL2」という風に記載します。  
@@ -119,10 +119,10 @@ Linuxシステムでは通常、カーネルによりinitプロセスが起動�
 WSLでも、initプロセスが全プロセスの親プロセスとなる点は同様です。  
 しかし、WSLで利用されるinitは、WSL専用にMS社によって開発されたソフトウェアであり、通常のLinuxで利用されているSystem V initやsystemdとは異なるものとなっています。  
 
-WSLのinitプログラムは`/init`に配置されています。  
+WSLのinitプログラムは`/sbin/init`ではなく、`/init`に配置されています。  
 
 ### ユーザランドプロセスの起動
-WSLでは、Daemonの起動は行われず、この点がSystem V initなどとは異なります。  
+WSLでは、Daemonの起動は行われず、この点がSystem V initやsystemdなどとは異なります。  
 
 WSLが起動されると、プロセスID = 1 のプロセスとして最初に起動し、`/etc/passwd`ファイルに記載されているログインシェルを実行します。  
 
@@ -147,9 +147,12 @@ initプロセスは、9Pサーバへのアクセスを受け取ると、Linuxフ
 WSLでは、WSL内のbashなどから、`cmd.exe`などのWindowsプログラムを呼び出すことができます。  
 
 #### 仕組み
-WSLでは`/mnt/c/`などのディレクトリに、Windowsのファイルシステムをマウントしており、Windowsプログラムはその配下に配置されています。  
-WSLからWindowsプログラムを呼び出す際には、initプログラムの引数に`/mnt/c/`から始まるWindowsファイルシステム上のプログラムパスを与えると、
-`C:\`から始まるWindows側でのパスに変換され、`wsl.exe`がWindowsプログラムが起動しています。  
+initプログラムの引数にWindowsプログラムを指定すると、WSL内からWindows上へ情報が渡され、Windows上でプログラムが起動します。  
+
+WSLではDrvFSにより`/mnt/c/`などのディレクトリに、Windowsのファイルシステムをマウントしており、
+Windowsプログラムはその配下に配置されています。  
+WSLからWindowsプログラムを呼び出す際には、initプログラムの引数に`/mnt/c/`から始まるWindowsファイルシステム上のプログラムパスを与えると、initに内部で`C:\`から始まるWindows側でのパスに変換され、LxCore.sysなどを通して`wsl.exe`へ渡されます。
+`wsl.exe`が渡されたパスのWindowsプログラムを起動することで、WSL内部からWindowsプログラムをしています。  
 
 また、デフォルトでWindows上のPATH環境変数をWSLへ引き継いでいるため、フルパスを指定する必要がないようになっています。
 (ただし、コマンドプロンプトやPowershellと異なり、`.exe`といった拡張子の指定は必要です。)  
@@ -162,15 +165,36 @@ WSL2では、バージョン1と比較して、下記の改善がなされてい
 * Linux上でのファイルアクセス速度の向上
 * システムコールの完全互換
 
-一方で、Linux上から、NTFSなどのWindows上のファイルへのアクセス速度は下がっているため、多くのファイルアクセスが必要な場面ではLinux側へファイルを移動させた上で処理する方が良いとされています。
+一方で、Linux上から、NTFSなどのWindows上のファイルへのアクセスがDrvFSから9Pでのアクセスに変更されており、
+ファイル読み書きの速度が下がっています。  
+そのため、多くのファイルアクセスが必要な場面ではLinux側へファイルを移動させた上で処理する方が良いとされています。
 
 これは、WSLバージョン1が「Windows上でELFバイナリを実行する」機能であったのに比べ、WSLバージョン2は「軽量仮想マシン上でLinuxコンテナを動作させる」機能であることによるものです。  
 
 ### システムコールAPIの提供
-* WSL2: Utility VMとLinuxカーネル
+WSL2では、完全なLinuxシステムコールの提供のため、Linuxカーネルを実行しています。
+カーネルの実行環境としてHyper-Vのような準仮想化ハイパーバイザを使用しており、ホストOSとなるWindows10もHyper-Vの有効化時と同様に、仮想化環境の中に入ります。  
+
+対してWSL環境は、軽量仮想マシンと呼ばれるタイプの仮想マシンインスタンス上でLinuxカーネルが起動し、その上で実行されるコンテナランタイム上で動作します。(Ubuntuであれば、`Ubuntu` on `Container` on `Light weight VM` on `Hyper-V`です。)  
+また、LinuxカーネルはMicrosoft社によりカスタマイズされたものが使用されており、これはGithub上で公開されています。[^3]
 
 ### ファイルシステム
-* WSL2:仮想HDD(root.vhdx)
+### ルートファイルシステム
+ディストリビューションがインストールされる、ルートファイルシステムが以下のように変更されています。
+
+* WSL1: NTFS上にマッピングされたVolFS
+* WSL2: 仮想HDD(root.vhdx)上のext4
+
+NTFSを通して、メタデータを取得・設定する必要がなくなったために、アクセス速度が向上しています。
+
+### Windowsファイルシステムへのアクセス
+WSL内からWindows上のNTFSなどへアクセスする方法も変更されています。
+
+* WSL1: DrvFSを通したアクセス
+* WSL2: 9Pでのアクセス(Unix Domain Socket経由)
+
+WSL1でのDrvFSへのアクセスをシステムコールとして呼び出した際には、カーネルモードドライバーであるLxCore.sys, lsxx.sysが処理していました。  
+しかし、WSL2では9P
 
 ### Linux→Windowsファイルシステムへのアクセス
 * WSL2:9P
@@ -182,3 +206,4 @@ WSL2では、バージョン1と比較して、下記の改善がなされてい
 
 [^1]: [Pico Process Overview - Windows Subsystem for Linux](https://blogs.msdn.microsoft.com/wsl/2016/05/23/pico-process-overview/)
 [^2]: [WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb](https://kledgeb.blogspot.com/2016/06/wsl-19-wsl1.html)
+[^3]: [microsoft/WSL2-Linux-Kernel : The source for the Linux kernel used in Windows Subsystem for Linux 2 (WSL2)](https://github.com/microsoft/WSL2-Linux-Kernel)
