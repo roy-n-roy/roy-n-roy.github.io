@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="300mm"
-   height="300mm"
+   width="30mm"
+   height="30mm"
    viewBox="0 0 300 300"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="nyanco_stamp.svg"
+   sodipodi:docname="nyanco.svg"
    inkscape:export-filename="C:\Users\euphs\source\pages\roy-n-roy.github.io\docs\imgs\icon_152.png"
    inkscape:export-xdpi="20.108334"
    inkscape:export-ydpi="20.108334"
@@ -29,11 +29,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="-156.31993"
-     inkscape:cy="267.5856"
+     inkscape:zoom="3.959798"
+     inkscape:cx="-135.75581"
+     inkscape:cy="105.52471"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer3"
      showgrid="false"
      inkscape:window-width="2560"
      inkscape:window-height="1377"
@@ -43,7 +43,8 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0"
+     scale-x="10" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -52,7 +53,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -60,12 +61,13 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="base"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(0,-270)">
     <circle
        style="opacity:1;fill:#ac9352;fill-opacity:0.51675978;stroke:none;stroke-width:2.07052374;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path816"
-       cx="150.50082"
-       cy="150"
+       cx="150"
+       cy="420"
        r="150"
        inkscape:label="300mm円" />
   </g>
@@ -73,7 +75,7 @@
      inkscape:label="nyanco"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-0.50081834,132.1)"
+     transform="translate(-0.50081834,-137.9)"
      style="display:none">
     <path
        inkscape:label="face"
@@ -170,7 +172,8 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="nyanco_hige_bold"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(0,-270)">
     <path
        inkscape:label="face"
        inkscape:connector-curvature="0"
@@ -225,15 +228,14 @@
          ry="0" />
     </g>
     <path
-       style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke-width:1.37784922"
+       style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke-width:0.36455593"
        mask="none"
-       d="m 214.31445,126.47852 v 465.9375 h -0.16211 v 96.625 l 160.07227,22.51953 -5.15625,36.91601 -154.91602,-21.79297 v 62.4375 L 374.25,811.64453 369.09375,848.56055 214.15234,826.76367 v 159.8711 h 0.16211 708.44336 V 826.62109 l -155.95508,21.93946 -5.15625,-36.91602 161.11133,-22.66601 v -62.4375 l -155.92969,21.93554 -5.15624,-36.91601 161.08593,-22.66211 v -96.48242 -465.9375 h -0.002 l -353.43359,353.4375 -353.4375,-353.4375 z"
-       transform="scale(0.26458333)"
+       d="m 56.704031,303.46411 v 123.2793 h -0.04289 v 25.56536 l 42.352454,5.95829 -1.364257,9.76736 -40.988197,-5.76605 v 16.51992 l 42.359172,5.95932 -1.364258,9.76737 -40.994914,-5.76709 v 42.29922 h 0.04289 187.442299 v -42.33695 l -41.26311,5.80482 -1.36426,-9.76737 42.62737,-5.99704 v -16.51993 l -41.25639,5.80378 -1.36426,-9.76736 42.62065,-5.99601 v -25.52764 -123.2793 h -5.3e-4 l -93.51263,93.51367 -93.513672,-93.51367 z"
        id="path947"
        inkscape:connector-curvature="0"
        inkscape:label="cropped_nyanco" />
     <g
-       transform="translate(-0.52916663,132.17992)"
+       transform="translate(-0.52916663,402.17992)"
        inkscape:label="cropped_hige_bold"
        id="g958"
        style="fill:#000000;fill-opacity:1">
