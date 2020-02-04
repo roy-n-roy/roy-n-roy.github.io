@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://roy-n-roy.github.io/Docker/nginx/">
+        <link rel="canonical" href="https://roy-n-roy.github.io/Docker/django/">
       
       
       
@@ -38,7 +38,7 @@
     
     
       
-        <title>Nginx - roy-n-roy メモ</title>
+        <title>Djangoアプリケーション - roy-n-roy メモ</title>
       
     
     
@@ -114,7 +114,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#nginx" tabindex="0" class="md-skip">
+      <a href="#django" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -140,7 +140,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Nginx
+                Djangoアプリケーション
               
             </span>
           
@@ -432,20 +432,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../" title="Docker 設定集" class="md-nav__link">
-      Docker 設定集
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
-      Fluentd+Elasticsearch+Kibana
+    <a href="../" title="Docker" class="md-nav__link">
+      Docker
     </a>
   </li>
 
@@ -465,11 +453,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Nginx
+        Djangoアプリケーション
       </label>
     
-    <a href="./" title="Nginx" class="md-nav__link md-nav__link--active">
-      Nginx
+    <a href="./" title="Djangoアプリケーション" class="md-nav__link md-nav__link--active">
+      Djangoアプリケーション
     </a>
     
       
@@ -484,7 +472,96 @@
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    静的サイト
+    準備
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    ベースイメージの選定
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    コンテナ設計
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    前提
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django_1" class="md-nav__link">
+    Djangoアプリケーションの設定
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#django_2" class="md-nav__link">
+    Djangoのデプロイ時チェック
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settingspy" class="md-nav__link">
+    settings.pyファイルの修正
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    Dockerファイルの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uwsgi" class="md-nav__link">
+    uWSGI設定ファイルの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nginx" class="md-nav__link">
+    Nginxの設定
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-composeyml" class="md-nav__link">
+    docker-compose.ymlファイル
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    感想
   </a>
   
 </li>
@@ -505,8 +582,51 @@
           
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-3" type="checkbox" id="nav-5-3" checked>
+    
+    <label class="md-nav__link" for="nav-5-3">
+      Compose設定集
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-3">
+        Compose設定集
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
   <li class="md-nav__item">
-    <a href="../redmine+gitlab+jenkins/" title="プロジェクト&ソース管理" class="md-nav__link">
+    <a href="../Compose設定集/fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
+      Fluentd+Elasticsearch+Kibana
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Compose設定集/nginx/" title="Nginx" class="md-nav__link">
+      Nginx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Compose設定集/redmine+gitlab+jenkins/" title="プロジェクト&ソース管理" class="md-nav__link">
       プロジェクト&ソース管理
     </a>
   </li>
@@ -518,9 +638,14 @@
 
 
   <li class="md-nav__item">
-    <a href="../wordpress/" title="Wordpress" class="md-nav__link">
+    <a href="../Compose設定集/wordpress/" title="Wordpress" class="md-nav__link">
       Wordpress
     </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
         
@@ -1019,7 +1144,96 @@
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    静的サイト
+    準備
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    ベースイメージの選定
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    コンテナ設計
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    前提
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django_1" class="md-nav__link">
+    Djangoアプリケーションの設定
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#django_2" class="md-nav__link">
+    Djangoのデプロイ時チェック
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settingspy" class="md-nav__link">
+    settings.pyファイルの修正
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    Dockerファイルの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uwsgi" class="md-nav__link">
+    uWSGI設定ファイルの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nginx" class="md-nav__link">
+    Nginxの設定
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-composeyml" class="md-nav__link">
+    docker-compose.ymlファイル
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    感想
   </a>
   
 </li>
@@ -1043,7 +1257,7 @@
                 <div class="md-source-date">
                   <small>
                     
-                      最終更新日: 2019年12月5日
+                      最終更新日: 2020年2月4日
                     
                   </small>
                 </div>
@@ -1051,11 +1265,186 @@
               
                 
                 
-                <h1 id="nginx">Nginx</h1>
-<h2 id="_1">静的サイト</h2>
-<p><code>html</code>ディレクトリをルートとして、静的Webサイトを提供する。  </p>
-<p><a href="https://gist.github.com/roy-n-roy/85ea606ff01da712dfea8de297e04b13#file-docker-compose-yml">docker-compose.yml</a>
-<script src="https://gist.github.com/roy-n-roy/85ea606ff01da712dfea8de297e04b13.js?file=docker-compose.yml"></script></p>
+                <h1 id="django">Djangoアプリケーション</h1>
+<p>Djangoとは、Pythonで利用できるWebアプリケーションフレームワークです。<br />
+この記事では、Djangoを使って開発したアプリケーションをDocker環境へデプロイした際の手順を記載します。  </p>
+<h2 id="_1">準備</h2>
+<h3 id="_2">ベースイメージの選定</h3>
+<p>オリジナルのアプリケーションをDocker上で動作させるため、Dockerイメージを自前でビルドします。
+今回はPythonでDjangoアプリケーションを動かすので、<code>python:3.8-alpine</code>を選択しました。<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>  </p>
+<h3 id="_3">コンテナ設計</h3>
+<p><figure style="text-align: center;">
+<a href="/imgs/docker_django_arch.png" data-lightbox="docker_django_arch"><img style="float: left;" src="/imgs/docker_django_arch.png" width=100% /></a><br />
+<figcaption>図 1. コンテナ構成図<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></figcaption>
+</figure></p>
+<p>上記図のような感じにしたいと思います。</p>
+<ul>
+<li>アプリサーバ<ul>
+<li>Djangoアプリは、Webアプリと定期バッチアプリがあります。<br />
+    これらは同じイメージを使用するが、コンテナは別々に2つ起動します。</li>
+<li>nginxとWebアプリの接続には、uWSGIを使用します。</li>
+</ul>
+</li>
+<li>httpサーバ<ul>
+<li>外部に公開するネットワークポートはnginxのHTTP(80)/HTTPS(443)のみとします。</li>
+<li>nginxでHTTP over SSL/TLS(HTTPS)に対応させます。<br />
+    証明書はLet's Encryptで取得します。</li>
+<li>画像などの静的コンテンツは共有Volumeに置き、Webアプリを介さずにnginxから直接配信します。</li>
+<li>コンテナイメージは <a href="https://hub.docker.com/r/steveltn/https-portal">steveltn/https-portal</a> を使用します。</li>
+</ul>
+</li>
+<li>
+<p>データベースサーバ</p>
+<ul>
+<li>Djangoアプリケーションではデータを保存するためにRDBを使用するため、今回はPostgreSQLを選択しています。</li>
+<li>コンテナイメージは <a href="https://hub.docker.com/_/postgres">PostgreSQLのDocker公式イメージ</a> を使用します。</li>
+</ul>
+</li>
+<li>
+<p>各コンテナ間の通信には、Docker内部ネットワークを使用します。</p>
+</li>
+</ul>
+<h2 id="_4">前提</h2>
+<p>以降の作業では、下記を前提として書かれています。</p>
+<ul>
+<li>Djangoアプリケーションを開発し、開発環境で動作している。</li>
+<li>Dockerがインストールされた環境が存在している。</li>
+</ul>
+<h2 id="django_1">Djangoアプリケーションの設定</h2>
+<h3 id="django_2">Djangoのデプロイ時チェック</h3>
+<p>Djangoには管理コマンドに、デプロイ時のチェックをする機能が備わっています。<br />
+実行すると、デプロイする場合の設定エラーや警告が表示されます。</p>
+<div class="codehilite"><pre><span></span><span class="hll">$ python manage.py check --deploy
+</span>
+System check identified some issues:
+
+WARNINGS:
+?: <span class="o">(</span>security.W004<span class="o">)</span> You have not <span class="nb">set</span> a value <span class="k">for</span> the SECURE_HSTS_SECONDS setting.
+If your entire site is served only over SSL, you may want to consider setting a
+value and enabling HTTP Strict Transport Security. Be sure to <span class="nb">read</span> the
+documentation first<span class="p">;</span> enabling HSTS carelessly can cause serious, irreversible
+problems.
+?: <span class="o">(</span>security.W006<span class="o">)</span> Your SECURE_CONTENT_TYPE_NOSNIFF setting is not <span class="nb">set</span> to True,
+so your pages will not be served with an <span class="s1">&#39;x-content-type-options: nosniff&#39;</span> header.
+You should consider enabling this header to prevent the browser from identifying
+content types incorrectly.
+?: <span class="o">(</span>security.W007<span class="o">)</span> Your SECURE_BROWSER_XSS_FILTER setting is not <span class="nb">set</span> to True,
+so your pages will not be served with an <span class="s1">&#39;x-xss-protection: 1; mode=block&#39;</span> header.
+You should consider enabling this header to activate the browser<span class="se">\&#39;</span>s XSS filtering
+and <span class="nb">help</span> prevent XSS attacks.
+?: <span class="o">(</span>security.W008<span class="o">)</span> Your SECURE_SSL_REDIRECT setting is not <span class="nb">set</span> to True.
+Unless your site should be available over both SSL and non-SSL connections,
+you may want to either <span class="nb">set</span> this setting True or configure a load balancer or
+reverse-proxy server to redirect all connections to HTTPS.
+?: <span class="o">(</span>security.W012<span class="o">)</span> SESSION_COOKIE_SECURE is not <span class="nb">set</span> to True. Using a secure-only
+session cookie makes it more difficult <span class="k">for</span> network traffic sniffers to hijack user
+sessions.
+?: <span class="o">(</span>security.W016<span class="o">)</span> You have <span class="s1">&#39;django.middleware.csrf.CsrfViewMiddleware&#39;</span> in your
+MIDDLEWARE, but you have not <span class="nb">set</span> CSRF_COOKIE_SECURE to True. Using a secure-only
+CSRF cookie makes it more difficult <span class="k">for</span> network traffic sniffers to steal the CSRF
+token.
+?: <span class="o">(</span>security.W017<span class="o">)</span> You have <span class="s1">&#39;django.middleware.csrf.CsrfViewMiddleware&#39;</span> in your
+MIDDLEWARE, but you have not <span class="nb">set</span> CSRF_COOKIE_HTTPONLY to True. Using an HttpOnly
+CSRF cookie makes it more difficult <span class="k">for</span> cross-site scripting attacks to steal the
+CSRF token.
+?: <span class="o">(</span>security.W019<span class="o">)</span> You have <span class="s1">&#39;django.middleware.clickjacking.XFrameOptionsMiddleware&#39;</span>
+in your MIDDLEWARE, but X_FRAME_OPTIONS is not <span class="nb">set</span> to <span class="s1">&#39;DENY&#39;</span>. The default is
+<span class="s1">&#39;SAMEORIGIN&#39;</span>, but unless there is a good reason <span class="k">for</span> your site to serve other parts
+of itself in a frame, you should change it to <span class="s1">&#39;DENY&#39;</span>.
+</pre></div>
+
+<p>なんだか、たくさん警告が表示されたので、<a href="https://docs.djangoproject.com/ja/3.0/howto/deployment/checklist/">ドキュメント</a><sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>を参考にしながらsettings.pyを修正しました。  </p>
+<h3 id="settingspy">settings.pyファイルの修正</h3>
+<p>Djangoアプリケーションの設定は<code>django-admin startproject</code>で作成したディレクトリ内に<code>settings.py</code>というファイルに記載されています。<br />
+ここに設定されている値の初期値は開発向けに設定されているため、本番環境用に設定値に変更していきます。  </p>
+<p>ただし、Dockerコンテナで動作させるため、コンテナ内の環境変数から設定値を取得できるようにし、コンテナ実行時に設定値を注入できるようにしています。
+また、ログはコンテナ側で管理するため、ファイル出力ではなく標準出力に表示するように設定しています。  </p>
+<p>設定にあたっては、Django公式ドキュメントを参考にしました。<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup><sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup><sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup><sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup><sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup><sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup></p>
+<details class="info"><summary>settings.py を表示</summary><p><script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=settings.py"></script></p>
+</details>
+<h2 id="docker">Dockerファイルの作成</h2>
+<p>次は、アプリケーションのDockerイメージをビルドするため、Dockerfileを作ります。</p>
+<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=Dockerfile"></script>
+
+<p>ポイントを下記に挙げます。</p>
+<ul>
+<li><code>apk</code>コマンドに<code>--no-cache</code> オプションを付けることで、ローカルキャッシュを使用せず、ダウンロードしたパッケージファイルも実行後に削除されます。</li>
+<li>Dockerイメージのビルドでは、各行の実行結果がレイヤとして保存されるため、ビルドのみに必要な
+    <code>gcc</code>, <code>linux-headers</code>, <code>musl-dev</code>, <code>postgresql-dev</code> といったパッケージ群は、同一行内で追加・ビルド・削除することで、
+    アプリ実行に不要なパッケージをインストールした状態でレイヤを保存させないようにしています。</li>
+<li>ライブラリパッケージのインストールを先に、アプリケーションのコピーを後に書くことで、アプリのみの更新の場合には以前のレイヤキャッシュを使用できるようにしています。</li>
+<li>uWSGIの起動の前に以下のコマンドを実行しています。<ul>
+<li><code>python manage.py migrate</code>:<br />
+    DBへテーブル作成・カラムの変更などを反映するコマンドです。
+    DBインスタンスが起動しているタイミングで実行する必要があります。</li>
+<li><code>python manage.py collectstatic</code>:<br />
+    画像などの静的コンテンツファイルを1箇所に集めるコマンドです。
+    nginxと共有するボリュームへコピーしたいため、コンテナ起動時に実行しています。</li>
+</ul>
+</li>
+<li>環境変数 <code>SECRET_KEY</code> を動的に設定するために、 <code>~/.profile</code> 読み込み時に生成するようにしています。
+    しかし、これはベストプラクティスではなく、本来は <code>.env</code>ファイルや <code>docker secret</code> などを用いるのが良いのではないかと思います。</li>
+</ul>
+<h2 id="uwsgi">uWSGI設定ファイルの作成</h2>
+<p>Djangoのドキュメントには<a href="https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/">uWSGI上で動かす方法</a><sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup>も載っているので、これを見ながら設定します。
+<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=uwsgi.ini"></script></p>
+<h2 id="nginx">Nginxの設定</h2>
+<p>httpサーバのNginxのイメージは、前述の通り <a href="https://hub.docker.com/r/steveltn/https-portal">steveltn/https-portal</a> を使用します。<br />
+このイメージは、自動でLet's Encryptの証明書取得・更新してくれるため、証明書の期限切れを気にする必要がない上、cronなどの追加設定が不要なものです。<br />
+Nginxの設定ファイルはeRubyファイルになっており、<code>/var/lib/nginx-conf/[ドメイン名].ssl.conf.erb</code>というファイルを配置すると、対応したドメイン名でのアクセスに適用されます。</p>
+<p>設定ファイルはuWSGIのドキュメント<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup>を見つつ、作成しました。</p>
+<details class="info"><summary>nginx_uwsgi.ssl.conf.erb を表示</summary><p><script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=nginx_uwsgi.ssl.conf.erb"></script></p>
+</details>
+<h2 id="docker-composeyml">docker-compose.ymlファイル</h2>
+<p>最後に、前述のコンテナを起動するためのdocker-composeファイルです。</p>
+<details class="info"><summary>docker-compose.yml を表示</summary><p><script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=docker-compose.yml"></script></p>
+</details>
+<h2 id="_5">感想</h2>
+<p>アプリケーションを作り始めるところからデプロイまで、Djangoの公式ドキュメントが充実しており、いたせり尽くせりといった感じでした。  </p>
+<p>ドキュメントの日本語翻訳もしっかりされていること、作り始める時の手軽さ、Pythonのエコシステムが活かせることもあり、初心者にもオススメできるものだと思います。  </p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Dockerオフィシャルイメージに<code>django</code>というものも存在するのですが、2020年2月時点で3年以上メンテナンスされておらず、Djangoのバージョンも古いため採用は見送りました。&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>各ロゴはこれらのWebサイトで配布されているものを使用しています。<a href="https://www.docker.com/company/newsroom/media-resources">Docker</a>, 
+<a href="https://github.com/unbit/uwsgi/blob/master/logo_uWSGI.svg">uWSGI</a>, 
+<a href="https://www.djangoproject.com/community/logos/">Django</a>, 
+<a href="http://nginx.org/">NGINX</a>, 
+<a href="https://www.python.org/community/logos/">Python</a>, 
+<a href="https://www.postgresql.org/media/img/about/press/slonik_with_black_text_and_tagline.gif">PostgreSQL</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://docs.djangoproject.com/ja/3.0/howto/deployment/checklist/">デプロイチェックリスト | Django ドキュメント</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://docs.djangoproject.com/ja/3.0/topics/security/">Django におけるセキュリティ | Django ドキュメント</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://docs.djangoproject.com/ja/3.0/ref/databases/">データベース | Django ドキュメント</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p><a href="https://docs.djangoproject.com/ja/3.0/topics/i18n/">国際化とローカル化 | Django ドキュメント</a>&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p><a href="https://docs.djangoproject.com/ja/3.0/howto/static-files/">静的ファイル (画像、JavaScript、CSS など) を管理する | Django ドキュメント</a>&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p><a href="https://docs.djangoproject.com/ja/3.0/topics/email/">メールを送信する | Django ドキュメント</a>&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p><a href="https://docs.djangoproject.com/ja/3.0/topics/logging/">ロギング | Django ドキュメント</a>&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p><a href="https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/">Django を uWSGI とともに使うには？ | Django ドキュメント</a>&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p><a href="https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html">Setting up Django and your web server with uWSGI and nginx -- uWSGI 2.0 documentation</a>&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
                 
                   
                 
@@ -1076,7 +1465,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../" title="Docker" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1085,19 +1474,19 @@
                 <span class="md-footer-nav__direction">
                   前
                 </span>
-                Fluentd+Elasticsearch+Kibana
+                Docker
               </span>
             </div>
           </a>
         
         
-          <a href="../redmine+gitlab+jenkins/" title="プロジェクト&ソース管理" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../Compose設定集/fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   次
                 </span>
-                プロジェクト&ソース管理
+                Fluentd+Elasticsearch+Kibana
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
