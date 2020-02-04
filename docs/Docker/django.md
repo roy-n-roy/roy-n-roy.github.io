@@ -26,7 +26,7 @@ Djangoとは、Pythonで利用できるWebアプリケーションフレーム�
 	* 画像などの静的コンテンツは共有Volumeに置き、Webアプリを介さずにnginxから直接配信します。
 	* コンテナイメージは [steveltn/https-portal](https://hub.docker.com/r/steveltn/https-portal) を使用します。
 * データベースサーバ
-	* Djangoアプリケーションではデータを保存するためにRDBを使用するため、今回はPostgreSQLを選択しています。[^3]
+	* Djangoアプリケーションではデータを保存するためにRDBを使用するため、今回はPostgreSQLを選択しています。
 	* コンテナイメージは [PostgreSQLのDocker公式イメージ](https://hub.docker.com/_/postgres) を使用します。
 
 * 各コンテナ間の通信には、Docker内部ネットワークを使用します。
@@ -82,30 +82,20 @@ in your MIDDLEWARE, but X_FRAME_OPTIONS is not set to 'DENY'. The default is
 of itself in a frame, you should change it to 'DENY'.
 ```
 
-警告が表示されたので、ドキュメント[^4]を参考にしながらsettings.pyを修正しました。  
+なんだか、たくさん警告が表示されたので、[ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/checklist/)[^3]を参考にしながらsettings.pyを修正しました。  
 
 ### settings.pyファイルの修正
 Djangoアプリケーションの設定は`django-admin startproject`で作成したディレクトリ内に`settings.py`というファイルに記載されています。  
 ここに設定されている値の初期値は開発向けに設定されているため、本番環境用に設定値に変更していきます。  
-ただしDockerコンテナで動作させるため、コンテナ内の環境変数から設定値を取得できるようにし、コンテナ実行時に設定値を注入できるようにしています。
 
-* セキュリティ関連  
-	[公式ドキュメント](https://docs.djangoproject.com/en/3.0/topics/security/)を参照しながら設定しています。
-	また、`SECRET_KEY`などは環境変数から取得するようにし、コンテナ起動時に指定するようにしています。  
-	<script src="https://gist-it.appspot.com/https://github.com/roy-n-roy/DockerHubUpdateNotifier/blob/v1.1.1/django/config/settings.py?slice=23:36&footer=no"></script>
+ただし、Dockerコンテナで動作させるため、コンテナ内の環境変数から設定値を取得できるようにし、コンテナ実行時に設定値を注入できるようにしています。
+また、ログはコンテナ側で管理するため、ファイル出力ではなく標準出力に表示するように設定しています。  
 
-* データベース設定  
-	<script src="https://gist-it.appspot.com/https://github.com/roy-n-roy/DockerHubUpdateNotifier/blob/v1.1.1/django/config/settings.py?slice=101:114&footer=no"></script>
+設定にあたっては、Django公式ドキュメントを参考にしました。[^4][^5][^6][^7][^8][^9]
 
-* ロケール/多言語対応設定  
-	これも[公式ドキュメント](https://docs.djangoproject.com/ja/3.0/topics/i18n/)を参考にして設定します。
-	<script src="https://gist-it.appspot.com/https://github.com/roy-n-roy/DockerHubUpdateNotifier/blob/v1.1.1/django/config/settings.py?slice=139:153&footer=no"></script>
+??? info "settings.py を表示"
+	<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=settings.py"></script>
 
-* ログ設定  
-	ログはコンテナ側で管理するため、ファイルではなく、標準出力に表示するよう設定しました。  
-	<script src="https://gist-it.appspot.com/https://github.com/roy-n-roy/DockerHubUpdateNotifier/blob/v1.1.1/django/config/settings.py?slice=194:211&footer=minimal"></script>
-
-その他に、Eメールの送信が必要な場合は、メールバックエンドの設定が必要です。
 
 ## Dockerファイルの作成
 次は、アプリケーションのDockerイメージをビルドするため、Dockerfileを作ります。
@@ -130,7 +120,7 @@ Djangoアプリケーションの設定は`django-admin startproject`で作成�
 	しかし、これはベストプラクティスではなく、本来は `.env`ファイルや `docker secret` などを用いるのが良いのではないかと思います。
 
 ## uWSGI設定ファイルの作成
-Djangoのドキュメントには[uWSGI上で動かす方法](https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/)[^5]も載っているので、これを見ながら設定します。
+Djangoのドキュメントには[uWSGI上で動かす方法](https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/)[^10]も載っているので、これを見ながら設定します。
 <script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=uwsgi.ini"></script>
 
 
@@ -139,22 +129,37 @@ httpサーバのNginxのイメージは、前述の通り [steveltn/https-portal
 このイメージは、自動でLet's Encryptの証明書取得・更新してくれるため、証明書の期限切れを気にする必要がない上、cronなどの追加設定が不要なものです。  
 Nginxの設定ファイルはeRubyファイルになっており、`/var/lib/nginx-conf/[ドメイン名].ssl.conf.erb`というファイルを配置すると、対応したドメイン名でのアクセスに適用されます。
 
-設定ファイルはuWSGIのドキュメント[^6]を見つつ、下記の様に作成しました。
-<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=nginx_uwsgi.ssl.conf.erb"></script>
+設定ファイルはuWSGIのドキュメント[^11]を見つつ、作成しました。
+
+??? info "nginx_uwsgi.ssl.conf.erb を表示"
+	<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=nginx_uwsgi.ssl.conf.erb"></script>
 
 ## docker-compose.ymlファイル
 最後に、前述のコンテナを起動するためのdocker-composeファイルです。
-<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=docker-compose.yml"></script>
+
+??? info "docker-compose.yml を表示"
+	<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=docker-compose.yml"></script>
+
+
+## 感想
+アプリケーションを作り始めるところからデプロイまで、Djangoの公式ドキュメントが充実しており、いたせり尽くせりといった感じでした。  
+
+ドキュメントの日本語翻訳もしっかりされていること、作り始める時の手軽さ、Pythonのエコシステムが活かせることもあり、初心者にもオススメできるものだと思います。  
 
 
 [^1]: Dockerオフィシャルイメージに`django`というものも存在するのですが、2020年2月時点で3年以上メンテナンスされておらず、Djangoのバージョンも古いため採用は見送りました。
-[^2]: 各ロゴはこちらで配布されているものを使用しています。[Docker](https://www.docker.com/company/newsroom/media-resources), 
+[^2]: 各ロゴはこれらのWebサイトで配布されているものを使用しています。[Docker](https://www.docker.com/company/newsroom/media-resources), 
 [uWSGI](https://github.com/unbit/uwsgi/blob/master/logo_uWSGI.svg), 
 [Django](https://www.djangoproject.com/community/logos/), 
 [NGINX](http://nginx.org/), 
 [Python](https://www.python.org/community/logos/), 
 [PostgreSQL](https://www.postgresql.org/media/img/about/press/slonik_with_black_text_and_tagline.gif)
-[^3]: [データベース | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/ref/databases/)
-[^4]: [デプロイチェックリスト | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/checklist/)
-[^5]: [Django を uWSGI とともに使うには？ | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/)
-[^6]: [Setting up Django and your web server with uWSGI and nginx -- uWSGI 2.0 documentation](https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
+[^3]: [デプロイチェックリスト | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/checklist/)
+[^4]: [Django におけるセキュリティ | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/topics/security/)
+[^5]: [データベース | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/ref/databases/)
+[^6]: [国際化とローカル化 | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/topics/i18n/)
+[^7]: [静的ファイル (画像、JavaScript、CSS など) を管理する | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/static-files/)
+[^8]: [メールを送信する | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/topics/email/)
+[^9]: [ロギング | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/topics/logging/)
+[^10]: [Django を uWSGI とともに使うには？ | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/)
+[^11]: [Setting up Django and your web server with uWSGI and nginx -- uWSGI 2.0 documentation](https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
