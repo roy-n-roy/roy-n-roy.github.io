@@ -1,53 +1,46 @@
 # Djangoアプリケーション
 Djangoとは、Pythonで利用できるWebアプリケーションフレームワークです。  
-
 この記事では、Djangoを使って開発したアプリケーションをDocker環境へデプロイした際の手順を記載します。  
 
+## 準備
+### ベースイメージの選定
+オリジナルのアプリケーションをDocker上で動作させるため、Dockerイメージを自前でビルドします。
+今回はPythonでDjangoアプリケーションを動かすので、`python:3.8-alpine`を選択しました。[^1]  
+
+### コンテナ設計
+<figure style="text-align: center;">
+<a href="/imgs/docker_django_arch.png" data-lightbox="docker_django_arch"><img style="float: left;" src="/imgs/docker_django_arch.png" width=100% /></a>  
+<figcaption>図 1. コンテナ構成図[^2]</figcaption>
+</figure>
+
+上記図のような感じにしたいと思います。
+
+* アプリサーバ
+	* Djangoアプリは、Webアプリと定期バッチアプリがあります。  
+		これらは同じイメージを使用するが、コンテナは別々に2つ起動します。
+	* nginxとWebアプリの接続には、uWSGIを使用します。
+* httpサーバ
+	* 外部に公開するネットワークポートはnginxのHTTP(80)/HTTPS(443)のみとします。
+	* nginxでHTTP over SSL/TLS(HTTPS)に対応させます。  
+		証明書はLet's Encryptで取得します。
+	* 画像などの静的コンテンツは共有Volumeに置き、Webアプリを介さずにnginxから直接配信します。
+	* コンテナイメージは [steveltn/https-portal](https://hub.docker.com/r/steveltn/https-portal) を使用します。
+* データベースサーバ
+	* Djangoアプリケーションではデータを保存するためにRDBを使用するため、今回はPostgreSQLを選択しています。[^3]
+	* コンテナイメージは [PostgreSQLのDocker公式イメージ](https://hub.docker.com/_/postgres) を使用します。
+
+* 各コンテナ間の通信には、Docker内部ネットワークを使用します。
+
 ## 前提
-この記事では、下記を前提として書かれています。
+以降の作業では、下記を前提として書かれています。
 
 * Djangoアプリケーションを開発し、開発環境で動作している。
 * Dockerがインストールされた環境が存在している。
 
-## 準備
-### ベースイメージの選定
-オリジナルのアプリケーションをDocker上で動作させるため、専用のDockerイメージを作成する必要があります。
-しかし、1からイメージを作成するのはたいへんなので、ある程度利用するアプリケーションが決まっていれば、それにかなう物をベースとして利用します。
-
-今回はPythonでDjangoアプリケーションを動かすので、`python:3.8-alpine`を選択しました。  
-
-Pythonのバージョンは、開発でも使用している現時点で最新のものを選び、ディストリビューションはAlpine Linuxのものを選択しています。  
-alpineの付かない`python:3.8`でベースとしているDebianではなく、Alpine Linuxのものを選んだのは、「イメージのサイズが小さい」という理由からです。  
-
-また、Dockerオフィシャルイメージに、ずばり`django`というものも存在するのですが、3年以上メンテナンスされておらず、Djangoのバージョンも古いため採用は見送りました。
-
-### データベースの選定
-Djangoアプリケーションでは、ユーザが登録したデータを保存するためにリレーショナルデータベースを使用しています。  
-利用可能なデータベースは[いくつか](https://docs.djangoproject.com/ja/3.0/ref/databases/)[^1]あるため、その中から使用するデータベースバックエンドを選択します。
-
-今回は、PostgreSQLを選択しました。理由は個人的嗜好によるものです。
-
-### コンテナ設計
-下記のような感じにしたいと思います。[^2]
-
-<figure style="text-align: center;">
-<a href="/imgs/docker_django_arch.png" data-lightbox="docker_django_arch"><img style="float: left;" src="/imgs/docker_django_arch.png" width=100% /></a>  
-<figcaption>図 1. コンテナ構成図</figcaption>
-</figure>
-
-* 外部に公開するネットワークポートはnginxが後悔するHTTP(80)/HTTPS(443)のみとします。
-* nginxでHTTP over SSL/TLS(HTTPS)に対応させます。  
-	証明書はLet's Encryptで取得します。
-* 画像などの静的コンテンツは共有Volumeに置き、Webアプリを介さずにnginxから直接配信します。
-* Djangoアプリは、Webアプリと定期バッチアプリがあります。  
-	これらは同じイメージを使用するが、コンテナは別々に2つ起動します。
-* nginxとWebアプリの接続には、uWSGIを使用します。
-* 各コンテナ間の通信には、Docker内部ネットワークを使用します。
-
 ## Djangoアプリケーションの設定
 ### Djangoのデプロイ時チェック
 Djangoには管理コマンドに、デプロイ時のチェックをする機能が備わっています。  
-せっかくあるので、実行してみます。
+実行すると、デプロイする場合の設定エラーや警告が表示されます。
 
 ``` bash hl_lines="1"
 $ python manage.py check --deploy
@@ -89,9 +82,9 @@ in your MIDDLEWARE, but X_FRAME_OPTIONS is not set to 'DENY'. The default is
 of itself in a frame, you should change it to 'DENY'.
 ```
 
-警告が表示されたので、ドキュメント[^3]を参考にしながらsettings.pyを修正しました。  
+警告が表示されたので、ドキュメント[^4]を参考にしながらsettings.pyを修正しました。  
 
-### Django設定ファイルの修正
+### settings.pyファイルの修正
 Djangoアプリケーションの設定は`django-admin startproject`で作成したディレクトリ内に`settings.py`というファイルに記載されています。  
 ここに設定されている値の初期値は開発向けに設定されているため、本番環境用に設定値に変更していきます。  
 ただしDockerコンテナで動作させるため、コンテナ内の環境変数から設定値を取得できるようにし、コンテナ実行時に設定値を注入できるようにしています。
@@ -114,39 +107,54 @@ Djangoアプリケーションの設定は`django-admin startproject`で作成�
 
 その他に、Eメールの送信が必要な場合は、メールバックエンドの設定が必要です。
 
-## uWSGI設定ファイルの作成
-Djangoのドキュメントには[uWSGI上で動かす方法](https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/)[^4]まで載っているので、これを見ながら設定します。
-<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=uwsgi.ini"></script>
-
-
-
 ## Dockerファイルの作成
-アプリケーション側の準備が整ったので、次はDocker側の設定ファイルを書いていきます。
+次は、アプリケーションのDockerイメージをビルドするため、Dockerfileを作ります。
 
 <script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=Dockerfile"></script>
 
 ポイントを下記に挙げます。
 
-* 環境変数 `SECRET_KEY` を動的に設定するため、`ENV` コマンドではなく `~/.profile` 読み込み時に生成するようにしています。
-	しかし、これはベストプラクティスではなく、本来は `docker secret` などを用いるのが良いのではないかと思います。
-* `apk`コマンドに`--no-cache` オプションを付けることで、ローカルキャッシュを使用せず、ダウンロードしたパッケージファイルも実行後に削除してくれます。
-* Dockerイメージのビルドでは、各行の実行結果がレイヤとして保存されます。  
-	そのため、実行に不要なパッケージをインストールした状態でレイヤを保存させないよう、  
-	Pythonパッケージのビルドに必要な `gcc`, `linux-headers`, `musl-dev`, `postgresql-dev`  
-	といったパッケージ群は、同一行内で追加・ビルド・削除するようにしています。
+* `apk`コマンドに`--no-cache` オプションを付けることで、ローカルキャッシュを使用せず、ダウンロードしたパッケージファイルも実行後に削除されます。
+* Dockerイメージのビルドでは、各行の実行結果がレイヤとして保存されるため、ビルドのみに必要な
+	`gcc`, `linux-headers`, `musl-dev`, `postgresql-dev` といったパッケージ群は、同一行内で追加・ビルド・削除することで、
+	アプリ実行に不要なパッケージをインストールした状態でレイヤを保存させないようにしています。
 * ライブラリパッケージのインストールを先に、アプリケーションのコピーを後に書くことで、アプリのみの更新の場合には以前のレイヤキャッシュを使用できるようにしています。
-* `python manage.py migrate`コマンドは、DBへテーブル作成・カラムの変更などを反映するコマンドです。
-	そのため、ビルド時ではなくコンテナ起動時に実行します。
-* `python manage.py collectstatic`コマンドは、画像などの静的コンテンツファイルを1箇所に集めるコマンドです。
-	これも、nginxと共有するボリュームへコピーしたいため、コンテナ起動時に実行しています。
+* uWSGIの起動の前に以下のコマンドを実行しています。
+	* `python manage.py migrate`:  
+		DBへテーブル作成・カラムの変更などを反映するコマンドです。
+		DBインスタンスが起動しているタイミングで実行する必要があります。
+	* `python manage.py collectstatic`:  
+		画像などの静的コンテンツファイルを1箇所に集めるコマンドです。
+		nginxと共有するボリュームへコピーしたいため、コンテナ起動時に実行しています。
+* 環境変数 `SECRET_KEY` を動的に設定するために、 `~/.profile` 読み込み時に生成するようにしています。
+	しかし、これはベストプラクティスではなく、本来は `.env`ファイルや `docker secret` などを用いるのが良いのではないかと思います。
+
+## uWSGI設定ファイルの作成
+Djangoのドキュメントには[uWSGI上で動かす方法](https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/)[^5]も載っているので、これを見ながら設定します。
+<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=uwsgi.ini"></script>
 
 
-[^1]: [データベース | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/ref/databases/)
+## Nginxの設定
+httpサーバのNginxのイメージは、前述の通り [steveltn/https-portal](https://hub.docker.com/r/steveltn/https-portal) を使用します。  
+このイメージは、自動でLet's Encryptの証明書取得・更新してくれるため、証明書の期限切れを気にする必要がない上、cronなどの追加設定が不要なものです。  
+Nginxの設定ファイルはeRubyファイルになっており、`/var/lib/nginx-conf/[ドメイン名].ssl.conf.erb`というファイルを配置すると、対応したドメイン名でのアクセスに適用されます。
+
+設定ファイルはuWSGIのドキュメント[^6]を見つつ、下記の様に作成しました。
+<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=nginx_uwsgi.ssl.conf.erb"></script>
+
+## docker-compose.ymlファイル
+最後に、前述のコンテナを起動するためのdocker-composeファイルです。
+<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=docker-compose.yml"></script>
+
+
+[^1]: Dockerオフィシャルイメージに`django`というものも存在するのですが、2020年2月時点で3年以上メンテナンスされておらず、Djangoのバージョンも古いため採用は見送りました。
 [^2]: 各ロゴはこちらで配布されているものを使用しています。[Docker](https://www.docker.com/company/newsroom/media-resources), 
 [uWSGI](https://github.com/unbit/uwsgi/blob/master/logo_uWSGI.svg), 
 [Django](https://www.djangoproject.com/community/logos/), 
 [NGINX](http://nginx.org/), 
 [Python](https://www.python.org/community/logos/), 
 [PostgreSQL](https://www.postgresql.org/media/img/about/press/slonik_with_black_text_and_tagline.gif)
-[^3]: [デプロイチェックリスト | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/checklist/)
-[^4]: [Django を uWSGI とともに使うには？ | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/)
+[^3]: [データベース | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/ref/databases/)
+[^4]: [デプロイチェックリスト | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/checklist/)
+[^5]: [Django を uWSGI とともに使うには？ | Django ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/)
+[^6]: [Setting up Django and your web server with uWSGI and nginx -- uWSGI 2.0 documentation](https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
