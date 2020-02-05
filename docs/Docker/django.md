@@ -1,4 +1,4 @@
-# Djangoアプリケーション
+# Djangoアプリ on Dockerで運用する
 Djangoとは、Pythonで利用できるWebアプリケーションフレームワークです。  
 この記事では、Djangoを使って開発したアプリケーションをDocker環境へデプロイした際の手順を記載します。  
 
@@ -141,7 +141,16 @@ Nginxの設定ファイルはeRubyファイルになっており、`/var/lib/ngi
 	<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=docker-compose.yml"></script>
 
 
-## 感想
+## 最後に
+### この他にやるべきこと
+
+* (言及すべくもないが、)gitなどでソース管理をする。
+* DBの定期バックアップ
+	* こういうもの [Django Database Backup -- django-dbbackup 3.0.2 documentation](https://django-dbbackup.readthedocs.io/en/stable/index.html) もある。
+* ユーザーアップロードコンテンツがあるアプリの場合は、それも定期バックアップが必要。
+* きちんと製品として運用するのであれば、[k8s](https://kubernetes.io/ja/)などに載せる。
+
+### 感想
 アプリケーションを作り始めるところからデプロイまで、Djangoの公式ドキュメントが充実しており、いたせり尽くせりといった感じでした。  
 
 ドキュメントの日本語翻訳もしっかりされていること、作り始める時の手軽さ、Pythonのエコシステムが活かせることもあり、初心者にもオススメできるものだと思います。  
