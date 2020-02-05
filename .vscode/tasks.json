@@ -4,24 +4,32 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "mkdocs-install",
+			"label": "setup_pipenv",
 			"type": "shell",
-			"command": "pip install -r submodules/mkdocs-material/requirements.txt mkdocs-git-revision-date-localized-plugin pytest bs4 requests lxml aiohttp[speedups]",
-			"problemMatcher": []
-		},
-		{
-			"label": "mkdocs-new",
-			"type": "shell",
-			"command": "mkdocs new .",
-			"dependsOn": [
-				"mkdocs-install"
+			"command": "bash",
+			"args": [
+				"-c",
+				"[ ! -e .venv/bin/activate ] && python3 -m venv .venv; python -m pip install -U pip pipenv && pipenv install",
 			],
-			"problemMatcher": []
+			"windows": {
+				"command": "cmd",
+				"args": [
+					"/c",
+					"(if not exist .venv\\Scripts\\activate python -m venv .venv) & python -m pip install -U pip pipenv && pipenv install",
+				],
+			},
+			"options": {
+				"env": {
+					"VIRTUAL_ENV": "${workspaceFolder}/.venv"
+				},
+				"cwd": "${workspaceFolder}",
+			},
+			"problemMatcher": [],
 		},
 		{
 			"label": "mkdocs-build",
 			"type": "shell",
-			"command": "mkdocs build",
+			"command": "pipenv run mkdocs build",
 			"group": {
 				"kind": "build",
 				"isDefault": true
@@ -31,7 +39,7 @@
 			"label": "mkdocs-serve",
 			"type": "shell",
 			"isBackground": true,
-			"command": "mkdocs serve",
+			"command": "pipenv run mkdocs serve",
 			"problemMatcher": {
 				"owner": "custom",
 				"pattern": {
@@ -48,7 +56,7 @@
 			"label": "mkdocs-check-serve",
 			"type": "shell",
 			"isBackground": true,
-			"command": "mkdocs serve",
+			"command": "pipenv run mkdocs serve",
 			"options": {
 				"cwd": "${workspaceRoot}/release"
 			},
@@ -75,7 +83,7 @@
 		{
 			"label": "mkdocs-deploy",
 			"type": "shell",
-			"command": "mkdocs gh-deploy",
+			"command": "pipenv run mkdocs gh-deploy",
 			"options": {
 				"cwd": "${workspaceRoot}/release"
 			},
@@ -87,7 +95,7 @@
 		{
 			"label": "mkdocs-test",
 			"type": "shell",
-			"command": "py.test",
+			"command": "pipenv run py.test",
 			"group": {
 				"kind": "test",
 				"isDefault": true
