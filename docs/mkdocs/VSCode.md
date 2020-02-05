@@ -12,14 +12,18 @@ Ubuntu: `sudo apt install python3 python3-pip`
 ## mkdocsの設定ファイルを作成
 [Getting started -  Material for MkDocs](https://squidfunk.github.io/mkdocs-material/getting-started/#usage)を参考に、`mkdocs.yml`ファイルを作成します。  
 
-## launch.jsonとtasks.jsonの設定
-下記を設定する  
+## mkdocs環境の作成
+まだMkDocsをインストールしていない場合は、pipenvで環境を作成します。
 
-その後、まだMkDocsをインストールしていない場合は、  
-`Ctrl+Shift+P`から`task`と入力し、`タスクの実行`を選択後、Task: `mkdocs-new` を実行
+まずは、下記のような`Pipfile`を作成します。
+!!! example "Pipfile"
+	<script src="https://gist.github.com/roy-n-roy/e5034b2725f694e659b8c4b30579a69b.js?file=Pipfile"></script>
 
-!!! example ".vscode/launch.json"
-	<script src="https://gist.github.com/roy-n-roy/e5034b2725f694e659b8c4b30579a69b.js?file=launch.json"></script>
+その後、下記のような`tasks.json`, `launch.json`を作成してから、
+`Ctrl+Shift+P`から`task`と入力し、`タスクの実行`を選択後、Task: `setup_pipenv` を実行します。
 
 !!! example ".vscode/tasks.json"
 	<script src="https://gist.github.com/roy-n-roy/e5034b2725f694e659b8c4b30579a69b.js?file=tasks.json"></script>
+
+!!! example ".vscode/launch.json"
+	<script src="https://gist.github.com/roy-n-roy/e5034b2725f694e659b8c4b30579a69b.js?file=launch.json"></script>
