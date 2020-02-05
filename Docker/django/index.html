@@ -38,7 +38,7 @@
     
     
       
-        <title>Djangoアプリケーション - roy-n-roy メモ</title>
+        <title>Djangoアプリ on Dockerで運用する - roy-n-roy メモ</title>
       
     
     
@@ -114,7 +114,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#django" tabindex="0" class="md-skip">
+      <a href="#django-on-docker" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -140,7 +140,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Djangoアプリケーション
+                Djangoアプリ on Dockerで運用する
               
             </span>
           
@@ -453,11 +453,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Djangoアプリケーション
+        Djangoアプリ on Dockerで運用する
       </label>
     
-    <a href="./" title="Djangoアプリケーション" class="md-nav__link md-nav__link--active">
-      Djangoアプリケーション
+    <a href="./" title="Djangoアプリ on Dockerで運用する" class="md-nav__link md-nav__link--active">
+      Djangoアプリ on Dockerで運用する
     </a>
     
       
@@ -505,7 +505,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#django_1" class="md-nav__link">
+  <a href="#django" class="md-nav__link">
     Djangoアプリケーションの設定
   </a>
   
@@ -513,7 +513,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#django_2" class="md-nav__link">
+  <a href="#django_1" class="md-nav__link">
     Djangoのデプロイ時チェック
   </a>
   
@@ -561,8 +561,28 @@
       
         <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
+    最後に
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    この他にやるべきこと
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     感想
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1177,7 +1197,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#django_1" class="md-nav__link">
+  <a href="#django" class="md-nav__link">
     Djangoアプリケーションの設定
   </a>
   
@@ -1185,7 +1205,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#django_2" class="md-nav__link">
+  <a href="#django_1" class="md-nav__link">
     Djangoのデプロイ時チェック
   </a>
   
@@ -1233,8 +1253,28 @@
       
         <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
+    最後に
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    この他にやるべきこと
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     感想
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1257,7 +1297,7 @@
                 <div class="md-source-date">
                   <small>
                     
-                      最終更新日: 2020年2月4日
+                      最終更新日: 2020年2月5日
                     
                   </small>
                 </div>
@@ -1265,7 +1305,7 @@
               
                 
                 
-                <h1 id="django">Djangoアプリケーション</h1>
+                <h1 id="django-on-docker">Djangoアプリ on Dockerで運用する</h1>
 <p>Djangoとは、Pythonで利用できるWebアプリケーションフレームワークです。<br />
 この記事では、Djangoを使って開発したアプリケーションをDocker環境へデプロイした際の手順を記載します。  </p>
 <h2 id="_1">準備</h2>
@@ -1310,8 +1350,8 @@
 <li>Djangoアプリケーションを開発し、開発環境で動作している。</li>
 <li>Dockerがインストールされた環境が存在している。</li>
 </ul>
-<h2 id="django_1">Djangoアプリケーションの設定</h2>
-<h3 id="django_2">Djangoのデプロイ時チェック</h3>
+<h2 id="django">Djangoアプリケーションの設定</h2>
+<h3 id="django_1">Djangoのデプロイ時チェック</h3>
 <p>Djangoには管理コマンドに、デプロイ時のチェックをする機能が備わっています。<br />
 実行すると、デプロイする場合の設定エラーや警告が表示されます。</p>
 <div class="codehilite"><pre><span></span><span class="hll">$ python manage.py check --deploy
@@ -1399,7 +1439,18 @@ Nginxの設定ファイルはeRubyファイルになっており、<code>/var/li
 <p>最後に、前述のコンテナを起動するためのdocker-composeファイルです。</p>
 <details class="info"><summary>docker-compose.yml を表示</summary><p><script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=docker-compose.yml"></script></p>
 </details>
-<h2 id="_5">感想</h2>
+<h2 id="_5">最後に</h2>
+<h3 id="_6">この他にやるべきこと</h3>
+<ul>
+<li>(言及すべくもないが、)gitなどでソース管理をする。</li>
+<li>DBの定期バックアップ<ul>
+<li>こういうもの <a href="https://django-dbbackup.readthedocs.io/en/stable/index.html">Django Database Backup -- django-dbbackup 3.0.2 documentation</a> もある。</li>
+</ul>
+</li>
+<li>ユーザーアップロードコンテンツがあるアプリの場合は、それも定期バックアップが必要。</li>
+<li>きちんと製品として運用するのであれば、<a href="https://kubernetes.io/ja/">k8s</a>などに載せる。</li>
+</ul>
+<h3 id="_7">感想</h3>
 <p>アプリケーションを作り始めるところからデプロイまで、Djangoの公式ドキュメントが充実しており、いたせり尽くせりといった感じでした。  </p>
 <p>ドキュメントの日本語翻訳もしっかりされていること、作り始める時の手軽さ、Pythonのエコシステムが活かせることもあり、初心者にもオススメできるものだと思います。  </p>
 <div class="footnote">
@@ -1523,7 +1574,7 @@ Nginxの設定ファイルはeRubyファイルになっており、<code>/var/li
       
     </div>
     
-      <script src="../../assets/javascripts/application.05d94ad8.js"></script>
+      <script src="../../assets/javascripts/application.1142d4ba.js"></script>
       
         
         
