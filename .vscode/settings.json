@@ -3,5 +3,5 @@
 	"python.testing.unittestEnabled": false,
 	"python.testing.nosetestsEnabled": false,
 	"python.testing.pytestEnabled": true,
-	"python.pythonPath": ".venv\\Scripts\\python.exe"
+	"python.pythonPath": "~\\.virtualenvs\\roy-n-roy.github.io-IC04ieR8\\Scripts\\python.exe"
 }

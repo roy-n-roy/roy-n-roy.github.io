@@ -19,3 +19,4 @@ Pygments = ">=2.2"
 Markdown = "<3.2"
 
 [requires]
+python_version = "3.7"
