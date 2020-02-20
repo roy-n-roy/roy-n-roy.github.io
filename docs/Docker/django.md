@@ -1,4 +1,4 @@
-# Djangoアプリ on Dockerで運用する
+# DjangoアプリをDockerで運用する
 Djangoとは、Pythonで利用できるWebアプリケーションフレームワークです。  
 この記事では、Djangoを使って開発したアプリケーションをDocker環境へデプロイした際の手順を記載します。  
 
