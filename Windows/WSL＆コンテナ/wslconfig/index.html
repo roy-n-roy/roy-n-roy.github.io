@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://roy-n-roy.github.io/Linux/LVM/">
+        <link rel="canonical" href="https://roy-n-roy.github.io/Windows/WSL＆コンテナ/wslconfig/">
       
       
       
@@ -33,18 +33,18 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-　、。，．]+">
       
-      <link rel="shortcut icon" href="../../imgs/favicon.ico">
+      <link rel="shortcut icon" href="../../../imgs/favicon.ico">
       <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
     
     
       
-        <title>LVM(Logical Volume Manager) - roy-n-roy メモ</title>
+        <title>wsl.conf と .wslconfig - roy-n-roy メモ</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.adb8469c.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
@@ -53,7 +53,7 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+      <script src="../../../assets/javascripts/modernizr.86422ebf.js"></script>
     
     
       
@@ -62,12 +62,12 @@
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
-    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../lightbox2/css/lightbox.min.css">
+      <link rel="stylesheet" href="../../../lightbox2/css/lightbox.min.css">
     
-      <link rel="stylesheet" href="../../styles/git_revision_date.css">
+      <link rel="stylesheet" href="../../../styles/git_revision_date.css">
     
     
       
@@ -114,7 +114,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#lvmlogical-volume-manager" tabindex="0" class="md-skip">
+      <a href="#wslconf-wslconfig" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -125,7 +125,7 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="https://roy-n-roy.github.io/" title="roy-n-roy メモ" aria-label="roy-n-roy メモ" class="md-header-nav__button md-logo">
           
-            <img alt="logo" src="../../imgs/logo.svg" width="24" height="24">
+            <img alt="logo" src="../../../imgs/logo.svg" width="24" height="24">
           
         </a>
       </div>
@@ -140,7 +140,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                LVM(Logical Volume Manager)
+                wsl.conf と .wslconfig
               
             </span>
           
@@ -195,7 +195,7 @@
         
   <li class="md-tabs__item">
     
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         Home
       </a>
     
@@ -211,7 +211,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../C＃/mergeAssemblies/" class="md-tabs__link">
+        <a href="../../../C＃/mergeAssemblies/" class="md-tabs__link">
           C＃
         </a>
       
@@ -224,7 +224,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../Docker/" class="md-tabs__link">
+        <a href="../../../Docker/" class="md-tabs__link">
           Docker
         </a>
       
@@ -237,7 +237,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="./" class="md-tabs__link md-tabs__link--active">
+        <a href="../../../Linux/LVM/" class="md-tabs__link">
           Linux
         </a>
       
@@ -250,7 +250,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../Raspberry Pi/" class="md-tabs__link">
+        <a href="../../../Raspberry Pi/" class="md-tabs__link">
           Raspberry Pi
         </a>
       
@@ -263,7 +263,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../RouterOS/" class="md-tabs__link">
+        <a href="../../../RouterOS/" class="md-tabs__link">
           RouterOS
         </a>
       
@@ -276,7 +276,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../Windows/" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link md-tabs__link--active">
           Windows
         </a>
       
@@ -289,7 +289,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../mkdocs/" class="md-tabs__link">
+        <a href="../../../mkdocs/" class="md-tabs__link">
           Mkdocs
         </a>
       
@@ -302,7 +302,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../プライバシー・ポリシー/" class="md-tabs__link">
+        <a href="../../../プライバシー・ポリシー/" class="md-tabs__link">
           プライバシー・ポリシー
         </a>
       
@@ -325,7 +325,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="https://roy-n-roy.github.io/" title="roy-n-roy メモ" class="md-nav__button md-logo">
       
-        <img alt="logo" src="../../imgs/logo.svg" width="48" height="48">
+        <img alt="logo" src="../../../imgs/logo.svg" width="48" height="48">
       
     </a>
     roy-n-roy メモ
@@ -339,7 +339,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../.." title="Home" class="md-nav__link">
+    <a href="../../.." title="Home" class="md-nav__link">
       Home
     </a>
   </li>
@@ -351,7 +351,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../InfiniBand/" title="InfiniBand" class="md-nav__link">
+    <a href="../../../InfiniBand/" title="InfiniBand" class="md-nav__link">
       InfiniBand
     </a>
   </li>
@@ -363,7 +363,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../vpn/" title="VPNサーバの代替設定" class="md-nav__link">
+    <a href="../../../vpn/" title="VPNサーバの代替設定" class="md-nav__link">
       VPNサーバの代替設定
     </a>
   </li>
@@ -394,7 +394,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../C＃/mergeAssemblies/" title=".Net CoreでのDLL埋め込み" class="md-nav__link">
+    <a href="../../../C＃/mergeAssemblies/" title=".Net CoreでのDLL埋め込み" class="md-nav__link">
       .Net CoreでのDLL埋め込み
     </a>
   </li>
@@ -430,7 +430,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Docker/" title="Docker" class="md-nav__link">
+    <a href="../../../Docker/" title="Docker" class="md-nav__link">
       Docker
     </a>
   </li>
@@ -442,7 +442,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Docker/django/" title="DjangoアプリをDockerで運用する" class="md-nav__link">
+    <a href="../../../Docker/django/" title="DjangoアプリをDockerで運用する" class="md-nav__link">
       DjangoアプリをDockerで運用する
     </a>
   </li>
@@ -473,7 +473,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Docker/Compose設定集/fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
+    <a href="../../../Docker/Compose設定集/fluentd+kibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
       Fluentd+Elasticsearch+Kibana
     </a>
   </li>
@@ -485,7 +485,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Docker/Compose設定集/nginx/" title="Nginx" class="md-nav__link">
+    <a href="../../../Docker/Compose設定集/nginx/" title="Nginx" class="md-nav__link">
       Nginx
     </a>
   </li>
@@ -497,7 +497,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Docker/Compose設定集/redmine+gitlab+jenkins/" title="プロジェクト&ソース管理" class="md-nav__link">
+    <a href="../../../Docker/Compose設定集/redmine+gitlab+jenkins/" title="プロジェクト&ソース管理" class="md-nav__link">
       プロジェクト&ソース管理
     </a>
   </li>
@@ -509,7 +509,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Docker/Compose設定集/wordpress/" title="Wordpress" class="md-nav__link">
+    <a href="../../../Docker/Compose設定集/wordpress/" title="Wordpress" class="md-nav__link">
       Wordpress
     </a>
   </li>
@@ -529,12 +529,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
     <label class="md-nav__link" for="nav-6">
       Linux
@@ -550,49 +548,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        LVM(Logical Volume Manager)
-      </label>
-    
-    <a href="./" title="LVM(Logical Volume Manager)" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../../Linux/LVM/" title="LVM(Logical Volume Manager)" class="md-nav__link">
       LVM(Logical Volume Manager)
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">目次</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#lvm" class="md-nav__link">
-    LVMの拡張
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -602,7 +562,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../OSInstall/" title="Linuxインストール時の作業" class="md-nav__link">
+    <a href="../../../Linux/OSInstall/" title="Linuxインストール時の作業" class="md-nav__link">
       Linuxインストール時の作業
     </a>
   </li>
@@ -638,7 +598,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Raspberry Pi/" title="Raspberry Pi" class="md-nav__link">
+    <a href="../../../Raspberry Pi/" title="Raspberry Pi" class="md-nav__link">
       Raspberry Pi
     </a>
   </li>
@@ -650,7 +610,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Raspberry Pi/Network/" title="ネットワーク設定" class="md-nav__link">
+    <a href="../../../Raspberry Pi/Network/" title="ネットワーク設定" class="md-nav__link">
       ネットワーク設定
     </a>
   </li>
@@ -662,7 +622,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Raspberry Pi/WebConsole/" title="Web Console" class="md-nav__link">
+    <a href="../../../Raspberry Pi/WebConsole/" title="Web Console" class="md-nav__link">
       Web Console
     </a>
   </li>
@@ -698,7 +658,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../RouterOS/" title="RouterOS" class="md-nav__link">
+    <a href="../../../RouterOS/" title="RouterOS" class="md-nav__link">
       RouterOS
     </a>
   </li>
@@ -710,7 +670,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../RouterOS/Backup/" title="Backup" class="md-nav__link">
+    <a href="../../../RouterOS/Backup/" title="Backup" class="md-nav__link">
       Backup
     </a>
   </li>
@@ -722,7 +682,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../RouterOS/Firewall/" title="Firewall" class="md-nav__link">
+    <a href="../../../RouterOS/Firewall/" title="Firewall" class="md-nav__link">
       Firewall
     </a>
   </li>
@@ -734,7 +694,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../RouterOS/VPN Server/" title="VPN Server" class="md-nav__link">
+    <a href="../../../RouterOS/VPN Server/" title="VPN Server" class="md-nav__link">
       VPN Server
     </a>
   </li>
@@ -749,10 +709,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
     
     <label class="md-nav__link" for="nav-9">
       Windows
@@ -770,7 +732,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Windows/" title="Windows Desktop" class="md-nav__link">
+    <a href="../../" title="Windows Desktop" class="md-nav__link">
       Windows Desktop
     </a>
   </li>
@@ -782,7 +744,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Windows/VpnError/" title="テザリング(有線ケーブル)でのVPN接続エラー" class="md-nav__link">
+    <a href="../../VpnError/" title="テザリング(有線ケーブル)でのVPN接続エラー" class="md-nav__link">
       テザリング(有線ケーブル)でのVPN接続エラー
     </a>
   </li>
@@ -794,7 +756,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Windows/storageBenchmark/" title="ストレージの速度測定" class="md-nav__link">
+    <a href="../../storageBenchmark/" title="ストレージの速度測定" class="md-nav__link">
       ストレージの速度測定
     </a>
   </li>
@@ -806,7 +768,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Windows/windowsShutdownBlockSetting/" title="Windows10 シャットダウンブロックの設定" class="md-nav__link">
+    <a href="../../windowsShutdownBlockSetting/" title="Windows10 シャットダウンブロックの設定" class="md-nav__link">
       Windows10 シャットダウンブロックの設定
     </a>
   </li>
@@ -818,7 +780,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Windows/記憶域スペース/" title="記憶域スペースとReFS" class="md-nav__link">
+    <a href="../../記憶域スペース/" title="記憶域スペースとReFS" class="md-nav__link">
       記憶域スペースとReFS
     </a>
   </li>
@@ -828,8 +790,10 @@
           
           
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9-6" type="checkbox" id="nav-9-6" checked>
     
@@ -849,7 +813,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Windows/WSL＆コンテナ/" title="Windowsでのコンテナ技術とWSL" class="md-nav__link">
+    <a href="../" title="Windowsでのコンテナ技術とWSL" class="md-nav__link">
       Windowsでのコンテナ技術とWSL
     </a>
   </li>
@@ -861,7 +825,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Windows/WSL＆コンテナ/HostComputeService/" title="Windowsのコンテナ" class="md-nav__link">
+    <a href="../HostComputeService/" title="Windowsのコンテナ" class="md-nav__link">
       Windowsのコンテナ
     </a>
   </li>
@@ -873,7 +837,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Windows/WSL＆コンテナ/centos/" title="WSLでCentOSを利用する" class="md-nav__link">
+    <a href="../centos/" title="WSLでCentOSを利用する" class="md-nav__link">
       WSLでCentOSを利用する
     </a>
   </li>
@@ -883,11 +847,56 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../Windows/WSL＆コンテナ/wslconfig/" title="wsl.conf と .wslconfig" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        wsl.conf と .wslconfig
+      </label>
+    
+    <a href="./" title="wsl.conf と .wslconfig" class="md-nav__link md-nav__link--active">
       wsl.conf と .wslconfig
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wslconf" class="md-nav__link">
+    wsl.conf:ディストリビューション毎の構成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wslconfwsl2" class="md-nav__link">
+    .wslconf:WSL2の軽量仮想マシンの構成
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -926,7 +935,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../mkdocs/" title="MkDocs" class="md-nav__link">
+    <a href="../../../mkdocs/" title="MkDocs" class="md-nav__link">
       MkDocs
     </a>
   </li>
@@ -938,7 +947,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../mkdocs/VSCode/" title="Visual Studio Codeでの編集環境構築" class="md-nav__link">
+    <a href="../../../mkdocs/VSCode/" title="Visual Studio Codeでの編集環境構築" class="md-nav__link">
       Visual Studio Codeでの編集環境構築
     </a>
   </li>
@@ -950,7 +959,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../mkdocs/VSVode_debug_optout_googleAnalytics/" title="Google Analyticsの設定" class="md-nav__link">
+    <a href="../../../mkdocs/VSVode_debug_optout_googleAnalytics/" title="Google Analyticsの設定" class="md-nav__link">
       Google Analyticsの設定
     </a>
   </li>
@@ -962,7 +971,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../mkdocs/gitRevisionDate/" title="git-revision-date-localizedプラグイン" class="md-nav__link">
+    <a href="../../../mkdocs/gitRevisionDate/" title="git-revision-date-localizedプラグイン" class="md-nav__link">
       git-revision-date-localizedプラグイン
     </a>
   </li>
@@ -974,7 +983,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../mkdocs/lightbox2/" title="Lightbox2" class="md-nav__link">
+    <a href="../../../mkdocs/lightbox2/" title="Lightbox2" class="md-nav__link">
       Lightbox2
     </a>
   </li>
@@ -986,7 +995,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../mkdocs/logo作成/" title="Logo作成" class="md-nav__link">
+    <a href="../../../mkdocs/logo作成/" title="Logo作成" class="md-nav__link">
       Logo作成
     </a>
   </li>
@@ -998,7 +1007,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../mkdocs/test/" title="リンク切れのテスト" class="md-nav__link">
+    <a href="../../../mkdocs/test/" title="リンク切れのテスト" class="md-nav__link">
       リンク切れのテスト
     </a>
   </li>
@@ -1034,7 +1043,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../プライバシー・ポリシー/" title="プライバシー・ポリシー" class="md-nav__link">
+    <a href="../../../プライバシー・ポリシー/" title="プライバシー・ポリシー" class="md-nav__link">
       プライバシー・ポリシー
     </a>
   </li>
@@ -1066,8 +1075,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#lvm" class="md-nav__link">
-    LVMの拡張
+  <a href="#wslconf" class="md-nav__link">
+    wsl.conf:ディストリビューション毎の構成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wslconfwsl2" class="md-nav__link">
+    .wslconf:WSL2の軽量仮想マシンの構成
   </a>
   
 </li>
@@ -1091,7 +1107,7 @@
                 <div class="md-source-date">
                   <small>
                     
-                      最終更新日: 2020年1月10日
+                      最終更新日: 2020年2月20日
                     
                   </small>
                 </div>
@@ -1099,66 +1115,51 @@
               
                 
                 
-                <h1 id="lvmlogical-volume-manager">LVM(Logical Volume Manager)</h1>
-<p>LinuxでHDDやSSDなどの物理ディスクを隠蔽し、論理ボリュームとして扱う仕組みです。<br />
-OSをインストールし、稼働開始した後からディスク容量を追加したり、複数のディスクをまとめて利用したりすることができます。  </p>
-<p>LVMは、下記のような要素から構成されています。  </p>
-<ul>
-<li>物理ボリューム (Physical Volume, PV)<br />
-    LVMで管理している物理ディスクのパーティションを指します。  </li>
-<li>ボリュームグループ (Volume Group, VG)<br />
-    複数の物理ボリュームをまとめたグループを指します。  </li>
-<li>論理ボリューム (Logical Volume, LV)
-    ボリュームグループの一部、もしくは全部を切り出したものを指し、OSは論理ボリュームをマウントして利用します。<br />
-    必ず、1つのボリュームグループから作成します。  </li>
-</ul>
-<h2 id="lvm">LVMの拡張</h2>
-<p>OSの稼働中にディスク容量が不足した場合には、物理ディスクの空きがあれば、論理ディスクを拡張することができます。<br />
-論理ディスクの拡張するためには、下記のコマンドを実行します。</p>
-<div class="admonition example">
-<p class="admonition-title">LVMへ新規ディスク追加</p>
-<div class="codehilite"><pre><span></span><span class="c1"># 新たなHDD/SSDをフォーマットし、物理ボリュームを作成</span>
-sudo parted -s -a optimal /dev/sdx mklabel gpt mkpart primary <span class="m">0</span>% <span class="m">100</span>% <span class="nb">set</span> <span class="m">1</span> lvm on
-<span class="c1"># 作成したパーティションから物理ボリュームを作成</span>
-sudo pvcreate /dev/sdx1
-<span class="c1"># 確認</span>
-sudo pvdisplay
+                <h1 id="wslconf-wslconfig">wsl.conf と .wslconfig</h1>
+<p>WSL上のディストリビューションの構成について、<code>/etc/wsl.conf</code>で設定することができます。<br />
+詳細は、<a href="https://docs.microsoft.com/ja-jp/windows/wsl/wsl-config#configuration-options">Microsoftのドキュメント</a>を参照してください。  </p>
+<p>また、WSL2の各ディストリビューションのコンテナをホストする軽量仮想マシンの構成については、
+各ユーザの<code>C:\Users\[username]\.wslconfig</code>で設定することができます。<br />
+こちらは、2020/02時点で正式リリースされていないため、<a href="https://docs.microsoft.com/ja-jp/windows/wsl/release-notes">WSLのリリースノート</a>を追いかけて、記載しています。</p>
+<h2 id="wslconf">wsl.conf:ディストリビューション毎の構成</h2>
+<div class="admonition info">
+<p class="admonition-title">/etc/wsl.conf</p>
+<div class="codehilite"><pre><span></span><span class="k">[automount]</span>
+<span class="na">enabled</span><span class="o">=</span><span class="s">true                # Cドライブなどの DrvFs の自動マウントする</span>
+<span class="na">mountFsTab</span><span class="o">=</span><span class="s">true             # WSLの起動時に /etc/fstab を読み込んで自動的にマウントする</span>
+<span class="na">root</span><span class="o">=</span><span class="s">&quot;/mnt/&quot;                # DrvFsのマウント先</span>
+<span class="na">options</span><span class="o">=</span><span class="s">&quot;&quot;                  # DrvFsのマウントオプション</span>
+<span class="s">                            # 規定値: `uid=1000,gid=1000,umask=000,fmask=000,dmask=000`</span>
+<span class="na">crossDistro</span><span class="o">=</span><span class="s">true            # ディストリビューションを跨いだマウントをサポートする (ver2004以降)</span>
+<span class="k">[network]</span>
+<span class="na">generateHosts</span><span class="o">=</span><span class="s">true          # /etc/hosts を自動生成する</span>
+<span class="na">generateResolvConf</span><span class="o">=</span><span class="s">true     # /etc/resolv.conf を自動生成する</span>
+<span class="k">[interop]</span>
+<span class="na">enabled</span><span class="o">=</span><span class="s">true                # WSL内からWindowsプログラムの起動をサポートする (ver1809以降)</span>
+<span class="na">appendWindowsPath</span><span class="o">=</span><span class="s">true      # WSL内のPATH環境変数に、WindowsのPATH環境変数を追加する (ver1809以降)</span>
+<span class="k">[user]</span>
+<span class="na">default</span><span class="o">=</span><span class="s">&lt;string&gt;            # 規定のログインユーザ名を指定する (ver2004以降) 規定値: レジストリ値に従う</span>
+<span class="k">[filesystem]</span>
+<span class="na">umask</span><span class="o">=</span><span class="s">0022                  # デフォルトのパーミッションを指定する (ver2004以降)</span>
 </pre></div>
 
 </div>
-<div class="admonition example">
-<p class="admonition-title">物理ボリュームをボリュームグループ「ubuntu-vg」に追加</p>
-<div class="codehilite"><pre><span></span>sudo vgextend ubuntu-vg /dev/sdx1
-<span class="c1"># 確認</span>
-sudo vgdisplay
-sudo pvdisplay
-</pre></div>
+<h2 id="wslconfwsl2">.wslconf:WSL2の軽量仮想マシンの構成</h2>
+<div class="admonition info">
+<p class="admonition-title">%USERPROFILE%\.wslinfo</p>
+<div class="codehilite"><pre><span></span><span class="k">[wsl2]</span>
+<span class="na">kernel</span><span class="o">=</span><span class="s">&lt;path&gt;               # カスタムLinuxカーネルの(Windows上の)パスを指定する</span>
+<span class="na">kernelCommandLine</span><span class="o">=</span><span class="s">&lt;string&gt;  # カーネルコマンド引数を指定する</span>
+<span class="na">memory</span><span class="o">=</span><span class="s">&lt;size&gt;               # WSL2の軽量仮想マシンで使用する最大メモリサイズを指定する</span>
+<span class="na">processors</span><span class="o">=</span><span class="s">&lt;number&gt;         # WSL2の軽量仮想マシンで使用するCPU数を指定する</span>
+<span class="na">swap</span><span class="o">=</span><span class="s">&lt;size&gt;                 # WSL2の軽量仮想マシンで使用するスワップファイルのサイズを指定する</span>
+<span class="s">                            # 0を指定した場合はスワップファイルを使用しない</span>
+<span class="na">swapFile</span><span class="o">=</span><span class="s">&lt;path&gt;             # スワップファイルに使用するVHDファイルの(Windows上の)パスを指定する</span>
+<span class="na">localhostForwarding</span><span class="o">=</span><span class="s">true    # WSLのネットワークポート待ち受けを、ホストマシンにフォワーディングする</span>
 
-</div>
-<div class="admonition example">
-<p class="admonition-title">ボリュームグループ「ubuntu-vg」の論理ボリューム「ubuntu-lv」に「5GB」追加</p>
-<div class="codehilite"><pre><span></span>sudo lvextend -L +5120m /dev/ubuntu-vg/ubuntu-lv
-<span class="c1"># 確認</span>
-sudo lvdisplay
-
-<span class="c1"># ファイルシステム拡張</span>
-sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
-<span class="c1"># 確認</span>
-df -h
-</pre></div>
-
-</div>
-<p>もしくは、  </p>
-<div class="admonition example">
-<p class="admonition-title">ボリュームグループ「ubuntu-vg」の論理ボリューム「ubuntu-lv」を「最大サイズ」まで拡張</p>
-<div class="codehilite"><pre><span></span>sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
-<span class="c1"># 確認</span>
-sudo lvdisplay
-
-<span class="c1"># ファイルシステム拡張</span>
-sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
-<span class="c1"># 確認</span>
-df -h
+<span class="c1"># &lt;path&gt; entries must be absolute Windows paths with escaped backslashes,</span>
+<span class="c1"># for example C:\\Users\\Ben\\kernel</span>
+<span class="c1"># &lt;size&gt; entries must be size followed by unit, for example 8GB or 512MB</span>
 </pre></div>
 
 </div>
@@ -1182,7 +1183,7 @@ df -h
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../Docker/Compose設定集/wordpress/" title="Wordpress" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../centos/" title="WSLでCentOSを利用する" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1191,19 +1192,19 @@ df -h
                 <span class="md-footer-nav__direction">
                   前
                 </span>
-                Wordpress
+                WSLでCentOSを利用する
               </span>
             </div>
           </a>
         
         
-          <a href="../OSInstall/" title="Linuxインストール時の作業" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../../mkdocs/" title="MkDocs" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   次
                 </span>
-                Linuxインストール時の作業
+                MkDocs
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -1226,7 +1227,7 @@ df -h
       </div>
       
   <div class="md-footer-social">
-    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    <link rel="stylesheet" href="../../../assets/fonts/font-awesome.css">
     
       <a href="https://github.com/roy-n-roy/" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
     
@@ -1240,28 +1241,28 @@ df -h
       
     </div>
     
-      <script src="../../assets/javascripts/application.df00da5d.js"></script>
+      <script src="../../../assets/javascripts/application.df00da5d.js"></script>
       
         
         
           
-          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          <script src="../../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
           
             
               
-                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+                <script src="../../../assets/javascripts/lunr/tinyseg.js"></script>
               
               
-                <script src="../../assets/javascripts/lunr/lunr.ja.js"></script>
+                <script src="../../../assets/javascripts/lunr/lunr.ja.js"></script>
               
             
           
           
         
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
       
-        <script src="../../lightbox2/js/lightbox-plus-jquery.min.js"></script>
+        <script src="../../../lightbox2/js/lightbox-plus-jquery.min.js"></script>
       
     
   </body>
