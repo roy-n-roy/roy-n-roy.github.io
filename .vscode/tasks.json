@@ -12,6 +12,7 @@
 				"options": {
 					"env": {
 						"VIRTUALENV_CREATOR": "venv",
+						"VIRTUALENV_COPIES": "True",
 					},
 				},
 			},
