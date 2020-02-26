@@ -19,6 +19,9 @@
 			"options": {
 				"cwd": "${workspaceFolder}",
 			},
+			"dependsOn":[
+				"setup-check-pipenv",
+			],
 			"problemMatcher": [],
 		},
 		{
@@ -98,7 +101,6 @@
 				"cwd": "${workspaceRoot}/release"
 			},
 			"dependsOn":[
-				"setup-check-pipenv",
 				"mkdocs-stop"
 			],
 			"problemMatcher": {
