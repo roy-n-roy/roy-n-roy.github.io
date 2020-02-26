@@ -1,21 +1,13 @@
 site_name: roy-n-roy メモ
 theme:
-  name: null
-  custom_dir: 'submodules/mkdocs-material/material'
+  name: material
   logo: 'imgs/logo.svg'
   favicon: 'imgs/favicon.ico'
   language: 'ja'
   feature:
     tabs: true
-  include_search_page: false
-  search_index_only: true
-  static_templates:
-    - 404.html
   palette:
     primary: 'deep orange'
-  font:
-    text: Roboto
-    code: Roboto Mono
 site_url: 'https://roy-n-roy.github.io/'
 markdown_extensions:
   - admonition

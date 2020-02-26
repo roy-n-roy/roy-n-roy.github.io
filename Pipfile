@@ -4,19 +4,18 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-
-[packages]
+flake8 = "*"
+autopep8 = "*"
 pytest = "*"
 bs4 = "*"
+lxml = "*"
 aiohttp = {extras = ["speedups"],version = "*"}
 requests = "*"
-lxml = "*"
-mkdocs = ">=1.0"
-Pygments = ">=2.4"
-markdown = ">=3.2"
-pymdown-extensions = ">=6.3,<7"
+
+[packages]
+mkdocs-material = {editable = true,git = "https://github.com/roy-n-roy/mkdocs-material.git",ref = "edit"}
 mkdocs-minify-plugin = "*"
 mkdocs-git-revision-date-localized-plugin = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"

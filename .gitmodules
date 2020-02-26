@@ -1,9 +1,0 @@
-[submodule "submodules/lightbox2"]
-	path = submodules/lightbox2
-	url = https://github.com/lokesh/lightbox2.git
-[submodule "submodules/Chart.js"]
-	path = submodules/Chart.js
-	url = https://github.com/chartjs/Chart.js.git
-[submodule "submodules/mkdocs-material"]
-	path = submodules/mkdocs-material
-	url = https://github.com/roy-n-roy/mkdocs-material.git

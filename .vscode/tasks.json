@@ -4,7 +4,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "setup_pipenv",
+			"label": "setup-pipenv",
 			"type": "shell",
 			"command": "pipenv",
 			"args": [ "install" ],
@@ -22,9 +22,35 @@
 			"problemMatcher": [],
 		},
 		{
+			"label": "setup-check-pipenv",
+			"type": "shell",
+			"command": "pipenv",
+			"args": [ "install", "--dev" ],
+			"windows": {
+				"options": {
+					"env": {
+						"VIRTUALENV_CREATOR": "venv",
+						"VIRTUALENV_COPIES": "True",
+					},
+				},
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/release",
+			},
+			"problemMatcher": [],
+		},
+		{
 			"label": "mkdocs-build",
 			"type": "shell",
 			"command": "pipenv run mkdocs build",
+			"windows": {
+				"options": {
+					"env": {
+						"VIRTUALENV_CREATOR": "venv",
+						"VIRTUALENV_COPIES": "True",
+					},
+				},
+			},
 			"group": {
 				"kind": "build",
 				"isDefault": true
@@ -35,6 +61,14 @@
 			"type": "shell",
 			"isBackground": true,
 			"command": "pipenv run mkdocs serve",
+			"windows": {
+				"options": {
+					"env": {
+						"VIRTUALENV_CREATOR": "venv",
+						"VIRTUALENV_COPIES": "True",
+					},
+				},
+			},
 			"problemMatcher": {
 				"owner": "custom",
 				"pattern": {
@@ -52,10 +86,19 @@
 			"type": "shell",
 			"isBackground": true,
 			"command": "pipenv run mkdocs serve",
+			"windows": {
+				"options": {
+					"env": {
+						"VIRTUALENV_CREATOR": "venv",
+						"VIRTUALENV_COPIES": "True",
+					},
+				},
+			},
 			"options": {
 				"cwd": "${workspaceRoot}/release"
 			},
 			"dependsOn":[
+				"setup-check-pipenv",
 				"mkdocs-stop"
 			],
 			"problemMatcher": {
@@ -79,6 +122,14 @@
 			"label": "mkdocs-deploy",
 			"type": "shell",
 			"command": "pipenv run mkdocs gh-deploy",
+			"windows": {
+				"options": {
+					"env": {
+						"VIRTUALENV_CREATOR": "venv",
+						"VIRTUALENV_COPIES": "True",
+					},
+				},
+			},
 			"options": {
 				"cwd": "${workspaceRoot}/release"
 			},
@@ -91,6 +142,17 @@
 			"label": "mkdocs-test",
 			"type": "shell",
 			"command": "pipenv run py.test",
+			"windows": {
+				"options": {
+					"env": {
+						"VIRTUALENV_CREATOR": "venv",
+						"VIRTUALENV_COPIES": "True",
+					},
+				},
+			},
+			"options": {
+				"cwd": "${workspaceRoot}/release"
+			},
 			"group": {
 				"kind": "test",
 				"isDefault": true
