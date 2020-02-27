@@ -14,6 +14,8 @@ jobs:
       - name: Git config
         run: |
           git config --global core.symlinks true
+          git config --global user.name "github-actions"
+          git config --global user.email actions@github.com
 
       # リポジトリをチェックアウトする
       # MkDocsでgit-revision-dateプラグインを利用している場合は、
@@ -38,31 +40,34 @@ jobs:
         with:
           python-version: '3.8'
 
-      # Pipfile.lockのハッシュ値が一致する場合は、
-      # 以前に実行した際のpipのキャッシュを利用する
-      - name: Get pip cache
-        uses: actions/cache@v1
-        with:
-          path: ~\AppData\Local\pip\Cache
-          key: pip-${{ hashFiles('Pipfile.lock') }}
-
-      # Pipenvをインストールした後、
-      # Pipfile.lockから依存関係をインストールする
-      - name: Install dependencies
+      # Pipenvをインストールする
+      - name: Install Pipenv
         run: |
           python -m pip install --upgrade pip
           pip install pipenv
-          pipenv install --dev --deploy --system --ignore-pipfile
+
+      # Pipfile.lockのハッシュ値が一致する場合は、
+      # 以前に実行した際のvirtualenvをキャッシュから復元する
+      - name: Get venv cache
+        id: cache-venv
+        uses: actions/cache@v1
+        with:
+          path: ~\.virtualenvs
+          key: venv-${{ hashFiles('Pipfile.lock') }}
+
+      # Pipfile.lockから依存関係をインストールする
+      - name: Install dependencies
+        if: steps.cache-venv.outputs.cache-hit != 'true'
+        run: |
+          pipenv install --verbose --dev --deploy --ignore-pipfile
 
       # pytestでテストを実行する
       - name: Test with pytest
         run: |
-          pytest
+          pipenv run pytest
 
       # MkDocsでGitHubへデプロイする
-      # デフォルトではコミットユーザ/E-mailが未設定のため
-      # remote-nameオプションでgithub.actorを含めたURLを指定する
       - name: MkDocs Deploy
         run: |
           git fetch --depth=1 origin master
-          mkdocs gh-deploy --force --remote-name https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git
+          pipenv run mkdocs gh-deploy
