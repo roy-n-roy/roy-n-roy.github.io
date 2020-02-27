@@ -12,9 +12,11 @@ import aiohttp
 import requests
 from bs4 import BeautifulSoup
 import pytest
+from requests.packages.urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter
 
 # mkdocs serve実行時のURL
-mkdocs_url = 'http://127.0.0.1:9000/'
+mkdocs_url = 'http://127.0.0.1:7160/'
 
 
 @pytest.fixture(scope="module")
@@ -30,14 +32,21 @@ def start_mkdocs(request):
     except requests.exceptions.ConnectionError:
         # 接続できない場合はmkdocs serveを起動
         proc = subprocess.Popen(
-                ['pipenv', 'run', 'mkdocs', 'serve', '-a',
-                 urlparse(mkdocs_url).netloc],
+                ['mkdocs', 'serve', '-a', urlparse(mkdocs_url).netloc],
                 cwd=Path(__file__).parents[1].relative_to(os.getcwd()),
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 universal_newlines=True
             )
-        time.sleep(8)
+        
+        session = requests.Session()
+        retries = Retry(
+                total=5,
+                backoff_factor=1,
+                status_forcelist=[500, 502, 503, 504]
+            )
+        session.mount("http://", HTTPAdapter(max_retries=retries))
+        session.get(url=mkdocs_url, timeout=(6.0, 15.0))
 
     def stop_process():
         if proc:
