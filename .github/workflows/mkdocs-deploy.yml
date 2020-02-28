@@ -40,26 +40,22 @@ jobs:
         with:
           python-version: '3.8'
 
+      # Pipfile.lockのハッシュ値が一致する場合は、
+      # 以前に実行した際のpipのキャッシュを復元する
+      - name: Get pip cache
+        id: cache-pip
+        uses: actions/cache@v1
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: pip-${{ hashFiles('Pipfile.lock') }}
+
       # Pipenvをインストールする
-      - name: Install Pipenv
+      # Pipfile.lockから依存関係をインストールする
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pipenv
-
-      # Pipfile.lockのハッシュ値が一致する場合は、
-      # 以前に実行した際のvirtualenvをキャッシュから復元する
-      - name: Get venv cache
-        id: cache-venv
-        uses: actions/cache@v1
-        with:
-          path: ~\.virtualenvs
-          key: venv-${{ hashFiles('Pipfile.lock') }}
-
-      # Pipfile.lockから依存関係をインストールする
-      - name: Install dependencies
-        if: steps.cache-venv.outputs.cache-hit != 'true'
-        run: |
-          pipenv install --verbose --dev --deploy --ignore-pipfile
+          pipenv install --dev --deploy --system --ignore-pipfile
 
       # pytestでテストを実行する
       - name: Test with pytest
@@ -71,3 +67,12 @@ jobs:
         run: |
           git fetch --depth=1 origin master
           pipenv run mkdocs gh-deploy
+
+      # Slackへ通知する
+      - name: Notify Slack
+        if: always()
+        uses: pioug/le-slack-message@v1.0.0
+        with:
+          ACTION_NAME: MkDocs Test and Deploy
+          JOB: ${{ toJson(job) }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
