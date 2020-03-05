@@ -2,8 +2,10 @@ name: MkDocs Test and Deploy
 
 on: 
   push:
-    # releaseブランチへのpush時に実行する
+    # releaseブランチのdocsディレクトリ配下で
+    # Markdownファイルがpushされた時に実行する
     branches: release
+    paths: docs/**/*.md
 
 jobs:
   deploy:
@@ -73,6 +75,6 @@ jobs:
         if: always()
         uses: pioug/le-slack-message@v1.0.0
         with:
-          ACTION_NAME: MkDocs Test and Deploy
+          ACTION_NAME: MkDocs Test and Deploy@roy-n-roy/roy-n-roy.github.io 
           JOB: ${{ toJson(job) }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
