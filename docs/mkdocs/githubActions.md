@@ -2,7 +2,7 @@
 
 MkDocsでWebページを編集する際、下記の図のようなワークフローを採っています。  
 
-今回は、GitHub Actionsを利用して、DkDocsでのGitHub Pagesへのページ公開を自動化しました。  
+今回は、GitHub Actionsを利用して、MkDocsでのGitHub Pagesへのページ公開を自動化しました。  
 
 <a href="/imgs/mkdocs_github_actions_workflow.png" data-lightbox="image">
 <img src="/imgs/mkdocs_github_actions_workflow.png" /></a>  
