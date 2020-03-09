@@ -25,7 +25,7 @@ Github Actionsでは、実行環境をWindows/MacOS/Ubuntuから選択できま�
 今回はWindows上のVSCodeで編集/MkDocsを実行しているので、デプロイ時の環境もWindowsを選択しました。  
 ワークフロー内の各ステップについては、Yamlファイル内のコメントで説明しています。
 
-<script src="https://gist-it.appspot.com/https://github.com/roy-n-roy/roy-n-roy.github.io/blob/edit/.github/workflows/mkdocs-deploy.yml?footer=minimal"></script>
+<script src="https://gist-it.appspot.com/https://github.com/roy-n-roy/roy-n-roy.github.io/blob/release/.github/workflows/mkdocs-deploy.yml?footer=minimal"></script>
 
 
 [^1]:[GitHub Actionsについて - GitHubヘルプ](https://help.github.com/ja/actions/getting-started-with-github-actions/about-github-actions)
