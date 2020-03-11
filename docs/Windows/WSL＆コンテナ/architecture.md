@@ -194,10 +194,7 @@ WSL内からWindows上のNTFSなどへアクセスする方法も変更されて
 * WSL2: 9Pでのアクセス(Unix Domain Socket経由)
 
 WSL1でのDrvFSへのアクセスをシステムコールとして呼び出した際には、カーネルモードドライバーであるLxCore.sys, lsxx.sysが処理していました。  
-しかし、WSL2では9P
-
-### Linux→Windowsファイルシステムへのアクセス
-* WSL2:9P
+しかし、WSL2ではWindowsからWSLへのファイルアクセスと同様に、9Pを経由したアクセスに変更されています。
 
 <figure style="text-align: center;">
 <a href="/imgs/windows_wsl_wsl2.png" data-lightbox="windows_wsl_wsl2"><img src="/imgs/windows_wsl_wsl2.png" /></a>  
