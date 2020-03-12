@@ -1,0 +1,1898 @@
+
+
+
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://roy-n-roy.github.io/Windows/WSL%EF%BC%86%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A/Architecture/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="クリップボードへコピー">
+      
+        <meta name="lang:clipboard.copied" content="コピーしました">
+      
+        <meta name="lang:search.language" content="ja">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="何も見つかりませんでした">
+      
+        <meta name="lang:search.result.one" content="1件見つかりました">
+      
+        <meta name="lang:search.result.other" content="#件見つかりました">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-　、。，．]+">
+      
+      <link rel="shortcut icon" href="../../../imgs/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>WSLのアーキテクチャ - roy-n-roy メモ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ff7043">
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../../lightbox2/css/lightbox.min.css">
+    
+      <link rel="stylesheet" href="../../../styles/git_revision_date.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-149709379-1", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="deep-orange" data-md-color-accent="">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#wsl" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://roy-n-roy.github.io/" title="roy-n-roy メモ" aria-label="roy-n-roy メモ" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../../imgs/logo.svg" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              roy-n-roy メモ
+            </span>
+            <span class="md-header-nav__topic">
+              
+                WSLのアーキテクチャ
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            検索キーワードを入力してください
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../C%EF%BC%83/mergeAssemblies/" class="md-tabs__link">
+          C＃
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../Docker/" class="md-tabs__link">
+          Docker
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../Linux/LVM/" class="md-tabs__link">
+          Linux
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../Raspberry%20Pi/" class="md-tabs__link">
+          Raspberry Pi
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../RouterOS/" class="md-tabs__link">
+          RouterOS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../" class="md-tabs__link md-tabs__link--active">
+          Windows
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../mkdocs/" class="md-tabs__link">
+          Mkdocs
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../%E3%83%97%E3%83%A9%E3%82%A4%E3%83%90%E3%82%B7%E3%83%BC%E3%83%BB%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC/" class="md-tabs__link">
+          プライバシー・ポリシー
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://roy-n-roy.github.io/" title="roy-n-roy メモ" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../../imgs/logo.svg" width="48" height="48">
+      
+    </a>
+    roy-n-roy メモ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../InfiniBand/" title="InfiniBand" class="md-nav__link">
+      InfiniBand
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../vpn/" title="VPNサーバの代替設定" class="md-nav__link">
+      VPNサーバの代替設定
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      C＃
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        C＃
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../C%EF%BC%83/mergeAssemblies/" title=".Net CoreでのDLL埋め込み" class="md-nav__link">
+      .Net CoreでのDLL埋め込み
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Docker
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/" title="Docker" class="md-nav__link">
+      Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/Django/" title="DjangoアプリをDockerで運用する" class="md-nav__link">
+      DjangoアプリをDockerで運用する
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/autoImageUpdate/" title="Docker Composeのイメージ更新自動化" class="md-nav__link">
+      Docker Composeのイメージ更新自動化
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/updateCompose/" title="Docker Composeの更新スクリプト" class="md-nav__link">
+      Docker Composeの更新スクリプト
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-5" type="checkbox" id="nav-5-5" checked>
+    
+    <label class="md-nav__link" for="nav-5-5">
+      Compose設定集
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-5">
+        Compose設定集
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/Compose%E8%A8%AD%E5%AE%9A%E9%9B%86/fluentd%2Bkibana/" title="Fluentd+Elasticsearch+Kibana" class="md-nav__link">
+      Fluentd+Elasticsearch+Kibana
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/Compose%E8%A8%AD%E5%AE%9A%E9%9B%86/nginx/" title="Nginx" class="md-nav__link">
+      Nginx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/Compose%E8%A8%AD%E5%AE%9A%E9%9B%86/redmine%2Bgitlab%2Bjenkins/" title="プロジェクト&ソース管理" class="md-nav__link">
+      プロジェクト&ソース管理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Docker/Compose%E8%A8%AD%E5%AE%9A%E9%9B%86/wordpress/" title="Wordpress" class="md-nav__link">
+      Wordpress
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Linux
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Linux
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Linux/LVM/" title="LVM(Logical Volume Manager)" class="md-nav__link">
+      LVM(Logical Volume Manager)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Linux/OSInstall/" title="Linuxインストール時の作業" class="md-nav__link">
+      Linuxインストール時の作業
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Raspberry Pi
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Raspberry Pi
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Raspberry%20Pi/" title="Raspberry Pi" class="md-nav__link">
+      Raspberry Pi
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Raspberry%20Pi/Network/" title="ネットワーク設定" class="md-nav__link">
+      ネットワーク設定
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Raspberry%20Pi/WebConsole/" title="Web Console" class="md-nav__link">
+      Web Console
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      RouterOS
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        RouterOS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../RouterOS/" title="RouterOS" class="md-nav__link">
+      RouterOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../RouterOS/Backup/" title="Backup" class="md-nav__link">
+      Backup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../RouterOS/Firewall/" title="Firewall" class="md-nav__link">
+      Firewall
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../RouterOS/VPN%20Server/" title="VPN Server" class="md-nav__link">
+      VPN Server
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
+    
+    <label class="md-nav__link" for="nav-9">
+      Windows
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Windows
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../" title="Windows Desktop" class="md-nav__link">
+      Windows Desktop
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../VpnError/" title="テザリング(有線ケーブル)でのVPN接続エラー" class="md-nav__link">
+      テザリング(有線ケーブル)でのVPN接続エラー
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../storageBenchmark/" title="ストレージの速度測定" class="md-nav__link">
+      ストレージの速度測定
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../windowsShutdownBlockSetting/" title="Windows10 シャットダウンブロックの設定" class="md-nav__link">
+      Windows10 シャットダウンブロックの設定
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%A8%98%E6%86%B6%E5%9F%9F%E3%82%B9%E3%83%9A%E3%83%BC%E3%82%B9/" title="記憶域スペースとReFS" class="md-nav__link">
+      記憶域スペースとReFS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9-6" type="checkbox" id="nav-9-6" checked>
+    
+    <label class="md-nav__link" for="nav-9-6">
+      WSL＆コンテナ
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-9-6">
+        WSL＆コンテナ
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Windowsでのコンテナ技術とWSL" class="md-nav__link">
+      Windowsでのコンテナ技術とWSL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        WSLのアーキテクチャ
+      </label>
+    
+    <a href="./" title="WSLのアーキテクチャ" class="md-nav__link md-nav__link--active">
+      WSLのアーキテクチャ
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wsl_1" class="md-nav__link">
+    WSLで実現できること
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsl1" class="md-nav__link">
+    WSL1の機能
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    構成要素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    プロセス管理と「ピコプロセス」
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    システムコールAPIの提供
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    ファイルシステム
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volfs" class="md-nav__link">
+    VolFs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drvfs" class="md-nav__link">
+    DrvFs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    initプロセスについて
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    ユーザランドプロセスの起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windowslinux" class="md-nav__link">
+    Windows→Linuxファイルシステムへのアクセス
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    仕組み
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linuxwindows" class="md-nav__link">
+    Linux→Windowsプログラムの呼び出し
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    仕組み
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsl2" class="md-nav__link">
+    WSL2の機能
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wsl2_1" class="md-nav__link">
+    WSL2とは
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wsl2_2" class="md-nav__link">
+    WSL2の構成要素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api_1" class="md-nav__link">
+    システムコールAPIの提供
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    ファイルシステム
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    ルートファイルシステム
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    Windowsファイルシステムへのアクセス
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HostComputeService/" title="Windowsのコンテナ" class="md-nav__link">
+      Windowsのコンテナ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../centos/" title="WSLでCentOSを利用する" class="md-nav__link">
+      WSLでCentOSを利用する
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../wslconfig/" title="wsl.conf と .wslconfig" class="md-nav__link">
+      wsl.conf と .wslconfig
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+    
+    <label class="md-nav__link" for="nav-10">
+      Mkdocs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-10">
+        Mkdocs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/" title="MkDocs" class="md-nav__link">
+      MkDocs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/VSCode/" title="Visual Studio Codeでの編集環境構築" class="md-nav__link">
+      Visual Studio Codeでの編集環境構築
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/VSVode_debug_optout_googleAnalytics/" title="Google Analyticsの設定" class="md-nav__link">
+      Google Analyticsの設定
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/gitRevisionDate/" title="git-revision-date-localizedプラグイン" class="md-nav__link">
+      git-revision-date-localizedプラグイン
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/githubActions/" title="GitHub Actionsを利用したMkDocsの自動デプロイ" class="md-nav__link">
+      GitHub Actionsを利用したMkDocsの自動デプロイ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/lightbox2/" title="Lightbox2" class="md-nav__link">
+      Lightbox2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/logo%E4%BD%9C%E6%88%90/" title="Logo作成" class="md-nav__link">
+      Logo作成
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../mkdocs/test/" title="リンク切れのテスト" class="md-nav__link">
+      リンク切れのテスト
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      プライバシー・ポリシー
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        プライバシー・ポリシー
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E3%83%97%E3%83%A9%E3%82%A4%E3%83%90%E3%82%B7%E3%83%BC%E3%83%BB%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC/" title="プライバシー・ポリシー" class="md-nav__link">
+      プライバシー・ポリシー
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wsl_1" class="md-nav__link">
+    WSLで実現できること
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsl1" class="md-nav__link">
+    WSL1の機能
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    構成要素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    プロセス管理と「ピコプロセス」
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    システムコールAPIの提供
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    ファイルシステム
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volfs" class="md-nav__link">
+    VolFs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drvfs" class="md-nav__link">
+    DrvFs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    initプロセスについて
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    ユーザランドプロセスの起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windowslinux" class="md-nav__link">
+    Windows→Linuxファイルシステムへのアクセス
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    仕組み
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linuxwindows" class="md-nav__link">
+    Linux→Windowsプログラムの呼び出し
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    仕組み
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsl2" class="md-nav__link">
+    WSL2の機能
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wsl2_1" class="md-nav__link">
+    WSL2とは
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wsl2_2" class="md-nav__link">
+    WSL2の構成要素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api_1" class="md-nav__link">
+    システムコールAPIの提供
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    ファイルシステム
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    ルートファイルシステム
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    Windowsファイルシステムへのアクセス
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                <div class="md-source-date">
+                  <small>
+                    
+                      最終更新日: 2020年3月12日
+                    
+                  </small>
+                </div>
+              
+              
+                
+                
+                <h1 id="wsl">WSLのアーキテクチャ</h1>
+<h2 id="wsl_1">WSLで実現できること</h2>
+<p>Windows Subsystem for Linux(WSL)は少ないオーバーヘッドでGNU/LinuxのCLIプログラムを実行できる環境を提供する機能です。</p>
+<p>Windowsでは「Portable Executable」という形式の実行ファイルのみを動作させることができます。
+しかし、Linuxなどで利用されている実行ファイルは「Executable and Linkable Format(ELF)」と呼ばれる形式であるため、通常はWindows上で動作させることはできません。  </p>
+<p>LinuxのCLIプログラムを利用できる環境を用意するには、下記のような機能が必要です。</p>
+<ul>
+<li>Linuxカーネルの機能<br />
+    ファイルシステム・プロセス管理・メモリ管理などのシステムコールAPIの提供</li>
+<li>シェル環境<br />
+    bash, zsh, kshなど</li>
+<li>パッケージマネージャ<br />
+    プログラムとライブラリの入手方法の提供</li>
+</ul>
+<p>WSLではLinuxシステムコールAPIをWindowsの機能として用意し、その上にLinuxディストリビューションをMicrosoft Storeからインストールするという形式をとっています。  </p>
+<p>WSLにはバージョン1とバージョン2が存在し、それぞれLinuxシステムコールAPIの提供方法が異なります。  </p>
+<table>
+<thead>
+<tr>
+<th>バージョン</th>
+<th>ベース技術</th>
+<th>システムコールAPI提供方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>バージョン1<br>(WSL1)</td>
+<td>「ピコプロセス」と呼ばれる<br>Windowsのプロセス隔離技術</td>
+<td>LxCore.sys/Lxss.sysという<br>NTカーネルドライバがLinux<br>システムコールをエミュレーション<br>(Linuxカーネルを使用しない)</td>
+</tr>
+<tr>
+<td>バージョン2<br>(WSL2)</td>
+<td>軽量仮想マシン(lightweight VM)<br>+Linuxカーネル</td>
+<td>仮想マシン上でLinuxカーネルを稼働</td>
+</tr>
+</tbody>
+</table>
+<p>なお、本記事ではWSLのバージョンを明確に区別するため、WSLバージョン1を「WSL1」、バージョン2を「WSL2」と記載します。<br />
+また、WSL1とWSL2の両方に共通する機能の場合は「WSL1/WSL2」という風に記載します。  </p>
+<h2 id="wsl1">WSL1の機能</h2>
+<h3 id="_1">構成要素</h3>
+<p>WSL1は、下記の図に示されるような要素から成り立っています。</p>
+<p><a href="/imgs/windows_wsl_wsl1.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_wsl1.png" /></a>  </p>
+<ul>
+<li>
+<p>ランチャー/フロントエンド(wsl.exe/wslhost.exe)</p>
+</li>
+<li>
+<p>LxssManager(LxssManager.dll)</p>
+</li>
+<li>
+<p>ピコプロバイダー(カーネルモードドライバー: LxCore.sys/Lxss.sys)</p>
+</li>
+<li>
+<p>ピコプロセス</p>
+<ul>
+<li>MS製initプロセス</li>
+<li>Linuxディストリビューション</li>
+</ul>
+</li>
+<li>
+<p>Plan9プロトコル リダイレクタ(カーネルモードドライバー: p9rdr.sys)</p>
+</li>
+</ul>
+<p>参考: DEFEND AND UNDERSTAND WSL - ionescu007/lxss - Github<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<h3 id="_2">プロセス管理と「ピコプロセス」</h3>
+<p>WSL1では、Windows上で「ピコプロセス(Pico Process)」<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>と呼ばれる形式のプロセスとして、Linuxプログラムを動作させます。  </p>
+<p>「ピコプロセス」は、Windowsの「最小プロセス(Minimal Porcess)」という仕組みを利用して実現しています。
+「最小プロセス」は通常のユーザーモードプロセスと下記のような点が異なります。</p>
+<div class="admonition quote">
+<p class="admonition-title">「最小プロセス」の特徴</p>
+</div>
+<blockquote>
+<ol>
+<li>
+<p>ntdll.dllはプロセスにマップされない<br />
+        ユーザーモードのバイナリーである「ntdll.dll」は、デフォルトでプロセスにマップされません。  </p>
+</li>
+<li>
+<p>PEBは生成されない<br />
+    プロセスの管理に使用するPEB（Process Environment Block）は生成されません。  </p>
+</li>
+<li>
+<p>初期スレッドは生成されない<br />
+    プロセス生成時、初期スレッド（メインスレッド）を生成しません。  </p>
+</li>
+<li>
+<p>TEBは自動的に生成されない<br />
+    「ピコプロセス」内でスレッドが生成されても、スレッドの管理に使用するTEB（Thread Environment Block）は自動的に生成されません。  </p>
+</li>
+<li>
+<p>共有ユーザーデータセクションはマップされない<br />
+    共有ユーザーデータセクションは、プロセスにマップされません。<br />
+    共有ユーザーデータセクションとは、すべてのユーザーモードのアドレス空間に読み込み専用でマップされ、システム共通の情報を効果的に検索するために使用されるブロックです。  </p>
+</li>
+<li>
+<p>PEB/TEBなしで動作する<br />
+    従来のプロセスのようにプロセスが常にPEB/TEBを持っている前提で動作する個所は、PEB/TEBなしでもプロセスを扱えるように変更されています。  </p>
+</li>
+<li>
+<p>カーネルは積極的にプロセスの管理を行わない<br />
+    Windowsカーネルは、積極的にプロセスの管理を行いません。<br />
+    しかしスレッドのスケジューリングやメモリー管理など、ユーザーが利用したいOSのすべての基盤技術は引き続き提供されます。  </p>
+</li>
+</ol>
+<p>引用元: <cite>WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup></cite>  </p>
+</blockquote>
+<p>「ピコプロセス」は、これらの特徴を利用して、通常のWindowsプロセスからの隔離と最小限のプロセス管理を実現しています。  </p>
+<h3 id="api">システムコールAPIの提供</h3>
+<p>WSL1では、LxCore.sys, lsxx.sysの2つのカーネルモードドライバーがNTカーネル上で動作しています。<br />
+この2つのドライバーは「ピコプロバイダー」と呼ばれ、これらがLinuxシステムコールAPIを提供しています。<br />
+「ピコプロセス」の呼び出したシステムコールや例外は、ドライバー上での処理やWindowsシステムコールへの変換されます。
+これにより、WSL1においてLinuxカーネル相当の機能を実現しています。  </p>
+<p>参考文献: WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup></p>
+<h3 id="_3">ファイルシステム</h3>
+<h4 id="volfs">VolFs</h4>
+<p>「VolFs」とは、WSL1で動作するディストリビューションのルートパーティションで使用するファイルシステムです。<br />
+これは、WSL1独自のファイルシステムであり、WSL1ではext4やxfs、btrfsといったファイルシステムをルートパーティションに利用することはできません。</p>
+<p>VolFsでのファイルの実体は、WindowsのNTFS上に保存されています。<br />
+しかし、NTFSではLinux上で利用されるパーミッション情報などが保存できないため、VolFsでは実ファイルとは別にメタデータとしてパーミッション情報を保存しています。  </p>
+<p>VolFsは、ext4やxfs、btrfsと同様に、Virtual File System(VFS)というファイルシステムの抽象化インターフェースの上に実装されており、他のLinux上で利用されるファイルシステムと同様に扱うことができるようになっています。  </p>
+<h4 id="drvfs">DrvFs</h4>
+<p>「DrvFs」とは、WSL1の中からWindows上のCドライブなどの「ドライブ文字を割り当てられているローカルファイルシステム」へアクセスするためのファイルシステムです。<br />
+ネットワークドライブには対応していません。  </p>
+<p>こちらもWSL1の独自のファイルシステムですが、パーミッション情報などはログインしたユーザで<code>777</code>もしくは<code>555</code>で固定されており、変更することはできません。  </p>
+<p>WSLの起動時に自動マウントされるようになっていますが、USBフラッシュディスクなどを後から接続した場合は、下記のようなコマンドで手動マウントすることでアクセスできるようになります。  </p>
+<div class="admonition example">
+<p class="admonition-title">Eドライブをマウント</p>
+<div class="codehilite"><pre><span></span><code><span class="err">sudo mkdir /mnt/e</span>
+<span class="err">sudo mount -t drvfs E: /mnt/e</span>
+</code></pre></div>
+
+</div>
+<h2 id="init">initプロセスについて</h2>
+<p>Linuxシステムでは通常、カーネルによりinitプロセスが起動され、その後initが各Daemonの起動を担い、Linuxシステム上の全てのプロセスはプロセスID = 1 のinitプロセスを親として起動されます。  </p>
+<p>WSLでも、initプロセスが全プロセスの親プロセスとなる点は同様です。<br />
+しかし、WSLで利用されるinitは、WSL専用にMS社によって開発されたソフトウェアであり、通常のLinuxで利用されているSystem V initやsystemdとは異なるものとなっています。  </p>
+<p>WSLのinitプログラムは<code>/sbin/init</code>ではなく、<code>/init</code>に配置されています。  </p>
+<h3 id="_4">ユーザランドプロセスの起動</h3>
+<p>WSLでは、Daemonの起動は行われず、この点がSystem V initやsystemdなどとは異なります。  </p>
+<p>WSLが起動されると、プロセスID = 1 のプロセスとして最初に起動し、<code>/etc/passwd</code>ファイルに記載されているログインシェルを実行します。  </p>
+<h3 id="windowslinux">Windows→Linuxファイルシステムへのアクセス</h3>
+<p>またWSLのinitは、WindowsからLinuxファイルシステムへアクセスするための機能を提供しています。  </p>
+<p>WindowsからLinux上のファイルシステムへは、UNCパスで<code>\\wsl$\[ディストリビューション名]</code>を指定することで、WSLで起動しているディストリビューションのファイルシステムへアクセスすることができます。  </p>
+<h4 id="_5">仕組み</h4>
+<p>Windows上からLinuxファイルシステムへのアクセスには「Plan 9 Filesystem Protocol(9P)」と呼ばれるプロトコルが利用されています。
+これは、「Plan 9 from Bell Labs」というUNIXの後継としてベル研究所で開発されたOSにおいて、システムの構成要素間の接続を目的として開発されたネットワークプロトコルです。  </p>
+<p>WSLのinitには9Pサーバを搭載しており、Windowsからネットワーク接続を通じて、9Pサーバへアクセスすることができます。<br />
+initプロセスは、9Pサーバへのアクセスを受け取ると、Linuxファイルシステム上のファイルを読み書きするような形になっています。  </p>
+<p>また、Windows側では<code>p9rdr.sys</code>というファイルシステムリダイレクタがカーネルモードドライバーとして稼働しています。<br />
+このリダイレクタはWindowsプロセスから<code>\\wsl$</code>へアクセスした際に動作し、P9クライアントとしてWSL上のP9サーバへアクセスし、9Pサーバから受け取ったファイルやフォルダなどのデータをエクスプローラーなどのWindowsアプリケーション上に表現することで、WindowsからLinuxファイルシステムへのアクセスを実現しています。  </p>
+<p><a href="/imgs/windows_wsl_windows_to_linux_file_access.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_windows_to_linux_file_access.png" /></a>  </p>
+<h3 id="linuxwindows">Linux→Windowsプログラムの呼び出し</h3>
+<p>WSLでは、WSL内のbashなどから、<code>cmd.exe</code>などのWindowsプログラムを呼び出すことができます。  </p>
+<h4 id="_6">仕組み</h4>
+<p>initプログラムの引数にWindowsプログラムを指定すると、WSL内からWindows上へ情報が渡され、Windows上でプログラムが起動します。  </p>
+<p>WSLではDrvFSにより<code>/mnt/c/</code>などのディレクトリに、Windowsのファイルシステムをマウントしており、
+Windowsプログラムはその配下に配置されています。<br />
+WSLからWindowsプログラムを呼び出す際には、initプログラムの引数に<code>/mnt/c/</code>から始まるWindowsファイルシステム上のプログラムパスを与えると、initに内部で<code>C:\</code>から始まるWindows側でのパスに変換され、LxCore.sysなどを通して<code>wsl.exe</code>へ渡されます。
+<code>wsl.exe</code>が渡されたパスのWindowsプログラムを起動することで、WSL内部からWindowsプログラムをしています。  </p>
+<p>また、デフォルトでWindows上のPATH環境変数をWSLへ引き継いでいるため、フルパスを指定する必要がないようになっています。
+(ただし、コマンドプロンプトやPowershellと異なり、<code>.exe</code>といった拡張子の指定は必要です。)  </p>
+<h2 id="wsl2">WSL2の機能</h2>
+<h3 id="wsl2_1">WSL2とは</h3>
+<p>2020年春ごろに公開予定のWindows 10 バージョン2004 以降では、現行のWSL(以降、バージョン1と記載) に加えて、WSL2(以降、WSL2 もしくは バージョン2と記載) を利用出来るようになります。</p>
+<p>WSL2では、バージョン1と比較して、下記の改善がなされています。</p>
+<ul>
+<li>Linux上でのファイルアクセス速度の向上</li>
+<li>システムコールの完全互換</li>
+</ul>
+<p>WSL2は、WSL1を置き換えるものではなく、ディストリビューション単位でバージョン切り替えて利用することが出来ます。  </p>
+<div class="admonition note">
+<p class="admonition-title">WSL1からWSL2に切り替えるコマンド</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;</span> <span class="n">wsl</span><span class="p">.</span><span class="n">exe</span> <span class="c1">--list --verbose</span>
+  <span class="n">NAME</span>                   <span class="k">STATE</span>           <span class="k">VERSION</span>
+<span class="o">*</span> <span class="n">Ubuntu</span>                 <span class="n">Running</span>         <span class="mi">1</span>
+
+<span class="o">&gt;</span> <span class="n">wsl</span><span class="p">.</span><span class="n">exe</span> <span class="c1">--set-version Ubuntu 2</span>
+<span class="err">変換中です。この処理には数分かかることがあります</span><span class="p">...</span>
+<span class="n">WSL</span> <span class="mi">2</span> <span class="err">との主な違いについては、</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">aka</span><span class="p">.</span><span class="n">ms</span><span class="o">/</span><span class="n">wsl2</span> <span class="err">を参照してください</span>
+<span class="err">変換が完了しました。</span>
+
+<span class="o">&gt;</span> <span class="n">wsl</span><span class="p">.</span><span class="n">exe</span> <span class="c1">--list --verbose</span>
+  <span class="n">NAME</span>                   <span class="k">STATE</span>           <span class="k">VERSION</span>
+<span class="o">*</span> <span class="n">Ubuntu</span>                 <span class="n">Running</span>         <span class="mi">2</span>
+</code></pre></div>
+
+</div>
+<details class="note"><summary>WSL2からWSL1に戻すコマンド</summary><div class="codehilite"><pre><span></span><code><span class="o">&gt;</span> <span class="n">wsl</span><span class="p">.</span><span class="n">exe</span> <span class="c1">--list --verbose</span>
+  <span class="n">NAME</span>                   <span class="k">STATE</span>           <span class="k">VERSION</span>
+<span class="o">*</span> <span class="n">Ubuntu</span>                 <span class="n">Running</span>         <span class="mi">2</span>
+
+<span class="o">&gt;</span> <span class="n">wsl</span><span class="p">.</span><span class="n">exe</span> <span class="c1">--set-version Ubuntu 1</span>
+<span class="err">変換中です。この処理には数分かかることがあります</span><span class="p">...</span>
+<span class="err">変換が完了しました。</span>
+
+<span class="o">&gt;</span> <span class="n">wsl</span><span class="p">.</span><span class="n">exe</span> <span class="c1">--list --verbose</span>
+  <span class="n">NAME</span>                   <span class="k">STATE</span>           <span class="k">VERSION</span>
+<span class="o">*</span> <span class="n">Ubuntu</span>                 <span class="n">Running</span>         <span class="mi">1</span>
+</code></pre></div>
+
+</details>
+<h3 id="wsl2_2">WSL2の構成要素</h3>
+<p>WSL2は、下記の図に示されるような要素から成り立っています。</p>
+<figure style="text-align: center;">
+<a href="/imgs/windows_wsl_wsl2.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_wsl2.png" /></a>  
+<figcaption>図. WSLとWSL2 アーキテクチャの概略</figcaption>
+</figure>
+
+<ul>
+<li>
+<p>ランチャー/フロントエンド(wsl.exe/wslhost.exe)</p>
+</li>
+<li>
+<p>LxssManager(LxssManager.dll)</p>
+</li>
+<li>
+<p>Hyper-V ホスト コンピューティング サービス(vmcompute.exe)</p>
+</li>
+<li>
+<p>仮想マシン ワーカー プロセス(vmwp.exe : 9Pサーバ機能を含む)</p>
+</li>
+<li>
+<p>Hyper-Vハイパーバイザ</p>
+<ul>
+<li>軽量仮想マシン(Light-weight Virtual Machine)<ul>
+<li>Linuxカーネル</li>
+<li>コンテナ<ul>
+<li>仮想HDD(ext4.vhdx)</li>
+<li>MS製init(9Pサーバ機能を含む)</li>
+<li>Linuxディストリビューション</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Plan9プロトコル リダイレクタ(カーネルモードドライバー: p9rdr.sys)</p>
+</li>
+</ul>
+<p>参考: The new Windows subsystem for Linux architecture: a deep dive - BRK3068 - Microsoft Developer - YouTube<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup></p>
+<h3 id="api_1">システムコールAPIの提供</h3>
+<p>WSL2では、完全なLinuxシステムコールの提供のため、Linuxカーネルを実行しています。
+カーネルの実行環境としてHyper-Vのような準仮想化ハイパーバイザを使用しており、ホストOSとなるWindows10もHyper-Vの有効化時と同様に、仮想化環境の中に入ります。  </p>
+<p>対してWSL環境は、軽量仮想マシンと呼ばれるタイプの仮想マシンインスタンス上でLinuxカーネルが起動し、その上で実行されるコンテナランタイム上で動作します。(Ubuntuであれば、<code>Ubuntu</code> on <code>Container</code> on <code>Light weight VM</code> on <code>Hyper-V</code>です。)<br />
+また、LinuxカーネルはMicrosoft社によりカスタマイズされたものが使用されており、これはGithub上で公開されています。<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup></p>
+<h3 id="_7">ファイルシステム</h3>
+<h3 id="_8">ルートファイルシステム</h3>
+<p>ディストリビューションがインストールされる、ルートファイルシステムが以下のように変更されています。</p>
+<ul>
+<li>WSL1: NTFS上にマッピングされたVolFS</li>
+<li>WSL2: 仮想HDD(root.vhdx)上のext4</li>
+</ul>
+<p>NTFSを通して、メタデータを取得・設定する必要がなくなったために、アクセス速度が向上しています。</p>
+<h3 id="windows">Windowsファイルシステムへのアクセス</h3>
+<p>WSL内からWindows上のNTFSなどへアクセスする方法も変更されています。</p>
+<ul>
+<li>WSL1: DrvFSを通したアクセス</li>
+<li>WSL2: 9Pでのアクセス</li>
+</ul>
+<p>WSL1でのDrvFSへのアクセスをシステムコールとして呼び出した際には、カーネルモードドライバーであるLxCore.sys, lsxx.sysが処理していました。<br />
+しかし、WSL2では軽量仮想マシン+コンテナ技術を採用しているため、カーネルモードドライバーを利用した方法から、9Pを経由したアクセスに変更されています。</p>
+<p>WSL内のinitと同様に、Windows側でも軽量仮想マシンのVM Workderプロセス内で9Pサーバが動作しており<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>、
+この9Pサーバを通じて、LinuxプロセスからCドライブなどへアクセスされます。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://github.com/ionescu007/lxss/blob/master/WSL-BlueHat-Final.pdf">DEFEND AND UNDERSTAND WSL - ionescu007/lxss - Github</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://blogs.msdn.microsoft.com/wsl/2016/05/23/pico-process-overview/">Pico Process Overview - Windows Subsystem for Linux</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://kledgeb.blogspot.com/2016/06/wsl-19-wsl1.html">WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://kledgeb.blogspot.com/2016/06/wsl-24-linuxwindows-nt.html">WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://github.com/microsoft/WSL2-Linux-Kernel">GitHub - microsoft/WSL2-Linux-Kernel : The source for the Linux kernel used in Windows Subsystem for Linux 2 (WSL2)</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p><a href="https://www.youtube.com/watch?v=lwhMThePdIo">The new Windows subsystem for Linux architecture: a deep dive - BRK3068 - Microsoft Developer - YouTube</a>&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p><a href="https://msrc-blog.microsoft.com/2019/09/11/attacking-the-vm-worker-process/">Attacking the VM Worker Process - Microsoft Security Response Center</a>&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../" title="Windowsでのコンテナ技術とWSL" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  前
+                </span>
+                Windowsでのコンテナ技術とWSL
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../HostComputeService/" title="Windowsのコンテナ" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  次
+                </span>
+                Windowsのコンテナ
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/roy-n-roy/" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/roy_n_roy/" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/application.df00da5d.js"></script>
+      
+        
+        
+          
+          <script src="../../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../../assets/javascripts/lunr/lunr.ja.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.1",url:{base:"../../.."}})</script>
+      
+        <script src="../../../lightbox2/js/lightbox-plus-jquery.min.js"></script>
+      
+    
+  </body>
+</html>
