@@ -30,7 +30,7 @@ WSLにはバージョン1とバージョン2が存在し、それぞれLinuxシ�
 ### 構成要素
 WSL1は、下記の図に示されるような要素から成り立っています。
 
-<a href="/imgs/windows_wsl_wsl1.png" data-lightbox="windows_wsl_wsl1"><img src="/imgs/windows_wsl_wsl1.png" /></a>  
+<a href="/imgs/windows_wsl_wsl1.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_wsl1.png" /></a>  
 
 * ランチャー/フロントエンド(wsl.exe/wslhost.exe)
 
@@ -141,7 +141,7 @@ initプロセスは、9Pサーバへのアクセスを受け取ると、Linuxフ
 また、Windows側では`p9rdr.sys`というファイルシステムリダイレクタがカーネルモードドライバーとして稼働しています。  
 このリダイレクタはWindowsプロセスから`\\wsl$`へアクセスした際に動作し、P9クライアントとしてWSL上のP9サーバへアクセスし、9Pサーバから受け取ったファイルやフォルダなどのデータをエクスプローラーなどのWindowsアプリケーション上に表現することで、WindowsからLinuxファイルシステムへのアクセスを実現しています。  
 
-<a href="/imgs/windows_wsl_windows_to_linux_file_access.png" data-lightbox="windows_wsl_windows_to_linux_file_access"><img src="/imgs/windows_wsl_windows_to_linux_file_access.png" /></a>  
+<a href="/imgs/windows_wsl_windows_to_linux_file_access.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_windows_to_linux_file_access.png" /></a>  
 
 ### Linux→Windowsプログラムの呼び出し
 WSLでは、WSL内のbashなどから、`cmd.exe`などのWindowsプログラムを呼び出すことができます。  
@@ -205,7 +205,7 @@ WSL2は、WSL1を置き換えるものではなく、ディストリビューシ
 WSL2は、下記の図に示されるような要素から成り立っています。
 
 <figure style="text-align: center;">
-<a href="/imgs/windows_wsl_wsl2.png" data-lightbox="windows_wsl_wsl2"><img src="/imgs/windows_wsl_wsl2.png" /></a>  
+<a href="/imgs/windows_wsl_wsl2.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_wsl2.png" /></a>  
 <figcaption>図. WSLとWSL2 アーキテクチャの概略</figcaption>
 </figure>
 

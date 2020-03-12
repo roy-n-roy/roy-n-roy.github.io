@@ -26,14 +26,6 @@
 			"type": "shell",
 			"isBackground": true,
 			"command": "pipenv run mkdocs serve",
-			"windows": {
-				"options": {
-					"env": {
-						"VIRTUALENV_CREATOR": "venv",
-						"VIRTUALENV_COPIES": "True",
-					},
-				},
-			},
 			"options": {
 				"env": {
 					"PIPENV_PIPFILE": "${workspaceFolder}/release/Pipfile",
@@ -43,7 +35,7 @@
 			"problemMatcher": {
 				"owner": "custom",
 				"pattern": {
-					"regexp": "^$"
+					"regexp": "^.*(Error|Except).*$"
 				},
 				"background": {
 					"activeOnStart": true,
@@ -57,14 +49,6 @@
 			"type": "shell",
 			"isBackground": true,
 			"command": "pipenv run mkdocs serve",
-			"windows": {
-				"options": {
-					"env": {
-						"VIRTUALENV_CREATOR": "venv",
-						"VIRTUALENV_COPIES": "True",
-					},
-				},
-			},
 			"options": {
 				"cwd": "${workspaceFolder}/release"
 			},
@@ -74,7 +58,7 @@
 			"problemMatcher": {
 				"owner": "custom",
 				"pattern": {
-					"regexp": "^$"
+					"regexp": "^.*(Error|Except).*$"
 				},
 				"background": {
 					"activeOnStart": true,
@@ -92,14 +76,6 @@
 			"label": "mkdocs-deploy",
 			"type": "shell",
 			"command": "pipenv run mkdocs gh-deploy",
-			"windows": {
-				"options": {
-					"env": {
-						"VIRTUALENV_CREATOR": "venv",
-						"VIRTUALENV_COPIES": "True",
-					},
-				},
-			},
 			"options": {
 				"cwd": "${workspaceFolder}/release"
 			},
@@ -112,14 +88,6 @@
 			"label": "mkdocs-test",
 			"type": "shell",
 			"command": "pipenv run py.test",
-			"windows": {
-				"options": {
-					"env": {
-						"VIRTUALENV_CREATOR": "venv",
-						"VIRTUALENV_COPIES": "True",
-					},
-				},
-			},
 			"options": {
 				"cwd": "${workspaceFolder}/release"
 			},
