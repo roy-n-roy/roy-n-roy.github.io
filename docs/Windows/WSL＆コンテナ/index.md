@@ -15,9 +15,8 @@ Windows subsystem for Linux(WSL) とは、Windows上でLinux OS(ディストリ�
 インストール方法などは下記を参照してください。  
 	[Windows 10 用 Windows Subsystem for Linux のインストール ガイド - Microsoft Docs](https://docs.microsoft.com/ja-jp/windows/wsl/install-win10)
 
-### [WSLのアーキテクチャ](architecture)
+### [WSLのアーキテクチャ](Architecture)
 WSLのアーキテクチャについて解説した記事です。
 
 ### [WSLでCentOSを利用する](centos)
 Microsoft Storeで公開されていないCentOSをWSLで利用する方法について。
-
