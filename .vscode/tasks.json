@@ -7,27 +7,6 @@
 			"label": "setup-pipenv",
 			"type": "shell",
 			"command": "pipenv",
-			"args": [ "install" ],
-			"windows": {
-				"options": {
-					"env": {
-						"VIRTUALENV_CREATOR": "venv",
-						"VIRTUALENV_COPIES": "True",
-					},
-				},
-			},
-			"options": {
-				"cwd": "${workspaceFolder}",
-			},
-			"dependsOn":[
-				"setup-check-pipenv",
-			],
-			"problemMatcher": [],
-		},
-		{
-			"label": "setup-check-pipenv",
-			"type": "shell",
-			"command": "pipenv",
 			"args": [ "install", "--dev" ],
 			"windows": {
 				"options": {
@@ -43,23 +22,6 @@
 			"problemMatcher": [],
 		},
 		{
-			"label": "mkdocs-build",
-			"type": "shell",
-			"command": "pipenv run mkdocs build",
-			"windows": {
-				"options": {
-					"env": {
-						"VIRTUALENV_CREATOR": "venv",
-						"VIRTUALENV_COPIES": "True",
-					},
-				},
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
-		},
-		{
 			"label": "mkdocs-serve",
 			"type": "shell",
 			"isBackground": true,
@@ -71,6 +33,12 @@
 						"VIRTUALENV_COPIES": "True",
 					},
 				},
+			},
+			"options": {
+				"env": {
+					"PIPENV_PIPFILE": "${workspaceFolder}/release/Pipfile",
+				},
+				"cwd": "${workspaceFolder}"
 			},
 			"problemMatcher": {
 				"owner": "custom",
@@ -98,7 +66,7 @@
 				},
 			},
 			"options": {
-				"cwd": "${workspaceRoot}/release"
+				"cwd": "${workspaceFolder}/release"
 			},
 			"dependsOn":[
 				"mkdocs-stop"
@@ -133,7 +101,7 @@
 				},
 			},
 			"options": {
-				"cwd": "${workspaceRoot}/release"
+				"cwd": "${workspaceFolder}/release"
 			},
 			"dependsOn":[
 				"mkdocs-test"
@@ -153,7 +121,7 @@
 				},
 			},
 			"options": {
-				"cwd": "${workspaceRoot}/release"
+				"cwd": "${workspaceFolder}/release"
 			},
 			"group": {
 				"kind": "test",
