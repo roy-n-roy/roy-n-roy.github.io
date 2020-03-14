@@ -18,10 +18,22 @@ WSLではLinuxシステムコールAPIをWindowsの機能として用意し、�
 
 WSLにはバージョン1とバージョン2が存在し、それぞれLinuxシステムコールAPIの提供方法が異なります。  
 
-| バージョン            | ベース技術                                              | システムコールAPI提供方法                   |
-| --------------------- | ------------------------------------------------------- | ------------------------------------------- |
-| バージョン1<br>(WSL1) | 「ピコプロセス」と呼ばれる<br>Windowsのプロセス隔離技術 | LxCore.sys/Lxss.sysという<br>NTカーネルドライバがLinux<br>システムコールをエミュレーション<br>(Linuxカーネルを使用しない) |
-| バージョン2<br>(WSL2) | 軽量仮想マシン(lightweight VM)<br>+Linuxカーネル        | 仮想マシン上でLinuxカーネルを稼働 |
+* WSL1
+	* LxCore.sys/Lxss.sysというNTカーネルドライバが、Linuxシステムコール命令からWindowsシステムコール命令へ変換し、システムコールAPIを提供します  
+		(Linuxカーネルを使用しない)
+* WSL2
+	* 仮想マシン上で稼働するLinuxカーネルがシステムコールAPIを提供します  
+
+<figure style="text-align: center;">
+<a href="/imgs/windows_wsl_compare.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_compare.png" /></a>  
+<figcaption>図. WSL1 と WSL2 の命令実行の比較</figcaption>
+</figure>
+
+| バージョン            | ベース技術         | メリット | デメリット |
+| --------------------- | ------------------ | -------- | ---------- |
+| バージョン1<br>(WSL1) | システムコール変換 | メモリリソースの消費が少ない | 命令変換のオーバーヘッドが発生し、<br>CPUリソースの消費が増える<br>一部のシステムコール命令が提供されない |
+| バージョン2<br>(WSL2) | 仮想マシン         | 
+
 
 なお、本記事ではWSLのバージョンを明確に区別するため、WSLバージョン1を「WSL1」、バージョン2を「WSL2」と記載します。  
 また、WSL1とWSL2の両方に共通する機能の場合は「WSL1/WSL2」という風に記載します。  
@@ -30,7 +42,10 @@ WSLにはバージョン1とバージョン2が存在し、それぞれLinuxシ�
 ### 構成要素
 WSL1は、下記の図に示されるような要素から成り立っています。
 
+<figure style="text-align: center;">
 <a href="/imgs/windows_wsl_wsl1.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_wsl1.png" /></a>  
+<figcaption>図. WSL1 アーキテクチャの概略</figcaption>
+</figure>
 
 * ランチャー/フロントエンド(wsl.exe/wslhost.exe)
 
@@ -141,7 +156,10 @@ initプロセスは、9Pサーバへのアクセスを受け取ると、Linuxフ
 また、Windows側では`p9rdr.sys`というファイルシステムリダイレクタがカーネルモードドライバーとして稼働しています。  
 このリダイレクタはWindowsプロセスから`\\wsl$`へアクセスした際に動作し、P9クライアントとしてWSL上のP9サーバへアクセスし、9Pサーバから受け取ったファイルやフォルダなどのデータをエクスプローラーなどのWindowsアプリケーション上に表現することで、WindowsからLinuxファイルシステムへのアクセスを実現しています。  
 
+<figure style="text-align: center;">
 <a href="/imgs/windows_wsl_windows_to_linux_file_access.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_windows_to_linux_file_access.png" /></a>  
+<figcaption>図. 9Pを利用したLinuxファイルシステムへのアクセス</figcaption>
+</figure>
 
 ### Linux→Windowsプログラムの呼び出し
 WSLでは、WSL内のbashなどから、`cmd.exe`などのWindowsプログラムを呼び出すことができます。  
@@ -206,7 +224,7 @@ WSL2は、下記の図に示されるような要素から成り立っていま�
 
 <figure style="text-align: center;">
 <a href="/imgs/windows_wsl_wsl2.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_wsl2.png" /></a>  
-<figcaption>図. WSLとWSL2 アーキテクチャの概略</figcaption>
+<figcaption>図. WSL2 アーキテクチャの概略</figcaption>
 </figure>
 
 * ランチャー/フロントエンド(wsl.exe/wslhost.exe)
