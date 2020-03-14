@@ -883,6 +883,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#linuxelf" class="md-nav__link">
+    Linuxのプログラム(ELFバイナリ)を実行するには
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsl1wsl2" class="md-nav__link">
+    WSL1とWSL2の違い
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wsl1" class="md-nav__link">
     WSL1の機能
   </a>
@@ -1299,6 +1313,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#linuxelf" class="md-nav__link">
+    Linuxのプログラム(ELFバイナリ)を実行するには
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsl1wsl2" class="md-nav__link">
+    WSL1とWSL2の違い
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wsl1" class="md-nav__link">
     WSL1の機能
   </a>
@@ -1493,7 +1521,7 @@
                 <div class="md-source-date">
                   <small>
                     
-                      最終更新日: 2020年3月12日
+                      最終更新日: 2020年3月14日
                     
                   </small>
                 </div>
@@ -1506,9 +1534,10 @@
 <p>Windows Subsystem for Linux(WSL)は少ないオーバーヘッドでGNU/LinuxのCLIプログラムを実行できる環境を提供する機能です。</p>
 <p>Windowsでは「Portable Executable」という形式の実行ファイルのみを動作させることができます。
 しかし、Linuxなどで利用されている実行ファイルは「Executable and Linkable Format(ELF)」と呼ばれる形式であるため、通常はWindows上で動作させることはできません。  </p>
+<h2 id="linuxelf">Linuxのプログラム(ELFバイナリ)を実行するには</h2>
 <p>LinuxのCLIプログラムを利用できる環境を用意するには、下記のような機能が必要です。</p>
 <ul>
-<li>Linuxカーネルの機能<br />
+<li>Linuxカーネル相当の機能<br />
     ファイルシステム・プロセス管理・メモリ管理などのシステムコールAPIの提供</li>
 <li>シェル環境<br />
     bash, zsh, kshなど</li>
@@ -1516,25 +1545,47 @@
     プログラムとライブラリの入手方法の提供</li>
 </ul>
 <p>WSLではLinuxシステムコールAPIをWindowsの機能として用意し、その上にLinuxディストリビューションをMicrosoft Storeからインストールするという形式をとっています。  </p>
-<p>WSLにはバージョン1とバージョン2が存在し、それぞれLinuxシステムコールAPIの提供方法が異なります。  </p>
+<h2 id="wsl1wsl2">WSL1とWSL2の違い</h2>
+<p>WSLにはバージョン1とバージョン2が存在し、それぞれLinuxシステムコールAPIおよびディスクの提供方法が異なります。  </p>
+<ul>
+<li>WSL1<ul>
+<li>LxCore.sys/Lxss.sysというNTカーネルドライバが、Linuxシステムコール命令からWindowsシステムコール命令へ変換し、システムコールAPIを提供します<br />
+    (Linuxカーネルを使用しない)</li>
+<li>VolFSという独自のファイルシステムを採用  </li>
+</ul>
+</li>
+<li>WSL2<ul>
+<li>軽量仮想マシン上で稼働するLinuxカーネルがシステムコールAPIを提供します  </li>
+<li>仮想HDD(*.vhdx)ファイル上にext4などのファイルシステムを適用  </li>
+</ul>
+</li>
+</ul>
+<figure style="text-align: center;">
+<a href="/imgs/windows_wsl_compare.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_compare.png" /></a>  
+<figcaption>図. WSL1 と WSL2 の命令実行の比較</figcaption>
+</figure>
+
 <table>
 <thead>
 <tr>
 <th>バージョン</th>
 <th>ベース技術</th>
-<th>システムコールAPI提供方法</th>
+<th>メリット</th>
+<th>デメリット</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>バージョン1<br>(WSL1)</td>
-<td>「ピコプロセス」と呼ばれる<br>Windowsのプロセス隔離技術</td>
-<td>LxCore.sys/Lxss.sysという<br>NTカーネルドライバがLinux<br>システムコールをエミュレーション<br>(Linuxカーネルを使用しない)</td>
+<td>システムコール変換</td>
+<td><ul><li>メモリの消費が少ない</li></ul></td>
+<td><ul><li>命令変換によるCPUオーバーヘッド</li><li>一部のシステムコールが実行不可</li><li>ディスクアクセス速度が遅い</li></ul></td>
 </tr>
 <tr>
 <td>バージョン2<br>(WSL2)</td>
-<td>軽量仮想マシン(lightweight VM)<br>+Linuxカーネル</td>
-<td>仮想マシン上でLinuxカーネルを稼働</td>
+<td>仮想マシン</td>
+<td><ul><li>システムコールの完全互換</li><li>(WSL1と比較して)ディスクアクセス速度の改善</li></ul></td>
+<td><ul><li>ファイルシステムキャッシュなどでのメモリ消費量の増加</li></ul></td>
 </tr>
 </tbody>
 </table>
@@ -1543,7 +1594,11 @@
 <h2 id="wsl1">WSL1の機能</h2>
 <h3 id="_1">構成要素</h3>
 <p>WSL1は、下記の図に示されるような要素から成り立っています。</p>
-<p><a href="/imgs/windows_wsl_wsl1.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_wsl1.png" /></a>  </p>
+<figure style="text-align: center;">
+<a href="/imgs/windows_wsl_wsl1.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_wsl1.png" /></a>  
+<figcaption>図. WSL1 アーキテクチャの概略</figcaption>
+</figure>
+
 <ul>
 <li>
 <p>ランチャー/フロントエンド(wsl.exe/wslhost.exe)</p>
@@ -1652,7 +1707,11 @@
 initプロセスは、9Pサーバへのアクセスを受け取ると、Linuxファイルシステム上のファイルを読み書きするような形になっています。  </p>
 <p>また、Windows側では<code>p9rdr.sys</code>というファイルシステムリダイレクタがカーネルモードドライバーとして稼働しています。<br />
 このリダイレクタはWindowsプロセスから<code>\\wsl$</code>へアクセスした際に動作し、P9クライアントとしてWSL上のP9サーバへアクセスし、9Pサーバから受け取ったファイルやフォルダなどのデータをエクスプローラーなどのWindowsアプリケーション上に表現することで、WindowsからLinuxファイルシステムへのアクセスを実現しています。  </p>
-<p><a href="/imgs/windows_wsl_windows_to_linux_file_access.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_windows_to_linux_file_access.png" /></a>  </p>
+<figure style="text-align: center;">
+<a href="/imgs/windows_wsl_windows_to_linux_file_access.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_windows_to_linux_file_access.png" /></a>  
+<figcaption>図. 9Pを利用したLinuxファイルシステムへのアクセス</figcaption>
+</figure>
+
 <h3 id="linuxwindows">Linux→Windowsプログラムの呼び出し</h3>
 <p>WSLでは、WSL内のbashなどから、<code>cmd.exe</code>などのWindowsプログラムを呼び出すことができます。  </p>
 <h4 id="_6">仕組み</h4>
@@ -1707,7 +1766,7 @@ WSLからWindowsプログラムを呼び出す際には、initプログラムの
 <p>WSL2は、下記の図に示されるような要素から成り立っています。</p>
 <figure style="text-align: center;">
 <a href="/imgs/windows_wsl_wsl2.png" data-lightbox="windows_wsl_arch"><img src="/imgs/windows_wsl_wsl2.png" /></a>  
-<figcaption>図. WSLとWSL2 アーキテクチャの概略</figcaption>
+<figcaption>図. WSL2 アーキテクチャの概略</figcaption>
 </figure>
 
 <ul>
