@@ -5,7 +5,11 @@ on:
     # releaseブランチのdocsディレクトリ配下で
     # Markdownファイルがpushされた時に実行する
     branches: release
-    paths: docs/**/*.md
+    paths:
+      - 'docs/**/*.md'
+      - 'docs/imgs/**'
+      - 'Pipfile.lock'
+      - 'mkdocs.yml'
 
 jobs:
   deploy:
