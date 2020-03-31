@@ -106,7 +106,9 @@ WSL1では、LxCore.sys, lsxx.sysの2つのカーネルモードドライバー�
 「ピコプロセス」の呼び出したシステムコールや例外は、ドライバー上での処理やWindowsシステムコールへの変換されます。
 これにより、WSL1においてLinuxカーネル相当の機能を実現しています。  
 
-参考文献: WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb[^4]
+参考文献:
+	WSL System Calls - Windows Subsystem for Linux[^8], 
+	WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb[^4]
 
 ### ファイルシステム
 #### VolFs
@@ -283,6 +285,7 @@ WSL内のinitと同様に、Windows側でも軽量仮想マシンのVM Workder�
 [^1]: [DEFEND AND UNDERSTAND WSL - ionescu007/lxss - Github](https://github.com/ionescu007/lxss/blob/master/WSL-BlueHat-Final.pdf)
 [^2]: [Pico Process Overview - Windows Subsystem for Linux](https://blogs.msdn.microsoft.com/wsl/2016/05/23/pico-process-overview/)
 [^3]: [WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb](https://kledgeb.blogspot.com/2016/06/wsl-19-wsl1.html)
+[^8]: [WSL System Calls - Windows Subsystem for Linux](https://blogs.msdn.microsoft.com/wsl/2016/06/08/wsl-system-calls/)
 [^4]: [WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb](https://kledgeb.blogspot.com/2016/06/wsl-24-linuxwindows-nt.html)
 [^5]: [GitHub - microsoft/WSL2-Linux-Kernel : The source for the Linux kernel used in Windows Subsystem for Linux 2 (WSL2)](https://github.com/microsoft/WSL2-Linux-Kernel)
 [^6]: [The new Windows subsystem for Linux architecture: a deep dive - BRK3068 - Microsoft Developer - YouTube](https://www.youtube.com/watch?v=lwhMThePdIo)
