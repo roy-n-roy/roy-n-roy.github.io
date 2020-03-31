@@ -1521,7 +1521,7 @@
                 <div class="md-source-date">
                   <small>
                     
-                      最終更新日: 2020年3月14日
+                      最終更新日: 2020年3月31日
                     
                   </small>
                 </div>
@@ -1669,7 +1669,9 @@
 この2つのドライバーは「ピコプロバイダー」と呼ばれ、これらがLinuxシステムコールAPIを提供しています。<br />
 「ピコプロセス」の呼び出したシステムコールや例外は、ドライバー上での処理やWindowsシステムコールへの変換されます。
 これにより、WSL1においてLinuxカーネル相当の機能を実現しています。  </p>
-<p>参考文献: WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup></p>
+<p>参考文献:
+    WSL System Calls - Windows Subsystem for Linux<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">4</a></sup>, 
+    WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">5</a></sup></p>
 <h3 id="_3">ファイルシステム</h3>
 <h4 id="volfs">VolFs</h4>
 <p>「VolFs」とは、WSL1で動作するディストリビューションのルートパーティションで使用するファイルシステムです。<br />
@@ -1801,12 +1803,12 @@ WSLからWindowsプログラムを呼び出す際には、initプログラムの
 <p>Plan9プロトコル リダイレクタ(カーネルモードドライバー: p9rdr.sys)</p>
 </li>
 </ul>
-<p>参考: The new Windows subsystem for Linux architecture: a deep dive - BRK3068 - Microsoft Developer - YouTube<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup></p>
+<p>参考: The new Windows subsystem for Linux architecture: a deep dive - BRK3068 - Microsoft Developer - YouTube<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">7</a></sup></p>
 <h3 id="api_1">システムコールAPIの提供</h3>
 <p>WSL2では、完全なLinuxシステムコールの提供のため、Linuxカーネルを実行しています。
 カーネルの実行環境としてHyper-Vのような準仮想化ハイパーバイザを使用しており、ホストOSとなるWindows10もHyper-Vの有効化時と同様に、仮想化環境の中に入ります。  </p>
 <p>対してWSL環境は、軽量仮想マシンと呼ばれるタイプの仮想マシンインスタンス上でLinuxカーネルが起動し、その上で実行されるコンテナランタイム上で動作します。(Ubuntuであれば、<code>Ubuntu</code> on <code>Container</code> on <code>Light weight VM</code> on <code>Hyper-V</code>です。)<br />
-また、LinuxカーネルはMicrosoft社によりカスタマイズされたものが使用されており、これはGithub上で公開されています。<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup></p>
+また、LinuxカーネルはMicrosoft社によりカスタマイズされたものが使用されており、これはGithub上で公開されています。<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">6</a></sup></p>
 <h3 id="_7">ファイルシステム</h3>
 <h3 id="_8">ルートファイルシステム</h3>
 <p>ディストリビューションがインストールされる、ルートファイルシステムが以下のように変更されています。</p>
@@ -1823,7 +1825,7 @@ WSLからWindowsプログラムを呼び出す際には、initプログラムの
 </ul>
 <p>WSL1でのDrvFSへのアクセスをシステムコールとして呼び出した際には、カーネルモードドライバーであるLxCore.sys, lsxx.sysが処理していました。<br />
 しかし、WSL2では軽量仮想マシン+コンテナ技術を採用しているため、カーネルモードドライバーを利用した方法から、9Pを経由したアクセスに変更されています。</p>
-<p>WSL内のinitと同様に、Windows側でも軽量仮想マシンのVM Workderプロセス内で9Pサーバが動作しており<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>、
+<p>WSL内のinitと同様に、Windows側でも軽量仮想マシンのVM Workderプロセス内で9Pサーバが動作しており<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">8</a></sup>、
 この9Pサーバを通じて、LinuxプロセスからCドライブなどへアクセスされます。</p>
 <div class="footnote">
 <hr />
@@ -1837,17 +1839,20 @@ WSLからWindowsプログラムを呼び出す際には、initプログラムの
 <li id="fn:3">
 <p><a href="https://kledgeb.blogspot.com/2016/06/wsl-19-wsl1.html">WSL その19 - WSLを構成する基盤の1つであるピコプロセスとは - kledgeb</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
+<li id="fn:8">
+<p><a href="https://blogs.msdn.microsoft.com/wsl/2016/06/08/wsl-system-calls/">WSL System Calls - Windows Subsystem for Linux</a>&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
 <li id="fn:4">
-<p><a href="https://kledgeb.blogspot.com/2016/06/wsl-24-linuxwindows-nt.html">WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p><a href="https://kledgeb.blogspot.com/2016/06/wsl-24-linuxwindows-nt.html">WSL その24 - システムコールとは（前編）・LinuxカーネルのシステムコールとWindows NTカーネルのシステムコール - kledgeb</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 <li id="fn:5">
-<p><a href="https://github.com/microsoft/WSL2-Linux-Kernel">GitHub - microsoft/WSL2-Linux-Kernel : The source for the Linux kernel used in Windows Subsystem for Linux 2 (WSL2)</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p><a href="https://github.com/microsoft/WSL2-Linux-Kernel">GitHub - microsoft/WSL2-Linux-Kernel : The source for the Linux kernel used in Windows Subsystem for Linux 2 (WSL2)</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 <li id="fn:6">
-<p><a href="https://www.youtube.com/watch?v=lwhMThePdIo">The new Windows subsystem for Linux architecture: a deep dive - BRK3068 - Microsoft Developer - YouTube</a>&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p><a href="https://www.youtube.com/watch?v=lwhMThePdIo">The new Windows subsystem for Linux architecture: a deep dive - BRK3068 - Microsoft Developer - YouTube</a>&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 <li id="fn:7">
-<p><a href="https://msrc-blog.microsoft.com/2019/09/11/attacking-the-vm-worker-process/">Attacking the VM Worker Process - Microsoft Security Response Center</a>&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p><a href="https://msrc-blog.microsoft.com/2019/09/11/attacking-the-vm-worker-process/">Attacking the VM Worker Process - Microsoft Security Response Center</a>&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 8 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
