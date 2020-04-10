@@ -6,14 +6,13 @@ import subprocess
 import sys
 from pathlib import Path
 from urllib.parse import quote, urlparse
-import time
 
 import aiohttp
+import pytest
 import requests
 from bs4 import BeautifulSoup
-import pytest
-from requests.packages.urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
 # mkdocs serve実行時のURL
 mkdocs_url = 'http://127.0.0.1:7160/'
@@ -38,7 +37,7 @@ def start_mkdocs(request):
                 stderr=subprocess.PIPE,
                 universal_newlines=True
             )
-        
+
         session = requests.Session()
         retries = Retry(
                 total=5,
@@ -49,6 +48,7 @@ def start_mkdocs(request):
         session.get(url=mkdocs_url, timeout=(6.0, 15.0))
 
     def stop_process():
+        print("finalize")
         if proc:
             proc.kill()
 
