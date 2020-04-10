@@ -1,14 +1,14 @@
 site_name: roy-n-roy メモ
 theme:
   name: material
-  logo: 'imgs/logo.svg'
-  favicon: 'imgs/favicon.ico'
-  language: 'ja'
-  feature:
-    tabs: true
+  logo: imgs/logo.svg
+  favicon: imgs/favicon.ico
+  language: ja
+  features:
+    - tabs
   palette:
-    primary: 'deep orange'
-site_url: 'https://roy-n-roy.github.io/'
+    primary: deep orange
+site_url: https://roy-n-roy.github.io/
 markdown_extensions:
   - admonition
   - codehilite
@@ -21,17 +21,17 @@ plugins:
 remote_branch: master
 extra:
   search:
-    language: 'ja'
+    language: ja
   social:
-    - type: 'github'
-      link: 'https://github.com/roy-n-roy/'
-    - type: 'twitter'
-      link: 'https://twitter.com/roy_n_roy/'
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/roy-n-roy/
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/roy_n_roy/
 extra_javascript:
-    - 'lightbox2/js/lightbox-plus-jquery.min.js'
+    - lightbox2/js/lightbox-plus-jquery.min.js
 extra_css:
-    - 'lightbox2/css/lightbox.min.css'
-    - 'styles/git_revision_date.css'
+    - lightbox2/css/lightbox.min.css
+    - styles/git_revision_date.css
 google_analytics:
-  - 'UA-149709379-1'
-  - 'auto'
+  - UA-149709379-1
+  - auto
