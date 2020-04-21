@@ -35,7 +35,7 @@ WSL上のディストリビューションの構成について、`/etc/wsl.conf
 ## .wslconf:WSL2の軽量仮想マシンの構成
 
 
-!!! info "%USERPROFILE%\\.wslinfo"
+!!! info "%USERPROFILE%\\.wslconfig"
 	```
 	[wsl2]
 	kernel=<path>               # カスタムLinuxカーネルの(Windows上の)パスを指定する
