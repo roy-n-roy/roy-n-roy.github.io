@@ -156,7 +156,7 @@
         "mkdocs-material": {
             "editable": true,
             "git": "https://github.com/roy-n-roy/mkdocs-material.git",
-            "ref": "543031e24406dd1cf85d9119bfc9413cdd800f30"
+            "ref": "d9c2accba3daf2a7da84f77030061540f139a82e"
         },
         "mkdocs-minify-plugin": {
             "hashes": [
