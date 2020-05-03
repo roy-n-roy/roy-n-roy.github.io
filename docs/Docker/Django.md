@@ -82,7 +82,7 @@ in your MIDDLEWARE, but X_FRAME_OPTIONS is not set to 'DENY'. The default is
 of itself in a frame, you should change it to 'DENY'.
 ```
 
-なんだか、たくさん警告が表示されたので、[ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/checklist/)[^3]を参考にしながらsettings.pyを修正しました。  
+なんだか、たくさん警告が表示されたので、[ドキュメント](https://docs.djangoproject.com/ja/3.0/howto/deployment/checklist/)[^3] を参考にしながらsettings.pyを修正しました。  
 
 ### settings.pyファイルの修正
 Djangoアプリケーションの設定は`django-admin startproject`で作成したディレクトリ内に`settings.py`というファイルに記載されています。  
@@ -91,16 +91,21 @@ Djangoアプリケーションの設定は`django-admin startproject`で作成�
 ただし、Dockerコンテナで動作させるため、コンテナ内の環境変数から設定値を取得できるようにし、コンテナ実行時に設定値を注入できるようにしています。
 また、ログはコンテナ側で管理するため、ファイル出力ではなく標準出力に表示するように設定しています。  
 
-設定にあたっては、Django公式ドキュメントを参考にしました。[^4][^5][^6][^7][^8][^9]
+設定にあたっては、Django公式ドキュメントを参考にしました。[^4] [^5] [^6] [^7] [^8] [^9]
 
 ??? info "settings.py を表示"
 	<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=settings.py"></script>
 
 
 ## Dockerファイルの作成
-次は、アプリケーションのDockerイメージをビルドするため、Dockerfileを作ります。
+次は、アプリケーションのDockerイメージをビルドするため、Dockerfileと  
+コンテナ起動時に呼び出すentrypoint.shを作ります。
 
-<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=Dockerfile"></script>
+* Dockerfile
+<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=Dockerfile"></script>  
+
+* entrypoint.sh
+<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=entrypoint.sh"></script>  
 
 ポイントを下記に挙げます。
 
@@ -116,11 +121,11 @@ Djangoアプリケーションの設定は`django-admin startproject`で作成�
 	* `python manage.py collectstatic`:  
 		画像などの静的コンテンツファイルを1箇所に集めるコマンドです。
 		nginxと共有するボリュームへコピーしたいため、コンテナ起動時に実行しています。
-* 環境変数 `SECRET_KEY` を動的に設定するために、 `~/.profile` 読み込み時に生成するようにしています。
+* コンテナ起動時に `~/.profile` を読み込み、環境変数 `SECRET_KEY` を動的に生成するようにしています。
 	しかし、これはベストプラクティスではなく、本来は `.env`ファイルや `docker secret` などを用いるのが良いのではないかと思います。
 
 ## uWSGI設定ファイルの作成
-Djangoのドキュメントには[uWSGI上で動かす方法](https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/)[^10]も載っているので、これを見ながら設定します。
+Djangoのドキュメントには[uWSGI上で動かす方法](https://docs.djangoproject.com/ja/3.0/howto/deployment/wsgi/uwsgi/)[^10] も載っているので、これを見ながら設定します。
 <script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=uwsgi.ini"></script>
 
 
@@ -129,7 +134,7 @@ httpサーバのNginxのイメージは、前述の通り [steveltn/https-portal
 このイメージは、自動でLet's Encryptの証明書取得・更新してくれるため、証明書の期限切れを気にする必要がない上、cronなどの追加設定が不要なものです。  
 Nginxの設定ファイルはeRubyファイルになっており、`/var/lib/nginx-conf/[ドメイン名].ssl.conf.erb`というファイルを配置すると、対応したドメイン名でのアクセスに適用されます。
 
-設定ファイルはuWSGIのドキュメント[^11]を見つつ、作成しました。
+設定ファイルはuWSGIのドキュメント[^11] を見つつ、作成しました。
 
 ??? info "nginx_uwsgi.ssl.conf.erb を表示"
 	<script src="https://gist.github.com/roy-n-roy/333106710978f7609b66fd69be3ab8bb.js?file=nginx_uwsgi.ssl.conf.erb"></script>
