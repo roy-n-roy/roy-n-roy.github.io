@@ -391,18 +391,29 @@ description = "A Material Design theme for MkDocs"
 name = "mkdocs-material"
 optional = false
 python-versions = "*"
-version = "5.0.2"
+version = "5.1.6"
 
 [package.dependencies]
 Pygments = ">=2.4"
 markdown = ">=3.2"
 mkdocs = ">=1.1"
+mkdocs-material-extensions = ">=1.0b1"
 pymdown-extensions = ">=7.0"
 
 [package.source]
-reference = "d9c2accba3daf2a7da84f77030061540f139a82e"
+reference = "f407a9c16218163d41dcb0cf40d5832d3c54f1bb"
 type = "git"
 url = "https://github.com/roy-n-roy/mkdocs-material.git"
+[[package]]
+category = "main"
+description = "Extension pack for Python Markdown."
+name = "mkdocs-material-extensions"
+optional = false
+python-versions = ">=3.5"
+version = "1.0b2"
+
+[package.dependencies]
+mkdocs-material = ">=5.0.0"
 
 [[package]]
 category = "main"
@@ -977,6 +988,10 @@ mkdocs-git-revision-date-localized-plugin = [
     {file = "mkdocs_git_revision_date_localized_plugin-0.5.2-py3-none-any.whl", hash = "sha256:3a109a2edd47cf2f80f60a272c88077ede4a88d25a46d9bdf276014bdbc3a14a"},
 ]
 mkdocs-material = []
+mkdocs-material-extensions = [
+    {file = "mkdocs-material-extensions-1.0b2.tar.gz", hash = "sha256:838580195f3f4d6c937238b1ce81365744348bca8bb2c694028aacf21bfac518"},
+    {file = "mkdocs_material_extensions-1.0b2-py3-none-any.whl", hash = "sha256:f2557ab830c2ecc0306a0741d7d943f7036b5fb167a5a92850ee6a1c9ce51d5a"},
+]
 mkdocs-minify-plugin = [
     {file = "mkdocs-minify-plugin-0.3.0.tar.gz", hash = "sha256:06fecd8ddb9cb90f30bcee2d94c3d4b46a090f403d7ff0edff089a435906c4ee"},
     {file = "mkdocs_minify_plugin-0.3.0-py2-none-any.whl", hash = "sha256:9bac96276b1681debb3eb2cf5bae972586b4c1138e8d78ea63a984ea6276563d"},
