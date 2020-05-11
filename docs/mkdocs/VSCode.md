@@ -13,14 +13,14 @@ Ubuntu: `sudo apt install python3 python3-pip`
 [Getting started -  Material for MkDocs](https://squidfunk.github.io/mkdocs-material/getting-started/#usage)を参考に、`mkdocs.yml`ファイルを作成します。  
 
 ## mkdocs環境の作成
-まだMkDocsをインストールしていない場合は、pipenvで環境を作成します。
+まだMkDocsをインストールしていない場合は、poetryで環境を作成します。
 
-まずは、下記のような`Pipfile`を作成します。
-!!! example "Pipfile"
-	<script src="https://gist.github.com/roy-n-roy/e5034b2725f694e659b8c4b30579a69b.js?file=Pipfile"></script>
+まずは、下記のような`pyproject.toml`を作成します。
+!!! example "pyproject.toml"
+	<script src="https://gist.github.com/roy-n-roy/e5034b2725f694e659b8c4b30579a69b.js?file=pyproject.toml"></script>
 
 その後、下記のような`tasks.json`, `launch.json`を作成してから、
-`Ctrl+Shift+P`から`task`と入力し、`タスクの実行`を選択後、Task: `setup_pipenv` を実行します。
+`Ctrl+Shift+P`から`task`と入力し、`タスクの実行`を選択後、Task: `setup_poetry` を実行します。
 
 !!! example ".vscode/tasks.json"
 	<script src="https://gist.github.com/roy-n-roy/e5034b2725f694e659b8c4b30579a69b.js?file=tasks.json"></script>
