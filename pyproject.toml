@@ -1,23 +1,23 @@
 [tool.poetry]
-name = "roy-n-roy.memo"
+name = "roy-n-roy.github.io"
 version = "1.0.0"
 description = "roy-n-roy's memo docs"
 authors = ["Roy <royroy.euph@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-mkdocs-minify-plugin = "^0.3.0"
-mkdocs-git-revision-date-localized-plugin = "^0.5.2"
 mkdocs-material = {git = "https://github.com/roy-n-roy/mkdocs-material.git", rev = "edit"}
+mkdocs-git-revision-date-localized-plugin = "^0.5.2"
+mkdocs-minify-plugin = "^0.3.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
-flake8 = "^3.7.9"
-autopep8 = "^1.5.2"
-bs4 = "^0.0.1"
-lxml = "^4.5.0"
-requests = "^2.23.0"
 aiohttp = {extras = ["speedups"], version = "^3.6.2"}
+autopep8 = "^1.5.2"
+beautifulsoup4 = "^4.9.0"
+flake8 = "^3.7.9"
+lxml = "^4.5.0"
+pytest = "^5.2"
+requests = "^2.23.0"
 
 [build-system]
 requires = ["poetry>=0.12"]

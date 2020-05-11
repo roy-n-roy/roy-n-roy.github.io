@@ -120,17 +120,6 @@ cffi = ">=1.0.0"
 
 [[package]]
 category = "dev"
-description = "Dummy package for Beautiful Soup"
-name = "bs4"
-optional = false
-python-versions = "*"
-version = "0.0.1"
-
-[package.dependencies]
-beautifulsoup4 = "*"
-
-[[package]]
-category = "dev"
 description = "cChardet is high speed universal character encoding detector."
 name = "cchardet"
 optional = false
@@ -391,18 +380,29 @@ description = "A Material Design theme for MkDocs"
 name = "mkdocs-material"
 optional = false
 python-versions = "*"
-version = "5.0.2"
+version = "5.1.6"
 
 [package.dependencies]
 Pygments = ">=2.4"
 markdown = ">=3.2"
 mkdocs = ">=1.1"
+mkdocs-material-extensions = ">=1.0b1"
 pymdown-extensions = ">=7.0"
 
 [package.source]
-reference = "d9c2accba3daf2a7da84f77030061540f139a82e"
+reference = "f407a9c16218163d41dcb0cf40d5832d3c54f1bb"
 type = "git"
 url = "https://github.com/roy-n-roy/mkdocs-material.git"
+[[package]]
+category = "main"
+description = "Extension pack for Python Markdown."
+name = "mkdocs-material-extensions"
+optional = false
+python-versions = ">=3.5"
+version = "1.0b2"
+
+[package.dependencies]
+mkdocs-material = ">=5.0.0"
 
 [[package]]
 category = "main"
@@ -692,7 +692,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "b768c3d55b6fe81f1872d1169a055c530a7bc6da4916dbd9f187ed4098b0ef26"
+content-hash = "9af9f9487c0111c4ed52af8a2c6e8d13357e92a72f87e412ab826ec2efd38aee"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -770,9 +770,6 @@ brotlipy = [
     {file = "brotlipy-0.7.0-cp37-cp37m-win_amd64.whl", hash = "sha256:1379347337dc3d20b2d61456d44ccce13e0625db2611c368023b4194d5e2477f"},
     {file = "brotlipy-0.7.0-pp226-pp226u-macosx_10_10_x86_64.whl", hash = "sha256:786afc8c9bd67de8d31f46e408a3386331e126829114e4db034f91eacb05396d"},
     {file = "brotlipy-0.7.0.tar.gz", hash = "sha256:36def0b859beaf21910157b4c33eb3b06d8ce459c942102f16988cca6ea164df"},
-]
-bs4 = [
-    {file = "bs4-0.0.1.tar.gz", hash = "sha256:36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a"},
 ]
 cchardet = [
     {file = "cchardet-2.1.6-cp35-cp35m-macosx_10_9_x86_64.whl", hash = "sha256:2aa1b008965c703ad6597361b0f6d427c8971fe94a2c99ec3724c228ae50d6a6"},
@@ -977,6 +974,10 @@ mkdocs-git-revision-date-localized-plugin = [
     {file = "mkdocs_git_revision_date_localized_plugin-0.5.2-py3-none-any.whl", hash = "sha256:3a109a2edd47cf2f80f60a272c88077ede4a88d25a46d9bdf276014bdbc3a14a"},
 ]
 mkdocs-material = []
+mkdocs-material-extensions = [
+    {file = "mkdocs-material-extensions-1.0b2.tar.gz", hash = "sha256:838580195f3f4d6c937238b1ce81365744348bca8bb2c694028aacf21bfac518"},
+    {file = "mkdocs_material_extensions-1.0b2-py3-none-any.whl", hash = "sha256:f2557ab830c2ecc0306a0741d7d943f7036b5fb167a5a92850ee6a1c9ce51d5a"},
+]
 mkdocs-minify-plugin = [
     {file = "mkdocs-minify-plugin-0.3.0.tar.gz", hash = "sha256:06fecd8ddb9cb90f30bcee2d94c3d4b46a090f403d7ff0edff089a435906c4ee"},
     {file = "mkdocs_minify_plugin-0.3.0-py2-none-any.whl", hash = "sha256:9bac96276b1681debb3eb2cf5bae972586b4c1138e8d78ea63a984ea6276563d"},
