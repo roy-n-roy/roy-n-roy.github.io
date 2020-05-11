@@ -4,18 +4,10 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "setup-pipenv",
+			"label": "setup-poetry",
 			"type": "shell",
-			"command": "pipenv",
-			"args": [ "install", "--dev" ],
-			"windows": {
-				"options": {
-					"env": {
-						"VIRTUALENV_CREATOR": "venv",
-						"VIRTUALENV_COPIES": "True",
-					},
-				},
-			},
+			"command": "poetry",
+			"args": [ "install", "--no-root" ],
 			"options": {
 				"cwd": "${workspaceFolder}/release",
 			},
@@ -25,12 +17,10 @@
 			"label": "mkdocs-serve",
 			"type": "shell",
 			"isBackground": true,
-			"command": "pipenv run mkdocs serve",
+			"command": "poetry",
+			"args": [ "run", "mkdocs", "serve", "--config-file", "../mkdocs.yml" ],
 			"options": {
-				"env": {
-					"PIPENV_PIPFILE": "${workspaceFolder}/release/Pipfile",
-				},
-				"cwd": "${workspaceFolder}"
+				"cwd": "${workspaceFolder}/release"
 			},
 			"problemMatcher": {
 				"owner": "custom",
@@ -48,7 +38,8 @@
 			"label": "mkdocs-check-serve",
 			"type": "shell",
 			"isBackground": true,
-			"command": "pipenv run mkdocs serve",
+			"command": "poetry",
+			"args": [ "run", "mkdocs", "serve" ],
 			"options": {
 				"cwd": "${workspaceFolder}/release"
 			},
@@ -75,7 +66,8 @@
 		{
 			"label": "mkdocs-deploy",
 			"type": "shell",
-			"command": "pipenv run mkdocs gh-deploy",
+			"command": "poetry",
+			"args": [ "run", "mkdocs", "gh-deploy" ],
 			"options": {
 				"cwd": "${workspaceFolder}/release"
 			},
@@ -87,7 +79,8 @@
 		{
 			"label": "mkdocs-test",
 			"type": "shell",
-			"command": "pipenv run py.test",
+			"command": "poetry",
+			"args": [ "run", "pytest" ],
 			"options": {
 				"cwd": "${workspaceFolder}/release"
 			},
