@@ -8,7 +8,7 @@ on:
     paths:
       - 'docs/**/*.md'
       - 'docs/imgs/**'
-      - 'Pipfile.lock'
+      - 'poetry.lock'
       - 'mkdocs.yml'
 
 jobs:
@@ -46,33 +46,33 @@ jobs:
         with:
           python-version: '3.8'
 
-      # Pipfile.lockのハッシュ値が一致する場合は、
+      # poetry.lockのハッシュ値が一致する場合は、
       # 以前に実行した際のpipのキャッシュを復元する
       - name: Get pip cache
         id: cache-pip
         uses: actions/cache@v1
         with:
-          path: ~\AppData\Local\pip\Cache
-          key: pip-${{ hashFiles('Pipfile.lock') }}
+          path: ~/AppData/Local/pypoetry/Cache
+          key: pip-${{ hashFiles('poetry.lock') }}
 
-      # Pipenvをインストールする
-      # Pipfile.lockから依存関係をインストールする
+      # Poetryをインストールする
+      # poetry.lockから依存関係をインストールする
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pipenv
-          pipenv install --dev --deploy --system --ignore-pipfile
+          pip install poetry
+          poetry install --no-root
 
       # pytestでテストを実行する
       - name: Test with pytest
         run: |
-          pipenv run pytest
+          poetry run pytest
 
       # MkDocsでGitHubへデプロイする
       - name: MkDocs Deploy
         run: |
           git fetch --depth=1 origin master
-          pipenv run mkdocs gh-deploy
+          poetry run mkdocs gh-deploy
 
       # Slackへ通知する
       - name: Notify Slack
