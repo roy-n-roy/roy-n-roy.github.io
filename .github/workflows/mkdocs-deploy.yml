@@ -3,12 +3,11 @@ name: MkDocs Test and Deploy
 on: 
   push:
     # releaseブランチのdocsディレクトリ配下で
-    # Markdownファイルがpushされた時に実行する
+    # Markdown、画像、設定ファイルがpushされた時に実行する
     branches: release
     paths:
       - 'docs/**/*.md'
       - 'docs/imgs/**'
-      - 'poetry.lock'
       - 'mkdocs.yml'
 
 jobs:
@@ -60,7 +59,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install poetry
+          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+          $env:PATH=($env:PATH -replace ";$","") + ";$env:USERPROFILE/.poetry/bin;"
           poetry install --no-root
 
       # pytestでテストを実行する
