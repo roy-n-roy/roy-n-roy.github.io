@@ -393,7 +393,7 @@ description = "Extension pack for Python Markdown."
 name = "mkdocs-material-extensions"
 optional = false
 python-versions = ">=3.5"
-version = "1.0b2"
+version = "1.0"
 
 [package.dependencies]
 mkdocs-material = ">=5.0.0"
@@ -968,8 +968,8 @@ mkdocs-git-revision-date-localized-plugin = [
 ]
 mkdocs-material = []
 mkdocs-material-extensions = [
-    {file = "mkdocs-material-extensions-1.0b2.tar.gz", hash = "sha256:838580195f3f4d6c937238b1ce81365744348bca8bb2c694028aacf21bfac518"},
-    {file = "mkdocs_material_extensions-1.0b2-py3-none-any.whl", hash = "sha256:f2557ab830c2ecc0306a0741d7d943f7036b5fb167a5a92850ee6a1c9ce51d5a"},
+    {file = "mkdocs-material-extensions-1.0.tar.gz", hash = "sha256:17d7491e189af75700310b7ec33c6c48a22060b8b445001deca040cb60471cde"},
+    {file = "mkdocs_material_extensions-1.0-py3-none-any.whl", hash = "sha256:09569c3694b5acc1e8334c9730e52b4bcde65fc9d613cc20e49af131ef1a9ca0"},
 ]
 mkdocs-minify-plugin = [
     {file = "mkdocs-minify-plugin-0.3.0.tar.gz", hash = "sha256:06fecd8ddb9cb90f30bcee2d94c3d4b46a090f403d7ff0edff089a435906c4ee"},
