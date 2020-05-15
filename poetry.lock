@@ -339,7 +339,7 @@ description = "Project documentation with Markdown."
 name = "mkdocs"
 optional = false
 python-versions = ">=3.5"
-version = "1.1.1"
+version = "1.1.2"
 
 [package.dependencies]
 Jinja2 = ">=2.10.1"
@@ -958,8 +958,8 @@ mccabe = [
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
 mkdocs = [
-    {file = "mkdocs-1.1.1-py3-none-any.whl", hash = "sha256:9fe57f2631ea39ebb50571af9998004a90f010cbc9cb9f24c4237ecad7211a96"},
-    {file = "mkdocs-1.1.1.tar.gz", hash = "sha256:33d5843e17ce7f21c40a31e04550eac2826697d8417c5a3f3dd50b9c3953cd04"},
+    {file = "mkdocs-1.1.2-py3-none-any.whl", hash = "sha256:096f52ff52c02c7e90332d2e53da862fde5c062086e1b5356a6e392d5d60f5e9"},
+    {file = "mkdocs-1.1.2.tar.gz", hash = "sha256:f0b61e5402b99d7789efa032c7a74c90a20220a9c81749da06dbfbcbd52ffb39"},
 ]
 mkdocs-git-revision-date-localized-plugin = [
     {file = "mkdocs-git-revision-date-localized-plugin-0.5.2.tar.gz", hash = "sha256:9a5f4f0f9de298af7c11f749822b9396d83c7920369ccd868d9cf035a627021f"},
