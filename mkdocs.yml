@@ -1,4 +1,14 @@
 site_name: roy-n-roy メモ
+site_author: Roy.
+site_description: Windows, Network, Docker, Raspberry Pi などについて、調べたこと/やってみたことをメモ書き
+site_url: https://roy-n-roy.github.io/
+repo_name: roy-n-roy.github.io
+repo_url: https://github.com/roy-n-roy/roy-n-roy.github.io
+remote_name: origin
+remote_branch: master
+#edit_uri: edit/release/docs/
+edit_uri: ''
+copyright: © 2019- Roy.
 theme:
   name: material
   logo: imgs/logo.svg
@@ -8,7 +18,7 @@ theme:
     - tabs
   palette:
     primary: deep orange
-site_url: https://roy-n-roy.github.io/
+    accent: deep orange
 markdown_extensions:
   - admonition
   - codehilite
@@ -17,11 +27,11 @@ markdown_extensions:
   - pymdownx.tabbed
   - pymdownx.details
 plugins:
-  - search
+  - search:
+      lang: ['ja']
   - git-revision-date-localized
   - minify:
       minify_html: true
-remote_branch: master
 extra:
   search:
     language: ja
