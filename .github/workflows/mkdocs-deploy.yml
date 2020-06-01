@@ -55,12 +55,15 @@ jobs:
           key: pip-${{ hashFiles('poetry.lock') }}
 
       # Poetryをインストールする
-      # poetry.lockから依存関係をインストールする
-      - name: Install dependencies
+      - name: Install Poetry
         run: |
           python -m pip install --upgrade pip
           curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-          $env:PATH=($env:PATH -replace ";$","") + ";$env:USERPROFILE/.poetry/bin;"
+          echo "::set-env name=PATH::$env:PATH;$HOME/.poetry/bin"
+
+      # poetry.lockから依存関係をインストールする
+      - name: Install dependencies
+        run: |
           poetry install --no-root
 
       # pytestでテストを実行する
@@ -77,8 +80,10 @@ jobs:
       # Slackへ通知する
       - name: Notify Slack
         if: always()
-        uses: pioug/le-slack-message@v1.0.0
+        uses: 8398a7/action-slack@v3
         with:
-          ACTION_NAME: MkDocs Test and Deploy@roy-n-roy/roy-n-roy.github.io 
-          JOB: ${{ toJson(job) }}
+          status: ${{ job.status }}
+          fields: repo,message,author,action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
