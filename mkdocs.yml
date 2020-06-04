@@ -28,13 +28,12 @@ markdown_extensions:
   - pymdownx.details
 plugins:
   - search:
-      lang: ['ja']
+      lang:
+        - ja
   - git-revision-date-localized
   - minify:
       minify_html: true
 extra:
-  search:
-    language: ja
   social:
     - icon: fontawesome/brands/github-alt
       link: https://github.com/roy-n-roy/
