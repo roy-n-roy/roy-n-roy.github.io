@@ -13,7 +13,7 @@ Djangoには、DBデータのダンプ作成/ロード機能が標準で用意�
 !!! note "ダンプデータ取得コマンド"
 	```
 	docker-compose exec webapp \
-		sh -lc "python manage.py dumpdata --format xml 2> /dev/null" > data.xml
+	    sh -lc "python manage.py dumpdata --format xml 2> /dev/null" > data.xml
 	bzip2 data.xml
 	```
 
@@ -26,9 +26,9 @@ Djangoには、DBデータのダンプ作成/ロード機能が標準で用意�
 !!! note "ダンプデータロードコマンド"
 	```
 	docker-compose run --rm -v $(pwd)/data.xml.bz2:/tmp/data.xml.bz2:ro webapp \
-		sh -lc "python manage.py migrate && \
-			python manage.py flush && \
-			python manage.py loaddata --exclude contenttypes /tmp/data.xml.bz2"
+	    sh -lc "python manage.py migrate && \
+	        python manage.py flush && \
+	        python manage.py loaddata --exclude contenttypes /tmp/data.xml.bz2"
 	```
 
 この後、`docker-compose up -d` でアプリを立ち上げて、データが読み込めていたら完了です。  
