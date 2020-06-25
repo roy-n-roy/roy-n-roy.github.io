@@ -46,13 +46,15 @@ jobs:
           python-version: '3.8'
 
       # poetry.lockのハッシュ値が一致する場合は、
-      # 以前に実行した際のpipのキャッシュを復元する
+      # 以前に実行した際のキャッシュを復元する
       - name: Get pip cache
         id: cache-pip
         uses: actions/cache@v1
         with:
           path: ~/AppData/Local/pypoetry/Cache
-          key: pip-${{ hashFiles('poetry.lock') }}
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
 
       # Poetryをインストールする
       - name: Install Poetry
