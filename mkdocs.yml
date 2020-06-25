@@ -46,5 +46,5 @@ extra_css:
     - lightbox2/css/lightbox.min.css
     - styles/git_revision_date.css
 google_analytics:
-  - UA-149709379-1
+  - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_TRACKING_ID"]
   - auto

@@ -73,6 +73,8 @@ jobs:
 
       # MkDocsでGitHubへデプロイする
       - name: MkDocs Deploy
+        env:
+          GOOGLE_ANALYTICS_TRACKING_ID: ${{ secrets.GOOGLE_ANALYTICS_TRACKING_ID }}
         run: |
           git fetch --depth=1 origin master
           poetry run mkdocs gh-deploy
