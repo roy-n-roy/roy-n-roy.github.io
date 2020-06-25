@@ -1,4 +1,4 @@
-# Docker Composeのイメージ更新自動化
+# Dockerイメージの更新自動化
 Docker Composeで起動したコンテナのイメージを自動更新したかったので、
 下記のようなスクリプトを作成してcrontabに登録しました。
 
