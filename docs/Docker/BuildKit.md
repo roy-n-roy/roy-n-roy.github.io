@@ -1,5 +1,5 @@
 
-# BuildKit
+# BuildKitでイメージをビルドする
 
 ## BuildKitとは
 下記引用。  
@@ -24,70 +24,127 @@
 > 
 > Docker や Docker Compose で正式に利用できるようになりつつあるため、しばしば Docker の新しいビルド機能として紹介されています。
 > 
-> <cite>[BuildKitによりDockerとDocker Composeで外部キャッシュを使った効率的なビルドをする方法 - Qiita][2]</cite>
+> 引用: <cite>[BuildKitによりDockerとDocker Composeで外部キャッシュを使った効率的なビルドをする方法 - Qiita][2]</cite>
 
 ## BuildKitの実装
 
+2020年6月時点では、BuildKitの実装は下記の2種類が存在します。
+
+1. Docker 18.06以降のDocker Engineに統合されているBuildKit
+1. buildkitdというデーモンとして実装されているBuildKit
 
 
-## BuildKitの利用方法
+2.のデーモン版では 1.のEngine統合版に対して、新たな機能が追加されています。
+また、Dockerとは完全に分離されており、BuildKit単体でもイメージをビルドが可能になっています。
 
-BuildKitを利用するには、下記の2種類の方法があります。
+dockerコマンドから 2.のBuildKitでフル機能を利用するには、[docker-buildx][3]というプラグインを利用します。
 
-0. docker単体で利用する方法
-    0. dockerデーモンの設定を変更して利用する方法
-    0. 環境変数を設定して利用する方法
-0. docker-buildxプラグインを追加してBuildKitを利用する方法
+それぞれで、利用できる機能については下記の表を参照してください。
 
-ただし 1. の方法では、一部機能に制限があります。  
-各機能の利用可否については下記の表を参照して下さい。
+### 利用できる機能の比較
 
-## 利用できる機能の比較
+| 機能 | Docker Engine<br>統合版 | buildkitd<br>デーモン版 | 説明 |
+| --------------- | :---------------------: | :---------------------: | ---- |
+| マルチステージビルドの並列実行                     | ✅ | ✅ | マルチステージDockerfileの各ステージのビルドを可能な限り並列で実行します。 |
+| マルチプラットフォーム対応のイメージビルド         | -- | ✅ | Intel(一般的なPC/サーバ)やArm(Raspberry Piなど)の複数のアーキテクチャで利用できるDockerイメージをビルドします。 |
+| Composeファイルでのビルド                          | -- | ✅ | docker-compose.ymlファイルからDockerfileやビルドコンテキストを読み取ってビルドします。 |
+| ビルドキャッシュの出力<br>&emsp;&emsp;inline形式   | ✅ | ✅ | ビルドキャッシュをイメージに埋め込み、DockerHubなどのレジストリに保存します。<br>マルチステージビルドの場合は、最終的にコマンドが実行されるステージのキャッシュのみが保存されます。 |
+| &emsp;&emsp;registry形式                           | -- | ✅ | ビルドキャッシュとイメージを分けて、DockerHubなどのレジストリに保存します。<br>マルチステージビルドの場合、全てのステージのキャッシュを保存できます。 |
+| &emsp;&emsp;local形式                              | -- | ✅ | OCIイメージフォーマットに準拠した形式で、ローカルディレクトリにビルドキャッシュを保存します。<br>マルチステージビルドの場合、全てのステージのキャッシュを保存できます。 |
+| ビルドキャッシュの使用<br>&emsp;&emsp;registry形式 | ✅ | ✅ | DockerHubなどのレジストリから、inline形式/egistry形式のビルドキャッシュを取得します。 |
+| &emsp;&emsp;local形式                              | -- | ✅ | ローカルディレクトリから、local形式のビルドキャッシュを取得します。 |
+| Dockerfileの実験的機能の使用                       | ✅ | ✅ | ビルドステップ単位で、パッケージマネージャのキャッシュ(--mount&nbsp;tyle=cache)や認証情報(--mount&nbsp;type=secret)をマウントしたり、ネットワークを制御(--network=none\|host\|default)するなどができます。<br>詳細は [GitHub上のドキュメント][6] を参照してください。 |
 
-| 機能                        | dockerコマンド組み込み |  buildxプラグイン  |   |
-| --------------------------- | :--------: | :----------------: | - |
-| マルチステージビルドの並列実行                     | ✅ | ✅ |
-| ビルドキャッシュの出力<br>&emsp;&emsp;inline形式   | ✅ | ✅ |
-| &emsp;&emsp;registry形式                           | -- | ✅ |
-| &emsp;&emsp;local形式                              | -- | ✅ |
-| ビルドキャッシュの使用<br>&emsp;&emsp;registry形式 | ✅ | ✅ |
-| &emsp;&emsp;local形式                              | -- | ✅ |
-| Dockerfileの実験的機能の使用<br>&emsp;&emsp;RUN --mount=type=bind | ✅ | ✅ |
-| &emsp;&emsp;RUN --mount=type=cache                 | ✅ | ✅ |
-| &emsp;&emsp;RUN --mount=type=tmpfs                 | ✅ | ✅ |
-| &emsp;&emsp;RUN --mount=type=secret                | ✅ | ✅ |
-| &emsp;&emsp;RUN --mount=type=ssh                   | ✅ | ✅ |
-| &emsp;&emsp;RUN --security=insecure\|sandbox       | ✅ | ✅ |
-| &emsp;&emsp;RUN --network=none\|host\|default      | ✅ | ✅ |
+## Docker EngineのBuildKitを利用する
 
-## BuildKitの有効化
-### docker単体で利用する
-docker単体でBuildKitを利用する方法です。  
+Docker 18.06以降のDocker Engineに統合されているBuildKitを利用するには、2つの方法があります。
 
-* 方法1
-    `/etc/docker/daemon.json` ファイルに下記の設定を追加します。
+0. Docker Engineの設定を変更して利用する方法  
+    この方法では、docker build実行時にデフォルトでBuildKitを使用するように、Dockerデーモンの設定ファイルを変更します。  
 
-
-    !!! info "/etc/docker/daemon.json"
+    ??? tip "設定方法"
+        `/etc/docker/daemon.json`ファイルに下記を追加してからDocker Engineを再起動します。
         ``` json
         {
-           "features": {
+        "features": {
                 "buildkit": true
             }
         }
         ```
 
-* 方法2
-    環境変数で`DOCKER_BUILDKIT=1`を設定します。  
-    bashの場合: `export DOCKER_BUILDKIT=1`
+        bashの場合
 
-上記のどちらかを設定した上で、`docker build`コマンドを実行するとBuildKitが有効化されます。
+        ``` bash
+        # /etc/docker/daemon.jsonファイルに設定追加
+        (test -f /etc/docker/daemon.json && cat /etc/docker/daemon.json || echo "{}") | \
+            jq '. |= .+{"features": {"buildkit": true}}' | sudo tee /etc/docker/daemon.json
+        # Docker Engineを再起動
+        sudo systemctl restart docker.servie
 
-### docker-buildxプラグインを使って利用する
+        # Dockerイメージをビルド
+        docker build .
+        ```
+    設定変更とデーモンの再起動をするため、root権限が必要になります。  
+    root権限が取得できない場合や、一時的にBuildKitを利用する場合は、2. の方法を試してください。
 
-docker-buildxは2020年6月現在では、まだ実験的機能と位置づけられています。  
-そのためbuildxを利用するには、まずdocker CLIの設定で実験的機能を有効化した上で、
-docker-buildxプラグインをインストールする必要があります。  
+0. 環境変数を設定して利用する方法  
+    環境変数 `DOCKER_BUILDKIT` を設定すると`docker build`コマンド実行時にBuildKitでビルドされるようになります。
+
+    ??? tip "環境変数の設定"
+        環境変数で`DOCKER_BUILDKIT=1`を設定します。  
+        bashの場合
+        ``` bash
+        export DOCKER_BUILDKIT=1
+        docker build -t .
+        # または
+        DOCKER_BUILDKIT=1 docker build .
+        ```
+    環境変数の追加だけのため、root権限が不要です。  
+    他のユーザーでも必ずBuildKitを使ってでビルドさせたい場合は、1.の方法で設定すると良いでしょう。
+
+## フル機能のBuildKitを利用する
+
+0. buildkitdを起動して、buildctlコマンドから利用する方法
+
+    ??? tip "buildctlコマンドから利用"
+        ```
+            # buildkitをインストール
+            curl -sSL https://github.com/moby/buildkit/releases/download/v0.7.1/buildkit-v0.7.1.linux-arm-v7.tar.gz | sudo tar zxf - -C /usr/local/
+            # buildkitdデーモンを起動
+            sudo buildkitd
+            # buildctlコマンドでビルド実行
+            sudo buildctl build --frontend=dockerfile.v0 --local context=. --local dockerfile=.
+        ```
+
+0. docker-buildxプラグインで、docker-containerドライバを通して利用する方法
+
+    docker-buildxは2020年6月現在では、まだ実験的機能と位置づけられています。  
+    そのためbuildxを利用するには、まずdocker CLIの設定で実験的機能を有効化した上で、
+    docker-buildxプラグインをインストールする必要があります。  
+
+    ??? tip "docker-buildxを通してBuildKitを利用"
+        ``` bash
+            # 実験的機能の有効化
+            cp -p ~/.docker/config.json{,.bk} && jq '. |= .+{"experimental": "enabled"}' < ~/.docker/config.json.bk > ~/.docker/config.json
+            # docker-buildxのインストール
+            mkdir -p ~/.docker/cli-plugins
+            curl -sSLo ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/v0.4.1/buildx-v0.4.1.linux-amd64
+            chmod +x ~/.docker/cli-plugins/docker-buildx
+            # buildxのバージョン表示確認
+            docker buildx version
+        ```
+    
+
+    また、docker-buildxプラグインには、ビルダーインスタンスと呼ばれる構成要素があり、このインスタンスを使用してビルドを実行します。  
+    デフォルトでは、Docker Engine統合のBuildKitを使用する"docker"ドライバのビルダーインスタンスを使用するにようなっているため、
+    コンテナー内でbuildkitdデーモンを起動して、そこでビルドを実行する"docker-container"ドライバのビルダーインスタンスを作成し、ビルダーインスタンスを切り替えます。  
+
+    ```
+        # コンテナドライバのビルダーインスタンスを作成、現在のインスタンスを切り替える
+        docker buildx create --name container-builder --driver docker-container --use
+        docker buildx build .
+        docker buildx stop
+    ```
 
 #### 実験的機能の有効化
 * Docker for Linux の場合  
@@ -135,3 +192,4 @@ CLIでは、下記のコマンドを実行します。
 [3]: https://github.com/docker/buildx
 [4]: https://docs.docker.com/buildx/working-with-buildx/
 [5]: https://github.com/marketplace/actions/docker-buildx
+[6]: https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/experimental.md
