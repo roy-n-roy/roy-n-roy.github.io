@@ -387,10 +387,9 @@ mkdocs-material-extensions = ">=1.0"
 pymdown-extensions = ">=7.0"
 
 [package.source]
-reference = "b0a7963fdff74f78b7df4397d755d465864b52f5"
+reference = "8da218775b039917ad6193b44f0759d6f6ae4074"
 type = "git"
 url = "https://github.com/roy-n-roy/mkdocs-material.git"
-
 [[package]]
 category = "main"
 description = "Extension pack for Python Markdown."
