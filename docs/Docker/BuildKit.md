@@ -3,58 +3,52 @@
 
 Dockerでコンテナイメージをビルドするときに、下記のようなことを考えていました。
 
-* コンテナイメージのサイズを小さくしたい
-* ビルド時間を短くしたい
-* Raspberry Piでも動くコンテナイメージを作りたい
+1. ビルド時間を短くしたい
+1. Raspberry Piでも動くコンテナイメージを作りたい
 
 ## 結論
-* [Best practices for writing Dockerfiles | Docker Documentation][7]を読みましょう
-* BuildKitでビルドしてみましょう
+**BuildKitでマルチステージビルドをする**
 
-[7]: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
-
-説明をスキップしてビルド方法が知りたい場合は、[フル機能のBuildKitでビルド](#buildkit_2) から読んでください。
-
-### コンテナイメージのサイズを小さくするには
-* AlpineLinuxのイメージをベースに選択する
-* マルチステージビルドを採用し、ビルド成果物だけを実行イメージに配置する
-* パッケージマネージャのキャッシュをレイヤーに残さない
-
-### ビルド時間を短くするには
-* マルチステージビルドを採用し、BuildKitで各ステージを並列ビルドする
-* ビルドキャッシュを最大限利用する
-
-### Raspberry Piでも動くコンテナイメージを作るには
-* BuildKitを使用して、マルチアーキテクチャ対応のコンテナイメージをビルドする
+説明をスキップしてビルド方法が知りたい場合は、[BuildKitとdocker-buildxプラグイン](#buildkitdocker-buildx) の章から読んでください。
 
 ## BuildKitとは
-BuildKitとは、コンテナをビルドするためのツールキットであり、
+BuildKitとは、コンテナをビルドするためのツールキットであり、  
 `buildkitd`というデーモンと`buildctl`というCLIツールで構成されています。
 
-また、BuildKitの機能の一部はDocker 18.06以降のDocker Engineに統合されており、
+Dockerの標準のビルドと比べて、BuildKitでビルドした場合には以下のようなメリットがあります。
+
+* マルチステージDockerfileの各ステージを並列ビルドできる
+* ビルドキャッシュをDockerHubなどに外部保存/再利用ができる
+* マルチアーキテクチャ対応のイメージをビルドできる
+
+また、BuildKitの一部機能はDocker 18.06以降のDocker Engineに統合されており、
 Docker単体でもBuildKitの一部機能を利用することができます。
 
-Docker Engine統合版と`buildkitd`での利用可能な機能については[利用できる機能の比較][#_3]を参照してください。
+### BuildKit 機能の比較
+2020年6月時点で、Docker 18.06以降のDocker Engineに統合されているBuildKitと、
+`buildkitd`というデーモンと`buildctl`というCLIツールのBuildKitには、利用できる機能に差があります。
 
-### 利用できる機能の比較
+それぞれで利用できる機能の差については、下記の表を参照してください。
 
 | 機能 | Docker Engine<br>統合版 | `buildkitd`<br>デーモン版 | 説明 |
 | --------------- | :---------------------: | :---------------------: | ---- |
 | マルチステージビルドの並列実行                     | ✅ | ✅ | マルチステージDockerfileの各ステージのビルドを可能な限り並列で実行します。 |
 | マルチプラットフォーム対応のイメージビルド         | -- | ✅ | Intel(一般的なPC/サーバ)やArm(Raspberry Piなど)の複数のアーキテクチャで利用できるDockerイメージをビルドします。 |
-| Composeファイルでのビルド                          | -- | ✅ | docker-compose.ymlファイルからDockerfileやビルドコンテキストを読み取ってビルドします。 |
 | ビルドキャッシュの出力<br>&emsp;&emsp;inline形式   | ✅ | ✅ | ビルドキャッシュをイメージに埋め込み、DockerHubなどのレジストリに保存します。<br>マルチステージビルドの場合は、最終的にコマンドが実行されるステージのキャッシュのみが保存されます。 |
 | &emsp;&emsp;registry形式                           | -- | ✅ | ビルドキャッシュとイメージを分けて、DockerHubなどのレジストリに保存します。<br>マルチステージビルドの場合、全てのステージのキャッシュを保存できます。 |
 | &emsp;&emsp;local形式                              | -- | ✅ | OCIイメージフォーマットに準拠した形式で、ローカルディレクトリにビルドキャッシュを保存します。<br>マルチステージビルドの場合、全てのステージのキャッシュを保存できます。 |
 | ビルドキャッシュの使用<br>&emsp;&emsp;registry形式 | ✅ | ✅ | DockerHubなどのレジストリから、inline形式/egistry形式のビルドキャッシュを取得します。 |
 | &emsp;&emsp;local形式                              | -- | ✅ | ローカルディレクトリから、local形式のビルドキャッシュを取得します。 |
+| Composeファイルでのビルド                          | -- | ✅ | docker-compose.ymlファイルからDockerfileやビルドコンテキストを読み取ってビルドします。 |
 | Dockerfileの実験的機能の使用                       | ✅ | ✅ | ビルドステップ単位で、パッケージマネージャのキャッシュ(--mount&nbsp;tyle=cache)や認証情報(--mount&nbsp;type=secret)をマウントしたり、ネットワークの制御(--network=none\|host\|default)などができます。<br>詳細は [GitHub上のドキュメント][6] を参照してください。 |
 
-## フル機能のBuildKitでビルド
-フル機能のBuildKitを使用してビルドをするには、`buildkitd`デーモンを起動して`buildctl`コマンドから実行できますが、
-すでにDockerを使用している場合は、docker-buildxプラグインを利用すると便利です。
+## BuildKitとdocker-buildxプラグイン
+BuildKitを使用してビルドをするには、`buildkitd`デーモンを起動して`buildctl`コマンドからビルドを実行できます。  
+しかし、既にDockerを使用しているのであれば、docker-buildxプラグインを利用することで、
+下記の様なメリットがあります。
 
-### docker-buildxプラグインでビルド
+* `buildkitd`デーモンがインストールされたコンテナを自動で起動
+* dockerコマンドと同じようなUIでビルドができる
 
 [docker-buildx][3]プラグインを利用するには下記の2点が必要です。
 
@@ -117,7 +111,10 @@ Docker Engine統合版と`buildkitd`での利用可能な機能については[�
     docker buildx stop
     ```
 
+## その他のBuildKitの利用方法
 ### Dockerを使用せず、buildkitdとbuildctlでビルドする
+以降の章ではdocker-buildxプラグインを利用しないBuildKitでのビルド方法を説明します。  
+
 Dockerを使用せずにビルドするには、BuildKitのインストールが必要です。
 以下の手順でインストールし、デーモンを起動します。
 
@@ -141,7 +138,7 @@ Dockerを使用せずにビルドするには、BuildKitのインストールが
     sudo buildctl build --frontend=dockerfile.v0 --local context=. --local dockerfile=.
     ```
 
-## Docker EngineのBuildKitでビルド
+### Docker EngineのBuildKitでビルド
 BuildKitやdocker-buildxプラグインをインストールせず、
 Docker 18.06以降のDocker Engineに統合されているBuildKitでビルドします。
 
@@ -171,9 +168,14 @@ Docker 18.06以降のDocker Engineに統合されているBuildKitでビルド�
 [Docker Buildx | Docker Documentation][4]  
 [Docker Buildx · Actions · GitHub Marketplace][5]  
 
+
 [1]: https://github.com/moby/buildkit
 [2]: https://qiita.com/tatsurou313/items/ad86da1bb9e8e570b6fa
 [3]: https://github.com/docker/buildx
 [4]: https://docs.docker.com/buildx/working-with-buildx/
 [5]: https://github.com/marketplace/actions/docker-buildx
 [6]: https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/experimental.md
+[7]: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/  
+
+[^7]: [Best practices for writing Dockerfiles | Docker Documentation][7]
+
