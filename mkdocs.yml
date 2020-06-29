@@ -1,6 +1,6 @@
 site_name: roy-n-roy メモ
 site_author: Roy.
-site_description: Windows, Network, Docker, Raspberry Pi などについて、調べたこと/やってみたことをメモ書き
+site_description: コンピューターについて、調べたこと/やってみたことをメモ書き
 site_url: https://roy-n-roy.github.io/
 repo_name: roy-n-roy.github.io
 repo_url: https://github.com/roy-n-roy/roy-n-roy.github.io
@@ -17,8 +17,9 @@ theme:
   features:
     - tabs
   palette:
+    scheme: preference
     primary: deep orange
-    accent: deep orange
+    accent: amber
 markdown_extensions:
   - admonition
   - codehilite
