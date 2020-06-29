@@ -12,43 +12,53 @@ BuildKitについての説明をスキップしてビルド方法を知りたい
 [BuildKitとdocker-buildxプラグイン](#buildkitdocker-buildx) の章から読んでください。
 
 ## BuildKitとは
-BuildKitとは、コンテナをビルドするためのツールキットであり、  
+[BuildKit][1][^1] とは、コンテナをビルドするためのツールキットであり、  
 `buildkitd`というデーモンと`buildctl`コマンドで構成されています。
 
 Dockerの標準のビルドと比べて、BuildKitでビルドした場合には以下のようなメリットがあります。
 
 * マルチステージDockerfileの各ステージを並列ビルドできる
 * ビルドキャッシュをDockerHubなどに外部保存/再利用ができる
-* マルチプラットフォーム対応のイメージをビルドできる (2020年6月現在ではLinuxのみ)
+* マルチプラットフォーム対応のイメージをビルドできる (2020年6月時点ではLinuxのみ)
 * Dockerfile内のビルド時に実行するRUNコマンドで、新たな実験的機能を使用できる  
     * SSH接続でリモートのファイルを取得
-    * 秘密鍵などのファイルをイメージ内に残さないようにマウント など[^6]
+    * 秘密鍵などのファイルをイメージ内に残さないようにマウント など[^5]
 
 また、BuildKitの一部機能はDocker 18.06以降のDocker Engineに統合されており、  
 Docker単体でもBuildKitの一部機能を利用することができます。
 
+<figure style="text-align: center;">
+<a href="/imgs/docker_buildkit_buildkit.png" data-lightbox="docker_buildkit"><img src="/imgs/docker_buildkit_buildkit.png" width=80% /></a><br>
+<figcaption>図: Docker Engine統合のBuildKitでのビルドと、<br>buildkitd, buildctl を使用したビルド</figcaption>
+</figure>
+
 ## BuildKitとdocker-buildxプラグイン
 BuildKitを使用してビルドをするには、`buildkitd`デーモンを起動して`buildctl`コマンドからビルドを実行できます。  
-しかし、既にDockerを使用しているのであれば、docker-buildxプラグインを利用することで、
+しかし、既にDockerを使用しているのであれば、[docker-buildx][2][^2] プラグインを利用することで、
 下記の様なメリットがあります。
 
 * ビルド時に、自動で `buildkitd`, `buildctl` を含むコンテナを起動
 * dockerコマンドと同じようなUIでビルドができる
 
+<figure style="text-align: center;">
+<a href="/imgs/docker_buildkit_buildx.png" data-lightbox="docker_buildkit"><img src="/imgs/docker_buildkit_buildx.png" width=80% /></a>  
+<figcaption>図: docker-buildxプラグインを使用したビルド</figcaption>
+</figure>
+
 ### docker-buildxプラグインをインストール
-[docker-buildx][3] プラグインを利用するには下記の3点が必要です。
+[docker-buildx][2][^2] プラグインを利用するには下記の3点が必要です。
 
 * **Docker CLIの実験的機能の有効化**  
-    docker-buildxは2020年6月現在では、まだ実験的機能と位置づけられているため、
+    docker-buildxは2020年6月時点では、まだ実験的機能と位置づけられているため、
     docker CLIの設定で実験的機能を有効化する必要があります。  
 
 * **docker-buildxプラグインのインストール** (Docker for Linuxの場合)  
-    Docker for Linuxを使用している場合は、[GitHubのdocker/buildx][3] のリリースページからバイナリをダウンロード、インストールします。  
+    Docker for Linuxを使用している場合は、[GitHubのdocker/buildx][2] のリリースページからバイナリをダウンロード、インストールします。  
     Docker Desktopの場合は、あらかじめインストールされています。
 
 * **qemu-user-staticのインストール** (Docker for Linuxの場合)  
     マルチプラットフォームイメージをビルドする場合は、対応するアーキテクチャの実行環境が必要です。  
-    今回は qemu-user-static をインストールし、エミュレーション環境を用意します。  
+    今回は qemu-user-static をインストール[^6]し、エミュレーション環境を用意します。  
     こちらもDocker Desktopの場合は、あらかじめインストールされています。
 
 === "Docker Desktop for Windows/Mac の場合"
@@ -137,7 +147,7 @@ Docker Hubなどのレジストリに/から、ビルドキャッシュをイン
 
 また、マルチプラットフォームイメージをビルドする場合は、`--platform`オプションを使用します。
 
-!!! tip "buildxでマルチプラットフォームイメージをビルド"
+!!! tip "buildxでマルチプラットフォームイメージをビルドしてpush"
     ``` bash
     # x86,x64,armv6,armv7,aarch64で利用できるイメージをビルドしてpush
     docker buildx build \
@@ -145,10 +155,32 @@ Docker Hubなどのレジストリに/から、ビルドキャッシュをイン
         --push --tag username/repo_name:tag_name .
     ```
 
+!!! info "参考: キャッシュタイプの一覧 (2020年6月時点)"
+    | キャッシュタイプ | 説明                                                                              |
+    | ---------------- | --------------------------------------------------------------------------------- |
+    | inlineタイプ     | コンテナイメージにビルドキャッシュを埋め込んで、イメージと一緒にDockerHubなどのレジストリに保存します。 |
+    | registryタイプ   | コンテナイメージとビルドキャッシュを別々にして、DockerHubなどのレジストリに保存します。<br>イメージとキャッシュ保存先でリポジトリ名:タグ名が、同じ場合/異なる場合のどちらでもエクスポート/インポートが可能です。 |
+    | localタイプ      | ビルドを実行するローカルホスト上のファイルシステムにビルドキャッシュを保存します。<br>CIツールを使用してビルドキャッシュを保存する場合などに便利です。 |
+
+    最新の情報については、[docker/buildxのドキュメンテーション](https://github.com/docker/buildx#documentation) を参照して下さい。  
+
+!!! info "参考: プラットフォームの一覧 (2020年6月時点)"
+    | プラットフォーム名 |                                                            |
+    | ------------------ | ---------------------------------------------------------- |
+    | linux/386          | Linux / Intel x86(32bit) アーキテクチャ                    |
+    | linux/amd64        | Linux / Intel x86_64(64bit) アーキテクチャ                 |
+    | linux/arm/v6       | Linux / ARM v6(32bit) アーキテクチャ                       |
+    | linux/arm/v7       | Linux / ARM v6(32bit) アーキテクチャ                       |
+    | linux/arm64/v8     | Linux / ARM v8(64bit) アーキテクチャ                       |
+    | linux/mips64le     | Linux / MIPS64 Little Endian(64bit) アーキテクチャ         |
+    | linux/ppc64le      | Linux / 64-bit PowerPC Little Endian(64bit) アーキテクチャ |
+    | linux/s390x        | Linux / IBM S/390(64bit) アーキテクチャ                    |
+    | windows/amd64      | Microsoft Windows / Intel x86_64(64bit) アーキテクチャ     |
+
 ## その他のBuildKitの利用方法
-### Dockerを使用せず、buildkitdとbuildctlでビルドする
 以降の章ではdocker-buildxプラグインを利用しないBuildKitでのビルド方法を説明します。  
 
+### Dockerを使用せず、buildkitdとbuildctlでビルドする
 Dockerを使用せずにビルドするには、BuildKitのインストールが必要です。
 以下の手順でインストールし、デーモンを起動します。
 
@@ -203,33 +235,26 @@ Docker 18.06以降のDocker Engineに統合されているBuildKitでビルド�
 
 | 機能 | Docker Engine<br>統合版 | `buildkitd`<br>デーモン版 | 説明 |
 | --------------- | :---------------------: | :---------------------: | ---- |
-| マルチステージビルドの並列実行                     | ✅ | ✅ | マルチステージDockerfileの各ステージのビルドを可能な限り並列で実行します。 |
-| マルチプラットフォーム対応のイメージビルド         | -- | ✅ | Intel(一般的なPC/サーバ)やArm(Raspberry Piなど)の複数のアーキテクチャで利用できるDockerイメージをビルドします。 |
-| ビルドキャッシュの出力<br>&emsp;&emsp;inline形式   | ✅ | ✅ | ビルドキャッシュをイメージに埋め込み、DockerHubなどのレジストリに保存します。<br>マルチステージビルドの場合は、最終的にコマンドが実行されるステージのキャッシュのみが保存されます。 |
-| &emsp;&emsp;registry形式                           | -- | ✅ | ビルドキャッシュとイメージを分けて、DockerHubなどのレジストリに保存します。<br>マルチステージビルドの場合、全てのステージのキャッシュを保存できます。 |
-| &emsp;&emsp;local形式                              | -- | ✅ | OCIイメージフォーマットに準拠した形式で、ローカルディレクトリにビルドキャッシュを保存します。<br>マルチステージビルドの場合、全てのステージのキャッシュを保存できます。 |
-| ビルドキャッシュの使用<br>&emsp;&emsp;registry形式 | ✅ | ✅ | DockerHubなどのレジストリから、inline形式/egistry形式のビルドキャッシュを取得します。 |
-| &emsp;&emsp;local形式                              | -- | ✅ | ローカルディレクトリから、local形式のビルドキャッシュを取得します。 |
-| Composeファイルでのビルド                          | -- | ✅ | docker-compose.ymlファイルからDockerfileやビルドコンテキストを読み取ってビルドします。 |
-| Dockerfileの実験的機能の使用                       | ✅ | ✅ | ビルドステップ単位で、パッケージマネージャのキャッシュ(--mount&nbsp;tyle=cache)や認証情報(--mount&nbsp;type=secret)をマウントしたり、ネットワークの制御(--network=none\|host\|default)などができます。<br>詳細は [GitHub上のドキュメント][6] を参照してください。 |
+| マルチステージビルドの並列実行                       | ✅ | ✅ | マルチステージDockerfileの各ステージのビルドを可能な限り並列で実行します。 |
+| マルチプラットフォーム対応のイメージビルド           | -- | ✅ | Intel(一般的なPC/サーバ)やArm(Raspberry Piなど)の複数のアーキテクチャで利用できるDockerイメージをビルドします。 |
+| ビルドキャッシュの出力<br>&emsp;&emsp;inlineタイプ   | ✅ | ✅ | ビルドキャッシュをイメージに埋め込み、DockerHubなどのレジストリに保存します。<br>マルチステージビルドの場合は、最終的にコマンドが実行されるステージのキャッシュのみが保存されます。 |
+| &emsp;&emsp;registryタイプ                           | -- | ✅ | ビルドキャッシュとイメージを分けて、DockerHubなどのレジストリに保存します。<br>マルチステージビルドの場合、全てのステージのキャッシュを保存できます。 |
+| &emsp;&emsp;localタイプ                              | -- | ✅ | OCIイメージフォーマットに準拠した形式で、ローカルディレクトリにビルドキャッシュを保存します。<br>マルチステージビルドの場合、全てのステージのキャッシュを保存できます。 |
+| ビルドキャッシュの使用<br>&emsp;&emsp;registryタイプ | ✅ | ✅ | DockerHubなどのレジストリから、inline形式/egistry形式のビルドキャッシュを取得します。 |
+| &emsp;&emsp;localタイプ                              | -- | ✅ | ローカルディレクトリから、local形式のビルドキャッシュを取得します。 |
+| Composeファイルでのビルド                            | -- | ✅ | docker-compose.ymlファイルからDockerfileやビルドコンテキストを読み取ってビルドします。 |
+| Dockerfileの実験的機能の使用                         | ✅ | ✅ | ビルドステップ単位で、パッケージマネージャのキャッシュ(--mount&nbsp;tyle=cache)や認証情報(--mount&nbsp;type=secret)をマウントしたり、ネットワークの制御(--network=none\|host\|default)などができます。<br>詳細は [GitHub上のドキュメント][5] を参照してください。 |
 
-
-## 参考文献
-[moby/buildkit: concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit · GitHub][1]  
-[BuildKitによりDockerとDocker Composeで外部キャッシュを使った効率的なビルドをする方法 - Qiita][2]  
-[docker/buildx: Docker CLI plugin for extended build capabilities with BuildKit · GitHub][3]  
-[Docker Buildx | Docker Documentation][4]  
-[Docker Buildx · Actions · GitHub Marketplace][5]  
-
+[^1]: [moby/buildkit: concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit][1]
+[^2]: [docker/buildx: Docker CLI plugin for extended build capabilities with BuildKit · GitHub][2]
+[^3]: [Docker Buildx | Docker Documentation][3]
+[^4]: Docker Blogでのマルチプラットフォームビルドの解説 [Multi-arch build and images, the simple way - Docker Blog][4]
+[^5]: Dockerfileの実験的機能については [Dockerfile frontend experimental syntaxes - buildkit/experimental.md GitHub][5] を参照。
+[^6]: 各ディストリビューションに応じたパッケージマネージャ、または [multiarch/qemu-user-static - Docker Hub][6] のDockerイメージを使用してインストールしてください。
 
 [1]: https://github.com/moby/buildkit
-[2]: https://qiita.com/tatsurou313/items/ad86da1bb9e8e570b6fa
-[3]: https://github.com/docker/buildx
-[4]: https://docs.docker.com/buildx/working-with-buildx/
-[5]: https://github.com/marketplace/actions/docker-buildx
-[6]: https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/experimental.md
-[7]: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/  
-
-[^6]: Dockerfileの実験的機能については [Dockerfile frontend experimental syntaxes - buildkit/experimental.md GitHub][6] を参照。
-[^7]: [Best practices for writing Dockerfiles | Docker Documentation][7]
-
+[2]: https://github.com/docker/buildx
+[3]: https://docs.docker.com/buildx/working-with-buildx/
+[4]: https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/
+[5]: https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/experimental.md
+[6]: https://hub.docker.com/r/multiarch/qemu-user-static/
