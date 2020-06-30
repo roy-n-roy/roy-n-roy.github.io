@@ -19,8 +19,8 @@ EB83922C-E87B-45FF-B2A3-BBB773644DCA
 11/27/2019  06:55 PM             5,510 License.txt
 12/25/2019  05:08 PM    &lt;DIR&gt;          Users
 12/25/2019  05:08 PM    &lt;DIR&gt;          Windows
-                1 File(s)          5,510 bytes
-                2 Dir(s)  21,299,453,952 bytes free
+               1 File(s)          5,510 bytes
+               2 Dir(s)  21,299,453,952 bytes free
 PS &gt; hcsdiag exec 3F098403-148F-49FE-9EA3-1729298CD01F bash
 PS &gt; $?
 False
@@ -75,7 +75,7 @@ PS C:\&gt; hcsdiag list
     Hyper-V Container Template, Created, 0ACF54A5-CEEF-454A-BDC7-56D2C9A223B9
 
 EB83922C-E87B-45FF-B2A3-BBB773644DCA
-VM,                         Created, EB83922C-E87B-45FF-B2A3-BBB773644DCA, VMMS
+    VM,                         Created, EB83922C-E87B-45FF-B2A3-BBB773644DCA, VMMS
 </code></pre></div> </div> <h3 id=hcsdiag-share-uvm-readonly-guid><strong>hcsdiag share [-uvm] [-readonly] &lt;GUID&gt; <folder> <driveletter></strong></h3> <p>英語での説明: </p> <blockquote> <p>'Shares a host folder into the container.' </p> </blockquote> <p>実行した結果:<br> &emsp;コンテナの場合はコンテナにフォルダが共有された。VMの場合は何も起きない。</p> <div class="admonition example"> <p class=admonition-title>hcsdiag share</p> <div class=highlight><pre><span></span><code>PS &gt; hcsdiag share 0c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6 C:\temp Z:
 PS &gt; hcsdiag exec 0c5b099512a9041d71b54544680416ac497a96b40206958a118777b2592393f6 cmd /c &quot;dir Z:\&quot;
  Volume in drive Z has no label.
