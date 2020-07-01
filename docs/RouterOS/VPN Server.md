@@ -42,6 +42,11 @@ VPNサーバを立てるということは、外部からの入り口を作る�
 ## ネットワーク設計  
 下記のようなネットワーク構成としました。
 
+* 宅内ネットワーク: ether1 (192.168.3.0/24)
+* VPNクライアント: (192.168.4.0/24)
+* DMZネットワーク: ether2 (192.168.5.0/24)
+* インターネット接続: pppoe-out1(0.0.0.0/0)
+
 ![](/imgs/home_server_network.svg)
 
 DMZ側のFirewallには下記のように設定しました。
@@ -166,6 +171,32 @@ generate-policy=port-strict mode-config=ike2-conf notrack-chain=prerouting \
 peer=ike2 policy-template-group=ike2-policies
 ```
 
+### ルーティング設定
+続いて、RouterOS上でファイアウォールの設定をしていきます。
+
+```
+# mangle設定
+/ip firewall mangle add chain=prerouting action=mark-connection new-connection-mark=IN_ETH1 passthrough=yes in-interface=ether1 log=no log-prefix="" comment="LANからの接続をIN_ETH1としてマーク"
+/ip firewall mangle add chain=postrouting action=mark-connection new-connection-mark=OUT_INTERNET passthrough=yes connection-state=new out-interface=all-ppp log=no log-prefix="" comment="外部への接続をOUT_INTERNETとしてマーク"
+
+# NAT設定
+/ip firewall nat add chain=srcnat action=masquerade in-interface=ether2 out-interface=all-ppp log=no log-prefix="" comment="DMZからインターネットへのNAT変換"
+/ip firewall nat add chain=dstnat action=dst-nat to-addresses=192.168.5.XXX protocol=tcp in-interface=all-ppp dst-port=80,443 log=yes log-prefix="[FORWARD] " comment="外部からWebサーバへのNAT変換"
+
+# filter設定
+/ip firewall filter add chain=input action=accept connection-state=established,related connection-mark=OUT_INTERNET in-interface=all-ppp log=no log-prefix="" comment="OUT_INTERNETでマークされた外部からの接続を許可"
+/ip firewall filter add chain=output action=accept out-interface=all-ppp log=no log-prefix="" comment="外部への接続を許可"
+/ip firewall filter add chain=forward action=accept protocol=tcp src-address=192.168.4.0/24 dst-address=192.168.3.0/24 dst-port=22,80,3389 log=no log-prefix="" comment="VPNクライアントネットワークから宅内ネットワークへの接続を一部ポートのみで許可"
+/ip firewall filter add chain=forward action=accept protocol=udp src-address=192.168.4.0/24 dst-address=192.168.3.0/24 dst-port=3389 log=no log-prefix=""
+/ip firewall filter add chain=input action=accept protocol=tcp in-interface=ether2 dst-port=53 log=no log-prefix="" comment="DMZからVPNルータへのDNS問い合わせを許可"
+/ip firewall filter add chain=input action=accept protocol=udp in-interface=ether2 dst-port=53 log=no log-prefix=""
+/ip firewall filter add chain=input action=accept protocol=udp in-interface=all-ppp dst-port=500,4500 log=no log-prefix="" comment="外部からのVPN接続を指定したポートのみで許可"
+/ip firewall filter add chain=forward action=accept protocol=tcp dst-address=192.168.5.XXX dst-port=80,443 log=no log-prefix="" comment="外部からWebサーバへの接続を指定したアドレス範囲・ポートのみで許可"
+/ip firewall filter add chain=forward action=reject reject-with=icmp-network-unreachable connection-state=!established,related connection-mark=!IN_ETH1 out-interface=ether1 log=yes log-prefix="[REJECT] " comment="Deny to LAN from DMZ,Internet"
+/ip firewall filter add chain=input action=drop in-interface=all-ppp log=yes log-prefix="[DROP] " comment="その他の接続を拒否"
+```
+
+
 以上でRouterOSでの設定は完了です。完了後にもバックアップを取っておきましょう。
 
 ```
@@ -206,6 +237,25 @@ Windows10、iOSもしくはその両方でVPN接続できるか、確認して�
 <a href="/imgs/routeros_vpn_server_windows10_settings.png" data-lightbox="settings_win"><img src="/imgs/routeros_vpn_server_windows10_settings.png" width="60%" /></a>
 
 設定完了後、VPN接続できることを確認します。  
+
+また、宅内ネットワーク(192.168.3.0/24)への接続でVPNを使用するように、ルーティング情報を設定します。  
+以下の作業はPowerShellで行います。  
+
+```
+# 192.168.3.0/24へのトラフィックをVPN接続へルーティングする
+Add-VpnConnectionRoute "[VPN接続名]" -DestinationPrefix "192.168.3.0/24"
+# 設定内容確認
+(Get-VpnConnection).Routes
+
+  DestinationPrefix : 192.168.3.0/24
+  InterfaceIndex    :
+  InterfaceAlias    : [VPN接続名]
+  AddressFamily     : IPv4
+  NextHop           : 0.0.0.0
+  Publish           : 0
+  RouteMetric       : 1
+  PolicyStore       :
+```
 
 #### iOS13の場合
 まず、先の手順で作成したCA証明書をインポートします。  
