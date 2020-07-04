@@ -49,11 +49,12 @@ jobs:
       # 以前に実行した際のキャッシュを復元する
       - name: Get pip cache
         id: cache-pip
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/AppData/Local/pypoetry/Cache
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
           restore-keys: |
+            ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
             ${{ runner.os }}-poetry-
 
       # Poetryをインストールする
