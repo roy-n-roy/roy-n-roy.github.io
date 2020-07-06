@@ -247,6 +247,7 @@ i18n = ["Babel (>=0.8)"]
 [[package]]
 category = "main"
 description = "Lightweight pipelining: using Python functions as pipeline jobs."
+marker = "python_version > \"2.7\""
 name = "joblib"
 optional = false
 python-versions = ">=3.6"
@@ -375,7 +376,7 @@ description = "A Material Design theme for MkDocs"
 name = "mkdocs-material"
 optional = false
 python-versions = "*"
-version = "5.3.3"
+version = "5.4.0"
 
 [package.dependencies]
 Pygments = ">=2.4"
@@ -385,10 +386,9 @@ mkdocs-material-extensions = ">=1.0"
 pymdown-extensions = ">=7.0"
 
 [package.source]
-reference = "8da218775b039917ad6193b44f0759d6f6ae4074"
+reference = "50eae03f1036a32e2f5366a92843d77dac7dd94a"
 type = "git"
 url = "https://github.com/roy-n-roy/mkdocs-material.git"
-
 [[package]]
 category = "main"
 description = "Extension pack for Python Markdown."
