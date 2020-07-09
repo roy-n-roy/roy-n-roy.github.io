@@ -363,7 +363,7 @@ description = "Mkdocs plugin that enables displaying the localized date of the l
 name = "mkdocs-git-revision-date-localized-plugin"
 optional = false
 python-versions = ">=3.5"
-version = "0.6"
+version = "0.7"
 
 [package.dependencies]
 GitPython = "*"
@@ -389,6 +389,7 @@ pymdown-extensions = ">=7.0"
 reference = "50eae03f1036a32e2f5366a92843d77dac7dd94a"
 type = "git"
 url = "https://github.com/roy-n-roy/mkdocs-material.git"
+
 [[package]]
 category = "main"
 description = "Extension pack for Python Markdown."
@@ -699,7 +700,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "2f2a0da8575dadad3a79c2ff0b173b9f6120e798fab072e22f374488e11ebf76"
+content-hash = "c8f7655e926a75b8e72f580792bf5e88b228ec1021b004b164ff1d0d3fe82be2"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -972,8 +973,8 @@ mkdocs = [
     {file = "mkdocs-1.1.2.tar.gz", hash = "sha256:f0b61e5402b99d7789efa032c7a74c90a20220a9c81749da06dbfbcbd52ffb39"},
 ]
 mkdocs-git-revision-date-localized-plugin = [
-    {file = "mkdocs-git-revision-date-localized-plugin-0.6.tar.gz", hash = "sha256:3131754c1e987a6ab0475fc9c5cca41912f37d06c1f0176a8ea9feda0bf47de6"},
-    {file = "mkdocs_git_revision_date_localized_plugin-0.6-py3-none-any.whl", hash = "sha256:29d1bb70a5571c54e1f0116041ca245de4b0dca04fd8f07ed4ace70dbf30f16e"},
+    {file = "mkdocs-git-revision-date-localized-plugin-0.7.tar.gz", hash = "sha256:2ddfd2e390c512d9f8fcd01746fb6516985f6f6f22933789168775b4abc6d08c"},
+    {file = "mkdocs_git_revision_date_localized_plugin-0.7-py3-none-any.whl", hash = "sha256:3e40126fc5d48c9d3af0f1070dbb1c781239b716b7e217a961b1eef1bffd123f"},
 ]
 mkdocs-material = []
 mkdocs-material-extensions = [
