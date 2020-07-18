@@ -15,7 +15,7 @@ aiohttp = {extras = ["speedups"], version = "^3.6.2"}
 autopep8 = "^1.5.3"
 beautifulsoup4 = "^4.9.1"
 flake8 = "^3.8.3"
-lxml = "^4.5.1"
+lxml = "^4.5.2"
 pytest = "^5.4"
 requests = "^2.24.0"
 
