@@ -41,7 +41,7 @@ Djangoには、DBデータのダンプ作成/ロード機能が標準で用意�
 
 <!--
 	```
-	container_name="$(kubectl get pod -l app=dhun-app,tier=frontend -o custom-columns=NAME:.metadata.name --no-headers) --container dhun-webapp"
+	container_name="$(kubectl get pod -l app=dhun-app,tier=frontend -o custom-columns=NAME:.metadata.name --no-headers | head -n 1) --container dhun-webapp"
 	bzcat data.xml.bz2 | kubectl exec -i $container_name -- sh -lc "python manage.py loaddata --format=xml -"
 	```
 -->
