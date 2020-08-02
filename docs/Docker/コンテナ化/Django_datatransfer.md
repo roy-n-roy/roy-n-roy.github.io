@@ -17,6 +17,14 @@ Djangoには、DBデータのダンプ作成/ロード機能が標準で用意�
 	bzip2 data.xml
 	```
 
+<!--
+	```
+	container_name="$(kubectl get pod -l app=dhun-app,tier=frontend -o custom-columns=NAME:.metadata.name --no-headers) --container dhun-webapp"
+	kubectl exec $container_name -- sh -lc "python manage.py dumpdata --format=xml 2> /dev/null" > data.xml
+	bzip2 data.xml
+	```
+-->
+
 この後、新しいサーバへdata.xml.bz2を転送します。
 
 ## データリストア
@@ -30,6 +38,13 @@ Djangoには、DBデータのダンプ作成/ロード機能が標準で用意�
 	        python manage.py flush && \
 	        python manage.py loaddata --exclude contenttypes /tmp/data.xml.bz2"
 	```
+
+<!--
+	```
+	container_name="$(kubectl get pod -l app=dhun-app,tier=frontend -o custom-columns=NAME:.metadata.name --no-headers | head -n 1) --container dhun-webapp"
+	bzcat data.xml.bz2 | kubectl exec -i $container_name -- sh -lc "python manage.py loaddata --format=xml -"
+	```
+-->
 
 この後、`docker-compose up -d` でアプリを立ち上げて、データが読み込めていたら完了です。  
 
