@@ -371,7 +371,7 @@ description = "Mkdocs plugin that enables displaying the localized date of the l
 name = "mkdocs-git-revision-date-localized-plugin"
 optional = false
 python-versions = ">=3.5"
-version = "0.7"
+version = "0.7.1"
 
 [package.dependencies]
 GitPython = "*"
@@ -666,6 +666,7 @@ version = "6.0.4"
 [[package]]
 category = "main"
 description = "Fast, Extensible Progress Meter"
+marker = "python_version > \"2.7\""
 name = "tqdm"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*"
@@ -701,6 +702,7 @@ multidict = ">=4.0"
 
 [metadata]
 content-hash = "9f65792ffa47861ce8d2359faa2b0bdba7af39b2980e18c3a84a3a71374c0ae6"
+lock-version = "1.0"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -981,8 +983,8 @@ mkdocs = [
     {file = "mkdocs-1.1.2.tar.gz", hash = "sha256:f0b61e5402b99d7789efa032c7a74c90a20220a9c81749da06dbfbcbd52ffb39"},
 ]
 mkdocs-git-revision-date-localized-plugin = [
-    {file = "mkdocs-git-revision-date-localized-plugin-0.7.tar.gz", hash = "sha256:2ddfd2e390c512d9f8fcd01746fb6516985f6f6f22933789168775b4abc6d08c"},
-    {file = "mkdocs_git_revision_date_localized_plugin-0.7-py3-none-any.whl", hash = "sha256:3e40126fc5d48c9d3af0f1070dbb1c781239b716b7e217a961b1eef1bffd123f"},
+    {file = "mkdocs-git-revision-date-localized-plugin-0.7.1.tar.gz", hash = "sha256:69d1abb79ea72cda9d8ef564bfbbccc4826e05717915f08c4a2c678a10f2b07c"},
+    {file = "mkdocs_git_revision_date_localized_plugin-0.7.1-py3-none-any.whl", hash = "sha256:ad9c46dcd06bfad8a55e4d6ccba777fa88dec9b47cda7db105c60ec764bcc7f5"},
 ]
 mkdocs-material = []
 mkdocs-material-extensions = [
