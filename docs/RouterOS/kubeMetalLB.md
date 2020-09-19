@@ -1,27 +1,4 @@
-# RouterOSとMetalLBでk8sをBGPロードバランスする
-
-
-## KubernetesのService
-
-Kubernetesでアプリケーションを外部へ公開する場合には、Kubernetes Serviceを利用します。
-
-Serviceにはいくつかのタイプがあり、外部からKubernetesクラスター内部へのアクセスを提供するには
-NodePortタイプもしくは、LoadBalancerタイプのServiceを使用します。[^1]
-
-NodePortタイプのServiceでは、アプリケーションのPodが動作しているノードのIPアドレスにTCP/UDPポートが割り当てられます。  
-複数のノードが存在する場合にどのノードへ割り当てられるかは、デプロイされるまで分かりません。
-もし、NodePortタイプのServiceで公開する場合には、
-* シングルノードで構成する
-* デプロイするノードを事前に割り当てておく
-* 動的にDNSやDestination NATを設定する仕組みを用意する
-等が必要になるため、マルチノードで高可用性の構成にする場合には、あまり現実的でない選択肢になります。  
-
-
-もう一方のLoadBalancerタイプのServiceでは、Kubernetesクラスターの外部にあるロードバランサーが必要になります。
-通常、クラウドプロバイダーが提供でするロードバランサー機能と連携して、アプリケーションへのアクセスを提供します。
-
-もしクラウドではなく、ベアメタル環境でLoadBalancerタイプのServiceを使用する場合には、
-外部ロードバランサーにあたる機能を自身で用意する必要があります。
+# MetalLBとRouterOSでk8sサービスをロードバランス
 
 ## MetalLB
 MetalLB[^2]は、ベアメタル環境のKubernetesでLoadBalancerタイプのServiceを使用するための実装です。
@@ -31,7 +8,36 @@ BGPまたは、ARPやNDPなどの標準的なプロトコルを使用して、Ku
 
 ![](/imgs/routeros_kube_metallb.svg)
 
-### MetalLBのインストール
+## KubernetesのService
+
+MetalLBをインストールする前に、KubernetesのServiceについて説明します。
+
+Kubernetesでアプリケーションを外部へ公開する場合には、Serviceを利用します。
+
+Serviceにはいくつかのタイプがあり、外部からKubernetesクラスター内部へのアクセスを提供するには
+NodePortタイプもしくは、LoadBalancerタイプのServiceを使用します。[^1]
+
+NodePortタイプのServiceでは、アプリケーションのPodが動作しているノードのIPアドレスにTCP/UDPポートが割り当てられます。  
+複数のノードが存在する場合にどのノードへ割り当てられるかは、デプロイされるまで分かりません。
+もし、NodePortタイプのServiceで公開する場合には、以下のような構成にする必要があります。
+
+* シングルノードで構成する  
+* デプロイするノードを事前に割り当てておく  
+* 動的にDNSやDestination NATを設定する仕組みを用意する  
+
+そのため、マルチノードで高可用性の構成にしたい場合は、あまり現実的でない選択肢になります。  
+
+
+もう一方のLoadBalancerタイプのServiceでは、Kubernetesクラスターの外部にあるロードバランサーが必要になります。
+通常、クラウドプロバイダーが提供でするロードバランサー機能と連携して、アプリケーションへのアクセスを提供します。
+
+もしクラウドではなく、ベアメタル環境でLoadBalancerタイプのServiceを使用する場合には、
+外部ロードバランサーにあたる機能を自身で用意する必要があります。
+
+MetalLBは、標準的なBGPルーティングやARP/NDPといったLayer2プロトコルを利用して、
+市販のルーターと連携し、一般的なベアメタル環境でのロードバランシングを実現をします。
+
+## MetalLBのインストール
 
 MetalLB　公式サイトの[Manifestからのインストール方法](https://metallb.universe.tf/installation/#installation-by-manifest)に従って
 インストールします。
@@ -80,7 +86,7 @@ MetalLBのAS番号は65001、対向ルータのAS番号は65000としていま�
     ```
 
 
-### RouterOSでのBGP設定
+## RouterOSでのBGP設定
 
 今度はRouterOS側で、各Kubernetesノードと通信するための設定を追加します。
 対向のノードは4台で、192.168.5.250～254としています。
@@ -127,7 +133,19 @@ MetalLBのAS番号は65001、対向ルータのAS番号は65000としていま�
     5  Db  192.168.128.1/32                   192.168.5.253            20
     ```
 
-これで、192.168.128.1への名前解決を設定した上でアクセスすると、
+## RouterOSにリバースNATを設定
+
+最後に、外部へのアクセスにNATを使用している場合は、外部インターフェースへのHTTP(S)アクセスを
+Kubernetes IngressサービスのIPアドレスへ転送する設定をします。
+
+!!! info "リバースNAT設定"
+    ```
+    # ether1のPort 80,443(HTTP(S))アクセスを192.168.128.1へ転送
+    /ip firewall nat add action=dst-nat chain=dstnat in-interface=ether1 protocol=tcp port=80 to-addresses=192.168.128.1
+    /ip firewall nat add action=dst-nat chain=dstnat in-interface=ether1 protocol=tcp port=443 to-addresses=192.168.128.1
+    ```
+
+これで、別途名前解決を登録した上でアクセスすると、
 Kubernetes Ingressで設定したサービスが表示されます。
 
 [^1]: [Service | Kubernetes](https://kubernetes.io/ja/docs/concepts/services-networking/service/)
