@@ -371,7 +371,7 @@ description = "Mkdocs plugin that enables displaying the localized date of the l
 name = "mkdocs-git-revision-date-localized-plugin"
 optional = false
 python-versions = ">=3.5"
-version = "0.7"
+version = "0.7.2"
 
 [package.dependencies]
 GitPython = "*"
@@ -983,8 +983,8 @@ mkdocs = [
     {file = "mkdocs-1.1.2.tar.gz", hash = "sha256:f0b61e5402b99d7789efa032c7a74c90a20220a9c81749da06dbfbcbd52ffb39"},
 ]
 mkdocs-git-revision-date-localized-plugin = [
-    {file = "mkdocs-git-revision-date-localized-plugin-0.7.tar.gz", hash = "sha256:2ddfd2e390c512d9f8fcd01746fb6516985f6f6f22933789168775b4abc6d08c"},
-    {file = "mkdocs_git_revision_date_localized_plugin-0.7-py3-none-any.whl", hash = "sha256:3e40126fc5d48c9d3af0f1070dbb1c781239b716b7e217a961b1eef1bffd123f"},
+    {file = "mkdocs-git-revision-date-localized-plugin-0.7.2.tar.gz", hash = "sha256:53c1cb7b8417d2be603278eafe208cdc7d614fd62f4dad89ee2916bd82ff8563"},
+    {file = "mkdocs_git_revision_date_localized_plugin-0.7.2-py3-none-any.whl", hash = "sha256:4d3367f43526bba07032fc1054a5db109434f56e5528e000c2ca7b7f86a9c1db"},
 ]
 mkdocs-material = []
 mkdocs-material-extensions = [
