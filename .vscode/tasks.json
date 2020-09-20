@@ -89,6 +89,16 @@
 				"kind": "test",
 				"isDefault": true
 			}
+		},
+		{
+			"label": "git-diff",
+			"type": "shell",
+			"command": "git",
+			"args": [ "diff", "release", "edit", "--name-status", "--", "docs" ],
+			"options": {
+				"cwd": "${workspaceFolder}/release"
+			},
+			"problemMatcher": []
 		}
 	]
 }
