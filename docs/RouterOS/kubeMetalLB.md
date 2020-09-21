@@ -20,7 +20,7 @@ BGPまたは、ARPやNDPなどの標準的なプロトコルを使用して、Ku
 ## KubernetesのService
 
 MetalLBをインストールする前に、KubernetesのServiceについて説明します。
-今すぐMetalLBを使用したい方は、[MetalLBのインストール](#MetalLB_1)まで読み飛ばしてください。
+今すぐMetalLBを使用したい方は、[MetalLBのインストール](#metallb_1)まで読み飛ばしてください。
 
 Kubernetesでアプリケーションを外部へ公開する場合には、Serviceというものを利用します。
 
@@ -63,7 +63,7 @@ MetalLB　公式サイトの[Manifestからのインストール方法](https://
     ```
 
 続いて、BGPで対向ルータの `192.168.5.1` と通信するよう設定を追加します。
-MetalLBのAS番号は65001、対向ルータのAS番号は65000としています。
+MetalLBのAS番号は65001、対向ルータのAS番号は65000のプライベートAS番号を設定しています。
 
 !!! info "metallb/config-map.yaml"
     ```
@@ -148,7 +148,7 @@ MetalLBのAS番号は65001、対向ルータのAS番号は65000としていま�
 この段階で、確認のためにhostsなどへ名前解決を登録して
 ブラウザからアクセスすると、Ingressで設定したサービスが表示されます。
 
-下記の例では、2つのURLに `192.168.128.1` を設定しています。
+以下の例では、2つのURLに `192.168.128.1` を設定しています。
 
 !!! info "/etc/hosts もしくは C:\Windows\System32\drivers\etc\hosts"
     ```
