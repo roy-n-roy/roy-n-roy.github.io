@@ -14,7 +14,7 @@ mkdocs-minify-plugin = "^0.3.0"
 aiohttp = {extras = ["speedups"], version = "^3.6.2"}
 autopep8 = "^1.5.4"
 beautifulsoup4 = "^4.9.3"
-flake8 = "^3.8.3"
+flake8 = "^3.8.4"
 lxml = "^4.5.2"
 pytest = "^6.1"
 requests = "^2.24.0"
