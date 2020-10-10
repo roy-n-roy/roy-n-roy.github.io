@@ -1,11 +1,11 @@
 # wsl.conf と .wslconfig
 
 WSL上のディストリビューションの構成について、`/etc/wsl.conf`で設定することができます。  
-詳細は、[Microsoftのドキュメント](https://docs.microsoft.com/ja-jp/windows/wsl/wsl-config#configuration-options)を参照してください。  
-
 また、WSL2の各ディストリビューションのコンテナをホストする軽量仮想マシンの構成については、
 各ユーザの`C:\Users\[username]\.wslconfig`で設定することができます。  
-こちらは、2020/02時点で正式リリースされていないため、[WSLのリリースノート](https://docs.microsoft.com/ja-jp/windows/wsl/release-notes)を追いかけて、記載しています。
+詳細は、[Microsoftのドキュメント](https://docs.microsoft.com/ja-jp/windows/wsl/wsl-config#configuration-options)を参照してください。  
+
+なお、最新ビルドの情報について知りたい場合は、[WSLのリリースノート](https://docs.microsoft.com/ja-jp/windows/wsl/release-notes)を参照するとよいでしょう。
 
 ## wsl.conf:ディストリビューション毎の構成
 
