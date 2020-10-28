@@ -15,15 +15,15 @@ theme:
   favicon: imgs/favicon.ico
   language: ja
   features:
-    - tabs
+    - navigation.tabs
   palette:
     scheme: preference
     primary: deep orange
     accent: amber
 markdown_extensions:
   - admonition
-  - codehilite
   - footnotes
+  - pymdownx.highlight
   - pymdownx.superfences
   - pymdownx.tabbed
   - pymdownx.details
@@ -42,10 +42,10 @@ extra:
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/roy_n_roy/
 extra_javascript:
-    - lightbox2/js/lightbox-plus-jquery.min.js
+  - lightbox2/js/lightbox-plus-jquery.min.js
 extra_css:
-    - lightbox2/css/lightbox.min.css
-    - styles/git_revision_date.css
+  - lightbox2/css/lightbox.min.css
+  - styles/git_revision_date.css
 google_analytics:
   - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_TRACKING_ID"]
   - auto
