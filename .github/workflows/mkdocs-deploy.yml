@@ -62,7 +62,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-          echo "::set-env name=PATH::$env:PATH;$HOME/.poetry/bin"
+          echo "$HOME/.poetry/bin"  | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       # poetry.lockから依存関係をインストールする
       - name: Install dependencies

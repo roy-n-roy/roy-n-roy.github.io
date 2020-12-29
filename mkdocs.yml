@@ -16,6 +16,7 @@ theme:
   language: ja
   features:
     - navigation.tabs
+    - navigation.expand
   palette:
     scheme: preference
     primary: deep orange
@@ -37,7 +38,7 @@ plugins:
       minify_html: true
 extra:
   social:
-    - icon: fontawesome/brands/github-alt
+    - icon: fontawesome/brands/github
       link: https://github.com/roy-n-roy/
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/roy_n_roy/
