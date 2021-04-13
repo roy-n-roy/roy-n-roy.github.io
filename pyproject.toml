@@ -12,7 +12,7 @@ mkdocs-minify-plugin = "^0.4.0"
 
 [tool.poetry.dev-dependencies]
 aiohttp = {extras = ["speedups"], version = "^3.7.4"}
-autopep8 = "^1.5.5"
+autopep8 = "^1.5.6"
 beautifulsoup4 = "^4.9.3"
 flake8 = "^3.9.0"
 lxml = "^4.6.3"
