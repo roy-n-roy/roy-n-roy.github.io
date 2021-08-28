@@ -30,7 +30,7 @@
 				"background": {
 					"activeOnStart": true,
 					"beginsPattern": ".*Building documentation.*",
-					"endsPattern": ".*Start detecting changes.*"
+					"endsPattern": ".*Serving on http.*"
 				}
 			}
 		},
@@ -55,7 +55,7 @@
 				"background": {
 					"activeOnStart": true,
 					"beginsPattern": ".*Building documentation.*",
-					"endsPattern": ".*Start detecting changes.*"
+					"endsPattern": ".*Serving on http.*"
 				}
 			}
 		},
