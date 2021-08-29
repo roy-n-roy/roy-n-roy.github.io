@@ -42,11 +42,11 @@ extra:
       link: https://github.com/roy-n-roy/
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/roy_n_roy/
+  analytics:
+    provider: google
+    property: !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_TRACKING_ID"]
 extra_javascript:
   - lightbox2/js/lightbox-plus-jquery.min.js
 extra_css:
   - lightbox2/css/lightbox.min.css
   - styles/git_revision_date.css
-google_analytics:
-  - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_TRACKING_ID"]
-  - auto

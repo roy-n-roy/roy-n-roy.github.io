@@ -4,7 +4,8 @@ on:
   push:
     # releaseブランチのdocsディレクトリ配下で
     # Markdown、画像、設定ファイルがpushされた時に実行する
-    branches: release
+    branches:
+      - release
     paths:
       - 'docs/**/*.md'
       - 'docs/imgs/**'
@@ -70,9 +71,9 @@ jobs:
           poetry install --no-root
 
       # pytestでテストを実行する
-      - name: Test with pytest
-        run: |
-          poetry run pytest
+      #- name: Test with pytest
+      #  run: |
+      #    poetry run pytest
 
       # MkDocsでGitHubへデプロイする
       - name: MkDocs Deploy
