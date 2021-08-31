@@ -33,7 +33,8 @@ plugins:
   - search:
       lang:
         - ja
-  - git-revision-date-localized
+  - git-revision-date-localized:
+      locale: ja
   - minify:
       minify_html: true
 extra:
