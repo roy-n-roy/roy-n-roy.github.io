@@ -2,7 +2,7 @@
 name = "roy-n-roy.github.io"
 version = "1.0.0"
 description = "roy-n-roy's memo docs"
-authors = ["Roy <royroy.euph@gmail.com>"]
+authors = ["Roy. <royroy.euph@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"

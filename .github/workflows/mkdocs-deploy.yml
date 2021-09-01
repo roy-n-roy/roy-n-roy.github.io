@@ -10,6 +10,7 @@ on:
       - 'docs/**/*.md'
       - 'docs/imgs/**'
       - 'mkdocs.yml'
+      - 'pyproject.toml'
 
 jobs:
   deploy:
@@ -53,10 +54,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/AppData/Local/pypoetry/Cache
-          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          key: ${{ runner.os }}--poetry--${{ hashFiles('poetry.lock') }}
           restore-keys: |
-            ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
-            ${{ runner.os }}-poetry-
+            ${{ runner.os }}--poetry--${{ hashFiles('poetry.lock') }}
+            ${{ runner.os }}--poetry--
 
       # Poetryをインストールする
       - name: Install Poetry
@@ -68,12 +69,7 @@ jobs:
       # poetry.lockから依存関係をインストールする
       - name: Install dependencies
         run: |
-          poetry install --no-root
-
-      # pytestでテストを実行する
-      #- name: Test with pytest
-      #  run: |
-      #    poetry run pytest
+          poetry install --no-root --no-dev
 
       # MkDocsでGitHubへデプロイする
       - name: MkDocs Deploy
