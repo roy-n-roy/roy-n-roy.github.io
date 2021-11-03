@@ -8,7 +8,7 @@ authors = ["Roy. <royroy.euph@gmail.com>"]
 python = "^3.8"
 mkdocs-material = {git = "https://github.com/roy-n-roy/mkdocs-material.git", rev = "edit"}
 mkdocs-git-revision-date-localized-plugin = "^0.9"
-mkdocs-minify-plugin = "^0.4.0"
+mkdocs-minify-plugin = "^0.5.0"
 
 [tool.poetry.dev-dependencies]
 aiohttp = {extras = ["speedups"], version = "^3.7.4"}
