@@ -23,7 +23,7 @@
  Mode                 LastWriteTime         Length Name
  ----                 -------------         ------ ----
  -a---          <span class=m>2020</span>/04/23     <span class=m>7</span>:31      <span class=m>207544320</span> layer.tar
-</code></pre></div> </div> </div> </div> <details class=tips><summary>2020/06/04 更新前の記事 (rawファイルを利用する場合)</summary><h2 id=_2>面倒なことはイヤという方に</h2> <p>こちらで公開されているツールを利用しましょう。<br> <a href=https://github.com/yuk7/CentWSL>yuk7/CentWSL - GitHub</a></p> <h2 id=rootfs>rootfsの作成</h2> <p>WSLへディストリビューションを追加するためには、rootfsのイメージが必要となります。<br> 今回はクラウド用に用意されているrootfsイメージをダウンロードして流用します。<br> ここからは、WSL上のUbuntuで作業していきます。</p> <div class="admonition example"> <p class=admonition-title>rootfs作成</p> <div class=highlight><pre><span></span><code><span class=c1># ダウンロード・解凍</span>
+</code></pre></div> </div> </div> </div> <details class=tips> <summary>2020/06/04 更新前の記事 (rawファイルを利用する場合)</summary> <h2 id=_2>面倒なことはイヤという方に</h2> <p>こちらで公開されているツールを利用しましょう。<br> <a href=https://github.com/yuk7/CentWSL>yuk7/CentWSL - GitHub</a></p> <h2 id=rootfs>rootfsの作成</h2> <p>WSLへディストリビューションを追加するためには、rootfsのイメージが必要となります。<br> 今回はクラウド用に用意されているrootfsイメージをダウンロードして流用します。<br> ここからは、WSL上のUbuntuで作業していきます。</p> <div class="admonition example"> <p class=admonition-title>rootfs作成</p> <div class=highlight><pre><span></span><code><span class=c1># ダウンロード・解凍</span>
 &gt; curl -O https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1907.raw.tar.gz
 &gt; tar xf CentOS-7-x86_64-GenericCloud.raw.tar.gz
 
@@ -89,7 +89,7 @@
 
 # 手動でインポートしたディストロ全てを削除する場合
 &gt; Remove-Item -Recurse $env:LOCALAPPDATA\wsl\
-</code></pre></div> </div> <details class=tips><summary>2020/06/04 更新前の記事 (クラウド・コンテナ用イメージが公開されていない場合)</summary><h2 id=centos8-yumrootfs><del>CentOS8を使いたい</del> =&gt; yumコマンドでrootfsを作成</h2> <p>2019/12/08時点ではCentOS8のクラウド用イメージが公開されていないため、RPMパッケージから作成します。 CentOS7へログインし、CentOS8のrootfsを作成していきます。</p> <div class="admonition example"> <p class=admonition-title>rootfs作成</p> <div class=highlight><pre><span></span><code><span class=c1># CentOS8のリポジトリ設定ファイルを作成</span>
+</code></pre></div> </div> <details class=tips> <summary>2020/06/04 更新前の記事 (クラウド・コンテナ用イメージが公開されていない場合)</summary> <h2 id=centos8-yumrootfs><del>CentOS8を使いたい</del> =&gt; yumコマンドでrootfsを作成</h2> <p>2019/12/08時点ではCentOS8のクラウド用イメージが公開されていないため、RPMパッケージから作成します。 CentOS7へログインし、CentOS8のrootfsを作成していきます。</p> <div class="admonition example"> <p class=admonition-title>rootfs作成</p> <div class=highlight><pre><span></span><code><span class=c1># CentOS8のリポジトリ設定ファイルを作成</span>
 &gt; cat <span class=s>&lt;&lt; _END_ &gt; ./centos8.repo</span>
 <span class=s>[centos8-base]</span>
 <span class=s>name=CentOS-8-Base</span>
