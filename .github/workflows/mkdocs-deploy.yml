@@ -11,10 +11,11 @@ on:
       - 'docs/imgs/**'
       - 'mkdocs.yml'
       - 'pyproject.toml'
+      - '.github/workflows/mkdocs-deploy.yml'
 
 jobs:
   deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       # シンボリックリンクを扱えるようGitを設定する
@@ -38,8 +39,6 @@ jobs:
         run: |
           git submodule init
           git submodule update
-          rm -r docs
-          git restore docs
 
       # Python3.8をセットアップ
       - name: Set up Python
@@ -64,7 +63,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           curl -sSL https://install.python-poetry.org | python
-          echo "$HOME/.poetry/bin"  | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       # poetry.lockから依存関係をインストールする
       - name: Install dependencies
