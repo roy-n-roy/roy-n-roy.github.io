@@ -418,7 +418,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "mkdocs-minify-plugin"
-version = "0.6.0"
+version = "0.6.1"
 description = "An MkDocs plugin to minify HTML, JS or CSS files prior to being written to disk"
 category = "main"
 optional = false
@@ -707,7 +707,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "d7734c714fc228b7956838fb22cb56ca9fc8f095b6983d24b5856716c8ce4999"
+content-hash = "22aea59528c15193d47d54247d5900708729acf281aa368ef35c78153f706efb"
 
 [metadata.files]
 aiodns = [
@@ -1246,8 +1246,8 @@ mkdocs-material-extensions = [
     {file = "mkdocs_material_extensions-1.1.tar.gz", hash = "sha256:96ca979dae66d65c2099eefe189b49d5ac62f76afb59c38e069ffc7cf3c131ec"},
 ]
 mkdocs-minify-plugin = [
-    {file = "mkdocs-minify-plugin-0.6.0.tar.gz", hash = "sha256:da4c171d6b2901bf91950f56ec9db2c9016e4bfd8652aa720e8a8d836cd3cbcf"},
-    {file = "mkdocs_minify_plugin-0.6.0-py3-none-any.whl", hash = "sha256:ba94273ac7591d7b78aa3bdc5b1da67fc6ad23b33efc90722e0272a2bcf614b2"},
+    {file = "mkdocs-minify-plugin-0.6.1.tar.gz", hash = "sha256:29e14e4ab2d436cb05f56333c9bfbff561fc89402e04d0f1ccfe23a3e7070ba2"},
+    {file = "mkdocs_minify_plugin-0.6.1-py3-none-any.whl", hash = "sha256:6104f8132232da65cfe5d37c56b8ab3f5378f9fcedc341c180f62fdb25149cfe"},
 ]
 multidict = [
     {file = "multidict-6.0.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:0b9e95a740109c6047602f4db4da9949e6c5945cefbad34a1299775ddc9a62e2"},
