@@ -72,23 +72,7 @@
 			"options": {
 				"cwd": "${workspaceFolder}/release"
 			},
-			"dependsOn":[
-				"mkdocs-test"
-			],
 			"problemMatcher": []
-		},
-		{
-			"label": "mkdocs-test",
-			"type": "shell",
-			"command": "poetry",
-			"args": [ "run", "pytest" ],
-			"options": {
-				"cwd": "${workspaceFolder}/release"
-			},
-			"group": {
-				"kind": "test",
-				"isDefault": true
-			}
 		},
 		{
 			"label": "git-diff",
