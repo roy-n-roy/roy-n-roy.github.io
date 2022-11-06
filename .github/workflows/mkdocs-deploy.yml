@@ -11,17 +11,15 @@ on:
       - 'docs/imgs/**'
       - 'mkdocs.yml'
       - 'pyproject.toml'
-      - '.github/workflows/mkdocs-deploy.yml'
+      - 'poetry.lock'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # シンボリックリンクを扱えるようGitを設定する
       - name: Git config
         run: |
-          git config --global core.symlinks true
           git config --global user.name "github-actions"
           git config --global user.email actions@github.com
 
@@ -50,7 +48,7 @@ jobs:
       # poetry.lockから依存関係をインストールする
       - name: Install dependencies
         run: |
-          poetry install --no-root --no-dev
+          poetry install --no-root
 
       # MkDocsでGitHubへデプロイする
       - name: MkDocs Deploy
