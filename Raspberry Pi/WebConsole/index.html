@@ -5,306 +5,306 @@ figure#raspi_fig div#hdmi { text-align:right; }
 figure#raspi_fig div#lan { text-align:left; }
 figure#raspi_fig figcaption { text-align:center; }
 </style> <figure id=raspi_fig> <div id=hdmi><br><br>HDMIケーブル→<br>(PCに接続)<br><br><br>USB Type-C→</div> <img width=400 src=/imgs/raspberrypi_webconsole.jpg> <figcaption>Raspberry PiとCSI-2 to HDMIブリッジ</figcaption> <div id=lan>←LANケーブル<br><br><br><br><br><br><br></div> </figure> <h2 id=_4>苦労した点</h2> <ul> <li>正しく動作するレポートディスクリプタの作成<br> マウス・キーボードデバイスのエミュレーションのためにUSB HIDデバイスの機能に応じたレポートディスクリプタ<sup id=fnref:1><a class=footnote-ref href=#fn:1>1</a></sup>の作成が必要です。<br> 簡単な3ボタンマウスであれば、インターネット上に例がいくつか見つかるのですが、「横スクロール」「指定座標へのポインタの移動」などを実現ためには自身で作成が必要でした。</li> <li>WebRTCでのブラウザへの画面表示<br> WebRTCは様々な用途を想定しているためか、とにかく仕様が複雑<sup id=fnref:2><a class=footnote-ref href=#fn:2>2</a></sup>です。また、Webブラウザの外で実装しようとなると数千行のプログラムを自作するハメになります。<br> しかし、運良く技術書典7にサークル参加されていた<a href=https://techbookfest.org/event/tbf07/circle/5152352327696384>でんでんらぼ</a>さんの同人誌、<a href=https://tnoho.booth.pm/items/1572872>WebRTCをブラウザ外で使ってブラウザでできることを増やしてみませんか?</a>を拝読したことで、問題は一気に解決しました。 </li> </ul> <h2 id=_5>マウス・キーボードエミュレーション</h2> <h3 id=websocketnodejs>WebSocketを用いたNode.jsアプリ</h3> <p>ブラウザへのマウス・キーボード入力をRaspberry Piで受け取るためのNode.jsアプリケーションを自作しました。<br> <a href=https://github.com/roy-n-roy/raspi_web_console>roy-n-roy/raspi_web_console - GitHub</a> </p> <p>Node.jsのモジュールである、Socket.ioとExpressを用いた簡単なプログラムです。 </p> <blockquote class=twitter-tweet data-partner=tweetdeck><p dir=ltr>RaspberryPi + HIMI to CSIモジュールを使ってブラウザ経由コンソールが動くようになった。<br>画面配信WebRTC Client Momo + Ayame<a href=https://t.co/jppnHJbOMo>https://t.co/jppnHJbOMo</a><a href=https://t.co/epCejhbD6l>https://t.co/epCejhbD6l</a><br>RasPiのUSB OTGでUSBマウス・キーボードをエミュレートしてNodeJSアプリ経由で入力<a href=https://t.co/R2XYDsmCjt>https://t.co/R2XYDsmCjt</a> <a href=https://t.co/cWGUsMslxM>pic.twitter.com/cWGUsMslxM</a></p>&mdash; ☆Roy.★ (@Roy_n_roy) <a href="https://twitter.com/Roy_n_roy/status/1176863914518175749?ref_src=twsrc%5Etfw">September 25, 2019</a></blockquote> <script async src=https://platform.twitter.com/widgets.js charset=utf-8></script> <p>このプログラムでは、ブラウザからのイベントをWebSocketを通して受け取り、5種類の処理を行っています。</p> <table> <thead> <tr> <th>イベント</th> <th>処理</th> <th>出力</th> </tr> </thead> <tbody> <tr> <td>画面ロード時</td> <td>WebSocket接続を確立</td> <td>なし</td> </tr> <tr> <td>WebRTCシグナリング<br>サーバへのWebSocket接続時</td> <td>シグナリングサーバへの<br>WebSocket接続をProxy</td> <td>なし</td> </tr> <tr> <td><a href=https://developer.mozilla.org/ja/docs/Web/API/Document/keydown_event>keydown イベント</a>,<br><a href=https://developer.mozilla.org/ja/docs/Web/API/Document/keyup_event>keyup イベント</a></td> <td>ブラウザのキーコードから<br>USB HIDキーコード<sup id=fnref:3><a class=footnote-ref href=#fn:3>3</a></sup>に変換</td> <td>キーボードエミュレーション<br>デバイスへ書き込み</td> </tr> <tr> <td><a href=https://developer.mozilla.org/ja/docs/Web/API/Element/mousedown_event>mousedown イベント</a>,<br><a href=https://developer.mozilla.org/ja/docs/Web/API/Element/mouseup_event>mouseup イベント</a>,<br><a href=https://developer.mozilla.org/ja/docs/Web/API/Element/mousemove_event>mousemove イベント</a></td> <td>特になし</td> <td>マウスエミュレーション<br>デバイスへ書き込み</td> </tr> <tr> <td><a href=https://developer.mozilla.org/ja/docs/Web/API/Element/mouseenter_event>mouseenter イベント</a></td> <td>マウスが画面内に入った時の<br>絶対位置を取得</td> <td>デジタイザエミュレーション<br>デバイスへ書き込み</td> </tr> </tbody> </table> <p>特に重要なのが5番目のmouseenter イベントでの処理で、この処理が無いと<strong>「ブラウザ上のマウスポインタの位置」と「接続先PC上のマウスポインタの位置」にズレが生じて</strong>しまいます。 </p> <p>そのため、<strong>マウスとデジタイザを合体させたデバイス</strong>をエミュレーションし、 ブラウザの外からブラウザの画面内にマウスポインタが入ってきたタイミングで、モニタ上の絶対位置をエミュレーションデバイスに渡しています。</p> <p>なお、デジタイザとはペンタブレットなどのような、カーソルの絶対位置入力デバイスのことをいいます。 </p> <h4 id=_6>アプリケーションのインストール</h4> <p>Node.jsと自作アプリケーションのインストールを行います。 </p> <div class=tabbed-set data-tabs=1:2><input checked=checked id=__tabbed_1_1 name=__tabbed_1 type=radio><label for=__tabbed_1_1>Raspberry Pi 4の場合</label><div class=tabbed-content> <div class=highlight><pre><span></span><code><span class=c1># nodesourceリポジトリから最新のNode.jsをインストール</span>
-curl<span class=w> </span>-sL<span class=w> </span>https://deb.nodesource.com/setup_12.x<span class=w> </span><span class=p>|</span><span class=w> </span>sudo<span class=w> </span>-E<span class=w> </span>bash<span class=w> </span>-
-sudo<span class=w> </span>apt<span class=w> </span>install<span class=w> </span>-y<span class=w> </span>nodejs
+curl -sL https://deb.nodesource.com/setup_12.x <span class=p>|</span> sudo -E bash -
+sudo apt install -y nodejs
 
 <span class=c1># アプリケーションのダウンロードとインストール</span>
-curl<span class=w> </span>-L<span class=w> </span>-O<span class=w> </span>https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
-unzip<span class=w> </span>master.zip
-<span class=nb>cd</span><span class=w> </span>raspi_web_console-master
-sudo<span class=w> </span>bash<span class=w> </span>./setup.sh
+curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
+unzip master.zip
+<span class=nb>cd</span> raspi_web_console-master
+sudo bash ./setup.sh
 </code></pre></div> </div> <input id=__tabbed_1_2 name=__tabbed_1 type=radio><label for=__tabbed_1_2>Raspberry Pi Zeroの場合</label><div class=tabbed-content> <div class=highlight><pre><span></span><code><span class=c1># RaspbianのリポジトリからNode.jsをインストール</span>
-sudo<span class=w> </span>apt<span class=w> </span>install<span class=w> </span>-y<span class=w> </span>nodejs<span class=w> </span>npm
+sudo apt install -y nodejs npm
 
 <span class=c1># アプリケーションのダウンロードとインストール</span>
-curl<span class=w> </span>-L<span class=w> </span>-O<span class=w> </span>https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
-unzip<span class=w> </span>master.zip
-<span class=nb>cd</span><span class=w> </span>raspi_web_console-master
-sudo<span class=w> </span>bash<span class=w> </span>./setup.sh
+curl -L -O https://github.com/roy-n-roy/raspi_web_console/archive/master.zip
+unzip master.zip
+<span class=nb>cd</span> raspi_web_console-master
+sudo bash ./setup.sh
 </code></pre></div> </div> </div> <h3 id=usb-on-the-gousb>USB On-the-Go機能を用いたUSBマウス・キーボードのエミュレーション</h3> <p>USB On-the-Go機能を利用するために、Raspbian(Linux)の起動時設定を変更します。<br> なお、これらの設定は前述のアプリケーションのインストール時に合わせて実行されています。 </p> <ol> <li> <p>起動パラメータにLinux Device Tree Overlay "dwc2" USBコントローラドライバを設定 </p> <div class="admonition example"> <p class=admonition-title>/boot/config.txt</p> <div class=highlight><pre><span></span><code><span class=nv>dtoverlay</span><span class=o>=</span>dwc2
-</code></pre></div> </div> </li> <li> <p>起動時にLinuxカーネルモジュール "dwc2" と "libcomposite"<sup id=fnref:4><a class=footnote-ref href=#fn:4>4</a></sup> を読み込むよう設定 </p> <div class=highlight><pre><span></span><code><span class=nb>echo</span><span class=w> </span><span class=s2>&quot;dwc2&quot;</span><span class=w> </span>&gt;&gt;<span class=w> </span>/etc/modules
-<span class=nb>echo</span><span class=w> </span><span class=s2>&quot;libcomposite&quot;</span><span class=w> </span>&gt;&gt;<span class=w> </span>/etc/modules
+</code></pre></div> </div> </li> <li> <p>起動時にLinuxカーネルモジュール "dwc2" と "libcomposite"<sup id=fnref:4><a class=footnote-ref href=#fn:4>4</a></sup> を読み込むよう設定 </p> <div class=highlight><pre><span></span><code><span class=nb>echo</span> <span class=s2>&quot;dwc2&quot;</span> &gt;&gt; /etc/modules
+<span class=nb>echo</span> <span class=s2>&quot;libcomposite&quot;</span> &gt;&gt; /etc/modules
 reboot
 </code></pre></div> </li> <li> <p>libcomposite でUSBデバイスをエミュレーションするための設定<br> デバイスディスクリプタ/コンフィグディスクリプタ/レポートディスクリプタと呼ばれる情報を設定します。<br> 設定用のスクリプトが自作アプリケーションとあわせてインストールされているので、これを実行します。 </p> <div class=highlight><pre><span></span><code>init_usb.sh
 </code></pre></div> <p>実行すると、<code>/dev/hidg0</code>(キーボードエミュレータ), <code>/dev/hidg1</code>(マウス・デジタイザエミュレータ)というデバイスファイルが生えてきます。<br> これらのデバイスファイルにデータを書き込むと、接続先のPCでキーボードやマウスとして動作します。 </p> </li> </ol> <h4 id=usb>USB デバイス/コンフィグ/レポートディスクリプタの設定スクリプト</h4> <p>USB HIDデバイスのディスクリプタを設定していきます。<br> この辺り(<a href="https://www.raspberrypi.org/forums/viewtopic.php?t=241161">USB gadget using libcomposite - Raspberry Pi Forums</a>)を参考にしました。 </p> <div class="admonition example"> <p class=admonition-title>init_usb.sh</p> <div class=highlight><pre><span></span><code><span class=ch>#!/bin/bash -e</span>
 
-<span class=nv>USE_ETHER</span><span class=o>=</span><span class=nb>false</span><span class=w>     </span><span class=c1># RNDIS Ethernet Adapter</span>
-<span class=nv>USE_SERIAL</span><span class=o>=</span><span class=nb>false</span><span class=w>    </span><span class=c1># Serial port</span>
-<span class=nv>USE_KEYBOARD</span><span class=o>=</span><span class=nb>true</span><span class=w>   </span><span class=c1># HID Keyboard</span>
-<span class=nv>USE_MOUSE</span><span class=o>=</span><span class=nb>true</span><span class=w>      </span><span class=c1># HID Mouse &amp; Digitizer</span>
+<span class=nv>USE_ETHER</span><span class=o>=</span><span class=nb>false</span>     <span class=c1># RNDIS Ethernet Adapter</span>
+<span class=nv>USE_SERIAL</span><span class=o>=</span><span class=nb>false</span>    <span class=c1># Serial port</span>
+<span class=nv>USE_KEYBOARD</span><span class=o>=</span><span class=nb>true</span>   <span class=c1># HID Keyboard</span>
+<span class=nv>USE_MOUSE</span><span class=o>=</span><span class=nb>true</span>      <span class=c1># HID Mouse &amp; Digitizer</span>
 
-<span class=nv>LANG</span><span class=o>=</span><span class=s2>&quot;0x409&quot;</span><span class=w> </span><span class=c1># language code: 0x409=ENGLISH_US</span>
+<span class=nv>LANG</span><span class=o>=</span><span class=s2>&quot;0x409&quot;</span> <span class=c1># language code: 0x409=ENGLISH_US</span>
 <span class=nv>CONFIGFS</span><span class=o>=</span><span class=s2>&quot;/sys/kernel/config/usb_gadget/&quot;</span>
 <span class=nv>GADGET_NAME</span><span class=o>=</span><span class=s2>&quot;gadget&quot;</span>
 
-<span class=k>if</span><span class=w> </span><span class=o>[[</span><span class=w> </span><span class=nv>$EUID</span><span class=w> </span>-ne<span class=w> </span><span class=m>0</span><span class=w> </span><span class=o>]]</span><span class=p>;</span><span class=w> </span><span class=k>then</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=s2>&quot;This script must be run as root&quot;</span>
-<span class=w>    </span><span class=nb>exit</span><span class=w> </span><span class=m>1</span>
+<span class=k>if</span> <span class=o>[[</span> <span class=nv>$EUID</span> -ne <span class=m>0</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+    <span class=nb>echo</span> <span class=s2>&quot;This script must be run as root&quot;</span>
+    <span class=nb>exit</span> <span class=m>1</span>
 <span class=k>fi</span>
 
 <span class=c1># libcompositeカーネルモジュールが読み込まれていない場合はロード</span>
-<span class=k>if</span><span class=w> </span><span class=o>[</span><span class=w> </span>!<span class=w> </span>-d<span class=w> </span><span class=nv>$CONFIGFS</span><span class=w> </span><span class=o>]</span><span class=p>;</span><span class=w> </span><span class=k>then</span>
-<span class=w>    </span>modprobe<span class=w> </span>libcomposite
+<span class=k>if</span> <span class=o>[</span> ! -d <span class=nv>$CONFIGFS</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+    modprobe libcomposite
 <span class=k>fi</span>
 
 <span class=c1># Enter ConfigFS</span>
-<span class=nb>cd</span><span class=w> </span><span class=nv>$CONFIGFS</span>
+<span class=nb>cd</span> <span class=nv>$CONFIGFS</span>
 
 <span class=c1># Stopping getty</span>
-<span class=nv>GS_SERVICE_NAME</span><span class=o>=</span><span class=sb>`</span>systemctl<span class=w> </span>list-units<span class=w> </span>-t<span class=w> </span>service<span class=w> </span>--state<span class=o>=</span>running<span class=w> </span><span class=p>|</span><span class=w> </span>grep<span class=w> </span>-i<span class=w> </span>getty@ttygs<span class=w> </span><span class=p>|</span><span class=w> </span>cut<span class=w> </span>-d<span class=s1>&#39; &#39;</span><span class=w> </span>-f1<span class=sb>`</span><span class=w> </span><span class=o>||</span><span class=w> </span><span class=nb>true</span>
-<span class=k>if</span><span class=w> </span><span class=o>[</span><span class=w> </span>-n<span class=w> </span><span class=s2>&quot;</span><span class=nv>$GS_SERVICE_NAME</span><span class=s2>&quot;</span><span class=w> </span><span class=o>]</span><span class=p>;</span><span class=w> </span><span class=k>then</span>
-<span class=w>    </span>systemctl<span class=w> </span>stop<span class=w> </span><span class=nv>$GS_SERVICE_NAME</span>
-<span class=w>    </span><span class=k>if</span><span class=w> </span>lsmod<span class=w> </span><span class=p>|</span><span class=w> </span>grep<span class=w> </span>g_serial<span class=p>;</span><span class=w> </span><span class=k>then</span>
-<span class=w>        </span>rmmod<span class=w> </span>g_serial
-<span class=w>    </span><span class=k>fi</span>
+<span class=nv>GS_SERVICE_NAME</span><span class=o>=</span><span class=sb>`</span>systemctl list-units -t service --state<span class=o>=</span>running <span class=p>|</span> grep -i getty@ttygs <span class=p>|</span> cut -d<span class=s1>&#39; &#39;</span> -f1<span class=sb>`</span> <span class=o>||</span> <span class=nb>true</span>
+<span class=k>if</span> <span class=o>[</span> -n <span class=s2>&quot;</span><span class=nv>$GS_SERVICE_NAME</span><span class=s2>&quot;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+    systemctl stop <span class=nv>$GS_SERVICE_NAME</span>
+    <span class=k>if</span> lsmod <span class=p>|</span> grep g_serial<span class=p>;</span> <span class=k>then</span>
+        rmmod g_serial
+    <span class=k>fi</span>
 <span class=k>fi</span>
 
 <span class=c1># 既存設定をクリア</span>
-find<span class=w> </span>./<span class=nv>$GADGET_NAME</span>/configs/*/*<span class=w> </span>-maxdepth<span class=w> </span><span class=m>0</span><span class=w> </span>-type<span class=w> </span>l<span class=w> </span>-exec<span class=w> </span>rm<span class=w> </span><span class=o>{}</span><span class=w> </span><span class=se>\;</span><span class=w> </span><span class=p>&amp;</span>&gt;<span class=w> </span>/dev/null<span class=w> </span><span class=o>||</span><span class=w> </span><span class=nb>true</span>
-find<span class=w> </span>./<span class=nv>$GADGET_NAME</span>/configs/*/strings/*<span class=w> </span>-maxdepth<span class=w> </span><span class=m>0</span><span class=w> </span>-type<span class=w> </span>d<span class=w> </span>-exec<span class=w> </span>rmdir<span class=w> </span><span class=o>{}</span><span class=w> </span><span class=se>\;</span><span class=w> </span><span class=p>&amp;</span>&gt;<span class=w> </span>/dev/null<span class=w> </span><span class=o>||</span><span class=w> </span><span class=nb>true</span>
-find<span class=w> </span>./<span class=nv>$GADGET_NAME</span>/os_desc/*<span class=w> </span>-maxdepth<span class=w> </span><span class=m>0</span><span class=w> </span>-type<span class=w> </span>l<span class=w> </span>-exec<span class=w> </span>rm<span class=w> </span><span class=o>{}</span><span class=w> </span><span class=se>\;</span><span class=w> </span><span class=p>&amp;</span>&gt;<span class=w> </span>/dev/null<span class=w> </span><span class=o>||</span><span class=w> </span><span class=nb>true</span>
-find<span class=w> </span>./<span class=nv>$GADGET_NAME</span>/functions/*<span class=w> </span>-maxdepth<span class=w> </span><span class=m>0</span><span class=w> </span>-type<span class=w> </span>d<span class=w> </span>-exec<span class=w> </span>rmdir<span class=w> </span><span class=o>{}</span><span class=w> </span><span class=se>\;</span><span class=w> </span><span class=p>&amp;</span>&gt;<span class=w> </span>/dev/null<span class=w> </span><span class=o>||</span><span class=w> </span><span class=nb>true</span>
-find<span class=w> </span>./<span class=nv>$GADGET_NAME</span>/strings/*<span class=w> </span>-maxdepth<span class=w> </span><span class=m>0</span><span class=w> </span>-type<span class=w> </span>d<span class=w> </span>-exec<span class=w> </span>rmdir<span class=w> </span><span class=o>{}</span><span class=w> </span><span class=se>\;</span><span class=w> </span><span class=p>&amp;</span>&gt;<span class=w> </span>/dev/null<span class=w> </span><span class=o>||</span><span class=w> </span><span class=nb>true</span>
-find<span class=w> </span>./<span class=nv>$GADGET_NAME</span>/configs/*<span class=w> </span>-maxdepth<span class=w> </span><span class=m>0</span><span class=w> </span>-type<span class=w> </span>d<span class=w> </span>-exec<span class=w> </span>rmdir<span class=w> </span><span class=o>{}</span><span class=w> </span><span class=se>\;</span><span class=w> </span><span class=p>&amp;</span>&gt;<span class=w> </span>/dev/null<span class=w> </span><span class=o>||</span><span class=w> </span><span class=nb>true</span>
-rmdir<span class=w> </span>./<span class=nv>$GADGET_NAME</span><span class=w> </span><span class=p>&amp;</span>&gt;<span class=w> </span>/dev/null<span class=w> </span><span class=o>||</span><span class=w> </span><span class=nb>true</span>
+find ./<span class=nv>$GADGET_NAME</span>/configs/*/* -maxdepth <span class=m>0</span> -type l -exec rm <span class=o>{}</span> <span class=se>\;</span> <span class=p>&amp;</span>&gt; /dev/null <span class=o>||</span> <span class=nb>true</span>
+find ./<span class=nv>$GADGET_NAME</span>/configs/*/strings/* -maxdepth <span class=m>0</span> -type d -exec rmdir <span class=o>{}</span> <span class=se>\;</span> <span class=p>&amp;</span>&gt; /dev/null <span class=o>||</span> <span class=nb>true</span>
+find ./<span class=nv>$GADGET_NAME</span>/os_desc/* -maxdepth <span class=m>0</span> -type l -exec rm <span class=o>{}</span> <span class=se>\;</span> <span class=p>&amp;</span>&gt; /dev/null <span class=o>||</span> <span class=nb>true</span>
+find ./<span class=nv>$GADGET_NAME</span>/functions/* -maxdepth <span class=m>0</span> -type d -exec rmdir <span class=o>{}</span> <span class=se>\;</span> <span class=p>&amp;</span>&gt; /dev/null <span class=o>||</span> <span class=nb>true</span>
+find ./<span class=nv>$GADGET_NAME</span>/strings/* -maxdepth <span class=m>0</span> -type d -exec rmdir <span class=o>{}</span> <span class=se>\;</span> <span class=p>&amp;</span>&gt; /dev/null <span class=o>||</span> <span class=nb>true</span>
+find ./<span class=nv>$GADGET_NAME</span>/configs/* -maxdepth <span class=m>0</span> -type d -exec rmdir <span class=o>{}</span> <span class=se>\;</span> <span class=p>&amp;</span>&gt; /dev/null <span class=o>||</span> <span class=nb>true</span>
+rmdir ./<span class=nv>$GADGET_NAME</span> <span class=p>&amp;</span>&gt; /dev/null <span class=o>||</span> <span class=nb>true</span>
 
-mkdir<span class=w> </span>./<span class=nv>$GADGET_NAME</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=nb>cd</span><span class=w> </span>./<span class=nv>$GADGET_NAME</span>
+mkdir ./<span class=nv>$GADGET_NAME</span> <span class=o>&amp;&amp;</span> <span class=nb>cd</span> ./<span class=nv>$GADGET_NAME</span>
 
 <span class=c1>### Device Descriptorの設定</span>
 <span class=c1># VendorID</span>
-<span class=nb>echo</span><span class=w> </span>0x1d6b<span class=w> </span>&gt;<span class=w> </span>./idVendor<span class=w> </span><span class=c1># Linux Foundation</span>
+<span class=nb>echo</span> 0x1d6b &gt; ./idVendor <span class=c1># Linux Foundation</span>
 <span class=c1># USB HID Specification Release</span>
-<span class=nb>echo</span><span class=w> </span>0x0200<span class=w> </span>&gt;<span class=w> </span>./bcdUSB<span class=w> </span><span class=c1># USB2</span>
+<span class=nb>echo</span> 0x0200 &gt; ./bcdUSB <span class=c1># USB2</span>
 <span class=c1># USB Class code</span>
-<span class=nb>echo</span><span class=w> </span>0xEF<span class=w> </span>&gt;<span class=w> </span>./bDeviceClass<span class=w> </span><span class=c1># Miscellaneous Device Class</span>
+<span class=nb>echo</span> 0xEF &gt; ./bDeviceClass <span class=c1># Miscellaneous Device Class</span>
 <span class=c1># USB SubClass code</span>
-<span class=nb>echo</span><span class=w> </span>0x02<span class=w> </span>&gt;<span class=w> </span>./bDeviceSubClass<span class=w> </span><span class=c1># Common</span>
+<span class=nb>echo</span> 0x02 &gt; ./bDeviceSubClass <span class=c1># Common</span>
 <span class=c1># USB Protocol code</span>
-<span class=nb>echo</span><span class=w> </span>0x01<span class=w> </span>&gt;<span class=w> </span>./bDeviceProtocol<span class=w> </span><span class=c1># Interface Association Descriptor</span>
+<span class=nb>echo</span> 0x01 &gt; ./bDeviceProtocol <span class=c1># Interface Association Descriptor</span>
 
 <span class=c1># ProductID (assigned by manufacturer)</span>
-<span class=nb>echo</span><span class=w> </span>0x0001<span class=w> </span>&gt;<span class=w> </span>./idProduct
+<span class=nb>echo</span> 0x0001 &gt; ./idProduct
 <span class=c1># Device release number(assigned by manufacturer)</span>
-<span class=nb>echo</span><span class=w> </span>0x0100<span class=w> </span>&gt;<span class=w> </span>./bcdDevice<span class=w> </span><span class=c1># v1.0.0</span>
+<span class=nb>echo</span> 0x0100 &gt; ./bcdDevice <span class=c1># v1.0.0</span>
 
-mkdir<span class=w> </span>-p<span class=w> </span>strings/<span class=nv>$LANG</span>
-<span class=nb>echo</span><span class=w> </span><span class=s2>&quot;fedcba9876543210&quot;</span><span class=w> </span>&gt;<span class=w> </span>./strings/<span class=nv>$LANG</span>/serialnumber<span class=w> </span><span class=c1># 適当に設定</span>
-<span class=nb>echo</span><span class=w> </span><span class=s2>&quot;Raspberry Pi&quot;</span><span class=w> </span>&gt;<span class=w> </span>./strings/<span class=nv>$LANG</span>/manufacturer
-<span class=nb>echo</span><span class=w> </span><span class=s2>&quot;Generic USB Composite Device&quot;</span><span class=w> </span>&gt;<span class=w> </span>./strings/<span class=nv>$LANG</span>/product
+mkdir -p strings/<span class=nv>$LANG</span>
+<span class=nb>echo</span> <span class=s2>&quot;fedcba9876543210&quot;</span> &gt; ./strings/<span class=nv>$LANG</span>/serialnumber <span class=c1># 適当に設定</span>
+<span class=nb>echo</span> <span class=s2>&quot;Raspberry Pi&quot;</span> &gt; ./strings/<span class=nv>$LANG</span>/manufacturer
+<span class=nb>echo</span> <span class=s2>&quot;Generic USB Composite Device&quot;</span> &gt; ./strings/<span class=nv>$LANG</span>/product
 
 <span class=c1>### Configuration Descriptorの設定</span>
-mkdir<span class=w> </span>-p<span class=w> </span>./configs/c.1/strings/<span class=nv>$LANG</span>
-<span class=nb>echo</span><span class=w> </span><span class=m>1500</span><span class=w> </span>&gt;<span class=w> </span>./configs/c.1/MaxPower<span class=w> </span><span class=c1># 1500*2mA= 3.0A</span>
-<span class=nb>echo</span><span class=w> </span><span class=s2>&quot;Config 1: ECM network&quot;</span><span class=w> </span>&gt;<span class=w> </span>./configs/c.1/strings/<span class=nv>$LANG</span>/configuration
+mkdir -p ./configs/c.1/strings/<span class=nv>$LANG</span>
+<span class=nb>echo</span> <span class=m>1500</span> &gt; ./configs/c.1/MaxPower <span class=c1># 1500*2mA= 3.0A</span>
+<span class=nb>echo</span> <span class=s2>&quot;Config 1: ECM network&quot;</span> &gt; ./configs/c.1/strings/<span class=nv>$LANG</span>/configuration
 
 <span class=c1>### Report Descriptor定義</span>
 <span class=c1># Keyboard Report Descriptor</span>
 <span class=c1># (Modifier keys + 6 simultaneous Keys -&gt; 8 Bytes)</span>
 <span class=nv>KEYBD_REPT</span><span class=o>=</span><span class=s2>&quot;&quot;</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;0501&quot;</span><span class=w>      </span><span class=c1># USAGE_PAGE (Generic Desktop)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;0906&quot;</span><span class=w>      </span><span class=c1># USAGE (Keyboard)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;A101&quot;</span><span class=w>      </span><span class=c1># COLLECTION (Application)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;0507&quot;</span><span class=w>      </span><span class=c1>#   USAGE_PAGE (Keyboard)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;19E0&quot;</span><span class=w>      </span><span class=c1>#   USAGE_MINIMUM (Keyboard LeftControl)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;29E7&quot;</span><span class=w>      </span><span class=c1>#   USAGE_MAXIMUM (Keyboard Right GUI)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span><span class=w>      </span><span class=c1>#   LOGICAL_MINIMUM (0)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;2501&quot;</span><span class=w>      </span><span class=c1>#   LOGICAL_MAXIMUM (1)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;7501&quot;</span><span class=w>      </span><span class=c1>#   REPORT_SIZE (1)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9508&quot;</span><span class=w>      </span><span class=c1>#   REPORT_COUNT (8)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;8102&quot;</span><span class=w>      </span><span class=c1>#   INPUT (Data,Var,Abs)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;7508&quot;</span><span class=w>      </span><span class=c1>#   REPORT_SIZE (8)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span><span class=w>      </span><span class=c1>#   REPORT_COUNT (1)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;8103&quot;</span><span class=w>      </span><span class=c1>#   INPUT (Cnst,Var,Abs)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;1900&quot;</span><span class=w>      </span><span class=c1>#   USAGE_MINIMUM (Reserved (no event indicated))</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;299F&quot;</span><span class=w>      </span><span class=c1>#   USAGE_MAXIMUM (Keyboard Separator)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span><span class=w>      </span><span class=c1>#   LOGICAL_MINIMUM (0)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;259F&quot;</span><span class=w>      </span><span class=c1>#   LOGICAL_MAXIMUM (175)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;7508&quot;</span><span class=w>      </span><span class=c1>#   REPORT_SIZE (8)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9506&quot;</span><span class=w>      </span><span class=c1>#   REPORT_COUNT (6)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;8100&quot;</span><span class=w>      </span><span class=c1>#   INPUT (Data,Ary,Abs)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;0508&quot;</span><span class=w>      </span><span class=c1>#   USAGE_PAGE (LEDs)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;1901&quot;</span><span class=w>      </span><span class=c1>#   USAGE_MINIMUM (Num Lock)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;2905&quot;</span><span class=w>      </span><span class=c1>#   USAGE_MAXIMUM (Kana)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span><span class=w>      </span><span class=c1>#   LOGICAL_MINIMUM (0)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;2501&quot;</span><span class=w>      </span><span class=c1>#   LOGICAL_MAXIMUM (1)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;7501&quot;</span><span class=w>      </span><span class=c1>#   REPORT_SIZE (1)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9505&quot;</span><span class=w>      </span><span class=c1>#   REPORT_COUNT (5)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9102&quot;</span><span class=w>      </span><span class=c1>#   OUTPUT (Data,Var,Abs)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;7503&quot;</span><span class=w>      </span><span class=c1>#   REPORT_SIZE (3)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span><span class=w>      </span><span class=c1>#   REPORT_COUNT (1)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9103&quot;</span><span class=w>      </span><span class=c1>#   OUTPUT (Cnst,Var,Abs)</span>
-<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;C0&quot;</span><span class=w>        </span><span class=c1># END_COLLECTION</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;0501&quot;</span>      <span class=c1># USAGE_PAGE (Generic Desktop)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;0906&quot;</span>      <span class=c1># USAGE (Keyboard)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;A101&quot;</span>      <span class=c1># COLLECTION (Application)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;0507&quot;</span>      <span class=c1>#   USAGE_PAGE (Keyboard)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;19E0&quot;</span>      <span class=c1>#   USAGE_MINIMUM (Keyboard LeftControl)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;29E7&quot;</span>      <span class=c1>#   USAGE_MAXIMUM (Keyboard Right GUI)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span>      <span class=c1>#   LOGICAL_MINIMUM (0)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;2501&quot;</span>      <span class=c1>#   LOGICAL_MAXIMUM (1)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;7501&quot;</span>      <span class=c1>#   REPORT_SIZE (1)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9508&quot;</span>      <span class=c1>#   REPORT_COUNT (8)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;8102&quot;</span>      <span class=c1>#   INPUT (Data,Var,Abs)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;7508&quot;</span>      <span class=c1>#   REPORT_SIZE (8)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span>      <span class=c1>#   REPORT_COUNT (1)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;8103&quot;</span>      <span class=c1>#   INPUT (Cnst,Var,Abs)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;1900&quot;</span>      <span class=c1>#   USAGE_MINIMUM (Reserved (no event indicated))</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;299F&quot;</span>      <span class=c1>#   USAGE_MAXIMUM (Keyboard Separator)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span>      <span class=c1>#   LOGICAL_MINIMUM (0)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;259F&quot;</span>      <span class=c1>#   LOGICAL_MAXIMUM (175)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;7508&quot;</span>      <span class=c1>#   REPORT_SIZE (8)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9506&quot;</span>      <span class=c1>#   REPORT_COUNT (6)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;8100&quot;</span>      <span class=c1>#   INPUT (Data,Ary,Abs)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;0508&quot;</span>      <span class=c1>#   USAGE_PAGE (LEDs)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;1901&quot;</span>      <span class=c1>#   USAGE_MINIMUM (Num Lock)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;2905&quot;</span>      <span class=c1>#   USAGE_MAXIMUM (Kana)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span>      <span class=c1>#   LOGICAL_MINIMUM (0)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;2501&quot;</span>      <span class=c1>#   LOGICAL_MAXIMUM (1)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;7501&quot;</span>      <span class=c1>#   REPORT_SIZE (1)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9505&quot;</span>      <span class=c1>#   REPORT_COUNT (5)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9102&quot;</span>      <span class=c1>#   OUTPUT (Data,Var,Abs)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;7503&quot;</span>      <span class=c1>#   REPORT_SIZE (3)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span>      <span class=c1>#   REPORT_COUNT (1)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;9103&quot;</span>      <span class=c1>#   OUTPUT (Cnst,Var,Abs)</span>
+<span class=nv>KEYBD_REPT</span><span class=o>+=</span><span class=s2>&quot;C0&quot;</span>        <span class=c1># END_COLLECTION</span>
 
 <span class=c1># Mouse and Digitizer Report Descriptor</span>
 <span class=c1>#  (report_id=1, 5 Buttons, X, Y, Wheel, AC Pan -&gt; 1byte + 1byte + 4*2 Bytes)</span>
 <span class=c1>#  (report_id=2, 5 Buttons, X, Y, padding*2     -&gt; 1byte + 1byte + 4*2 Bytes)</span>
 <span class=nv>MOUSE_REPT</span><span class=o>=</span><span class=s2>&quot;&quot;</span>
 <span class=c1># マウス部分</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0501&quot;</span><span class=w>      </span><span class=c1># USAGE_PAGE (Generic Desktop)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0902&quot;</span><span class=w>      </span><span class=c1># USAGE (Mouse)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;A101&quot;</span><span class=w>      </span><span class=c1># COLLECTION (Application)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0901&quot;</span><span class=w>      </span><span class=c1>#   USAGE (Pointer)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;A100&quot;</span><span class=w>      </span><span class=c1>#   COLLECTION (Physical)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8501&quot;</span><span class=w>      </span><span class=c1>#     REPORT_ID (1)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0509&quot;</span><span class=w>      </span><span class=c1>#     USAGE_PAGE (Button)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;1901&quot;</span><span class=w>      </span><span class=c1>#     USAGE_MINIMUM (Button 1)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;2905&quot;</span><span class=w>      </span><span class=c1>#     USAGE_MAXIMUM (Button 5)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span><span class=w>      </span><span class=c1>#     LOGICAL_MINIMUM (0)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;2501&quot;</span><span class=w>      </span><span class=c1>#     LOGICAL_MAXIMUM (1)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7501&quot;</span><span class=w>      </span><span class=c1>#     REPORT_SIZE (1)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9505&quot;</span><span class=w>      </span><span class=c1>#     REPORT_COUNT (5)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8102&quot;</span><span class=w>      </span><span class=c1>#     INPUT (Data,Var,Abs)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7503&quot;</span><span class=w>      </span><span class=c1>#     REPORT_SIZE (3)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span><span class=w>      </span><span class=c1>#     REPORT_COUNT (1)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8101&quot;</span><span class=w>      </span><span class=c1>#     INPUT (Cnst,Ary,Abs)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0501&quot;</span><span class=w>      </span><span class=c1>#     USAGE_PAGE (Generic Desktop)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0930&quot;</span><span class=w>      </span><span class=c1>#     USAGE (X)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0931&quot;</span><span class=w>      </span><span class=c1>#     USAGE (Y)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0938&quot;</span><span class=w>      </span><span class=c1>#     USAGE (Wheel)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;160180&quot;</span><span class=w>    </span><span class=c1>#     LOGICAL_MINIMUM (-32767)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;26FF7F&quot;</span><span class=w>    </span><span class=c1>#     LOGICAL_MAXIMUM (32767)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7510&quot;</span><span class=w>      </span><span class=c1>#     REPORT_SIZE (16)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9503&quot;</span><span class=w>      </span><span class=c1>#     REPORT_COUNT (3)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8106&quot;</span><span class=w>      </span><span class=c1>#     INPUT (Data,Var,Rel)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;050C&quot;</span><span class=w>      </span><span class=c1>#     USAGE_PAGE (Consumer Devices)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0A3802&quot;</span><span class=w>    </span><span class=c1>#     USAGE (AC Pan)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;160180&quot;</span><span class=w>    </span><span class=c1>#     LOGICAL_MINIMUM (-32767)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;26FF7F&quot;</span><span class=w>    </span><span class=c1>#     LOGICAL_MAXIMUM (32767)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7510&quot;</span><span class=w>      </span><span class=c1>#     REPORT_SIZE (16)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span><span class=w>      </span><span class=c1>#     REPORT_COUNT (1)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8106&quot;</span><span class=w>      </span><span class=c1>#     INPUT (Data,Var,Rel)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;C0&quot;</span><span class=w>        </span><span class=c1>#   END_COLLECTION</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;C0&quot;</span><span class=w>        </span><span class=c1># END_COLLECTION</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0501&quot;</span>      <span class=c1># USAGE_PAGE (Generic Desktop)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0902&quot;</span>      <span class=c1># USAGE (Mouse)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;A101&quot;</span>      <span class=c1># COLLECTION (Application)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0901&quot;</span>      <span class=c1>#   USAGE (Pointer)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;A100&quot;</span>      <span class=c1>#   COLLECTION (Physical)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8501&quot;</span>      <span class=c1>#     REPORT_ID (1)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0509&quot;</span>      <span class=c1>#     USAGE_PAGE (Button)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;1901&quot;</span>      <span class=c1>#     USAGE_MINIMUM (Button 1)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;2905&quot;</span>      <span class=c1>#     USAGE_MAXIMUM (Button 5)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span>      <span class=c1>#     LOGICAL_MINIMUM (0)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;2501&quot;</span>      <span class=c1>#     LOGICAL_MAXIMUM (1)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7501&quot;</span>      <span class=c1>#     REPORT_SIZE (1)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9505&quot;</span>      <span class=c1>#     REPORT_COUNT (5)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8102&quot;</span>      <span class=c1>#     INPUT (Data,Var,Abs)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7503&quot;</span>      <span class=c1>#     REPORT_SIZE (3)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span>      <span class=c1>#     REPORT_COUNT (1)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8101&quot;</span>      <span class=c1>#     INPUT (Cnst,Ary,Abs)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0501&quot;</span>      <span class=c1>#     USAGE_PAGE (Generic Desktop)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0930&quot;</span>      <span class=c1>#     USAGE (X)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0931&quot;</span>      <span class=c1>#     USAGE (Y)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0938&quot;</span>      <span class=c1>#     USAGE (Wheel)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;160180&quot;</span>    <span class=c1>#     LOGICAL_MINIMUM (-32767)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;26FF7F&quot;</span>    <span class=c1>#     LOGICAL_MAXIMUM (32767)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7510&quot;</span>      <span class=c1>#     REPORT_SIZE (16)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9503&quot;</span>      <span class=c1>#     REPORT_COUNT (3)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8106&quot;</span>      <span class=c1>#     INPUT (Data,Var,Rel)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;050C&quot;</span>      <span class=c1>#     USAGE_PAGE (Consumer Devices)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0A3802&quot;</span>    <span class=c1>#     USAGE (AC Pan)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;160180&quot;</span>    <span class=c1>#     LOGICAL_MINIMUM (-32767)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;26FF7F&quot;</span>    <span class=c1>#     LOGICAL_MAXIMUM (32767)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7510&quot;</span>      <span class=c1>#     REPORT_SIZE (16)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span>      <span class=c1>#     REPORT_COUNT (1)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8106&quot;</span>      <span class=c1>#     INPUT (Data,Var,Rel)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;C0&quot;</span>        <span class=c1>#   END_COLLECTION</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;C0&quot;</span>        <span class=c1># END_COLLECTION</span>
 <span class=c1># デジタイザ部分</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;050D&quot;</span><span class=w>      </span><span class=c1># USAGE_PAGE (Digitizers)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0902&quot;</span><span class=w>      </span><span class=c1># USAGE (Pen)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;A101&quot;</span><span class=w>      </span><span class=c1># COLLECTION (Application)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8502&quot;</span><span class=w>      </span><span class=c1>#   REPORT_ID (2)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0920&quot;</span><span class=w>      </span><span class=c1>#   USAGE (Stylus)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;A100&quot;</span><span class=w>      </span><span class=c1>#   COLLECTION (Physical)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span><span class=w>      </span><span class=c1>#     LOGICAL_MINIMUM (0)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;2501&quot;</span><span class=w>      </span><span class=c1>#     LOGICAL_MAXIMUM (1)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0942&quot;</span><span class=w>      </span><span class=c1>#     USAGE (Tip Switch)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0944&quot;</span><span class=w>      </span><span class=c1>#     USAGE (Barrel Switch)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;093C&quot;</span><span class=w>      </span><span class=c1>#     USAGE (Invert)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0945&quot;</span><span class=w>      </span><span class=c1>#     USAGE (Eraser Switch)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0932&quot;</span><span class=w>      </span><span class=c1>#     USAGE (In Range)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7501&quot;</span><span class=w>      </span><span class=c1>#     REPORT_SIZE (1)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9505&quot;</span><span class=w>      </span><span class=c1>#     REPORT_COUNT (5)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8102&quot;</span><span class=w>      </span><span class=c1>#     INPUT (Data,Var,Abs)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7503&quot;</span><span class=w>      </span><span class=c1>#     REPORT_SIZE (3)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span><span class=w>      </span><span class=c1>#     REPORT_COUNT (1)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8101&quot;</span><span class=w>      </span><span class=c1>#     INPUT (Cnst,Ary,Abs)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0501&quot;</span><span class=w>      </span><span class=c1>#     USAGE_PAGE (Generic Desktop)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7510&quot;</span><span class=w>      </span><span class=c1>#     REPORT_SIZE (16)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span><span class=w>      </span><span class=c1>#     REPORT_COUNT (1)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;5500&quot;</span><span class=w>      </span><span class=c1>#     UNIT_EXPONENT (0)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;6513&quot;</span><span class=w>      </span><span class=c1>#     UNIT (Inch,EngLinear)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;3500&quot;</span><span class=w>      </span><span class=c1>#     PHYSICAL_MINIMUM (0)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span><span class=w>      </span><span class=c1>#     LOGICAL_MINIMUM (0)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0930&quot;</span><span class=w>      </span><span class=c1>#     USAGE (X)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;460005&quot;</span><span class=w>    </span><span class=c1>#     PHYSICAL_MAXIMUM (1280)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;260005&quot;</span><span class=w>    </span><span class=c1>#     LOGICAL_MAXIMUM (1280)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8102&quot;</span><span class=w>      </span><span class=c1>#     INPUT (Data,Var,Abs)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0931&quot;</span><span class=w>      </span><span class=c1>#     USAGE (Y)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;46D002&quot;</span><span class=w>    </span><span class=c1>#     PHYSICAL_MAXIMUM (720)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;26D002&quot;</span><span class=w>    </span><span class=c1>#     LOGICAL_MAXIMUM (720)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8102&quot;</span><span class=w>      </span><span class=c1>#     INPUT (Data,Var,Abs)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7520&quot;</span><span class=w>      </span><span class=c1>#     REPORT_SIZE (32)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8101&quot;</span><span class=w>      </span><span class=c1>#     INPUT (Cnst,Ary,Abs)</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;C0&quot;</span><span class=w>        </span><span class=c1>#   END_COLLECTION</span>
-<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;C0&quot;</span><span class=w>        </span><span class=c1># END_COLLECTION</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;050D&quot;</span>      <span class=c1># USAGE_PAGE (Digitizers)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0902&quot;</span>      <span class=c1># USAGE (Pen)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;A101&quot;</span>      <span class=c1># COLLECTION (Application)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8502&quot;</span>      <span class=c1>#   REPORT_ID (2)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0920&quot;</span>      <span class=c1>#   USAGE (Stylus)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;A100&quot;</span>      <span class=c1>#   COLLECTION (Physical)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span>      <span class=c1>#     LOGICAL_MINIMUM (0)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;2501&quot;</span>      <span class=c1>#     LOGICAL_MAXIMUM (1)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0942&quot;</span>      <span class=c1>#     USAGE (Tip Switch)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0944&quot;</span>      <span class=c1>#     USAGE (Barrel Switch)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;093C&quot;</span>      <span class=c1>#     USAGE (Invert)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0945&quot;</span>      <span class=c1>#     USAGE (Eraser Switch)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0932&quot;</span>      <span class=c1>#     USAGE (In Range)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7501&quot;</span>      <span class=c1>#     REPORT_SIZE (1)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9505&quot;</span>      <span class=c1>#     REPORT_COUNT (5)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8102&quot;</span>      <span class=c1>#     INPUT (Data,Var,Abs)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7503&quot;</span>      <span class=c1>#     REPORT_SIZE (3)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span>      <span class=c1>#     REPORT_COUNT (1)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8101&quot;</span>      <span class=c1>#     INPUT (Cnst,Ary,Abs)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0501&quot;</span>      <span class=c1>#     USAGE_PAGE (Generic Desktop)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7510&quot;</span>      <span class=c1>#     REPORT_SIZE (16)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;9501&quot;</span>      <span class=c1>#     REPORT_COUNT (1)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;5500&quot;</span>      <span class=c1>#     UNIT_EXPONENT (0)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;6513&quot;</span>      <span class=c1>#     UNIT (Inch,EngLinear)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;3500&quot;</span>      <span class=c1>#     PHYSICAL_MINIMUM (0)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;1500&quot;</span>      <span class=c1>#     LOGICAL_MINIMUM (0)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0930&quot;</span>      <span class=c1>#     USAGE (X)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;460005&quot;</span>    <span class=c1>#     PHYSICAL_MAXIMUM (1280)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;260005&quot;</span>    <span class=c1>#     LOGICAL_MAXIMUM (1280)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8102&quot;</span>      <span class=c1>#     INPUT (Data,Var,Abs)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;0931&quot;</span>      <span class=c1>#     USAGE (Y)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;46D002&quot;</span>    <span class=c1>#     PHYSICAL_MAXIMUM (720)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;26D002&quot;</span>    <span class=c1>#     LOGICAL_MAXIMUM (720)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8102&quot;</span>      <span class=c1>#     INPUT (Data,Var,Abs)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;7520&quot;</span>      <span class=c1>#     REPORT_SIZE (32)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;8101&quot;</span>      <span class=c1>#     INPUT (Cnst,Ary,Abs)</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;C0&quot;</span>        <span class=c1>#   END_COLLECTION</span>
+<span class=nv>MOUSE_REPT</span><span class=o>+=</span><span class=s2>&quot;C0&quot;</span>        <span class=c1># END_COLLECTION</span>
 
-<span class=k>if</span><span class=w> </span><span class=o>[</span><span class=w> </span>-n<span class=w> </span><span class=s2>&quot;&quot;</span><span class=k>$(</span>cat<span class=w> </span>./UDC<span class=k>)</span><span class=s2>&quot;&quot;</span><span class=w> </span><span class=o>]</span><span class=p>;</span><span class=w> </span><span class=k>then</span><span class=w> </span><span class=nb>echo</span><span class=w> </span>&gt;<span class=w> </span>./UDC<span class=p>;</span><span class=w> </span><span class=k>fi</span>
+<span class=k>if</span> <span class=o>[</span> -n <span class=s2>&quot;&quot;</span><span class=k>$(</span>cat ./UDC<span class=k>)</span><span class=s2>&quot;&quot;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span> <span class=nb>echo</span> &gt; ./UDC<span class=p>;</span> <span class=k>fi</span>
 
 <span class=nv>N</span><span class=o>=</span><span class=m>0</span>
 <span class=c1>### Report Descriptorの設定</span>
 <span class=c1># RNDIS Ethernet Adapter</span>
-<span class=k>if</span><span class=w> </span><span class=s2>&quot;</span><span class=nv>$USE_ETHER</span><span class=s2>&quot;</span><span class=p>;</span><span class=w> </span><span class=k>then</span>
-<span class=w>    </span><span class=c1># OS descriptors</span>
-<span class=w>    </span><span class=c1># https://msdn.microsoft.com/en-us/library/hh881271.aspx</span>
-<span class=w>    </span><span class=c1># WIndows extensions to force config</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>1</span><span class=w> </span>&gt;<span class=w> </span>./os_desc/use
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span>0xcd<span class=w> </span>&gt;<span class=w> </span>./os_desc/b_vendor_code
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span>MSFT100<span class=w> </span>&gt;<span class=w> </span>./os_desc/qw_sign
+<span class=k>if</span> <span class=s2>&quot;</span><span class=nv>$USE_ETHER</span><span class=s2>&quot;</span><span class=p>;</span> <span class=k>then</span>
+    <span class=c1># OS descriptors</span>
+    <span class=c1># https://msdn.microsoft.com/en-us/library/hh881271.aspx</span>
+    <span class=c1># WIndows extensions to force config</span>
+    <span class=nb>echo</span> <span class=m>1</span> &gt; ./os_desc/use
+    <span class=nb>echo</span> 0xcd &gt; ./os_desc/b_vendor_code
+    <span class=nb>echo</span> MSFT100 &gt; ./os_desc/qw_sign
 
-<span class=w>    </span>mkdir<span class=w> </span>-p<span class=w> </span>functions/rndis.usb<span class=nv>$N</span>
-<span class=w>    </span><span class=nv>SERIAL</span><span class=o>=</span><span class=s2>&quot;</span><span class=k>$(</span>grep<span class=w> </span>Serial<span class=w> </span>/proc/cpuinfo<span class=w> </span><span class=p>|</span><span class=w> </span>sed<span class=w> </span><span class=s1>&#39;s/Serial\s*: 0000\(\w*\)/\1/&#39;</span><span class=k>)</span><span class=s2>&quot;</span>
-<span class=w>    </span><span class=nv>MAC</span><span class=o>=</span><span class=s2>&quot;</span><span class=k>$(</span><span class=nb>echo</span><span class=w> </span><span class=si>${</span><span class=nv>SERIAL</span><span class=si>}</span><span class=w> </span><span class=p>|</span><span class=w> </span>sed<span class=w> </span><span class=s1>&#39;s/\(\w\w\)/:\1/g&#39;</span><span class=w> </span><span class=p>|</span><span class=w> </span>cut<span class=w> </span>-b<span class=w> </span><span class=m>2</span>-<span class=k>)</span><span class=s2>&quot;</span>
-<span class=w>    </span><span class=nv>MAC_HOST</span><span class=o>=</span><span class=s2>&quot;12</span><span class=k>$(</span><span class=nb>echo</span><span class=w> </span><span class=si>${</span><span class=nv>MAC</span><span class=si>}</span><span class=w> </span><span class=p>|</span><span class=w> </span>cut<span class=w> </span>-b<span class=w> </span><span class=m>3</span>-<span class=k>)</span><span class=s2>&quot;</span>
-<span class=w>    </span><span class=nv>MAC_DEV</span><span class=o>=</span><span class=s2>&quot;02</span><span class=k>$(</span><span class=nb>echo</span><span class=w> </span><span class=si>${</span><span class=nv>MAC</span><span class=si>}</span><span class=w> </span><span class=p>|</span><span class=w> </span>cut<span class=w> </span>-b<span class=w> </span><span class=m>3</span>-<span class=k>)</span><span class=s2>&quot;</span>
+    mkdir -p functions/rndis.usb<span class=nv>$N</span>
+    <span class=nv>SERIAL</span><span class=o>=</span><span class=s2>&quot;</span><span class=k>$(</span>grep Serial /proc/cpuinfo <span class=p>|</span> sed <span class=s1>&#39;s/Serial\s*: 0000\(\w*\)/\1/&#39;</span><span class=k>)</span><span class=s2>&quot;</span>
+    <span class=nv>MAC</span><span class=o>=</span><span class=s2>&quot;</span><span class=k>$(</span><span class=nb>echo</span> <span class=si>${</span><span class=nv>SERIAL</span><span class=si>}</span> <span class=p>|</span> sed <span class=s1>&#39;s/\(\w\w\)/:\1/g&#39;</span> <span class=p>|</span> cut -b <span class=m>2</span>-<span class=k>)</span><span class=s2>&quot;</span>
+    <span class=nv>MAC_HOST</span><span class=o>=</span><span class=s2>&quot;12</span><span class=k>$(</span><span class=nb>echo</span> <span class=si>${</span><span class=nv>MAC</span><span class=si>}</span> <span class=p>|</span> cut -b <span class=m>3</span>-<span class=k>)</span><span class=s2>&quot;</span>
+    <span class=nv>MAC_DEV</span><span class=o>=</span><span class=s2>&quot;02</span><span class=k>$(</span><span class=nb>echo</span> <span class=si>${</span><span class=nv>MAC</span><span class=si>}</span> <span class=p>|</span> cut -b <span class=m>3</span>-<span class=k>)</span><span class=s2>&quot;</span>
 
-<span class=w>    </span><span class=c1># https://msdn.microsoft.com/en-us/windows/hardware/gg463179.aspx</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span>RNDIS<span class=w> </span>&gt;<span class=w> </span>./functions/rndis.usb<span class=nv>$N</span>/os_desc/interface.rndis/compatible_id
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>5162001</span><span class=w> </span>&gt;<span class=w> </span>./functions/rndis.usb<span class=nv>$N</span>/os_desc/interface.rndis/sub_compatible_id
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=nv>$MAC_HOST</span><span class=w>      </span>&gt;<span class=w> </span>./functions/rndis.usb<span class=nv>$N</span>/host_addr
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=nv>$MAC_DEV</span><span class=w>       </span>&gt;<span class=w> </span>./functions/rndis.usb<span class=nv>$N</span>/dev_addr
-<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>./functions/rndis.usb<span class=k>$((</span>N++<span class=k>))</span><span class=w> </span>configs/c.1
-<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>./configs/c.1<span class=w> </span>os_desc
+    <span class=c1># https://msdn.microsoft.com/en-us/windows/hardware/gg463179.aspx</span>
+    <span class=nb>echo</span> RNDIS &gt; ./functions/rndis.usb<span class=nv>$N</span>/os_desc/interface.rndis/compatible_id
+    <span class=nb>echo</span> <span class=m>5162001</span> &gt; ./functions/rndis.usb<span class=nv>$N</span>/os_desc/interface.rndis/sub_compatible_id
+    <span class=nb>echo</span> <span class=nv>$MAC_HOST</span>      &gt; ./functions/rndis.usb<span class=nv>$N</span>/host_addr
+    <span class=nb>echo</span> <span class=nv>$MAC_DEV</span>       &gt; ./functions/rndis.usb<span class=nv>$N</span>/dev_addr
+    ln -s ./functions/rndis.usb<span class=k>$((</span>N++<span class=k>))</span> configs/c.1
+    ln -s ./configs/c.1 os_desc
 <span class=k>fi</span>
 
 <span class=c1># Serial port</span>
-<span class=k>if</span><span class=w> </span><span class=s2>&quot;</span><span class=nv>$USE_SERIAL</span><span class=s2>&quot;</span><span class=p>;</span><span class=w> </span><span class=k>then</span>
-<span class=w>    </span>mkdir<span class=w> </span>-p<span class=w> </span>functions/acm.usb<span class=nv>$N</span>
-<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>functions/acm.usb<span class=k>$((</span>N++<span class=k>))</span><span class=w> </span>configs/c.1/
+<span class=k>if</span> <span class=s2>&quot;</span><span class=nv>$USE_SERIAL</span><span class=s2>&quot;</span><span class=p>;</span> <span class=k>then</span>
+    mkdir -p functions/acm.usb<span class=nv>$N</span>
+    ln -s functions/acm.usb<span class=k>$((</span>N++<span class=k>))</span> configs/c.1/
 <span class=k>fi</span>
 
 <span class=c1># Keyboard</span>
-<span class=k>if</span><span class=w> </span><span class=s2>&quot;</span><span class=nv>$USE_KEYBOARD</span><span class=s2>&quot;</span><span class=p>;</span><span class=w> </span><span class=k>then</span>
-<span class=w>    </span>mkdir<span class=w> </span>-p<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>1</span><span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/subclass<span class=w> </span><span class=c1># Boot Device</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>1</span><span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/protocol<span class=w> </span><span class=c1># Keyboard</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>8</span><span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/report_length<span class=w> </span><span class=c1># Report length: 8bytes</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=nv>$KEYBD_REPT</span><span class=w> </span><span class=p>|</span><span class=w> </span>xxd<span class=w> </span>-r<span class=w> </span>-ps<span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/report_desc
-<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>functions/hid.usb<span class=k>$((</span>N++<span class=k>))</span><span class=w> </span>configs/c.1/
+<span class=k>if</span> <span class=s2>&quot;</span><span class=nv>$USE_KEYBOARD</span><span class=s2>&quot;</span><span class=p>;</span> <span class=k>then</span>
+    mkdir -p ./functions/hid.usb<span class=nv>$N</span>
+    <span class=nb>echo</span> <span class=m>1</span> &gt; ./functions/hid.usb<span class=nv>$N</span>/subclass <span class=c1># Boot Device</span>
+    <span class=nb>echo</span> <span class=m>1</span> &gt; ./functions/hid.usb<span class=nv>$N</span>/protocol <span class=c1># Keyboard</span>
+    <span class=nb>echo</span> <span class=m>8</span> &gt; ./functions/hid.usb<span class=nv>$N</span>/report_length <span class=c1># Report length: 8bytes</span>
+    <span class=nb>echo</span> <span class=nv>$KEYBD_REPT</span> <span class=p>|</span> xxd -r -ps &gt; ./functions/hid.usb<span class=nv>$N</span>/report_desc
+    ln -s functions/hid.usb<span class=k>$((</span>N++<span class=k>))</span> configs/c.1/
 <span class=k>fi</span>
 
 <span class=c1># Mouse</span>
-<span class=k>if</span><span class=w> </span><span class=s2>&quot;</span><span class=nv>$USE_MOUSE</span><span class=s2>&quot;</span><span class=p>;</span><span class=w> </span><span class=k>then</span>
-<span class=w>    </span>mkdir<span class=w> </span>-p<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>0</span><span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/subclass<span class=w> </span><span class=c1># No Subclass</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>0</span><span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/protocol<span class=w> </span><span class=c1># None</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>10</span><span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/report_length<span class=w>  </span><span class=c1># Report length: 10bytes</span>
-<span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=nv>$MOUSE_REPT</span><span class=w> </span><span class=p>|</span><span class=w> </span>xxd<span class=w> </span>-r<span class=w> </span>-ps<span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/report_desc
-<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>./functions/hid.usb<span class=k>$((</span>N++<span class=k>))</span><span class=w> </span>configs/c.1/
+<span class=k>if</span> <span class=s2>&quot;</span><span class=nv>$USE_MOUSE</span><span class=s2>&quot;</span><span class=p>;</span> <span class=k>then</span>
+    mkdir -p ./functions/hid.usb<span class=nv>$N</span>
+    <span class=nb>echo</span> <span class=m>0</span> &gt; ./functions/hid.usb<span class=nv>$N</span>/subclass <span class=c1># No Subclass</span>
+    <span class=nb>echo</span> <span class=m>0</span> &gt; ./functions/hid.usb<span class=nv>$N</span>/protocol <span class=c1># None</span>
+    <span class=nb>echo</span> <span class=m>10</span> &gt; ./functions/hid.usb<span class=nv>$N</span>/report_length  <span class=c1># Report length: 10bytes</span>
+    <span class=nb>echo</span> <span class=nv>$MOUSE_REPT</span> <span class=p>|</span> xxd -r -ps &gt; ./functions/hid.usb<span class=nv>$N</span>/report_desc
+    ln -s ./functions/hid.usb<span class=k>$((</span>N++<span class=k>))</span> configs/c.1/
 <span class=k>fi</span>
 
-ls<span class=w> </span>/sys/class/udc<span class=w> </span>&gt;<span class=w> </span>./UDC
+ls /sys/class/udc &gt; ./UDC
 
 <span class=c1># Starting getty</span>
-<span class=k>if</span><span class=w> </span><span class=o>[</span><span class=w> </span>-n<span class=w> </span><span class=s2>&quot;</span><span class=nv>$GS_SERVICE_NAME</span><span class=s2>&quot;</span><span class=w> </span><span class=o>]</span><span class=p>;</span><span class=w> </span><span class=k>then</span>
-<span class=w>    </span>systemctl<span class=w> </span>start<span class=w> </span><span class=nv>$GS_SERVICE_NAME</span>
+<span class=k>if</span> <span class=o>[</span> -n <span class=s2>&quot;</span><span class=nv>$GS_SERVICE_NAME</span><span class=s2>&quot;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+    systemctl start <span class=nv>$GS_SERVICE_NAME</span>
 <span class=k>fi</span>
 </code></pre></div> </div> <h4 id=usb_1>USBエミュレーションデバイスの入力データ構造</h4> <ul> <li> <p>キーボード入力のデータ構造<br> キーボードデバイス <code>/dev/hidg0</code> に入力します。 </p> <table> <thead> <tr> <th align=center>bytes\bit</th> <th align=center>7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</th> </tr> </thead> <tbody> <tr> <td align=center>0バイト目</td> <td align=center>右Win&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;右Alt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;右Shift&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;右Ctrl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;左Win&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;左Alt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;左Shift&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;左Ctrl</td> </tr> <tr> <td align=center>1バイト目</td> <td align=center>(Zero Padding)</td> </tr> <tr> <td align=center>2バイト目</td> <td align=center>1番目に押下したキーコード</td> </tr> <tr> <td align=center>3バイト目</td> <td align=center>2番目に押下したキーコード</td> </tr> <tr> <td align=center>4バイト目</td> <td align=center>3番目に押下したキーコード</td> </tr> <tr> <td align=center>5バイト目</td> <td align=center>4番目に押下したキーコード</td> </tr> <tr> <td align=center>6バイト目</td> <td align=center>5番目に押下したキーコード</td> </tr> <tr> <td align=center>7バイト目</td> <td align=center>6番目に押下したキーコード</td> </tr> </tbody> </table> </li> <li> <p>マウス入力のデータ構造<br> マウス/デジタイザデバイス <code>/dev/hidg1</code> に入力します。<br> マウスとして使用する場合は、0バイト目にレポートID = 0x01 を指定します。 </p> <p>各数値は範囲 -32,767 ～ 32,767 の2バイト数値(signed int16)で入力します。 </p> <table> <thead> <tr> <th align=center>bytes\bit</th> <th align=center>7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</th> </tr> </thead> <tbody> <tr> <td align=center>0バイト目</td> <td align=center>Report ID = 0x01</td> </tr> <tr> <td align=center>1バイト目</td> <td align=center>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(5 bits Zero Padding)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Button3&nbsp;&nbsp;Button2&nbsp;&nbsp;Button1</td> </tr> <tr> <td align=center>2バイト目</td> <td align=center>カーソル 横方向 移動量 (下位バイト)</td> </tr> <tr> <td align=center>3バイト目</td> <td align=center>カーソル 横方向 移動量 (上位バイト)</td> </tr> <tr> <td align=center>4バイト目</td> <td align=center>カーソル 縦方向 移動量 (下位バイト)</td> </tr> <tr> <td align=center>5バイト目</td> <td align=center>カーソル 縦方向 移動量 (上位バイト)</td> </tr> <tr> <td align=center>6バイト目</td> <td align=center>スクロール 縦方向 移動量 (下位バイト)</td> </tr> <tr> <td align=center>7バイト目</td> <td align=center>スクロール 縦方向 移動量 (上位バイト)</td> </tr> <tr> <td align=center>8バイト目</td> <td align=center>スクロール 縦方向 移動量 (下位バイト)</td> </tr> <tr> <td align=center>9バイト目</td> <td align=center>スクロール 縦方向 移動量 (上位バイト)</td> </tr> </tbody> </table> </li> <li> <p>デジタイザ入力のデータ構造<br> マウス/デジタイザデバイス <code>/dev/hidg1</code> に入力します。<br> デジタイザとして使用する場合は、0バイト目にレポートID = 0x02 を指定します。 </p> <table> <thead> <tr> <th align=center>bytes\bit</th> <th align=center>7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</th> </tr> </thead> <tbody> <tr> <td align=center>0バイト目</td> <td align=center>Report ID = 0x02</td> </tr> <tr> <td align=center>1バイト目</td> <td align=center>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(3 bits Zero Padding)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InRange&nbsp;&nbsp;EraserSw&nbsp;&nbsp;&nbsp;Invert&nbsp;&nbsp;&nbsp;BarrelSw&nbsp;&nbsp;&nbsp;TipSw</td> </tr> <tr> <td align=center>2バイト目</td> <td align=center>カーソル 横方向 絶対位置 (下位バイト)</td> </tr> <tr> <td align=center>3バイト目</td> <td align=center>カーソル 横方向 絶対位置 (上位バイト)</td> </tr> <tr> <td align=center>4バイト目</td> <td align=center>カーソル 縦方向 絶対位置 (下位バイト)</td> </tr> <tr> <td align=center>5バイト目</td> <td align=center>カーソル 縦方向 絶対位置 (上位バイト)</td> </tr> <tr> <td align=center>6バイト目</td> <td align=center>(Zero Padding)</td> </tr> <tr> <td align=center>7バイト目</td> <td align=center>(Zero Padding)</td> </tr> <tr> <td align=center>8バイト目</td> <td align=center>(Zero Padding)</td> </tr> <tr> <td align=center>9バイト目</td> <td align=center>(Zero Padding)</td> </tr> </tbody> </table> <p>また、1バイト目は(今回の用途では)常に下記の様に入力します。</p> <table> <thead> <tr> <th>bit</th> <th align=center>値</th> <th>用途</th> </tr> </thead> <tbody> <tr> <td>(Padding)</td> <td align=center>0</td> <td></td> </tr> <tr> <td>(Padding)</td> <td align=center>0</td> <td></td> </tr> <tr> <td>(Padding)</td> <td align=center>0</td> <td></td> </tr> <tr> <td>InRange</td> <td align=center>1</td> <td>カーソルがデジタイザ上にあることを示す</td> </tr> <tr> <td>Eraser Switch</td> <td align=center>0</td> <td>消しゴムスイッチが押されていることを示す</td> </tr> <tr> <td>Invert</td> <td align=center>0</td> <td>ペンの反対側の端(シャーペンの消しゴムの方)が<br>デジタイザ上にあることを示す</td> </tr> <tr> <td>Barrel Switch</td> <td align=center>0</td> <td>バレルボタンが押されていることを示す</td> </tr> <tr> <td>Tip Switch</td> <td align=center>0</td> <td>ペンがデジタイザの表面に触れていることを示す</td> </tr> </tbody> </table> <p>絶対位置は、画面左上の座標を X=0, Y=0 とし、画面右下の座標を X=1280, Y=720 として入力します。<br> ここでの最大座標は、レポートディスクリプタ内の<code>USAGE (X)</code>, <code>USAGE (Y)</code>の直後に指定している<code>LOGICAL_MAXIMUM (1280)</code>, <code>LOGICAL_MAXIMUM (720)</code>です。 </p> </li> </ul> <h2 id=_7>モニターエミュレーション</h2> <h3 id=csi-2-to-hdmihdmi>CSI-2 to HDMIブリッジモジュールを用いたHDMI入力</h3> <p>CSI-2(Camera Serial Interface 2)とはMIPI(Mobile Industry Processor Interface)アライアンスによって策定された、 モバイル機器のプロセッサにカメラを接続するためのインターフェースの規格<br> Raspberry Piはモバイル向けのCPUを搭載しており、CSI-2インターフェースを用いてカメラからの静止画/動画入力が利用できる。</p> <p>PC等からのHDMI出力をCSI-2インターフェースに入力できるよう変換するモジュールが、HDMI-CSIブリッジモジュールです。<br> 今回は<a href=https://auvidea.eu/b101-hdmi-to-csi-2-bridge-15-pin-fpc/ >ドイツ Auvidea社の B101 HDMI to CSI-2 Bridge (15 pin FPC)</a>を使用しました。<br> モジュールを接続した状態の図が<a href=#_3>こちら</a>。 </p> <p>Raspberry PiでCSI-2インターフェースを利用するには、<code>raspi-config</code>での有効化が必要です。<br> <div class=highlight><pre><span></span><code>sudo raspi-config
 </code></pre></div></p> <p><code>raspi-config</code>を実行すると対話形式での入力画面が表示されるので、<br> <div class=highlight><pre><span></span><code>&quot;5 Interfacing Options&quot; -&gt;
 &quot;P1 Camera&quot; &quot;Enable/Disable connection to the Raspberry Pi Camera&quot;
-</code></pre></div> と順に選択してCSI-2インターフェースを有効化します。</p> <h3 id=web>Webブラウザへの動画ストリーミング配信</h3> <p>2019/10 現在、Webブラウザへの動画ストリーミング配信には、HLSとWebRTCを用いた方法の2種類があります。<br> 結果的に、今回はリアルタイム性を重視して、WebRTCを使用することにしました。 </p> <p>また、WebRTCにはシグナリングサーバ/ICEサーバと呼ばれるサーバが必要であるため、それらについてもRaspberry Pi上に構築しました。 </p> <h4 id=webrtc>WebRTC ストリーミング配信</h4> <p>ストリーミング配信には、時雨堂社の<a href=https://github.com/shiguredo/momo>WebRTC Native Client Momo</a>を利用しました。<br> Momoは、ブラウザなしで様々な環境で動作する"WebRTC ネイティブクライアント"であり、時雨堂社によりメンテナンスされ、Raspbian Buster, Ubuntu(NVIDIA Jetson向け), MacOS用バイナリが提供されています。 </p> <p>今回は、<a href=https://github.com/shiguredo/momo/releases/latest>GithubのReleaseページ</a>よりRaspbian ARMv7用のバイナリをダウンロードし、インストールしました。<br> 詳しい利用方法は<a href=https://github.com/shiguredo/momo/blob/develop/doc/USE_RASPBERRY_PI.md>Raspberry Pi で Momo を使ってみる</a>を参照すると良いと思います。</p> <div class=tabbed-set data-tabs=2:2><input checked=checked id=__tabbed_2_1 name=__tabbed_2 type=radio><label for=__tabbed_2_1>Raspberry Pi 4の場合</label><div class=tabbed-content> <div class=highlight><pre><span></span><code>curl<span class=w> </span>-L<span class=w> </span>-O<span class=w> </span>https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv7.tar.gz
-tar<span class=w> </span>xf<span class=w> </span>momo-19.09.2_raspbian-buster_armv7.tar.gz
-sudo<span class=w> </span>cp<span class=w> </span>momo-19.09.2_raspbian-buster_armv7/momo<span class=w> </span>/usr/local/bin/.
-sudo<span class=w> </span>chmod<span class=w> </span>+x<span class=w> </span>/usr/local/bin/momo
-sudo<span class=w> </span>apt-get<span class=w> </span>install<span class=w> </span>libnspr4<span class=w> </span>libnss3
-</code></pre></div> </div> <input id=__tabbed_2_2 name=__tabbed_2 type=radio><label for=__tabbed_2_2>Raspberry Pi Zeroの場合</label><div class=tabbed-content> <div class=highlight><pre><span></span><code>curl<span class=w> </span>-L<span class=w> </span>-O<span class=w> </span>https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv6.tar.gz
-tar<span class=w> </span>xf<span class=w> </span>momo-19.09.2_raspbian-buster_armv6.tar.gz
-sudo<span class=w> </span>cp<span class=w> </span>momo-19.09.2_raspbian-buster_armv6/momo<span class=w> </span>/usr/local/bin/.
-sudo<span class=w> </span>chmod<span class=w> </span>+x<span class=w> </span>/usr/local/bin/momo
-sudo<span class=w> </span>apt-get<span class=w> </span>install<span class=w> </span>libnspr4<span class=w> </span>libnss3
-</code></pre></div> </div> </div> <h4 id=_8>シグナリングサーバ</h4> <p>こちらも、時雨堂社の<a href=https://github.com/OpenAyame/ayame>WebRTC向けシグナリングサーバ Ayame</a>と、<a href=https://github.com/OpenAyame/ayame-web-sdk>Ayame Web SDK</a>ライブラリを利用しました。 </p> <p>AyameについてはArm用バイナリが配布されてないため、 <a href=https://github.com/OpenAyame/ayame/releases/latest>GithubのReleaseページ</a>からソースコードをダウンロード自身でクロスコンパイルしました。<br> Go言語で書かれているため、簡単にクロスコンパイルができます。コンパイルはGo言語環境をインストールしたPC上のLinuxやWindoesなどで行います。</p> <div class=tabbed-set data-tabs=3:2><input checked=checked id=__tabbed_3_1 name=__tabbed_3 type=radio><label for=__tabbed_3_1>Raspberry Pi 4の場合</label><div class=tabbed-content> <div class=highlight><pre><span></span><code>curl<span class=w> </span>-L<span class=w> </span>-O<span class=w> </span>https://github.com/OpenAyame/ayame/archive/19.08.0.tar.gz
-tar<span class=w> </span>xf<span class=w> </span><span class=m>19</span>.08.0.tar.gz
-<span class=nb>cd</span><span class=w> </span>ayame-19.08.0
-<span class=nv>GO111MODULE</span><span class=o>=</span>on<span class=w> </span><span class=nv>GOOS</span><span class=o>=</span>linux<span class=w> </span><span class=nv>GOARCH</span><span class=o>=</span>arm<span class=w> </span><span class=nv>GOARM</span><span class=o>=</span><span class=m>7</span><span class=w> </span>go<span class=w> </span>build<span class=w> </span>-ldflags<span class=w> </span><span class=s1>&#39;-s -w -X main.AyameVersion=${VERSION}&#39;</span><span class=w> </span>-o<span class=w> </span>ayame
-</code></pre></div> </div> <input id=__tabbed_3_2 name=__tabbed_3 type=radio><label for=__tabbed_3_2>Raspberry Pi Zeroの場合</label><div class=tabbed-content> <div class=highlight><pre><span></span><code>curl<span class=w> </span>-L<span class=w> </span>-O<span class=w> </span>https://github.com/OpenAyame/ayame/archive/19.08.0.tar.gz
-tar<span class=w> </span>xf<span class=w> </span><span class=m>19</span>.08.0.tar.gz
-<span class=nb>cd</span><span class=w> </span>ayame-19.08.0
-<span class=nv>GO111MODULE</span><span class=o>=</span>on<span class=w> </span><span class=nv>GOOS</span><span class=o>=</span>linux<span class=w> </span><span class=nv>GOARCH</span><span class=o>=</span>arm<span class=w> </span><span class=nv>GOARM</span><span class=o>=</span><span class=m>6</span><span class=w> </span>go<span class=w> </span>build<span class=w> </span>-ldflags<span class=w> </span><span class=s1>&#39;-s -w -X main.AyameVersion=${VERSION}&#39;</span><span class=w> </span>-o<span class=w> </span>ayame
-</code></pre></div> </div> </div> <p>生成された<code>ayame</code>バイナリと設定ファイルをRaspberryPiへ転送し、momoと同様に<code>/usr/local/bin</code>にインストールします。</p> <div class=highlight><pre><span></span><code>scp<span class=w> </span>-p<span class=w> </span>ayame<span class=w> </span>config.yaml<span class=w> </span>pi@raspberrypi.local:~/.
-ssh<span class=w> </span>pi@raspberrypi.local<span class=w> </span><span class=s2>&quot;sudo cp ~pi/ayame /usr/local/bin/.&quot;</span>
-ssh<span class=w> </span>pi@raspberrypi.local<span class=w> </span><span class=s2>&quot;sudo mkdir -p /usr/local/etc/ayame &amp;&amp; sudo cp ~pi/config.yaml /usr/local/etc/ayame/.&quot;</span>
-</code></pre></div> <h4 id=ice>ICEサーバ</h4> <p>ICEサーバとはWebRTCにおいて、Peer-to-peer通信を確立するために、NAT越えなどを実現するための情報を提供するサーバです。 今回はローカルネットワーク上で通信するため、ICEサーバについては必要ありませんが、試しにインストールしてみます。 </p> <p>ICEサーバについてはcoTurnというOSSを利用します。Raspbianのリポジトリからインストールします。</p> <div class=highlight><pre><span></span><code>sudo<span class=w> </span>apt<span class=w> </span>install<span class=w> </span>coturn
-</code></pre></div> <h4 id=systemd>Systemdサービス設定</h4> <p>Momo、Ayameの自動起動設定を行います。 </p> <div class=highlight><pre><span></span><code>sudo<span class=w> </span>mkdir<span class=w> </span>-p<span class=w> </span>/usr/local/etc/default/
+</code></pre></div> と順に選択してCSI-2インターフェースを有効化します。</p> <h3 id=web>Webブラウザへの動画ストリーミング配信</h3> <p>2019/10 現在、Webブラウザへの動画ストリーミング配信には、HLSとWebRTCを用いた方法の2種類があります。<br> 結果的に、今回はリアルタイム性を重視して、WebRTCを使用することにしました。 </p> <p>また、WebRTCにはシグナリングサーバ/ICEサーバと呼ばれるサーバが必要であるため、それらについてもRaspberry Pi上に構築しました。 </p> <h4 id=webrtc>WebRTC ストリーミング配信</h4> <p>ストリーミング配信には、時雨堂社の<a href=https://github.com/shiguredo/momo>WebRTC Native Client Momo</a>を利用しました。<br> Momoは、ブラウザなしで様々な環境で動作する"WebRTC ネイティブクライアント"であり、時雨堂社によりメンテナンスされ、Raspbian Buster, Ubuntu(NVIDIA Jetson向け), MacOS用バイナリが提供されています。 </p> <p>今回は、<a href=https://github.com/shiguredo/momo/releases/latest>GithubのReleaseページ</a>よりRaspbian ARMv7用のバイナリをダウンロードし、インストールしました。<br> 詳しい利用方法は<a href=https://github.com/shiguredo/momo/blob/develop/doc/USE_RASPBERRY_PI.md>Raspberry Pi で Momo を使ってみる</a>を参照すると良いと思います。</p> <div class=tabbed-set data-tabs=2:2><input checked=checked id=__tabbed_2_1 name=__tabbed_2 type=radio><label for=__tabbed_2_1>Raspberry Pi 4の場合</label><div class=tabbed-content> <div class=highlight><pre><span></span><code>curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv7.tar.gz
+tar xf momo-19.09.2_raspbian-buster_armv7.tar.gz
+sudo cp momo-19.09.2_raspbian-buster_armv7/momo /usr/local/bin/.
+sudo chmod +x /usr/local/bin/momo
+sudo apt-get install libnspr4 libnss3
+</code></pre></div> </div> <input id=__tabbed_2_2 name=__tabbed_2 type=radio><label for=__tabbed_2_2>Raspberry Pi Zeroの場合</label><div class=tabbed-content> <div class=highlight><pre><span></span><code>curl -L -O https://github.com/shiguredo/momo/releases/download/19.09.2/momo-19.09.2_raspbian-buster_armv6.tar.gz
+tar xf momo-19.09.2_raspbian-buster_armv6.tar.gz
+sudo cp momo-19.09.2_raspbian-buster_armv6/momo /usr/local/bin/.
+sudo chmod +x /usr/local/bin/momo
+sudo apt-get install libnspr4 libnss3
+</code></pre></div> </div> </div> <h4 id=_8>シグナリングサーバ</h4> <p>こちらも、時雨堂社の<a href=https://github.com/OpenAyame/ayame>WebRTC向けシグナリングサーバ Ayame</a>と、<a href=https://github.com/OpenAyame/ayame-web-sdk>Ayame Web SDK</a>ライブラリを利用しました。 </p> <p>AyameについてはArm用バイナリが配布されてないため、 <a href=https://github.com/OpenAyame/ayame/releases/latest>GithubのReleaseページ</a>からソースコードをダウンロード自身でクロスコンパイルしました。<br> Go言語で書かれているため、簡単にクロスコンパイルができます。コンパイルはGo言語環境をインストールしたPC上のLinuxやWindoesなどで行います。</p> <div class=tabbed-set data-tabs=3:2><input checked=checked id=__tabbed_3_1 name=__tabbed_3 type=radio><label for=__tabbed_3_1>Raspberry Pi 4の場合</label><div class=tabbed-content> <div class=highlight><pre><span></span><code>curl -L -O https://github.com/OpenAyame/ayame/archive/19.08.0.tar.gz
+tar xf <span class=m>19</span>.08.0.tar.gz
+<span class=nb>cd</span> ayame-19.08.0
+<span class=nv>GO111MODULE</span><span class=o>=</span>on <span class=nv>GOOS</span><span class=o>=</span>linux <span class=nv>GOARCH</span><span class=o>=</span>arm <span class=nv>GOARM</span><span class=o>=</span><span class=m>7</span> go build -ldflags <span class=s1>&#39;-s -w -X main.AyameVersion=${VERSION}&#39;</span> -o ayame
+</code></pre></div> </div> <input id=__tabbed_3_2 name=__tabbed_3 type=radio><label for=__tabbed_3_2>Raspberry Pi Zeroの場合</label><div class=tabbed-content> <div class=highlight><pre><span></span><code>curl -L -O https://github.com/OpenAyame/ayame/archive/19.08.0.tar.gz
+tar xf <span class=m>19</span>.08.0.tar.gz
+<span class=nb>cd</span> ayame-19.08.0
+<span class=nv>GO111MODULE</span><span class=o>=</span>on <span class=nv>GOOS</span><span class=o>=</span>linux <span class=nv>GOARCH</span><span class=o>=</span>arm <span class=nv>GOARM</span><span class=o>=</span><span class=m>6</span> go build -ldflags <span class=s1>&#39;-s -w -X main.AyameVersion=${VERSION}&#39;</span> -o ayame
+</code></pre></div> </div> </div> <p>生成された<code>ayame</code>バイナリと設定ファイルをRaspberryPiへ転送し、momoと同様に<code>/usr/local/bin</code>にインストールします。</p> <div class=highlight><pre><span></span><code>scp -p ayame config.yaml pi@raspberrypi.local:~/.
+ssh pi@raspberrypi.local <span class=s2>&quot;sudo cp ~pi/ayame /usr/local/bin/.&quot;</span>
+ssh pi@raspberrypi.local <span class=s2>&quot;sudo mkdir -p /usr/local/etc/ayame &amp;&amp; sudo cp ~pi/config.yaml /usr/local/etc/ayame/.&quot;</span>
+</code></pre></div> <h4 id=ice>ICEサーバ</h4> <p>ICEサーバとはWebRTCにおいて、Peer-to-peer通信を確立するために、NAT越えなどを実現するための情報を提供するサーバです。 今回はローカルネットワーク上で通信するため、ICEサーバについては必要ありませんが、試しにインストールしてみます。 </p> <p>ICEサーバについてはcoTurnというOSSを利用します。Raspbianのリポジトリからインストールします。</p> <div class=highlight><pre><span></span><code>sudo apt install coturn
+</code></pre></div> <h4 id=systemd>Systemdサービス設定</h4> <p>Momo、Ayameの自動起動設定を行います。 </p> <div class=highlight><pre><span></span><code>sudo mkdir -p /usr/local/etc/default/
 
-sudo<span class=w> </span>vi<span class=w> </span>/etc/systemd/system/momo.service
-sudo<span class=w> </span>vi<span class=w> </span>/usr/local/etc/default/momo
-sudo<span class=w> </span>vi<span class=w> </span>/etc/systemd/system/ayame.service
+sudo vi /etc/systemd/system/momo.service
+sudo vi /usr/local/etc/default/momo
+sudo vi /etc/systemd/system/ayame.service
 </code></pre></div> <div class="admonition example"> <p class=admonition-title>momo.service</p> <div class=highlight><pre><span></span><code>[Unit]
 Description=WebRTC Native Client Momo
 
@@ -332,9 +332,9 @@ Restart=always
 
 [Install]
 WantedBy=multi-user.target
-</code></pre></div> </div> <div class=highlight><pre><span></span><code>sudo<span class=w> </span>systemctl<span class=w> </span>daemon-reload
-sudo<span class=w> </span>systemctl<span class=w> </span><span class=nb>enable</span><span class=w> </span>momo
-sudo<span class=w> </span>systemctl<span class=w> </span><span class=nb>enable</span><span class=w> </span>ayame
+</code></pre></div> </div> <div class=highlight><pre><span></span><code>sudo systemctl daemon-reload
+sudo systemctl <span class=nb>enable</span> momo
+sudo systemctl <span class=nb>enable</span> ayame
 
-sudo<span class=w> </span>reboot
+sudo reboot
 </code></pre></div> <p><br><br><br><br></p> <h1 id=_9>メモ書き</h1> <p>以降は、ブラウザへの動画配信を実現するWebRTCとHLSについて、調べたことを下記にメモ書き程度に残しておく。 </p> <h2 id=web-real-time-communicationwebrtc>Web Real-Time Communication(WebRTC)</h2> <p>Google社によって開発された、ウェブブラウザやモバイルアプリケーションにシンプルなAPI経由でリアルタイム通信を提供する自由かつオープンソースのプロジェクトです。 </p> <p>ウェブページ内で直接のピア・ツー・ピア通信によって、プラグインのインストールやネイティブアプリのダウンロードをせずに、<br> ウェブブラウザ間のボイスチャット、ビデオチャット、ファイル共有が可能。<br> <a href=https://ja.wikipedia.org/wiki/WebRTC>- Wikipedia「WebRTC」より引用</a></p> <p>Peer-to-peer通信である点が特徴。<br> <strong>動画配信のためのプトロコルではなく</strong> ブラウザを用いたリアルタイム通信のための技術です。 </p> <h4 id=_10>配信方法</h4> <p>Webブラウザ上からWebカメラやモニター共有の動画などを配信することができます。 また、ベースがPeer-to-Peer通信のため、接続先情報の交換やNAT超えなどの仕組みが用意されています。<br> javascriptでHTML5のvideoタグのソースオブジェクトにストリーミング配信動画を設定することで、ブラウザ上に表示します。<br> HLSと比較すると遅延の少ないリアルタイム配信が可能。</p> <div class="admonition note"> <p class=admonition-title>Note</p> <p>下記の記事を参考にしました。<br> <a href=https://gist.github.com/voluntas/6fcece7f424607c957d5>WebRTC スタックコトハジメ</a><br> <a href=https://gist.github.com/voluntas/a9dc017ea85aea5ffb7db73af5c6b4f9>詳解 WebRTC</a><br> <a href=http://iwashi.co/2014/12/12/why-do-we-need-rtcp-in-webrtc>WebRTCにて(S)RTCPが必要な理由 - iwashi.co</a> </p> </div> <h2 id=http-live-streaminghls>HTTP Live Streaming(HLS)</h2> <p>Apple社によって開発された、動画を配信するためのプロトコル。<br> MP4(H.264, AAC)ファイルを分割したものと、マスターファイル、インデックスファイルと呼ばれるファイル(拡張子: .m3u8)を用います。 </p> <h4 id=_11>配信方法</h4> <p>分割したファイル群をWebサーバに配置し、HTML5のvideoタグを用いて配信ができます。 </p> <h4 id=_12>詳細解説</h4> <div class="admonition note"> <p class=admonition-title>Note</p> <p>HLSについては下記の記事が詳しかった。<br> <a href=https://blogs.akamai.com/jp/2013/02/-1---http-live-streaminghls.html>動画配信技術 その1 - HTTP Live Streaming(HLS) - Akamai Japan Blog</a></p> </div> <p>動画の分割と配置が必要なため、リアルタイム配信ではある程度の遅延が発生します。 </p> <p>ffmpeg等で、ファイルの分割とインデックスファイルを作成可能です。 </p> <div class="admonition example"> <p class=admonition-title>Example</p> <p>input.mp4からoutput.m3u8というインデックスファイルと<br> output001.ts, output002.tsといった分割されたmpeg2-tsファイルに変換します。 </p> <p>$ <code>ffmpeg -i input.mp4 -c:v libx264 -c:a libfdk_aac -f hls -hls_time 5 -movflags faststart -hls_playlist_type vod -hls_segment_filename "output%3d.ts" output.m3u8</code></p> </div> <div class=footnote> <hr> <ol> <li id=fn:1> <p>HIDデバイスでは"レポート"と呼ばれる単位でデータをやりとりします。レポートの形式を定めたものがレポートディスクリプタです。&#160;<a class=footnote-backref href=#fnref:1 title="Jump back to footnote 1 in the text">&#8617;</a></p> </li> <li id=fn:2> <p><a href=https://w3c.github.io/webrtc-pc/ >WebRTC 1.0: Real-time Communication Between Browsers</a>で12000行ほど、[Media Capture and Streams]で5000行ほどの英文の仕様書で構成されています。&#160;<a class=footnote-backref href=#fnref:2 title="Jump back to footnote 2 in the text">&#8617;</a></p> </li> <li id=fn:3> <p>USB HIDのキーコードについては<a href=https://www.usb.org/hid>Human Interface Devices (HID) Information</a>内の"HID Usage Tables"ページ内のPDF資料に記載の、"10. Keyboard/Keypad Page (0x07) "を参照。&#160;<a class=footnote-backref href=#fnref:3 title="Jump back to footnote 3 in the text">&#8617;</a></p> </li> <li id=fn:4> <p>インターネット上には"g_hid"モジュールを用いている記述も見つかりますが、Raspbian Busterでは動作しませんでした。&#160;<a class=footnote-backref href=#fnref:4 title="Jump back to footnote 4 in the text">&#8617;</a></p> </li> </ol> </div> </article> </div> </div> </main> <footer class=md-footer> <nav class="md-footer__inner md-grid" aria-label=フッター> <a href=../Network/ class="md-footer__link md-footer__link--prev" aria-label="前: ネットワーク設定" rel=prev> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </div> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> 前 </span> ネットワーク設定 </div> </div> </a> <a href=../../RouterOS/ class="md-footer__link md-footer__link--next" aria-label="次: RouterOS" rel=next> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> 次 </span> RouterOS </div> </div> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg> </div> </a> </nav> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> © 2019- Roy. </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://github.com/roy-n-roy/ target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 496 512"><!-- Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg> </a> <a href=https://twitter.com/roy_n_roy/ target=_blank rel=noopener title=twitter.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": "../..", "features": ["navigation.tabs", "navigation.expand"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e]+", "search.placeholder": "\u691c\u7d22", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version.title": "Select version"}}</script> <script src=../../assets/javascripts/bundle.d6c3db9e.min.js></script> <script src=../../lightbox2/js/lightbox-plus-jquery.min.js></script> </body> </html>
