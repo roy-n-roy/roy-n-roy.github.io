@@ -1,16 +1,41 @@
-# RouterOSとOracle Cloud Infrastractureでサイト間VPNを構築する
+# OCIとサイト間VPNを構築
 
-## OCI設定
+MikroTik社のルーターに搭載されているRouterOSを使用してOracle Cloud Infrastracture (OCI) と自宅のネットワークをサイト間VPNで接続します。  
 
+![](/imgs/routeros_site-to-site_vpn_oci.svg)
+
+## 設定仕様
+
+以下の表の仕様で設定します。
+
+| 項目                                                   | 設定値           |
+| :----------------------------------------------------- | :--------------- |
+| RouterOS のグローバルIPアドレス                        | 203.0.113.1      |
+| RouterOS のプライベートネットワークアドレス            | 192.168.0.0/17   |
+| OCI の仮想クラウド・ネットワークのネットワークアドレス | 192.168.128.0/17 |
+| VPN接続する対象の OCI 内サブネット名                   | "Private Subnet" |
+
+## OCIの設定
+
+### 前提条件
+* OCI上でサイト間VPN接続する対象のVCN(仮想クラウド・ネットワーク)とサブネットが作成済みであること。
+* サイト間VPN接続する対象のサブネット: "Private Subnet" のOCIDを取得していること。
+* OCI CLI[^2]がセットアップ済みであること。
+* jqコマンド[^3]がインストール済みであること。
+
+### OCI CLIでの設定
+ここからは、OCI CLIを使用してコマンドで設定していきます。  
 
 ``` bash
-# 対象のOCIコンパートメントIDを変数に設定
-cpmt_id="ocid1.compartment.oc1..000000000000000000000000000000000000000000000000000000000000"
-vcn_id="ocid1.vcn.oc1.ap-osaka-1.000000000000000000000000000000000000000000000000000000000000"
-rt_id="ocid1.routetable.oc1.ap-osaka-1.000000000000000000000000000000000000000000000000000000000000"
+# Private Subnet のOCIDを変数に設定
+subnet_id="ocid1.subnet.oc1.ap-tokyo-1.000000000000000000000000000000000000000000000000000000000000"
 
 # 自宅ルーターに割り当てられたパブリックIPv4アドレスを設定
 ip_addr="203.0.113.1"
+
+# サブネットIDから対象のVCN OCIDとコンパートメントOCIDを取得
+vcn_id=$(oci network subnet get --subnet-id $subnet_id --query 'data."vcn-id"' --raw-output)
+cpmt_id=$(oci network vcn get --vcn-id $vcn_id --query 'data."compartment-id"' --raw-output)
 
 # 動的ルーティング・ゲートウェイの作成
 drg_id=$(oci network drg create --compartment-id $cpmt_id --display-name "動的ルーティング・ゲートウェイ" --query data.id --raw-output)
@@ -18,10 +43,13 @@ drg_id=$(oci network drg create --compartment-id $cpmt_id --display-name "動的
 # 動的ルーティング・ゲートウェイに既存のVCNへの接続を作成
 oci network drg-attachment create --drg-id $drg_id --vcn-id $vcn_id --display-name "VCNアタッチメント" 
 
-# 既存のルーティングテーブルを取得
-rt=$(oci network route-table get --rt-id $rt_id | jq '.data["route-rules"]')
+# 対象サブネットのルート・テーブルIDを取得
+rt_id=$(oci network subnet get --subnet-id $subnet_id --query 'data."route-table-id"' --raw-output)
 
-# 既存のルーティングテーブルに動的ルーティングゲートウェイへの経路を追加
+# ルート・テーブルの内容を取得
+rt=$(oci network route-table get --rt-id $rt_id --query 'data."route-rules"')
+
+# 既存のルート・テーブルに動的ルーティングゲートウェイへの経路を追加
 oci network route-table update --rt-id $rt_id --route-rules $(echo $rt | jq '. |= .+[{"destination": "192.168.0.0/17","networkEntityId":"'$drg_id'"}]') --force
 
 # CPEの作成
@@ -43,7 +71,11 @@ oci network ip-sec-psk get --ipsc-id $ipsec_id --tunnel-id $(oci network ip-sec-
 oci network ip-sec-psk get --ipsc-id $ipsec_id --tunnel-id $(oci network ip-sec-tunnel list --ipsc-id $ipsec_id --query 'data[1].id' --raw-output --all)
 ```
 
-## RouterOS設定
+ここで、最後に取得した<OCI側IPアドレス1、2>、<共有シークレット1、2>は、次のRouterOSの設定で使用するのでメモしておきます。  
+
+## RouterOSの設定
+こちらもコマンドを使用して設定していきます。  
+
 ``` conf
 /ip firewall filter
 # IKE, ESPのポートを許可
@@ -85,23 +117,32 @@ add peer=oci-vpn2 policy-template-group=oci-vpn my-id=address:203.0.113.1 remote
 /ip ipsec policy
 add peer=oci-vpn1,oci-vpn2 dst-address=192.168.128.0/17 src-address=192.168.0.0/17 proposal=oci-ipsec tunnel=yes
 
-# VPNを通過する通る場合のMSSを設定
+# VPNトンネルを通過する場合のMSSを設定
 /ip firewall mangle
 add action=change-mss chain=forward dst-address=192.168.128.0/17 new-mss=1358 passthrough=yes protocol=tcp tcp-flags=syn
 ```
 
-### MSS計算
-
-| フレッツ PPPoE MTU           |  1454  |
-| IPヘッダ                     | -  20  |
-| NATトラバーサル(無し)        | -   0  |
-| ESPヘッダ                    | -   8  |
-| ESP初期化ベクトル(AES-GCM)   | -   8  |
-| ESP初期化トレーラー(AES-GCM) | -   4  |
-| ESP認証データ(SHA384)        | -  16  |
-| IPヘッダ                     | -  20  |
-| TCPヘッダ                    | -  20  |
-| IPSec MSS                    |  1358  |
+### MSSの計算
+RouterOSの設定の最後でMSSを設定していますが、これを設定しない場合 1358 Byteを越えたTCPセグメントは破棄されてしまいます。  
+そのため、例えばサーバへSSH接続した際に「ログインはできるがコマンドを実行すると応答の途中で切断されてしまう」といった現象が発生してしまいます。  
 
 
-[^1]: [サポートされているIPSecパラメータ - Oracle Cloud Infrastructureドキュメント](https://docs.oracle.com/ja-jp/iaas/Content/Network/Reference/supportedIPsecparams.htm)
+設定する値は下記の計算で求められますが、ここで載せているのはフレッツのPPPoE接続での例ですので、実際に設定する際にはインターネット接続方式に応じた値を計算して設定するようにしてください。
+
+|                              |           |
+| :--------------------------- | --------: |
+| フレッツ PPPoE MTU           |     1454  |
+| IPヘッダ                     |      -20  |
+| NATトラバーサル(無し)        |      - 0  |
+| ESPヘッダ                    |      - 8  |
+| ESP初期化ベクトル(AES-GCM)   |      - 8  |
+| ESP初期化トレーラー(AES-GCM) |      - 4  |
+| ESP認証データ(SHA384)        |     - 16  |
+| IPヘッダ                     |     - 20  |
+| TCPヘッダ                    |     - 20  |
+| IPSec MSS                    | **1358**  |
+
+
+[^1]: [サポートされているIPSecパラメータ - Oracle Cloud Infrastructureドキュメント](https://docs.oracle.com/ja-jp/iaas/Content/Network/Reference/supportedIPsecparams.htm)  
+[^2]: [コマンドライン・インタフェース(CLI) - Oracle Cloud Infrastructureドキュメント](https://docs.oracle.com/ja-jp/iaas/Content/API/Concepts/cliconcepts.htm)  
+[^3]: [jq (https://stedolan.github.io/jq/)](https://stedolan.github.io/jq/)  
