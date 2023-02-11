@@ -116,6 +116,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://roy-n-roy.nyan-co.page/RouterOS/VPN_OCI/</loc>
+         <lastmod>2023-02-11</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://roy-n-roy.nyan-co.page/RouterOS/kubeMetalLB/</loc>
          <lastmod>2023-02-11</lastmod>
          <changefreq>daily</changefreq>
