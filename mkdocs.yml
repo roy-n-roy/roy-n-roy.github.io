@@ -17,6 +17,7 @@ theme:
   features:
     - navigation.tabs
     - navigation.expand
+    - content.code.annotate
   palette:
     scheme: preference
     primary: deep orange
