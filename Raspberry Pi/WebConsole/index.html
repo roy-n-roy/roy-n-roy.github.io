@@ -239,14 +239,14 @@ mkdir<span class=w> </span>-p<span class=w> </span>./configs/c.1/strings/<span c
 <span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>5162001</span><span class=w> </span>&gt;<span class=w> </span>./functions/rndis.usb<span class=nv>$N</span>/os_desc/interface.rndis/sub_compatible_id
 <span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=nv>$MAC_HOST</span><span class=w>      </span>&gt;<span class=w> </span>./functions/rndis.usb<span class=nv>$N</span>/host_addr
 <span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=nv>$MAC_DEV</span><span class=w>       </span>&gt;<span class=w> </span>./functions/rndis.usb<span class=nv>$N</span>/dev_addr
-<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>./functions/rndis.usb<span class=k>$((</span>N++<span class=k>))</span><span class=w> </span>configs/c.1
+<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>./functions/rndis.usb<span class=k>$((</span><span class=nv>N</span><span class=o>++</span><span class=k>))</span><span class=w> </span>configs/c.1
 <span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>./configs/c.1<span class=w> </span>os_desc
 <span class=k>fi</span>
 
 <span class=c1># Serial port</span>
 <span class=k>if</span><span class=w> </span><span class=s2>&quot;</span><span class=nv>$USE_SERIAL</span><span class=s2>&quot;</span><span class=p>;</span><span class=w> </span><span class=k>then</span>
 <span class=w>    </span>mkdir<span class=w> </span>-p<span class=w> </span>functions/acm.usb<span class=nv>$N</span>
-<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>functions/acm.usb<span class=k>$((</span>N++<span class=k>))</span><span class=w> </span>configs/c.1/
+<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>functions/acm.usb<span class=k>$((</span><span class=nv>N</span><span class=o>++</span><span class=k>))</span><span class=w> </span>configs/c.1/
 <span class=k>fi</span>
 
 <span class=c1># Keyboard</span>
@@ -256,7 +256,7 @@ mkdir<span class=w> </span>-p<span class=w> </span>./configs/c.1/strings/<span c
 <span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>1</span><span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/protocol<span class=w> </span><span class=c1># Keyboard</span>
 <span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>8</span><span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/report_length<span class=w> </span><span class=c1># Report length: 8bytes</span>
 <span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=nv>$KEYBD_REPT</span><span class=w> </span><span class=p>|</span><span class=w> </span>xxd<span class=w> </span>-r<span class=w> </span>-ps<span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/report_desc
-<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>functions/hid.usb<span class=k>$((</span>N++<span class=k>))</span><span class=w> </span>configs/c.1/
+<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>functions/hid.usb<span class=k>$((</span><span class=nv>N</span><span class=o>++</span><span class=k>))</span><span class=w> </span>configs/c.1/
 <span class=k>fi</span>
 
 <span class=c1># Mouse</span>
@@ -266,7 +266,7 @@ mkdir<span class=w> </span>-p<span class=w> </span>./configs/c.1/strings/<span c
 <span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>0</span><span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/protocol<span class=w> </span><span class=c1># None</span>
 <span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=m>10</span><span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/report_length<span class=w>  </span><span class=c1># Report length: 10bytes</span>
 <span class=w>    </span><span class=nb>echo</span><span class=w> </span><span class=nv>$MOUSE_REPT</span><span class=w> </span><span class=p>|</span><span class=w> </span>xxd<span class=w> </span>-r<span class=w> </span>-ps<span class=w> </span>&gt;<span class=w> </span>./functions/hid.usb<span class=nv>$N</span>/report_desc
-<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>./functions/hid.usb<span class=k>$((</span>N++<span class=k>))</span><span class=w> </span>configs/c.1/
+<span class=w>    </span>ln<span class=w> </span>-s<span class=w> </span>./functions/hid.usb<span class=k>$((</span><span class=nv>N</span><span class=o>++</span><span class=k>))</span><span class=w> </span>configs/c.1/
 <span class=k>fi</span>
 
 ls<span class=w> </span>/sys/class/udc<span class=w> </span>&gt;<span class=w> </span>./UDC
