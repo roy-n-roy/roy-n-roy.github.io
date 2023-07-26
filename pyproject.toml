@@ -9,7 +9,7 @@ homepage = "https://roy-n-roy.nyan-co.page/"
 python = "~3.8"
 mkdocs-material = {git = "https://github.com/roy-n-roy/mkdocs-material.git", rev = "edit"}
 mkdocs-git-revision-date-localized-plugin = "^1.2"
-mkdocs-minify-plugin = "^0.6.4"
+mkdocs-minify-plugin = "^0.7.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
