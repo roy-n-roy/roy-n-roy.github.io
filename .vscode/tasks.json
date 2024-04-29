@@ -11,7 +11,7 @@
 			"options": {
 				"cwd": "${workspaceFolder}/release",
 			},
-			"problemMatcher": [],
+			"problemMatcher": []
 		},
 		{
 			"label": "mkdocs-serve",
@@ -43,7 +43,7 @@
 			"options": {
 				"cwd": "${workspaceFolder}/release"
 			},
-			"dependsOn":[
+			"dependsOn": [
 				"setup-poetry",
 				"mkdocs-stop"
 			],
@@ -62,7 +62,9 @@
 		{
 			"label": "mkdocs-stop",
 			"type": "shell",
-			"command": "${command:workbench.action.terminal.kill}"
+			"command": "${command:workbench.action.terminal.kill}",
+			"args": [ "mkdocs-serve", "mkdocs-check-serve" ],
+			"problemMatcher": []
 		},
 		{
 			"label": "mkdocs-deploy",
