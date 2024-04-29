@@ -37,11 +37,11 @@ jobs:
         run: |
           curl -sSL https://install.python-poetry.org | python
 
-      # Python3.8をセットアップ
+      # Python3.12をセットアップ
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.8'
+          python-version: '3.12'
           cache: 'poetry'
 
       # poetry.lockから依存関係をインストールする

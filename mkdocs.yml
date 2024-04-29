@@ -47,6 +47,11 @@ extra:
   analytics:
     provider: google
     property: !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_TRACKING_ID"]
+  consent:
+    title: Cookieについて
+    description: >-
+      当サイトでは、サイトの利便性向上のためクッキー(Cookie)を使用しています。
+      サイトのクッキー(Cookie)の使用に関しては、<a href="/プライバシー・ポリシー/">「プライバシーポリシー」</a>をお読みください。
 extra_javascript:
   - lightbox2/js/lightbox-plus-jquery.min.js
 extra_css:

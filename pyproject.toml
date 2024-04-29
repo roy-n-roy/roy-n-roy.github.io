@@ -1,4 +1,5 @@
 [tool.poetry]
+package-mode = false
 name = "roy-n-roy.github.io"
 version = "1.0.0"
 description = "roy-n-roy's memo docs"
@@ -6,7 +7,7 @@ authors = ["Roy. <royroy.euph@gmail.com>"]
 homepage = "https://roy-n-roy.nyan-co.page/"
 
 [tool.poetry.dependencies]
-python = "~3.8"
+python = "~3.12"
 mkdocs-material = {git = "https://github.com/roy-n-roy/mkdocs-material.git", rev = "edit"}
 mkdocs-git-revision-date-localized-plugin = "^1.2"
 mkdocs-minify-plugin = "^0.7.1"
