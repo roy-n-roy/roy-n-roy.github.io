@@ -1,0 +1,75 @@
+name: Zensical Test and Deploy
+
+# 既存の mkdocs-deploy.yml（Poetry + mkdocs gh-deploy）を
+# uv + Zensical へ置き換えるためのワークフロー。
+# 移行検証中は release ブランチを汚さないよう、デプロイは release ブランチのみで実行し、
+# それ以外（trial ブランチ / PR）はビルド成果物の artifact アップロードまでに留める。
+
+on:
+  push:
+    branches:
+      - release
+      - claude/zensical-migration-research-6sDVS
+    paths:
+      - 'docs/**/*.md'
+      - 'docs/imgs/**'
+      - 'mkdocs.yml'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/zensical-deploy.yml'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # git-revision 等の履歴依存に備えて全コミット履歴と submodule (lightbox2) を取得
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      # uv をインストール（Python のセットアップとキャッシュも uv が担当）
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      # uv.lock に固定された依存をインストール
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      # Zensical でサイトをビルド
+      - name: Build site
+        env:
+          GOOGLE_ANALYTICS_TRACKING_ID: ${{ secrets.GOOGLE_ANALYTICS_TRACKING_ID }}
+        run: uv run zensical build --clean
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  # GitHub Pages へのデプロイは release ブランチでのみ実行する。
+  # 注意: この方式は Pages の公開ソースを「GitHub Actions」に設定する必要がある
+  #       （現行の gh-pages ブランチ方式からの切り替え）。切り替え前はこのジョブは
+  #       artifact を生成するだけで実害はない。
+  deploy:
+    if: github.ref == 'refs/heads/release'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

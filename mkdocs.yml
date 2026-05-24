@@ -1,1 +1,54 @@
-release/mkdocs.yml
+site_name: roy-n-roy メモ
+site_author: Roy.
+site_description: コンピューターについて、調べたこと/やってみたことをメモ書き
+site_url: https://roy-n-roy.nyan-co.page/
+repo_name: roy-n-roy.github.io
+repo_url: https://github.com/roy-n-roy/roy-n-roy.github.io
+remote_name: origin
+remote_branch: master
+edit_uri: ''
+copyright: © 2019- Roy.
+theme:
+  name: material
+  logo: imgs/logo.svg
+  favicon: imgs/favicon.ico
+  language: ja
+  features:
+    - navigation.tabs
+    - navigation.expand
+    - content.code.annotate
+  palette:
+    scheme: preference
+    primary: deep orange
+    accent: amber
+markdown_extensions:
+  - admonition
+  - footnotes
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.details
+  - pymdownx.tilde
+plugins:
+  - search:
+      lang:
+        - ja
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/roy-n-roy/
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/roy_n_roy/
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_TRACKING_ID
+  consent:
+    title: Cookieについて
+    description: >-
+      当サイトでは、サイトの利便性向上のためクッキー(Cookie)を使用しています。
+      サイトのクッキー(Cookie)の使用に関しては、<a href="/プライバシー・ポリシー/">「プライバシーポリシー」</a>をお読みください。
+extra_javascript:
+  - lightbox2/js/lightbox-plus-jquery.min.js
+extra_css:
+  - lightbox2/css/lightbox.min.css
+  - styles/git_revision_date.css

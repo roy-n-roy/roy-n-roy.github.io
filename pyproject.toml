@@ -1,0 +1,12 @@
+[project]
+name = "roy-n-roy.github.io"
+version = "1.0.0"
+description = "roy-n-roy's memo docs"
+authors = [{ name = "Roy.", email = "royroy.euph@gmail.com" }]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "zensical",
+]
+
+[tool.uv]
+package = false
